@@ -63,6 +63,9 @@ export const translations = {
     'common.requestsFound': '{count} requests found',
     'common.offersCount': '{count} offers',
     'common.all': 'All',
+    'common.recently': 'Recently',
+    'common.reviews': 'Reviews',
+    'common.memberSince': 'Member since',
     'common.adjustSearchTerms': 'Try adjusting your search terms',
 
     // Search
@@ -90,6 +93,54 @@ export const translations = {
     'wishlist.emptyWishlist': 'Your wishlist is empty',
     'wishlist.startAdding': 'Start adding items you love',
     'wishlist.exploreItems': 'Explore Items',
+
+    // Messages
+    'messages.chatFeaturesTitle': 'Chat Features',
+    'messages.chatFeaturesDescription':
+      'Communicate directly with agents and clients',
+    'messages.agentBadge': 'Agent',
+    'messages.today': 'Today',
+    'messages.messageAgentPlaceholder': 'Type a message to agent...',
+
+    // Create Request
+    'createRequest.budgetRangeDescription':
+      'Set your budget range to help agents understand your price expectations',
+
+    // Offer Details
+    'offerDetails.shoppingLocation': 'Shopping Location',
+    'offerDetails.deliveryTime': 'Delivery Time',
+    'offerDetails.defaultProcessing': 'Default Processing',
+    'offerDetails.processing': 'Processing',
+    'offerDetails.authenticity': 'Authenticity',
+    'offerDetails.authenticityGuarantee': 'Authenticity Guarantee',
+    'offerDetails.updated': 'Updated',
+    'offerDetails.ordersCompleted': 'Orders Completed',
+    'offerDetails.offeredBy': 'Offered by',
+    'offerDetails.successRate': 'Success Rate',
+    'offerDetails.offerDetails': 'Offer Details',
+    'offerDetails.aboutThisOffer': 'About this Offer',
+    'offerDetails.fastShipping': 'Fast Shipping',
+    'offerDetails.expressDelivery': 'Express Delivery',
+    'offerDetails.whatsIncluded': "What's Included",
+    'offerDetails.serviceInclusions': 'Service Inclusions',
+    'offerDetails.additionalBenefits': 'Additional Benefits',
+    'offerDetails.freeCommunication': 'Free Communication',
+    'offerDetails.freeCommunicationDesc':
+      'Direct communication with agent',
+    'offerDetails.purchaseReceipt': 'Purchase Receipt',
+    'offerDetails.purchaseReceiptDesc':
+      'Official receipt for all purchases',
+    'offerDetails.trackingInformation': 'Tracking Information',
+    'offerDetails.trackingInformationDesc':
+      'Real-time package tracking',
+    'offerDetails.priceBreakdown': 'Price Breakdown',
+    'offerDetails.shoppingServiceFee': 'Shopping Service Fee',
+    'offerDetails.platformHandlingFee': 'Platform Handling Fee',
+    'offerDetails.insuranceProtection': 'Insurance Protection',
+    'offerDetails.totalServiceCost': 'Total Service Cost',
+    'offerDetails.productCostNote':
+      'Product cost will be added at checkout',
+    'offerDetails.agentStats': 'Agent Statistics',
 
     // All Agents Page
     'allAgents.title': 'All Agents',
@@ -125,13 +176,16 @@ export const translations = {
 
     // Preferences Setup
     'preferences.title': 'Choose Your Interests',
-    'preferences.chooseInterests': 'Choose interests that match your shopping preferences',
-    'preferences.description': 'Select categories that interest you to get personalized recommendations and relevant shopping requests.',
+    'preferences.chooseInterests':
+      'Choose interests that match your shopping preferences',
+    'preferences.description':
+      'Select categories that interest you to get personalized recommendations and relevant shopping requests.',
     'preferences.productCategories': 'Product Categories',
     'preferences.selected': 'selected',
     'preferences.selectedCategories': 'Selected Categories',
     'preferences.completeSetup': 'Complete Setup',
-    'preferences.selectAtLeastOne': 'Please select at least one category',
+    'preferences.selectAtLeastOne':
+      'Please select at least one category',
 
     // Preferences Categories
     'preferences.categories.beauty': 'Beauty & Skincare',
@@ -169,7 +223,8 @@ export const translations = {
     'auth.lastName': 'Last Name',
     'auth.resetPassword': 'Reset Password',
     'auth.forgotPasswordTitle': 'Forgot Password',
-    'auth.resetPasswordDescription': 'Enter your email address and we\'ll send you a verification code to reset your password.',
+    'auth.resetPasswordDescription':
+      "Enter your email address and we'll send you a verification code to reset your password.",
     'auth.emailAddress': 'Email Address',
     'auth.enterEmailAddress': 'Enter your email address',
     'auth.viaPhoneNo': 'Via Phone Number',
@@ -195,15 +250,18 @@ export const translations = {
     'auth.alreadyHaveAccount': 'Already have an account?',
     'auth.languages': 'Languages',
     'auth.selectLanguages': 'Select languages you speak',
-    'auth.languagesHelp': 'Select languages you can communicate in (up to 5)',
+    'auth.languagesHelp':
+      'Select languages you can communicate in (up to 5)',
     'auth.searchLanguages': 'Search languages...',
-    'auth.selectedLanguagesCount': '{count} of {max} languages selected',
+    'auth.selectedLanguagesCount':
+      '{count} of {max} languages selected',
     'auth.passwordsDoNotMatch': 'Passwords do not match',
     'auth.agreeToTerms': 'Please agree to the Terms & Conditions',
 
     // Explore
     'explore.title': 'Explore',
-    'explore.description': 'Discover shopping requests, offers, and agents',
+    'explore.description':
+      'Discover shopping requests, offers, and agents',
     'explore.categories': 'Categories',
     'explore.requests': 'Requests',
     'explore.offers': 'Offers',
@@ -216,20 +274,23 @@ export const translations = {
     'explore.topAgents': 'Top Agents',
     'explore.topRatedAgents': 'Top Rated Agents',
     'explore.requestsForYou': 'Requests for You',
-    'explore.searchPlaceholder': 'Search for items, brands, or locations...',
+    'explore.searchPlaceholder':
+      'Search for items, brands, or locations...',
     'explore.viewAll': 'View All',
 
     // Orders
     'orders.title': 'Orders',
     'orders.description': 'Track your shopping requests and offers',
     'orders.signInPrompt': 'Please sign in to view your orders',
-    'orders.signInDescription': 'Access your order history, track progress, and manage your shopping requests.',
+    'orders.signInDescription':
+      'Access your order history, track progress, and manage your shopping requests.',
     'orders.signIn': 'Sign In',
     'orders.active': 'Active',
     'orders.completed': 'Completed',
     'orders.cancelled': 'Cancelled',
     'orders.orderManagement': 'Order Management',
-    'orders.orderManagementDescription': 'Track your proxy shopping requests and offers, monitor progress, and communicate with agents or clients.',
+    'orders.orderManagementDescription':
+      'Track your proxy shopping requests and offers, monitor progress, and communicate with agents or clients.',
     'orders.totalOrders': 'Total Orders',
     'orders.shoppingProgress': 'Shopping Progress',
     'orders.itemsPurchased': 'Items Purchased',
@@ -257,7 +318,8 @@ export const translations = {
 
     // Order Steps - Client View
     'orders.steps.requestPosted': 'Request Posted',
-    'orders.steps.waitingForAgents': 'Waiting for shopping agents to submit offers',
+    'orders.steps.waitingForAgents':
+      'Waiting for shopping agents to submit offers',
     'orders.steps.agentAssigned': 'Agent Assigned',
     'orders.steps.shoppingInProgress': 'Shopping in progress',
     'orders.steps.itemsPurchased': 'Items Purchased',
@@ -272,7 +334,8 @@ export const translations = {
     'orders.steps.startingShopping': 'Starting shopping process',
     'orders.steps.shoppingStarted': 'Shopping Started',
     'orders.steps.findingRequestedItems': 'Finding requested items',
-    'orders.steps.itemsBoughtSuccessfully': 'Items bought successfully',
+    'orders.steps.itemsBoughtSuccessfully':
+      'Items bought successfully',
     'orders.steps.packageSentToClient': 'Package sent to client',
     'orders.steps.successfullyCompleted': 'Successfully completed',
 
@@ -282,7 +345,8 @@ export const translations = {
     'messages.noMessages': 'No messages yet',
     'messages.startChat': 'Start a conversation',
     'messages.signInPrompt': 'Please sign in to view your messages',
-    'messages.signInDescription': 'Access your conversations with agents and clients.',
+    'messages.signInDescription':
+      'Access your conversations with agents and clients.',
     'messages.searchChats': 'Search chats',
     'messages.searchPlaceholder': 'Search conversations...',
     'messages.online': 'Online',
@@ -324,10 +388,11 @@ export const translations = {
     'profile.appSettings': 'App Settings',
     'profile.translation': 'Translation',
     'profile.selectLanguage': 'Select Language',
-    'profile.languageDescription': 'Choose your preferred language for the app interface',
+    'profile.languageDescription':
+      'Choose your preferred language for the app interface',
     'profile.english': 'English',
     'profile.simplifiedChinese': '简体中文',
-    'profile.traditionalChinese': '繁體中文',
+    'profile.traditionalChinese': '繁體中��',
     'profile.japanese': '日本語',
     'profile.korean': '한국어',
     'profile.notifications': 'Notifications',
@@ -335,16 +400,21 @@ export const translations = {
     'profile.account': 'Account',
     'profile.verified': 'Verified',
     'profile.pending': 'Pending',
-    'profile.accountDescription': 'Manage your account and verification status',
+    'profile.accountDescription':
+      'Manage your account and verification status',
     'profile.editProfile': 'Edit Profile',
     'profile.emailVerification': 'Email Verification',
-    'profile.emailVerificationDescPending': 'Verify your email for enhanced security',
+    'profile.emailVerificationDescPending':
+      'Verify your email for enhanced security',
     'profile.phoneVerification': 'Phone Verification',
-    'profile.phoneVerificationDescPending': 'Verify your phone to receive SMS notifications',
+    'profile.phoneVerificationDescPending':
+      'Verify your phone to receive SMS notifications',
     'profile.identityVerification': 'Identity Verification',
-    'profile.identityVerificationDescPending': 'Verify your identity to unlock premium features',
+    'profile.identityVerificationDescPending':
+      'Verify your identity to unlock premium features',
     'profile.businessVerification': 'Business Verification',
-    'profile.businessVerificationDescPending': 'Verify your business to access enterprise features',
+    'profile.businessVerificationDescPending':
+      'Verify your business to access enterprise features',
     'profile.paymentSettings': 'Payment Settings',
     'profile.bankInformation': 'Bank Information',
     'profile.creditCards': 'Credit Cards',
@@ -358,11 +428,13 @@ export const translations = {
     'profile.privacy': 'Privacy Policy',
     'profile.terms': 'Terms of Service',
     'profile.signInPrompt': 'Sign in to your account',
-    'profile.signInDescription': 'Access your orders, messages, and personalized recommendations.',
+    'profile.signInDescription':
+      'Access your orders, messages, and personalized recommendations.',
 
     // Edit Profile
     'editProfile.title': 'Edit Profile',
-    'editProfile.description': 'Update your personal information and preferences',
+    'editProfile.description':
+      'Update your personal information and preferences',
     'editProfile.firstName': 'First Name',
     'editProfile.firstNamePlaceholder': 'Enter your first name',
     'editProfile.lastName': 'Last Name',
@@ -383,7 +455,8 @@ export const translations = {
     'editProfile.bioPlaceholder': 'Tell us about yourself',
     'editProfile.languages': 'Languages',
     'editProfile.selectLanguages': 'Select languages you speak',
-    'editProfile.languagesHelp': 'Select languages you can communicate in (up to 5)',
+    'editProfile.languagesHelp':
+      'Select languages you can communicate in (up to 5)',
     'editProfile.saving': 'Saving...',
 
     // Create
@@ -397,26 +470,33 @@ export const translations = {
     'create.creatingOffer': 'Creating Offer',
     'create.requestDescription': 'Ask agents to shop for you',
     'create.offerDescription': 'Offer your shopping services',
-    'create.signInPrompt': 'Please sign in to create requests or offers',
-    'create.signInDescription': 'Access the creation tools to post shopping requests or offer your services.',
-    
+    'create.signInPrompt':
+      'Please sign in to create requests or offers',
+    'create.signInDescription':
+      'Access the creation tools to post shopping requests or offer your services.',
+
     // Create Request Form
     'createRequest.title': 'Create Request',
-    'createRequest.description': 'Create detailed proxy shopping requests to connect with verified agents',
+    'createRequest.description':
+      'Create detailed proxy shopping requests to connect with verified agents',
     'createRequest.infoBoxTitle': 'Proxy Shopping Request',
-    'createRequest.infoBoxDescription': 'Create detailed proxy shopping requests to connect with verified agents. Include specifications, budget, and timeline for best results.',
+    'createRequest.infoBoxDescription':
+      'Create detailed proxy shopping requests to connect with verified agents. Include specifications, budget, and timeline for best results.',
     'createRequest.basicInformation': 'Basic Information',
     'createRequest.requestTitle': 'Request Title',
-    'createRequest.requestTitlePlaceholder': 'What do you need? (e.g., "MacBook Pro from Apple Store")',
+    'createRequest.requestTitlePlaceholder':
+      'What do you need? (e.g., "MacBook Pro from Apple Store")',
     'createRequest.category': 'Category',
     'createRequest.selectCategory': 'Select a category',
     'createRequest.description': 'Description',
-    'createRequest.descriptionPlaceholder': 'Provide detailed information about what you need...',
+    'createRequest.descriptionPlaceholder':
+      'Provide detailed information about what you need...',
     'createRequest.quantity': 'Quantity',
     'createRequest.quantityPlaceholder': 'Enter quantity',
     'createRequest.specificRequirements': 'Specific Requirements',
     'createRequest.addRequirement': 'Add requirement',
-    'createRequest.requirementPlaceholder': 'e.g., Color: Black, Size: Large',
+    'createRequest.requirementPlaceholder':
+      'e.g., Color: Black, Size: Large',
     'createRequest.budgetRange': 'Budget Range',
     'createRequest.budgetMin': 'Minimum Budget',
     'createRequest.budgetMax': 'Maximum Budget',
@@ -424,11 +504,15 @@ export const translations = {
     'createRequest.budgetMaxPlaceholder': 'Max amount',
     'createRequest.locationInfo': 'Location Information',
     'createRequest.productOrigin': 'Product Origin',
-    'createRequest.productOriginPlaceholder': 'Where should the product be purchased from?',
-    'createRequest.purchasingLocation': 'Designated Purchasing Location',
-    'createRequest.purchasingLocationPlaceholder': 'Specific store or location',
+    'createRequest.productOriginPlaceholder':
+      'Where should the product be purchased from?',
+    'createRequest.purchasingLocation':
+      'Designated Purchasing Location',
+    'createRequest.purchasingLocationPlaceholder':
+      'Specific store or location',
     'createRequest.deliveryLocation': 'Expected Delivery Location',
-    'createRequest.deliveryLocationPlaceholder': 'Where should it be delivered?',
+    'createRequest.deliveryLocationPlaceholder':
+      'Where should it be delivered?',
     'createRequest.deliveryMethod': 'Delivery Method',
     'createRequest.shipToMe': 'Ship to Me',
     'createRequest.deliverPersonally': 'Deliver Personally',
@@ -438,7 +522,8 @@ export const translations = {
     'createRequest.addressLine1': 'Address Line 1',
     'createRequest.addressLine1Placeholder': 'Street address',
     'createRequest.addressLine2': 'Address Line 2',
-    'createRequest.addressLine2Placeholder': 'Apartment, suite, etc. (optional)',
+    'createRequest.addressLine2Placeholder':
+      'Apartment, suite, etc. (optional)',
     'createRequest.city': 'City',
     'createRequest.cityPlaceholder': 'Enter city',
     'createRequest.state': 'State/Province',
@@ -447,28 +532,36 @@ export const translations = {
     'createRequest.postalCodePlaceholder': 'Enter postal code',
     'createRequest.country': 'Country',
     'createRequest.selectCountry': 'Select country',
-    'createRequest.budgetRangeDescription': 'Enter your budget range in USD',
+    'createRequest.budgetRangeDescription':
+      'Enter your budget range in USD',
     'createRequest.createRequest': 'Create Request',
     'createRequest.successTitle': 'Request created successfully!',
-    'createRequest.successDescription': 'Your proxy shopping request has been posted. Agents will start submitting offers soon.',
+    'createRequest.successDescription':
+      'Your proxy shopping request has been posted. Agents will start submitting offers soon.',
     'createRequest.errorTitle': 'Failed to create request',
     'createRequest.errorDescription': 'Please try again later.',
-    
+
     // Create Offer Form
     'createOffer.title': 'Create Offer',
-    'createOffer.description': 'Offer your shopping services to clients',
+    'createOffer.description':
+      'Offer your shopping services to clients',
     'createOffer.infoBoxTitle': 'Shopping Service Offer',
-    'createOffer.infoBoxDescription': 'Create compelling offers showcasing your shopping expertise. Include your specialties, pricing, and service details.',
+    'createOffer.infoBoxDescription':
+      'Create compelling offers showcasing your shopping expertise. Include your specialties, pricing, and service details.',
     'createOffer.serviceInformation': 'Service Information',
     'createOffer.offerTitle': 'Offer Title',
-    'createOffer.offerTitlePlaceholder': 'e.g., "Professional Electronics Shopping in Tokyo"',
+    'createOffer.offerTitlePlaceholder':
+      'e.g., "Professional Electronics Shopping in Tokyo"',
     'createOffer.serviceDescription': 'Service Description',
-    'createOffer.serviceDescriptionPlaceholder': 'Describe your shopping services, experience, and what makes you unique...',
+    'createOffer.serviceDescriptionPlaceholder':
+      'Describe your shopping services, experience, and what makes you unique...',
     'createOffer.specialties': 'Specialties',
     'createOffer.addSpecialty': 'Add specialty',
-    'createOffer.specialtyPlaceholder': 'e.g., Luxury goods, Electronics, Fashion',
+    'createOffer.specialtyPlaceholder':
+      'e.g., Luxury goods, Electronics, Fashion',
     'createOffer.serviceArea': 'Service Area',
-    'createOffer.serviceAreaPlaceholder': 'Geographic areas you serve',
+    'createOffer.serviceAreaPlaceholder':
+      'Geographic areas you serve',
     'createOffer.pricingInformation': 'Pricing Information',
     'createOffer.serviceFee': 'Service Fee',
     'createOffer.serviceFeeType': 'Fee Type',
@@ -484,38 +577,51 @@ export const translations = {
     'createOffer.estimatedTimePlaceholder': 'e.g., 3-5 business days',
     'createOffer.additionalServices': 'Additional Services',
     'createOffer.qualityCheck': 'Quality Check',
-    'createOffer.qualityCheckDescription': 'Inspect items before purchase',
+    'createOffer.qualityCheckDescription':
+      'Inspect items before purchase',
     'createOffer.photoVerification': 'Photo Verification',
-    'createOffer.photoVerificationDescription': 'Send photos of items before purchase',
+    'createOffer.photoVerificationDescription':
+      'Send photos of items before purchase',
     'createOffer.giftWrapping': 'Gift Wrapping',
-    'createOffer.giftWrappingDescription': 'Offer gift wrapping services',
+    'createOffer.giftWrappingDescription':
+      'Offer gift wrapping services',
     'createOffer.fastDelivery': 'Fast Delivery',
-    'createOffer.fastDeliveryDescription': 'Express delivery options available',
+    'createOffer.fastDeliveryDescription':
+      'Express delivery options available',
     'createOffer.createOffer': 'Create Offer',
     'createOffer.successTitle': 'Offer created successfully!',
-    'createOffer.successDescription': 'Your shopping service offer has been posted. Clients can now find and contact you.',
+    'createOffer.successDescription':
+      'Your shopping service offer has been posted. Clients can now find and contact you.',
     'createOffer.errorTitle': 'Failed to create offer',
     'createOffer.errorDescription': 'Please try again later.',
-    
+
     // Create Offer Form - Additional Fields
     'createOffer.category': 'Category',
     'createOffer.price': 'Price',
     'createOffer.enterPrice': 'Enter price',
     'createOffer.yourLocation': 'Your Location',
-    'createOffer.locationPlaceholder': 'City, Country where you\'re located',
-    'createOffer.locationDescription': 'This helps clients understand delivery timeframes and costs',
+    'createOffer.locationPlaceholder':
+      "City, Country where you're located",
+    'createOffer.locationDescription':
+      'This helps clients understand delivery timeframes and costs',
     'createOffer.productSpecifications': 'Product Specifications',
-    'createOffer.addSpecificationPlaceholder': 'Add a specification (e.g., Brand: Nike, Size: Large)',
+    'createOffer.addSpecificationPlaceholder':
+      'Add a specification (e.g., Brand: Nike, Size: Large)',
     'createOffer.add': 'Add',
-    'createOffer.specificationsDescription': 'Add technical details, dimensions, materials, brand information, etc.',
+    'createOffer.specificationsDescription':
+      'Add technical details, dimensions, materials, brand information, etc.',
     'createOffer.availableQuantity': 'Available Quantity',
     'createOffer.quantityPlaceholder': 'How many units available?',
-    'createOffer.quantityDescription': 'Number of units you can provide (default: 1)',
+    'createOffer.quantityDescription':
+      'Number of units you can provide (default: 1)',
     'createOffer.estimatedDeliveryTime': 'Estimated Delivery Time',
-    'createOffer.deliveryTimePlaceholder': 'e.g., 3-5 business days, 1-2 weeks',
-    'createOffer.deliveryTimeDescription': 'How long will it take to source and deliver this item?',
+    'createOffer.deliveryTimePlaceholder':
+      'e.g., 3-5 business days, 1-2 weeks',
+    'createOffer.deliveryTimeDescription':
+      'How long will it take to source and deliver this item?',
     'createOffer.deliveryOptions': 'Delivery Options',
-    'createOffer.deliveryOptionsDescription': 'Select all delivery methods you can offer (multiple selections allowed)',
+    'createOffer.deliveryOptionsDescription':
+      'Select all delivery methods you can offer (multiple selections allowed)',
     'createOffer.deliverPersonally': 'Deliver Personally',
     'createOffer.deliverPersonallyDescription': 'Meet in person',
     'createOffer.domesticShipping': 'Domestic Shipping',
@@ -525,52 +631,75 @@ export const translations = {
     'createOffer.expressDelivery': 'Express Delivery',
     'createOffer.expressDeliveryDescription': 'Fast shipping',
     'createOffer.tags': 'Tags',
-    'createOffer.tagPlaceholder': 'Add a tag (e.g., luxury, handmade, imported)',
-    'createOffer.tagsDescription': 'Add keywords to help clients find your offer',
+    'createOffer.tagPlaceholder':
+      'Add a tag (e.g., luxury, handmade, imported)',
+    'createOffer.tagsDescription':
+      'Add keywords to help clients find your offer',
     'createOffer.productImages': 'Product Images',
-    'createOffer.uploadPhotos': 'Upload product photos to showcase your offer',
+    'createOffer.uploadPhotos':
+      'Upload product photos to showcase your offer',
     'createOffer.chooseImages': 'Choose Images',
-    'createOffer.imageDescription': 'High-quality images increase trust and sales. Recommended: 3-5 photos',
-    
+    'createOffer.imageDescription':
+      'High-quality images increase trust and sales. Recommended: 3-5 photos',
+
     // Create Request Form - Additional Fields
     'createRequest.successMessage': 'Request created successfully!',
-    'createRequest.successMessageDescription': 'Your proxy shopping request has been posted. Agents will start submitting offers soon.',
+    'createRequest.successMessageDescription':
+      'Your proxy shopping request has been posted. Agents will start submitting offers soon.',
     'createRequest.errorMessage': 'Failed to create request',
-    'createRequest.errorMessageDescription': 'Please try again later.',
+    'createRequest.errorMessageDescription':
+      'Please try again later.',
     'createRequest.productOrigin': 'Product Origin',
     'createRequest.selectCountryRegion': 'Select country or region',
-    'createRequest.productOriginDescription': 'Specify where you want the product to be purchased from',
-    'createRequest.designatedPurchasingLocation': 'Designated Purchasing Location',
-    'createRequest.purchasingLocationPlaceholder': 'Specific store, mall, or area for purchasing',
-    'createRequest.purchasingLocationDescription': 'Optional: Suggest specific stores or areas where agent should shop',
+    'createRequest.productOriginDescription':
+      'Specify where you want the product to be purchased from',
+    'createRequest.designatedPurchasingLocation':
+      'Designated Purchasing Location',
+    'createRequest.purchasingLocationPlaceholder':
+      'Specific store, mall, or area for purchasing',
+    'createRequest.purchasingLocationDescription':
+      'Optional: Suggest specific stores or areas where agent should shop',
     'createRequest.category': 'Category',
     'createRequest.quantity': 'Quantity',
-    'createRequest.quantityPlaceholder': 'How many items do you need?',
-    'createRequest.quantityDescription': 'Number of items you want to purchase',
+    'createRequest.quantityPlaceholder':
+      'How many items do you need?',
+    'createRequest.quantityDescription':
+      'Number of items you want to purchase',
     'createRequest.description': 'Description',
-    'createRequest.descriptionPlaceholder': 'Provide a general overview of what you need...',
+    'createRequest.descriptionPlaceholder':
+      'Provide a general overview of what you need...',
     'createRequest.specificRequirements': 'Specific Requirements',
-    'createRequest.requirementPlaceholder': 'Add a specific requirement...',
+    'createRequest.requirementPlaceholder':
+      'Add a specific requirement...',
     'createRequest.add': 'Add',
-    'createRequest.requirementsDescription': 'Add specific features, models, brands, sizes, colors, or technical specifications one by one',
+    'createRequest.requirementsDescription':
+      'Add specific features, models, brands, sizes, colors, or technical specifications one by one',
     'createRequest.deliveryMethod': 'Delivery Method',
     'createRequest.shipToMe': 'Ship to Me',
     'createRequest.shipToMeDescription': 'Package delivery',
     'createRequest.deliverPersonally': 'Deliver Personally',
     'createRequest.deliverPersonallyDescription': 'Meet in person',
-    'createRequest.personalDeliveryNote': 'Agent will meet you in person to hand over the items',
-    'createRequest.shippingNote': 'Items will be shipped to your address',
-    'createRequest.expectedDeliveryLocation': 'Expected Delivery Location',
+    'createRequest.personalDeliveryNote':
+      'Agent will meet you in person to hand over the items',
+    'createRequest.shippingNote':
+      'Items will be shipped to your address',
+    'createRequest.expectedDeliveryLocation':
+      'Expected Delivery Location',
     'createRequest.location': 'Location',
-    'createRequest.meetingLocationPlaceholder': 'City, State or Country where you want to meet',
-    'createRequest.meetingLocationDescription': 'The general location where you want to meet the agent for item handover',
+    'createRequest.meetingLocationPlaceholder':
+      'City, State or Country where you want to meet',
+    'createRequest.meetingLocationDescription':
+      'The general location where you want to meet the agent for item handover',
     'createRequest.shippingAddress': 'Shipping Address',
     'createRequest.fullName': 'Full Name',
-    'createRequest.fullNamePlaceholder': 'Enter recipient\'s full name',
+    'createRequest.fullNamePlaceholder':
+      "Enter recipient's full name",
     'createRequest.addressLine1': 'Address Line 1',
-    'createRequest.addressLine1Placeholder': 'Street address, building number',
+    'createRequest.addressLine1Placeholder':
+      'Street address, building number',
     'createRequest.addressLine2': 'Address Line 2',
-    'createRequest.addressLine2Placeholder': 'Apartment, suite, unit, floor (optional)',
+    'createRequest.addressLine2Placeholder':
+      'Apartment, suite, unit, floor (optional)',
     'createRequest.city': 'City',
     'createRequest.cityPlaceholder': 'City',
     'createRequest.state': 'State/Province',
@@ -580,7 +709,8 @@ export const translations = {
     'createRequest.country': 'Country',
     'createRequest.selectCountry': 'Select country',
     'createRequest.attachments': 'Attachments',
-    'createRequest.uploadDescription': 'Upload images, documents, or specifications',
+    'createRequest.uploadDescription':
+      'Upload images, documents, or specifications',
     'createRequest.chooseFiles': 'Choose Files',
 
     // Categories
@@ -593,13 +723,17 @@ export const translations = {
 
     // Category Descriptions
     'categories.fashion': 'Fashion',
-    'categories.fashionDescription': 'Clothing, shoes, accessories, and style items',
+    'categories.fashionDescription':
+      'Clothing, shoes, accessories, and style items',
     'categories.electronics': 'Electronics',
-    'categories.electronicsDescription': 'Phones, computers, gadgets, and tech accessories',
+    'categories.electronicsDescription':
+      'Phones, computers, gadgets, and tech accessories',
     'categories.accessories': 'Accessories',
-    'categories.accessoriesDescription': 'Bags, jewelry, watches, and fashion accessories',
+    'categories.accessoriesDescription':
+      'Bags, jewelry, watches, and fashion accessories',
     'categories.beauty': 'Beauty',
-    'categories.beautyDescription': 'Cosmetics, skincare, perfumes, and beauty products',
+    'categories.beautyDescription':
+      'Cosmetics, skincare, perfumes, and beauty products',
 
     // Agents
     'agents.contact': 'Contact',
@@ -611,7 +745,8 @@ export const translations = {
 
     // Request Steps - Client View
     'requestSteps.client.requestPosted': 'Request Posted',
-    'requestSteps.client.waitingForAgents': 'Waiting for shopping agents to submit offers',
+    'requestSteps.client.waitingForAgents':
+      'Waiting for shopping agents to submit offers',
     'requestSteps.client.agentAssigned': 'Agent Assigned',
     'requestSteps.client.shoppingInProgress': 'Shopping in progress',
     'requestSteps.client.itemsPurchased': 'Items Purchased',
@@ -623,15 +758,19 @@ export const translations = {
 
     // Request Steps - Agent View
     'requestSteps.agent.requestAccepted': 'Request Accepted',
-    'requestSteps.agent.startingShopping': 'Starting shopping process',
+    'requestSteps.agent.startingShopping':
+      'Starting shopping process',
     'requestSteps.agent.shoppingStarted': 'Shopping Started',
     'requestSteps.agent.findingItems': 'Finding requested items',
     'requestSteps.agent.itemsPurchased': 'Items Purchased',
-    'requestSteps.agent.itemsBoughtSuccessfully': 'Items bought successfully',
+    'requestSteps.agent.itemsBoughtSuccessfully':
+      'Items bought successfully',
     'requestSteps.agent.packageShipped': 'Package Shipped',
-    'requestSteps.agent.packageSentToClient': 'Package sent to client',
+    'requestSteps.agent.packageSentToClient':
+      'Package sent to client',
     'requestSteps.agent.delivered': 'Delivered',
-    'requestSteps.agent.successfullyCompleted': 'Successfully completed',
+    'requestSteps.agent.successfullyCompleted':
+      'Successfully completed',
 
     // Request Details
     'requestDetails.title': 'Request Details',
@@ -672,7 +811,8 @@ export const translations = {
     'offers.agentsHave': 'agents have',
     'offers.offeredToHelp': 'offered to help',
     'offers.acceptOffer': 'Accept Offer',
-    'offers.acceptOfferConfirmation': 'Are you sure you want to accept this offer?',
+    'offers.acceptOfferConfirmation':
+      'Are you sure you want to accept this offer?',
 
     // Agent
     'agent.totalOrders': 'Total Orders',
@@ -693,14 +833,16 @@ export const translations = {
     'feedback.yourComments': 'Your Comments',
     'feedback.shareDetails': 'Share details about your experience',
     'feedback.commentPlaceholder': 'Tell us about your experience...',
-    'feedback.feedbackHelps': 'Your feedback helps improve our platform',
+    'feedback.feedbackHelps':
+      'Your feedback helps improve our platform',
     'feedback.guidelines': 'Feedback Guidelines',
     'feedback.guideline1': 'Be honest and constructive',
     'feedback.guideline2': 'Provide specific details',
     'feedback.guideline3': 'Keep feedback professional',
     'feedback.guideline4': 'Help others make informed decisions',
     'feedback.submitFeedback': 'Submit Feedback',
-    'feedback.selectRatingToContinue': 'Please select a rating to continue',
+    'feedback.selectRatingToContinue':
+      'Please select a rating to continue',
     'feedback.skipForNow': 'Skip for now',
     'feedback.ratingFair': 'Fair',
     'feedback.outOfStars': 'out of 5 stars',
@@ -709,24 +851,32 @@ export const translations = {
     // Phone Verification
     'phoneVerification.title': 'Phone Verification',
     'phoneVerification.verifyYourPhone': 'Verify Your Phone Number',
-    'phoneVerification.sendCodeDescription': 'We\'ll send a verification code to your phone number to confirm your identity.',
+    'phoneVerification.sendCodeDescription':
+      "We'll send a verification code to your phone number to confirm your identity.",
     'phoneVerification.phoneLabel': 'Phone Number',
     'phoneVerification.phonePlaceholder': 'Enter your phone number',
-    'phoneVerification.phoneHint': 'Include country code (e.g., +1 555 123 4567)',
-    'phoneVerification.sendVerificationCode': 'Send Verification Code',
+    'phoneVerification.phoneHint':
+      'Include country code (e.g., +1 555 123 4567)',
+    'phoneVerification.sendVerificationCode':
+      'Send Verification Code',
 
     // Identity Verification
     'identityVerification.title': 'Identity Verification',
-    'identityVerification.description': 'Please provide a valid government-issued identification document to verify your identity.',
+    'identityVerification.description':
+      'Please provide a valid government-issued identification document to verify your identity.',
 
     // Business Verification
     'businessVerification.title': 'Business Verification',
-    'businessVerification.businessInformation': 'Business Information',
-    'businessVerification.tellUsAboutBusiness': 'Tell us about your business',
+    'businessVerification.businessInformation':
+      'Business Information',
+    'businessVerification.tellUsAboutBusiness':
+      'Tell us about your business',
     'businessVerification.businessName': 'Business Name',
-    'businessVerification.enterBusinessName': 'Enter your business name',
+    'businessVerification.enterBusinessName':
+      'Enter your business name',
     'businessVerification.businessType': 'Business Type',
-    'businessVerification.selectBusinessType': 'Select your business type',
+    'businessVerification.selectBusinessType':
+      'Select your business type',
     'businessVerification.corporation': 'Corporation',
     'businessVerification.llc': 'LLC',
     'businessVerification.partnership': 'Partnership',
@@ -739,32 +889,39 @@ export const translations = {
     'businessVerification.employees51to200': '51-200 employees',
     'businessVerification.employees201to1000': '201-1,000 employees',
     'businessVerification.employees1000Plus': '1,000+ employees',
-    'businessVerification.businessDescription': 'Business Description',
-    'businessVerification.describeBusinessIndustry': 'Describe your business and industry',
+    'businessVerification.businessDescription':
+      'Business Description',
+    'businessVerification.describeBusinessIndustry':
+      'Describe your business and industry',
 
     // Document Types
     'document.passport': 'Passport',
-    'document.passportDescription': 'Valid passport with photo and personal information',
+    'document.passportDescription':
+      'Valid passport with photo and personal information',
     'document.driversLicense': "Driver's License",
-    'document.driversLicenseDescription': 'Valid driver\'s license with photo',
+    'document.driversLicenseDescription':
+      "Valid driver's license with photo",
     'document.nationalId': 'National ID Card',
-    'document.nationalIdDescription': 'Government-issued national identification card',
+    'document.nationalIdDescription':
+      'Government-issued national identification card',
     'document.militaryId': 'Military ID',
-    'document.militaryIdDescription': 'Military identification card or veteran ID',
+    'document.militaryIdDescription':
+      'Military identification card or veteran ID',
 
     // Security
     'security.dataSecure': 'Your data is secure',
     'security.encrypted': 'All information is encrypted',
-    'security.noStorage': 'We don\'t store sensitive documents',
+    'security.noStorage': "We don't store sensitive documents",
     'security.essentialOnly': 'Only essential data is collected',
     'security.deleteAnytime': 'Delete your data anytime',
 
     // Bank Information
     'bank.title': 'Bank Information',
     'bank.addBankInfo': 'Add Bank Information',
-    'bank.description': 'Add your bank account information for payments and transfers.',
+    'bank.description':
+      'Add your bank account information for payments and transfers.',
     'bank.fullName': 'Full Name',
-    'bank.placeholders.fullName': 'Enter account holder\'s full name',
+    'bank.placeholders.fullName': "Enter account holder's full name",
     'bank.country': 'Country',
     'bank.placeholders.selectCountry': 'Select your country',
     'bank.currency': 'Currency',
@@ -789,10 +946,14 @@ export const translations = {
     'bank.zipCode': 'ZIP/Postal Code',
     'bank.placeholders.zipCode': 'Enter ZIP or postal code',
     'bank.addressCountry': 'Country',
-    'bank.verificationProcess': 'We may need 1-2 business days to verify your bank account',
-    'bank.securityInfo': 'Your banking information is encrypted and secure',
-    'bank.verificationTime': 'Verification typically takes 1-2 business days',
-    'bank.paymentsInfo': 'Once verified, you can receive payments to this account',
+    'bank.verificationProcess':
+      'We may need 1-2 business days to verify your bank account',
+    'bank.securityInfo':
+      'Your banking information is encrypted and secure',
+    'bank.verificationTime':
+      'Verification typically takes 1-2 business days',
+    'bank.paymentsInfo':
+      'Once verified, you can receive payments to this account',
     'bank.save': 'Save Bank Information',
 
     // Countries
@@ -821,68 +982,90 @@ export const translations = {
     // Credit Cards
     'creditCards.title': 'Credit Cards',
     'creditCards.subtitle': 'Payment Methods',
-    'creditCards.description': 'Manage your credit cards and payment methods.',
+    'creditCards.description':
+      'Manage your credit cards and payment methods.',
     'creditCards.addNewCard': 'Add New Card',
     'creditCards.noCards': 'No credit cards added yet',
     'creditCards.confirmDelete': 'Delete Card',
-    'creditCards.confirmDeleteMessage': 'Are you sure you want to delete this credit card?',
+    'creditCards.confirmDeleteMessage':
+      'Are you sure you want to delete this credit card?',
     'creditCards.deleteCard': 'Delete Card',
     'creditCards.saveChanges': 'Save Changes',
 
     // Add Credit Card
     'addCreditCard.paymentSecurity': 'Payment Security',
-    'addCreditCard.security1': 'Your payment information is encrypted and secure',
-    'addCreditCard.security2': 'We use industry-standard security measures',
-    'addCreditCard.security3': 'Your card details are never stored on our servers',
+    'addCreditCard.security1':
+      'Your payment information is encrypted and secure',
+    'addCreditCard.security2':
+      'We use industry-standard security measures',
+    'addCreditCard.security3':
+      'Your card details are never stored on our servers',
 
     // Two-Factor Authentication
     'twoFactor.title': 'Two-Factor Authentication',
     'twoFactor.secureAccount': 'Secure Your Account',
-    'twoFactor.description': 'Add an extra layer of security to your account with two-factor authentication.',
+    'twoFactor.description':
+      'Add an extra layer of security to your account with two-factor authentication.',
     'twoFactor.recommended': 'Recommended',
-    'twoFactor.recommendedText': 'Two-factor authentication significantly improves account security.',
-    'twoFactor.currentlyDisabled': 'Two-factor authentication is currently disabled',
+    'twoFactor.recommendedText':
+      'Two-factor authentication significantly improves account security.',
+    'twoFactor.currentlyDisabled':
+      'Two-factor authentication is currently disabled',
 
     // Change Password
     'changePassword.title': 'Change Password',
     'changePassword.updatePassword': 'Update Your Password',
     'changePassword.requirements': 'Password Requirements',
     'changePassword.currentPassword': 'Current Password',
-    'changePassword.enterCurrentPassword': 'Enter your current password',
+    'changePassword.enterCurrentPassword':
+      'Enter your current password',
     'changePassword.newPassword': 'New Password',
     'changePassword.enterNewPassword': 'Enter your new password',
     'changePassword.confirmNewPassword': 'Confirm New Password',
-    'changePassword.passwordRequirements': 'Password must meet the following requirements:',
+    'changePassword.passwordRequirements':
+      'Password must meet the following requirements:',
     'changePassword.requirement1': 'At least 8 characters long',
-    'changePassword.requirement2': 'Contains both uppercase and lowercase letters',
-    'changePassword.requirement3': 'Contains at least one number or special character',
+    'changePassword.requirement2':
+      'Contains both uppercase and lowercase letters',
+    'changePassword.requirement3':
+      'Contains at least one number or special character',
     'changePassword.changeButton': 'Change Password',
 
     // About Us
     'about.title': 'About Us',
     'about.subtitle': 'Connecting Shoppers Worldwide',
     'about.welcomeTitle': 'Welcome to Our Platform',
-    'about.welcomeDescription': 'We are revolutionizing the way people shop globally by connecting buyers with trusted shopping agents worldwide.',
+    'about.welcomeDescription':
+      'We are revolutionizing the way people shop globally by connecting buyers with trusted shopping agents worldwide.',
     'about.ourMission': 'Our Mission',
-    'about.ourMissionDescription': 'To make global shopping accessible, safe, and convenient for everyone by building a trusted marketplace that connects buyers with verified shopping agents.',
+    'about.ourMissionDescription':
+      'To make global shopping accessible, safe, and convenient for everyone by building a trusted marketplace that connects buyers with verified shopping agents.',
     'about.ourValues': 'Our Values',
     'about.customerFirst': 'Customer First',
-    'about.customerFirstDescription': 'Every decision we make prioritizes our users\' needs and satisfaction.',
+    'about.customerFirstDescription':
+      "Every decision we make prioritizes our users' needs and satisfaction.",
     'about.trustSafety': 'Trust & Safety',
-    'about.trustSafetyDescription': 'We maintain the highest standards of security and verification for all users.',
+    'about.trustSafetyDescription':
+      'We maintain the highest standards of security and verification for all users.',
     'about.globalCommunity': 'Global Community',
-    'about.globalCommunityDescription': 'We believe in connecting people across borders to create opportunities.',
+    'about.globalCommunityDescription':
+      'We believe in connecting people across borders to create opportunities.',
     'about.qualityExcellence': 'Quality & Excellence',
-    'about.qualityExcellenceDescription': 'We strive for excellence in every service and interaction.',
+    'about.qualityExcellenceDescription':
+      'We strive for excellence in every service and interaction.',
     'about.howItWorks': 'How It Works',
     'about.step1Title': 'Create Request',
-    'about.step1Description': 'Post your shopping request with details about what you need.',
+    'about.step1Description':
+      'Post your shopping request with details about what you need.',
     'about.step2Title': 'Receive Offers',
-    'about.step2Description': 'Verified agents submit offers to fulfill your request.',
+    'about.step2Description':
+      'Verified agents submit offers to fulfill your request.',
     'about.step3Title': 'Select Agent',
-    'about.step3Description': 'Choose the best offer and confirm your selection.',
+    'about.step3Description':
+      'Choose the best offer and confirm your selection.',
     'about.step4Title': 'Get Delivered',
-    'about.step4Description': 'Track your order and receive your items safely.',
+    'about.step4Description':
+      'Track your order and receive your items safely.',
     'about.ourJourney': 'Our Journey',
     'about.byTheNumbers': 'By the Numbers',
     'about.activeUsers': 'Active Users',
@@ -896,62 +1079,88 @@ export const translations = {
     'terms.title': 'Terms of Service',
     'terms.lastUpdated': 'Last updated: January 1, 2024',
     'terms.acceptanceTitle': '1. Acceptance of Terms',
-    'terms.acceptanceText': 'By accessing and using this platform, you accept and agree to be bound by the terms and provision of this agreement.',
+    'terms.acceptanceText':
+      'By accessing and using this platform, you accept and agree to be bound by the terms and provision of this agreement.',
     'terms.useLicenseTitle': '2. Use License',
-    'terms.useLicenseText': 'Permission is granted to temporarily download one copy of the materials on our platform for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:',
+    'terms.useLicenseText':
+      'Permission is granted to temporarily download one copy of the materials on our platform for personal, non-commercial transitory viewing only. This is the grant of a license, not a transfer of title, and under this license you may not:',
     'terms.useLicenseRestriction1': 'Modify or copy the materials',
-    'terms.useLicenseRestriction2': 'Use the materials for any commercial purpose or for any public display',
-    'terms.useLicenseRestriction3': 'Attempt to reverse engineer any software contained on the platform',
-    'terms.useLicenseRestriction4': 'Remove any copyright or other proprietary notations from the materials',
+    'terms.useLicenseRestriction2':
+      'Use the materials for any commercial purpose or for any public display',
+    'terms.useLicenseRestriction3':
+      'Attempt to reverse engineer any software contained on the platform',
+    'terms.useLicenseRestriction4':
+      'Remove any copyright or other proprietary notations from the materials',
     'terms.userAccountsTitle': '3. User Accounts',
-    'terms.userAccountsText': 'When you create an account with us, you must provide information that is accurate, complete, and current at all times. You are responsible for safeguarding the password and for maintaining the confidentiality of your account.',
+    'terms.userAccountsText':
+      'When you create an account with us, you must provide information that is accurate, complete, and current at all times. You are responsible for safeguarding the password and for maintaining the confidentiality of your account.',
     'terms.procurementTitle': '4. Procurement Services',
-    'terms.procurementText': 'Our platform facilitates connections between buyers and shopping agents. We do not directly provide procurement services but enable verified agents to offer their services to users.',
+    'terms.procurementText':
+      'Our platform facilitates connections between buyers and shopping agents. We do not directly provide procurement services but enable verified agents to offer their services to users.',
     'terms.prohibitedTitle': '5. Prohibited Uses',
     'terms.prohibitedText': 'You may not use our service:',
-    'terms.prohibited1': 'For any unlawful purpose or to solicit others to perform unlawful acts',
-    'terms.prohibited2': 'To violate any international, federal, provincial, or state regulations, rules, laws, or local ordinances',
-    'terms.prohibited3': 'To infringe upon or violate our intellectual property rights or the intellectual property rights of others',
-    'terms.prohibited4': 'To harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate',
+    'terms.prohibited1':
+      'For any unlawful purpose or to solicit others to perform unlawful acts',
+    'terms.prohibited2':
+      'To violate any international, federal, provincial, or state regulations, rules, laws, or local ordinances',
+    'terms.prohibited3':
+      'To infringe upon or violate our intellectual property rights or the intellectual property rights of others',
+    'terms.prohibited4':
+      'To harass, abuse, insult, harm, defame, slander, disparage, intimidate, or discriminate',
     'terms.liabilityTitle': '6. Limitation of Liability',
-    'terms.liabilityText': 'In no event shall our company, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, punitive, consequential, or special damages.',
+    'terms.liabilityText':
+      'In no event shall our company, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, punitive, consequential, or special damages.',
     'terms.governingTitle': '7. Governing Law',
-    'terms.governingText': 'These terms and conditions are governed by and construed in accordance with the laws of the jurisdiction in which our company is registered.',
+    'terms.governingText':
+      'These terms and conditions are governed by and construed in accordance with the laws of the jurisdiction in which our company is registered.',
 
     // Privacy Policy
     'privacy.title': 'Privacy Policy',
     'privacy.lastUpdated': 'Last updated: January 1, 2024',
     'privacy.informationWeCollect': 'Information We Collect',
-    'privacy.informationWeCollectContent': 'We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us for support.',
+    'privacy.informationWeCollectContent':
+      'We collect information you provide directly to us, such as when you create an account, make a purchase, or contact us for support.',
     'privacy.howWeUseInfo': 'How We Use Your Information',
-    'privacy.howWeUseInfoContent': 'We use the information we collect to:',
+    'privacy.howWeUseInfoContent':
+      'We use the information we collect to:',
     'privacy.useInfo1': 'Provide, maintain, and improve our services',
-    'privacy.useInfo2': 'Process transactions and send related information',
-    'privacy.useInfo3': 'Send technical notices, updates, security alerts, and support messages',
-    'privacy.useInfo4': 'Respond to your comments, questions, and provide customer service',
+    'privacy.useInfo2':
+      'Process transactions and send related information',
+    'privacy.useInfo3':
+      'Send technical notices, updates, security alerts, and support messages',
+    'privacy.useInfo4':
+      'Respond to your comments, questions, and provide customer service',
     'privacy.informationSharing': 'Information Sharing',
-    'privacy.informationSharingContent': 'We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy.',
+    'privacy.informationSharingContent':
+      'We do not sell, trade, or otherwise transfer your personal information to third parties without your consent, except as described in this policy.',
     'privacy.dataSecurity': 'Data Security',
-    'privacy.dataSecurityContent': 'We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.',
+    'privacy.dataSecurityContent':
+      'We implement appropriate security measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction.',
     'privacy.yourRights': 'Your Rights',
-    'privacy.yourRightsContent': 'You have the right to access, update, or delete your personal information. You may also opt out of certain communications from us.',
+    'privacy.yourRightsContent':
+      'You have the right to access, update, or delete your personal information. You may also opt out of certain communications from us.',
     'privacy.contactUs': 'Contact Us',
-    'privacy.contactUsContent': 'If you have any questions about this Privacy Policy, please contact us through our support channels.',
+    'privacy.contactUsContent':
+      'If you have any questions about this Privacy Policy, please contact us through our support channels.',
 
     // Support
     'support.title': 'Support',
     'support.needHelp': 'Need Help?',
-    'support.needHelpDescription': 'Our support team is here to assist you with any questions or issues.',
+    'support.needHelpDescription':
+      'Our support team is here to assist you with any questions or issues.',
     'support.contactMethod': 'Choose your preferred contact method',
     'support.contact': 'Contact',
     'support.emailSupport': 'Email Support',
-    'support.emailSupportDescription': 'Get help via email with detailed responses',
+    'support.emailSupportDescription':
+      'Get help via email with detailed responses',
     'support.emailSupportAction': 'Send Email',
     'support.liveChat': 'Live Chat',
-    'support.liveChatDescription': 'Chat with our support team in real-time',
+    'support.liveChatDescription':
+      'Chat with our support team in real-time',
     'support.liveChatAction': 'Start Chat',
     'support.phoneSupport': 'Phone Support',
-    'support.phoneSupportDescription': 'Call us for immediate assistance',
+    'support.phoneSupportDescription':
+      'Call us for immediate assistance',
     'support.phoneSupportAction': 'Call Now',
     'support.firstName': 'First Name',
     'support.firstNamePlaceholder': 'Enter your first name',
@@ -966,24 +1175,35 @@ export const translations = {
     'support.subjectBilling': 'Billing Question',
     'support.subjectFeature': 'Feature Request',
     'support.message': 'Message',
-    'support.messagePlaceholder': 'Describe your issue or question in detail...',
+    'support.messagePlaceholder':
+      'Describe your issue or question in detail...',
     'support.sendMessage': 'Send Message',
     'support.commonQuestions': 'Common Questions',
     'support.helpfulResources': 'Helpful Resources',
     'support.userGuide': 'User Guide',
-    'support.userGuideDescription': 'Complete guide to using our platform',
+    'support.userGuideDescription':
+      'Complete guide to using our platform',
     'support.videoTutorials': 'Video Tutorials',
-    'support.videoTutorialsDescription': 'Step-by-step video instructions',
+    'support.videoTutorialsDescription':
+      'Step-by-step video instructions',
     'support.apiDocumentation': 'API Documentation',
-    'support.apiDocumentationDescription': 'Technical documentation for developers',
-    'support.faq.createRequest': 'How do I create a shopping request?',
-    'support.faq.createRequestAnswer': 'To create a shopping request, go to the Create tab, fill out the request form with your item details, budget, and preferences, then submit it for agents to review.',
-    'support.faq.agentVerification': 'How do I know if an agent is verified?',
-    'support.faq.agentVerificationAnswer': 'Verified agents have a blue checkmark badge next to their name. They have completed identity verification and have a proven track record on our platform.',
-    'support.faq.paymentMethods': 'What payment methods are accepted?',
-    'support.faq.paymentMethodsAnswer': 'We accept major credit cards, debit cards, and various digital payment methods. All payments are processed securely through our encrypted payment system.',
+    'support.apiDocumentationDescription':
+      'Technical documentation for developers',
+    'support.faq.createRequest':
+      'How do I create a shopping request?',
+    'support.faq.createRequestAnswer':
+      'To create a shopping request, go to the Create tab, fill out the request form with your item details, budget, and preferences, then submit it for agents to review.',
+    'support.faq.agentVerification':
+      'How do I know if an agent is verified?',
+    'support.faq.agentVerificationAnswer':
+      'Verified agents have a blue checkmark badge next to their name. They have completed identity verification and have a proven track record on our platform.',
+    'support.faq.paymentMethods':
+      'What payment methods are accepted?',
+    'support.faq.paymentMethodsAnswer':
+      'We accept major credit cards, debit cards, and various digital payment methods. All payments are processed securely through our encrypted payment system.',
     'support.faq.trackOrders': 'How can I track my order status?',
-    'support.faq.trackOrdersAnswer': 'You can track your order status in the Orders tab. You will receive real-time updates as your agent progresses through each step of the shopping and delivery process.',
+    'support.faq.trackOrdersAnswer':
+      'You can track your order status in the Orders tab. You will receive real-time updates as your agent progresses through each step of the shopping and delivery process.',
   },
 
   'zh-cn': {
@@ -1049,6 +1269,9 @@ export const translations = {
     'common.requestsFound': '找到 {count} 个请求',
     'common.offersCount': '{count} 个报价',
     'common.all': '全部',
+    'common.recently': '最近',
+    'common.reviews': '评价',
+    'common.memberSince': '加入时间',
     'common.adjustSearchTerms': '请调整搜索条件',
 
     // Search
@@ -1076,6 +1299,49 @@ export const translations = {
     'wishlist.emptyWishlist': '您的心愿单是空的',
     'wishlist.startAdding': '开始添加您喜欢的商品',
     'wishlist.exploreItems': '探索商品',
+
+    // Messages
+    'messages.chatFeaturesTitle': '聊天功能',
+    'messages.chatFeaturesDescription': '与代理和客户直接沟通',
+    'messages.agentBadge': '代理',
+    'messages.today': '今天',
+    'messages.messageAgentPlaceholder': '给代理发消息...',
+
+    // Create Request
+    'createRequest.budgetRangeDescription':
+      '设置您的预算范围，帮助代理了解您的价格期望',
+
+    // Offer Details
+    'offerDetails.shoppingLocation': '购物地点',
+    'offerDetails.deliveryTime': '配送时间',
+    'offerDetails.defaultProcessing': '默认处理',
+    'offerDetails.processing': '处理中',
+    'offerDetails.authenticity': '正品保证',
+    'offerDetails.authenticityGuarantee': '正品保证',
+    'offerDetails.updated': '更新时间',
+    'offerDetails.ordersCompleted': '完成订单',
+    'offerDetails.offeredBy': '提供者',
+    'offerDetails.successRate': '成功率',
+    'offerDetails.offerDetails': '报价详情',
+    'offerDetails.aboutThisOffer': '关于此报价',
+    'offerDetails.fastShipping': '快速配送',
+    'offerDetails.expressDelivery': '快递配送',
+    'offerDetails.whatsIncluded': '包含内容',
+    'offerDetails.serviceInclusions': '服务包含',
+    'offerDetails.additionalBenefits': '额外优惠',
+    'offerDetails.freeCommunication': '免费沟通',
+    'offerDetails.freeCommunicationDesc': '与代理直接沟通',
+    'offerDetails.purchaseReceipt': '购买收据',
+    'offerDetails.purchaseReceiptDesc': '所有购买的官方收据',
+    'offerDetails.trackingInformation': '物流跟踪',
+    'offerDetails.trackingInformationDesc': '实时包裹跟踪',
+    'offerDetails.priceBreakdown': '价格明细',
+    'offerDetails.shoppingServiceFee': '购物服务费',
+    'offerDetails.platformHandlingFee': '平台手续费',
+    'offerDetails.insuranceProtection': '保险保护',
+    'offerDetails.totalServiceCost': '总服务费用',
+    'offerDetails.productCostNote': '商品费用将在结账时添加',
+    'offerDetails.agentStats': '代理统计',
 
     // All Agents Page
     'allAgents.title': '所有代理',
@@ -1112,7 +1378,8 @@ export const translations = {
     // Preferences Setup
     'preferences.title': '选择您的兴趣',
     'preferences.chooseInterests': '选择符合您购物偏好的兴趣',
-    'preferences.description': '选择您感兴趣的类别，以获得个性化推荐和相关的购物请求。',
+    'preferences.description':
+      '选择您感兴趣的类别，以获得个性化推荐和相关的购物请求。',
     'preferences.productCategories': '产品类别',
     'preferences.selected': '已选择',
     'preferences.selectedCategories': '已选择的类别',
@@ -1155,7 +1422,8 @@ export const translations = {
     'auth.lastName': '姓',
     'auth.resetPassword': '重置密码',
     'auth.forgotPasswordTitle': '忘记密码',
-    'auth.resetPasswordDescription': '输入您的邮箱地址，我们将发送验证码帮您重置密码。',
+    'auth.resetPasswordDescription':
+      '输入您的邮箱地址，我们将发送验证码帮您重置密码。',
     'auth.emailAddress': '邮箱地址',
     'auth.enterEmailAddress': '输入您的邮箱地址',
     'auth.viaPhoneNo': '通过手机号',
@@ -1173,7 +1441,7 @@ export const translations = {
     'auth.phoneNo': '手机号码',
     'auth.country': '国家',
     'auth.bio': '个人简介',
-    'auth.tellUsAboutYourself': '介绍一下您自己',
+    'auth.tellUsAboutYourself': '介绍一下您自���',
     'auth.confirmPassword': '确认密码',
     'auth.agreeWith': '我同意',
     'auth.termsConditions': '条款与条件',
@@ -1183,7 +1451,8 @@ export const translations = {
     'auth.selectLanguages': '选择您使用的语言',
     'auth.languagesHelp': '选择您可以交流的语言（最多5种）',
     'auth.searchLanguages': '搜索语言...',
-    'auth.selectedLanguagesCount': '已选择 {count} 种语言，最多 {max} 种',
+    'auth.selectedLanguagesCount':
+      '已选择 {count} 种语言，最多 {max} 种',
     'auth.passwordsDoNotMatch': '密码不匹配',
     'auth.agreeToTerms': '请同意条款与条件',
 
@@ -1209,13 +1478,15 @@ export const translations = {
     'orders.title': '订单',
     'orders.description': '跟踪您的购物请求和报价',
     'orders.signInPrompt': '请登录查看您的订单',
-    'orders.signInDescription': '访问您的订单历史、跟踪进度并管理您的购物请求。',
+    'orders.signInDescription':
+      '访问您的订单历史、跟踪进度并管理您的购物请求。',
     'orders.signIn': '登录',
     'orders.active': '进行中',
     'orders.completed': '已完成',
     'orders.cancelled': '已取消',
     'orders.orderManagement': '订单管理',
-    'orders.orderManagementDescription': '跟踪您的代购请求和报价，监控进度，并与代理商或客户沟通。',
+    'orders.orderManagementDescription':
+      '跟踪您的代购请求和报价，监控进度，并与代理商或客户沟通。',
     'orders.totalOrders': '总订单数',
     'orders.shoppingProgress': '购物进度',
     'orders.itemsPurchased': '商品已购买',
@@ -1324,13 +1595,17 @@ export const translations = {
     'profile.accountDescription': '管理您的账户和验证状态',
     'profile.editProfile': '编辑个人资料',
     'profile.emailVerification': '邮箱验证',
-    'profile.emailVerificationDescPending': '验证您的邮箱以增强安全性',
+    'profile.emailVerificationDescPending':
+      '验证您的邮箱以增强安全性',
     'profile.phoneVerification': '手机验证',
-    'profile.phoneVerificationDescPending': '验证您的手机以接收短信通知',
+    'profile.phoneVerificationDescPending':
+      '验证您的手机以接收短信通知',
     'profile.identityVerification': '身份验证',
-    'profile.identityVerificationDescPending': '验证您的身份以解锁高级功能',
+    'profile.identityVerificationDescPending':
+      '验证您的身份以解锁高级功能',
     'profile.businessVerification': '企业认证',
-    'profile.businessVerificationDescPending': '验证您的企业以获得企业功能',
+    'profile.businessVerificationDescPending':
+      '验证您的企业以获得企业功能',
     'profile.paymentSettings': '付款设置',
     'profile.bankInformation': '银行信息',
     'profile.creditCards': '信用卡',
@@ -1384,11 +1659,13 @@ export const translations = {
     'create.requestDescription': '请代理商为您购物',
     'create.offerDescription': '提供您的购物服务',
     'create.signInPrompt': '请登录以创建请求或报价',
-    'create.signInDescription': '访问创建工具以发布购物请求或提供您的服务。',
-    
+    'create.signInDescription':
+      '访问创建工具以发布购物请求或提供您的服务。',
+
     // Messages
     'messages.chatFeaturesTitle': '消息与聊天功能',
-    'messages.chatFeaturesDescription': '直接与代购代理商沟通。分享需求、获取报价，并在一个地方跟踪您的订单。端到端加密确保您的安全。',
+    'messages.chatFeaturesDescription':
+      '直接与代购代理商沟通。分享需求、获取报价，并在一个地方跟踪您的订单。端到端加密确保您的安全。',
     'messages.agentBadge': '代理商',
     'messages.noConversationsFound': '未找到对话',
     'messages.tryDifferentSearch': '尝试使用不同的搜索词',
@@ -1401,16 +1678,19 @@ export const translations = {
     'messages.today': '今天',
     'messages.yesterday': '昨天',
     'messages.messageAgentPlaceholder': '发消息给{name}...',
-    
+
     // Create Request Form
     'createRequest.title': '创建请求',
-    'createRequest.description': '创建详细的代购请求以联系经过验证的代理商',
+    'createRequest.description':
+      '创建详细的代购请求以联系经过验证的代理商',
     'createRequest.infoBoxTitle': '代购请求',
-    'createRequest.infoBoxDescription': '创建详细的代购请求以联系经过验证的代理商。包含规格、预算和时间表以获得最佳结果。',
+    'createRequest.infoBoxDescription':
+      '创建详细的代购请求以联系经过验证的代理商。包含规格、预算和时间表以获得最佳结果。',
     'createRequest.basicInformation': '基本信息',
     'createRequest.requestTitle': '请求标题',
     'createRequest.titlePlaceholder': '您需要什么？',
-    'createRequest.requestTitlePlaceholder': '您需要什么？（例如："苹果商店的MacBook Pro"）',
+    'createRequest.requestTitlePlaceholder':
+      '您需要什么？（例如："苹果商店的MacBook Pro"）',
     'createRequest.category': '���别',
     'createRequest.selectCategory': '选择类别',
     'createRequest.description': '描述',
@@ -1419,7 +1699,8 @@ export const translations = {
     'createRequest.quantityPlaceholder': '输入数量',
     'createRequest.specificRequirements': '具体要求',
     'createRequest.addRequirement': '添加要求',
-    'createRequest.requirementPlaceholder': '例如：颜色：黑色，尺寸：大',
+    'createRequest.requirementPlaceholder':
+      '例如：颜色：黑色，尺寸：大',
     'createRequest.budgetRange': '预算范围',
     'createRequest.budgetMin': '最低预算',
     'createRequest.budgetMax': '最高预算',
@@ -1453,23 +1734,28 @@ export const translations = {
     'createRequest.budgetRangeDescription': '以美元输入您的预算范围',
     'createRequest.createRequest': '创建请求',
     'createRequest.successTitle': '请求创建成功！',
-    'createRequest.successDescription': '您的代购请求已发布。代理商将很快开始提交报价。',
+    'createRequest.successDescription':
+      '您的代购请求已发布。代理商将很快开始提交报价。',
     'createRequest.errorTitle': '创建请求失败',
     'createRequest.errorDescription': '请稍后重试。',
-    
+
     // Create Offer Form
     'createOffer.title': '创建报价',
     'createOffer.description': '为客户提供购物服务',
     'createOffer.infoBoxTitle': '购物服务报价',
-    'createOffer.infoBoxDescription': '创建引人注目的报价，展示您的购物专业知识。包括您的专长、定价和服务详情。',
+    'createOffer.infoBoxDescription':
+      '创建引人注目的报价，展示您的购物专业知识。包括您的专长、定价和服务详情。',
     'createOffer.serviceInformation': '服务信息',
     'createOffer.offerTitle': '报价标题',
-    'createOffer.offerTitlePlaceholder': '例如："东京专业电子产品购物"',
+    'createOffer.offerTitlePlaceholder':
+      '例如："东京专业电子产品购物"',
     'createOffer.serviceDescription': '服务描述',
-    'createOffer.serviceDescriptionPlaceholder': '描述您的购物服务、经验以及独特之处...',
+    'createOffer.serviceDescriptionPlaceholder':
+      '描述您的购物服务、经验以及独特之处...',
     'createOffer.specialties': '专长',
     'createOffer.addSpecialty': '添加专长',
-    'createOffer.specialtyPlaceholder': '例如：奢侈品、电子产品、时尚',
+    'createOffer.specialtyPlaceholder':
+      '例如：奢侈品、电子产品、时尚',
     'createOffer.serviceArea': '服务区域',
     'createOffer.serviceAreaPlaceholder': '您服务的地理区域',
     'createOffer.pricingInformation': '定价信息',
@@ -1496,7 +1782,8 @@ export const translations = {
     'createOffer.fastDeliveryDescription': '提供快递配送选项',
     'createOffer.createOffer': '创建报价',
     'createOffer.successTitle': '报价创建成功！',
-    'createOffer.successDescription': '您的购物服务报价已发布。客户现在可以找到并联系您。',
+    'createOffer.successDescription':
+      '您的购物服务报价已发布。客户现在可以找到并联系您。',
     'createOffer.errorTitle': '创建报价失败',
     'createOffer.errorDescription': '请稍后重试。',
 
@@ -1512,7 +1799,8 @@ export const translations = {
     'categories.fashion': '时尚',
     'categories.fashionDescription': '服装、鞋子、配饰和时尚单品',
     'categories.electronics': '电子产品',
-    'categories.electronicsDescription': '手机、电脑、小工具和科技配件',
+    'categories.electronicsDescription':
+      '手机、电脑、小工具和科技配件',
     'categories.accessories': '配饰',
     'categories.accessoriesDescription': '包包、珠宝、手表和时尚配饰',
     'categories.beauty': '美容',
@@ -1626,20 +1914,24 @@ export const translations = {
     // Phone Verification
     'phoneVerification.title': '手机验证',
     'phoneVerification.verifyYourPhone': '验证您的手机号码',
-    'phoneVerification.sendCodeDescription': '我们将向您的手机号码发送验证码以确认您的身份。',
+    'phoneVerification.sendCodeDescription':
+      '我们将向您的手机号码发送验证码以确认您的身份。',
     'phoneVerification.phoneLabel': '手机号码',
     'phoneVerification.phonePlaceholder': '请输入您的手机号码',
-    'phoneVerification.phoneHint': '请包含国家代码（例如：+86 138 0013 8000）',
+    'phoneVerification.phoneHint':
+      '请包含国家代码（例如：+86 138 0013 8000）',
     'phoneVerification.sendVerificationCode': '发送验证码',
 
     // Identity Verification
     'identityVerification.title': '身份验证',
-    'identityVerification.description': '请提供有效的政府颁发的身份证明文件以验证您的身份。',
+    'identityVerification.description':
+      '请提供有效的政府颁发的身份证明文件以验证您的身份。',
 
     // Business Verification
     'businessVerification.title': '企业验证',
     'businessVerification.businessInformation': '企业信息',
-    'businessVerification.tellUsAboutBusiness': '告诉我们您的企业信息',
+    'businessVerification.tellUsAboutBusiness':
+      '告诉我们您的企业信息',
     'businessVerification.businessName': '企业名称',
     'businessVerification.enterBusinessName': '输入您的企业名称',
     'businessVerification.businessType': '企业类型',
@@ -1657,7 +1949,8 @@ export const translations = {
     'businessVerification.employees201to1000': '201-1,000名员工',
     'businessVerification.employees1000Plus': '1,000名以上员工',
     'businessVerification.businessDescription': '企业描述',
-    'businessVerification.describeBusinessIndustry': '描述您的企业和行业',
+    'businessVerification.describeBusinessIndustry':
+      '描述您的企业和行业',
 
     // Document Types
     'document.passport': '护照',
@@ -1706,7 +1999,8 @@ export const translations = {
     'bank.zipCode': '邮政编码',
     'bank.placeholders.zipCode': '输入邮政编码',
     'bank.addressCountry': '国家',
-    'bank.verificationProcess': '我们可能需要1-2个工作日来验证您的银行账户',
+    'bank.verificationProcess':
+      '我们可能需要1-2个工作日来验证您的银行账户',
     'bank.securityInfo': '您的银行信息经过加密并且安全',
     'bank.verificationTime': '验证通常需要1-2个工作日',
     'bank.paymentsInfo': '验证后，您可以将付款接收到此账户',
@@ -1755,7 +2049,8 @@ export const translations = {
     // Two-Factor Authentication
     'twoFactor.title': '双重���证',
     'twoFactor.secureAccount': '保护您的账户',
-    'twoFactor.description': '通过双重验证为您的账户添加额外的安全保护。',
+    'twoFactor.description':
+      '通过双重验证为您的账户添加额外的安全保护。',
     'twoFactor.recommended': '推荐',
     'twoFactor.recommendedText': '双重验证显著提高账户安全性。',
     'twoFactor.currentlyDisabled': '双重验证当前已禁用',
@@ -1779,21 +2074,28 @@ export const translations = {
     'about.title': '关于我们',
     'about.subtitle': '连接全球购物者',
     'about.welcomeTitle': '欢迎来到我们的平台',
-    'about.welcomeDescription': '我们通过连接买家与全球值得信赖的购物代理，正在革新人们的全球购物方式。',
+    'about.welcomeDescription':
+      '我们通过连接买家与全球值得信赖的购物代理，正在革新人们的全球购物方式。',
     'about.ourMission': '我们的使命',
-    'about.ourMissionDescription': '通过建立一个连接买家与认证购物代理的可信市场，让全球购物对每个人都变得便捷、安全和方便。',
+    'about.ourMissionDescription':
+      '通过建立一个连接买家与认证购物代理的可信市场，让全球购物对每个人都变得便捷、安全和方便。',
     'about.ourValues': '我们的价值观',
     'about.customerFirst': '客户至上',
-    'about.customerFirstDescription': '我们做出的每一个决定都优先考虑用户的需求和满意度。',
+    'about.customerFirstDescription':
+      '我们做出的每一个决定都优先考虑用户的需求和满意度。',
     'about.trustSafety': '信任与安全',
-    'about.trustSafetyDescription': '我们为所有用户保持最高的安全和验证标准。',
+    'about.trustSafetyDescription':
+      '我们为所有用户保持最高的安全和验证标准。',
     'about.globalCommunity': '全球社区',
-    'about.globalCommunityDescription': '我们相信跨越国界连接人们，创造机会。',
+    'about.globalCommunityDescription':
+      '我们相信跨越国界连接人们，创造机会。',
     'about.qualityExcellence': '质量与卓越',
-    'about.qualityExcellenceDescription': '我们在每一项服务和互动中都追求卓越。',
+    'about.qualityExcellenceDescription':
+      '我们在每一项服务和互动中都追求卓越。',
     'about.howItWorks': '工作原理',
     'about.step1Title': '创建请求',
-    'about.step1Description': '发布您的购物请求，详细说明您需要什么。',
+    'about.step1Description':
+      '发布您的购物请求，详细说明您需要什么。',
     'about.step2Title': '接收报价',
     'about.step2Description': '认证代理提交报价来满足您的请求。',
     'about.step3Title': '选择代理',
@@ -1813,33 +2115,45 @@ export const translations = {
     'terms.title': '服务条款',
     'terms.lastUpdated': '最后更新：2024年1月1日',
     'terms.acceptanceTitle': '1. 接受条款',
-    'terms.acceptanceText': '通过访问和使用本平台，您接受并同意受本协议条款和条件的约束。',
+    'terms.acceptanceText':
+      '通过访问和使用本平台，您接受并同意受本协议条款和条件的约束。',
     'terms.useLicenseTitle': '2. 使用许可',
-    'terms.useLicenseText': '仅允许临时下载我们平台上的一份材料副本，用于个人、非商业性的短期浏览。这是许可的授予，而非所有权的转让，在此许可下您不得：',
+    'terms.useLicenseText':
+      '仅允许临时下载我们平台上的一份材料副本，用于个人、非商业性的短期浏览。这是许可的授予，而非所有权的转让，在此许可下您不得：',
     'terms.useLicenseRestriction1': '修改或复制材料',
-    'terms.useLicenseRestriction2': '将材料用于任何商业目的或公��展示',
-    'terms.useLicenseRestriction3': '尝试对平台上包含的任何软件进行反向工程',
-    'terms.useLicenseRestriction4': '从材料中删除任何版权或其他专有标记',
+    'terms.useLicenseRestriction2':
+      '将材料用于任何商业目的或公��展示',
+    'terms.useLicenseRestriction3':
+      '尝试对平台上包含的任何软件进行反向工程',
+    'terms.useLicenseRestriction4':
+      '从材料中删除任何版权或其他专有标记',
     'terms.userAccountsTitle': '3. 用户账户',
-    'terms.userAccountsText': '当您在我们这里创建账户时，您必须始终提供准确、完整和最新的信息。您有责任保护密码并维护账户的机密性。',
+    'terms.userAccountsText':
+      '当您在我们这里创建账户时，您必须始终提供准确、完整和最新的信息。您有责任保护密码并维护账户的机密性。',
     'terms.procurementTitle': '4. 采购服务',
-    'terms.procurementText': '我们的平台促进买家和购物代理之间的连接。我们不直接提供采购服务，而是让经过验证的代理向用户提供服务。',
+    'terms.procurementText':
+      '我们的平台促进买家和购物代理之间的连接。我们不直接提供采购服务，而是让经过验证的代理向用户提供服务。',
     'terms.prohibitedTitle': '5. 禁止使用',
     'terms.prohibitedText': '您不得将我们的服务用于：',
     'terms.prohibited1': '任何非法目的或引诱他人进行非法行为',
-    'terms.prohibited2': '违反任何国际、联邦、省或州的法规、规则、法律或地方条例',
+    'terms.prohibited2':
+      '违反任何国际、联邦、省或州��法规、规则、法律或地方条例',
     'terms.prohibited3': '侵犯我们的知识产权或他人的知识产权',
-    'terms.prohibited4': '骚扰、虐待、侮辱、伤害、诽谤、中伤、贬低、恐吓或歧视',
+    'terms.prohibited4':
+      '骚扰、虐待、侮辱、伤害、诽谤、中伤、贬低、恐吓或歧视',
     'terms.liabilityTitle': '6. 责任限制',
-    'terms.liabilityText': '在任何情况下，我们公司及其董事、员工、合作伙伴、代理商、供应商或关联公司均不对任何间接、偶然、惩罚性、后果性或特殊损害承担责任。',
+    'terms.liabilityText':
+      '在任何情况下，我们公司及其董事、员工、合作伙伴、代理商、供应商或关联公司均不对任何间接、偶然、惩罚性、后果性或特殊损害承担责任。',
     'terms.governingTitle': '7. 适用法律',
-    'terms.governingText': '这些条款和条件受我们公司注册所在司法管辖区的法律管辖并按其解释。',
+    'terms.governingText':
+      '这些条款和条件受我们公司注册所在司法管辖区的法律管辖并按其解释。',
 
     // Privacy Policy
     'privacy.title': '隐私政策',
     'privacy.lastUpdated': '最后更新：2024年1月1日',
     'privacy.informationWeCollect': '我们收集的信息',
-    'privacy.informationWeCollectContent': '我们收集您直接向我们提供的信息，例如当您创建账户、购买商品或联系我们寻求支持时。',
+    'privacy.informationWeCollectContent':
+      '我们收集您直接向我们提供的信息，例如当您创建账户、购买商品或联系我们寻求支持时。',
     'privacy.howWeUseInfo': '我们如何使用您的信息',
     'privacy.howWeUseInfoContent': '我们使用收集的信息来：',
     'privacy.useInfo1': '提供、维护和改善我们的服务',
@@ -1847,18 +2161,23 @@ export const translations = {
     'privacy.useInfo3': '发送技术通知、更新、安全警报和支持消息',
     'privacy.useInfo4': '回应您的评论、问题并提供客户服务',
     'privacy.informationSharing': '信息共享',
-    'privacy.informationSharingContent': '除���政策中所述情况外，我们不会在未经您同意的情况下向第三方出售、交易或以其他方式转让您的个人信息。',
+    'privacy.informationSharingContent':
+      '除���政策中所述情况外，我们不会在未经您同意的情况下向第三方出售、交易或以其他方式转让您的个人信息。',
     'privacy.dataSecurity': '数据安全',
-    'privacy.dataSecurityContent': '我们实施适当的安全措施来保护您的个人信息，防止未经授权的访问、更改、披露或��坏。',
+    'privacy.dataSecurityContent':
+      '我们实施适当的安全措施来保护您的个人信息，防止未经授权的访问、更改、披露或��坏。',
     'privacy.yourRights': '您的权利',
-    'privacy.yourRightsContent': '您有权访问、更新或删除您的个人信息。您也可以选择不接收我们的某些通信。',
+    'privacy.yourRightsContent':
+      '您有权访问、更新或删除您的个人信息。您也可以选择不接收我们的某些通信。',
     'privacy.contactUs': '联系我们',
-    'privacy.contactUsContent': '如果您对本隐私政策有任何问题，请通过我们的支持渠道联系我们。',
+    'privacy.contactUsContent':
+      '如果您对本隐私政策有任何问题，请通过我们的支持渠道联系我们。',
 
     // Support
     'support.title': '支持',
     'support.needHelp': '需要帮助？',
-    'support.needHelpDescription': '我们的支持团队随时为您解答任何问题或提供帮助。',
+    'support.needHelpDescription':
+      '我们的支持团队随时为您解答任何问题或提供帮助。',
     'support.contactMethod': '选择您偏好的联系方式',
     'support.contact': '联系',
     'support.emailSupport': '邮件支持',
@@ -1894,17 +2213,21 @@ export const translations = {
     'support.apiDocumentation': 'API文档',
     'support.apiDocumentationDescription': '开发者技术文档',
     'support.faq.createRequest': '如何创建购物请求？',
-    'support.faq.createRequestAnswer': '要创建购物请求，请前往创建标签页，填写请求表单，包括商品详情、��算和偏好设置，然后提交供代理审核。',
+    'support.faq.createRequestAnswer':
+      '要创建购物请求，请前往创建标签页，填写请求表单，包括商品详情、��算和偏好设置，然后提交供代理审核。',
     'support.faq.agentVerification': '如何知道代理是否已验证？',
-    'support.faq.agentVerificationAnswer': '已验证的代理在其姓名旁边有蓝色验证徽章。他们已完成身份验证，在我们平台上有良好的记录。',
+    'support.faq.agentVerificationAnswer':
+      '已验证的代理在其姓名旁边有蓝色验证徽章。他们已完成身份验证，在我们平台上有良好的记录。',
     'support.faq.paymentMethods': '接受哪些付款方式？',
-    'support.faq.paymentMethodsAnswer': '我们接受主要信用卡、借记卡和各种数字支付方式。所有付款都通过我们的加密支付系统安全处理。',
+    'support.faq.paymentMethodsAnswer':
+      '我们接受主要信用卡、借记卡和各种数字支付方式。所有付款都通过我们的加密支付系统安全处理。',
     'support.faq.trackOrders': '如何跟踪我的订单状态？',
-    'support.faq.trackOrdersAnswer': '您可以在订单标签页中跟踪订单状态。当您的代理在购物和配送过程中进行每个步骤时，您将收到实时更新。',
+    'support.faq.trackOrdersAnswer':
+      '您可以在订单标签页中跟踪订单状态。当您的代理在购物和配送过程中进行每个步骤时，您将收到实时更新。',
 
     // Preferences - Missing selectAtLeastOne key
     'preferences.selectAtLeastOne': '请至少选择一个类别',
-    
+
     // Preference Categories
     'preferences.categories.beauty': '美容护肤',
     'preferences.categories.home': '家具家居',
@@ -1918,26 +2241,32 @@ export const translations = {
     'preferences.categories.bags': '包包手袋',
     'preferences.categories.automotive': '汽车摩托车',
     'preferences.categories.others': '其他',
-    
+
     // Create Offer Form - Additional Fields
     'createOffer.category': '类别',
     'createOffer.price': '价格',
     'createOffer.enterPrice': '输入价格',
     'createOffer.yourLocation': '您的位置',
     'createOffer.locationPlaceholder': '您所在的城市、国家',
-    'createOffer.locationDescription': '这有助于客户了解配送时间和费用',
+    'createOffer.locationDescription':
+      '这有助于客户了解配送时间和费用',
     'createOffer.productSpecifications': '产品规格',
-    'createOffer.addSpecificationPlaceholder': '添加规格（如：品牌：Nike，尺寸：大号）',
+    'createOffer.addSpecificationPlaceholder':
+      '添加规格（如：品牌：Nike，尺寸：大号）',
     'createOffer.add': '添加',
-    'createOffer.specificationsDescription': '添加技术详情、尺寸、材料、品牌信息等',
+    'createOffer.specificationsDescription':
+      '添加技术详情、尺寸、材料、品牌信息等',
     'createOffer.availableQuantity': '可用数量',
     'createOffer.quantityPlaceholder': '可提供多少单位？',
-    'createOffer.quantityDescription': '您可以提供的单位数量（默认：1）',
+    'createOffer.quantityDescription':
+      '您可以提供的单位数量（默认：1）',
     'createOffer.estimatedDeliveryTime': '预计配送时间',
     'createOffer.deliveryTimePlaceholder': '例如：3-5个工作日，1-2周',
-    'createOffer.deliveryTimeDescription': '获取并配送此商品需要多长时间？',
+    'createOffer.deliveryTimeDescription':
+      '获取并配送此商品需要多长时间？',
     'createOffer.deliveryOptions': '配送选项',
-    'createOffer.deliveryOptionsDescription': '选择您可以提供的所有配送方式（可多选）',
+    'createOffer.deliveryOptionsDescription':
+      '选择您可以提供的所有配送方式（可多选）',
     'createOffer.deliverPersonally': '亲自配送',
     'createOffer.deliverPersonallyDescription': '面对面配送',
     'createOffer.domesticShipping': '国内配送',
@@ -1947,34 +2276,42 @@ export const translations = {
     'createOffer.expressDelivery': '快递配送',
     'createOffer.expressDeliveryDescription': '快速配送',
     'createOffer.tags': '标签',
-    'createOffer.tagPlaceholder': '添加标签（如：奢侈品、手工制作、进口）',
+    'createOffer.tagPlaceholder':
+      '添加标签（如：奢侈品、手工制作、进口）',
     'createOffer.tagsDescription': '添加关键词帮助客户找到您的报价',
     'createOffer.productImages': '产品图片',
     'createOffer.uploadPhotos': '上传产品照片来展示您的报价',
     'createOffer.chooseImages': '选择图片',
-    'createOffer.imageDescription': '高质���图片可增加信任度和销售量。推荐：3-5张照片',
-    
+    'createOffer.imageDescription':
+      '高质���图片可增加信任度和销售量。推荐：3-5张照片',
+
     // Create Request Form - Additional Fields
     'createRequest.successMessage': '请求创建成功！',
-    'createRequest.successMessageDescription': '您的代购请求已发布。代理将很快开始提交报价。',
+    'createRequest.successMessageDescription':
+      '您的代购请求已发布。代理将很快开始提交报价。',
     'createRequest.errorMessage': '创建请求失败',
     'createRequest.errorMessageDescription': '请稍后再试。',
     'createRequest.productOrigin': '产品来源',
     'createRequest.selectCountryRegion': '选择国家或地区',
-    'createRequest.productOriginDescription': '指定您希望从哪里购买产品',
+    'createRequest.productOriginDescription':
+      '指定您希望从哪里购买产品',
     'createRequest.designatedPurchasingLocation': '指定购买地点',
-    'createRequest.purchasingLocationPlaceholder': '具体商店、商场或购买区域',
-    'createRequest.purchasingLocationDescription': '可选：建议代理应该购物的具体商店或区域',
+    'createRequest.purchasingLocationPlaceholder':
+      '具体商店、商场或购买区域',
+    'createRequest.purchasingLocationDescription':
+      '可选：建议代理应该购物的具体商店或区域',
     'createRequest.category': '类别',
     'createRequest.quantity': '数量',
     'createRequest.quantityPlaceholder': '您需要多少件商品？',
     'createRequest.quantityDescription': '您想要购买的商品数量',
     'createRequest.description': '描述',
-    'createRequest.descriptionPlaceholder': '提供您需要什么的总体概述...',
+    'createRequest.descriptionPlaceholder':
+      '提供您需要什么的总体概述...',
     'createRequest.specificRequirements': '具体要求',
     'createRequest.requirementPlaceholder': '添加具体要求...',
     'createRequest.add': '添加',
-    'createRequest.requirementsDescription': '逐一添加具体特征、型号、品牌、尺寸、颜色或技术规格',
+    'createRequest.requirementsDescription':
+      '逐一添加具体特征、型号、品牌、尺寸、颜色或技术规格',
     'createRequest.deliveryMethod': '配送方式',
     'createRequest.shipToMe': '配送给我',
     'createRequest.shipToMeDescription': '包裹配送',
@@ -1984,15 +2321,18 @@ export const translations = {
     'createRequest.shippingNote': '商品将配送到您的地址',
     'createRequest.expectedDeliveryLocation': '预期配送地点',
     'createRequest.location': '地点',
-    'createRequest.meetingLocationPlaceholder': '您想见面的城市、州或国家',
-    'createRequest.meetingLocationDescription': '您想与代理见面交付商品的大致地点',
+    'createRequest.meetingLocationPlaceholder':
+      '您想见面的城市、州或国家',
+    'createRequest.meetingLocationDescription':
+      '您想与代理见面交付商品的大致地点',
     'createRequest.shippingAddress': '配送地址',
     'createRequest.fullName': '全名',
     'createRequest.fullNamePlaceholder': '输入收件��全名',
     'createRequest.addressLine1': '地址第一行',
     'createRequest.addressLine1Placeholder': '街道地址、建筑号码',
     'createRequest.addressLine2': '地址第二行',
-    'createRequest.addressLine2Placeholder': '公寓、套间、单元、楼层（可选）',
+    'createRequest.addressLine2Placeholder':
+      '公寓、套间、单元、楼层（可选）',
     'createRequest.city': '城市',
     'createRequest.cityPlaceholder': '城市',
     'createRequest.state': '州/省',
@@ -2057,6 +2397,7 @@ export const translations = {
     'common.step': '步驟',
     'common.of': '共',
     'common.complete': '完成',
+    'common.category': '類別',
     'common.stepOf': '第 {current} 步，共 {total} 步',
     'common.searchInCategory': '在{category}中搜尋',
     'common.itemsFound': '找到 {count} 個商品',
@@ -2069,6 +2410,9 @@ export const translations = {
     'common.requestsFound': '找到 {count} 個請求',
     'common.offersCount': '{count} 個報價',
     'common.all': '全部',
+    'common.recently': '最近',
+    'common.reviews': '評價',
+    'common.memberSince': '加入時間',
     'common.adjustSearchTerms': '請調整搜尋條件',
 
     // Search
@@ -2096,6 +2440,49 @@ export const translations = {
     'wishlist.emptyWishlist': '您的願望清單是空的',
     'wishlist.startAdding': '開始添加您喜愛的商品',
     'wishlist.exploreItems': '探索商品',
+
+    // Messages
+    'messages.chatFeaturesTitle': '聊天功能',
+    'messages.chatFeaturesDescription': '與代理和客戶直接溝通',
+    'messages.agentBadge': '代理',
+    'messages.today': '今天',
+    'messages.messageAgentPlaceholder': '給代理發訊息...',
+
+    // Create Request
+    'createRequest.budgetRangeDescription':
+      '設置您的預算範圍，幫助代理了解您的價格期望',
+
+    // Offer Details
+    'offerDetails.shoppingLocation': '購物地點',
+    'offerDetails.deliveryTime': '配送時間',
+    'offerDetails.defaultProcessing': '預設處理',
+    'offerDetails.processing': '處理中',
+    'offerDetails.authenticity': '正品保證',
+    'offerDetails.authenticityGuarantee': '正品保證',
+    'offerDetails.updated': '更新時間',
+    'offerDetails.ordersCompleted': '完成訂單',
+    'offerDetails.offeredBy': '提供者',
+    'offerDetails.successRate': '成功率',
+    'offerDetails.offerDetails': '報價詳情',
+    'offerDetails.aboutThisOffer': '關於此報價',
+    'offerDetails.fastShipping': '快速配送',
+    'offerDetails.expressDelivery': '快遞配送',
+    'offerDetails.whatsIncluded': '包含內容',
+    'offerDetails.serviceInclusions': '服務包含',
+    'offerDetails.additionalBenefits': '額外優惠',
+    'offerDetails.freeCommunication': '免費溝通',
+    'offerDetails.freeCommunicationDesc': '與代理直接溝通',
+    'offerDetails.purchaseReceipt': '購買收據',
+    'offerDetails.purchaseReceiptDesc': '所有購買的官方收據',
+    'offerDetails.trackingInformation': '物流追蹤',
+    'offerDetails.trackingInformationDesc': '即時包裹追蹤',
+    'offerDetails.priceBreakdown': '價格明細',
+    'offerDetails.shoppingServiceFee': '購物服務費',
+    'offerDetails.platformHandlingFee': '平台手續費',
+    'offerDetails.insuranceProtection': '保險保護',
+    'offerDetails.totalServiceCost': '總服務費用',
+    'offerDetails.productCostNote': '商品費用將在結帳時添加',
+    'offerDetails.agentStats': '代理統計',
 
     // All Agents Page
     'allAgents.title': '所有代理',
@@ -2132,7 +2519,8 @@ export const translations = {
     // Preferences Setup
     'preferences.title': '選擇您的興趣',
     'preferences.chooseInterests': '選擇符合您購物偏好的興趣',
-    'preferences.description': '選擇您感興趣的類別，以獲得個人化推薦和相關的購物請求。',
+    'preferences.description':
+      '選擇您感興趣的類別，以獲得個人化推薦和相關的購物請求。',
     'preferences.productCategories': '產品類別',
     'preferences.selected': '已選擇',
     'preferences.selectedCategories': '已選擇的類別',
@@ -2175,7 +2563,8 @@ export const translations = {
     'auth.lastName': '姓',
     'auth.resetPassword': '重置密碼',
     'auth.forgotPasswordTitle': '忘記密碼',
-    'auth.resetPasswordDescription': '輸入您的電子郵件地址，我們將發送驗證碼幫您重置密碼。',
+    'auth.resetPasswordDescription':
+      '輸入您的電子郵件地址，我們將發送驗證碼幫您重置密碼。',
     'auth.emailAddress': '電子郵件地址',
     'auth.enterEmailAddress': '輸入您的電子郵件地址',
     'auth.viaPhoneNo': '通過手機號碼',
@@ -2222,13 +2611,15 @@ export const translations = {
     'orders.title': '訂單',
     'orders.description': '跟踪您的購物請求和報價',
     'orders.signInPrompt': '請登錄查看您的訂單',
-    'orders.signInDescription': '訪問您的訂單歷史、跟踪進度並管理您的購物請求。',
+    'orders.signInDescription':
+      '訪問您的訂單歷史、跟踪進度並管理您的購物請求。',
     'orders.signIn': '登錄',
     'orders.active': '進行中',
     'orders.completed': '已完成',
     'orders.cancelled': '已取消',
     'orders.orderManagement': '訂單管理',
-    'orders.orderManagementDescription': '跟踪您的代購請求和報價，監控進度，並與代理商或客戶溝通。',
+    'orders.orderManagementDescription':
+      '跟踪您的代購請求和報價，監控進度，並與代理商或客戶溝通。',
     'orders.totalOrders': '總訂單數',
     'orders.shoppingProgress': '購物進度',
     'orders.itemsPurchased': '商品已購買',
@@ -2337,13 +2728,17 @@ export const translations = {
     'profile.accountDescription': '���理您的帳戶和驗證狀態',
     'profile.editProfile': '編輯個人資料',
     'profile.emailVerification': '電子郵件驗證',
-    'profile.emailVerificationDescPending': '驗證您的電子郵件以增強安全性',
+    'profile.emailVerificationDescPending':
+      '驗證您的電子郵件以增強安全性',
     'profile.phoneVerification': '手機驗證',
-    'profile.phoneVerificationDescPending': '驗證您的手機以接收簡訊通知',
+    'profile.phoneVerificationDescPending':
+      '驗證您的手機以接收簡訊通知',
     'profile.identityVerification': '身份驗證',
-    'profile.identityVerificationDescPending': '驗證您的身份以解鎖進階功能',
+    'profile.identityVerificationDescPending':
+      '驗證您的身份以解鎖進階功能',
     'profile.businessVerification': '企業認證',
-    'profile.businessVerificationDescPending': '驗證您的企業以獲得企業功能',
+    'profile.businessVerificationDescPending':
+      '驗證您的企業以獲得企業功能',
     'profile.paymentSettings': '付款設定',
     'profile.bankInformation': '銀行資訊',
     'profile.creditCards': '信用卡',
@@ -2394,16 +2789,20 @@ export const translations = {
     'create.requestDescription': '請代理商為您購物',
     'create.offerDescription': '提供您的購物服務',
     'create.signInPrompt': '請登入以建立請求或報價',
-    'create.signInDescription': '存取建立工具以發布購物請求或提供您的服務。',
-    
+    'create.signInDescription':
+      '存取建立工具以發布購物請求或提供您的服務。',
+
     // Create Request Form
     'createRequest.title': '創建請求',
-    'createRequest.description': '創建詳細的代購請求以聯繫經過驗證的代理商',
+    'createRequest.description':
+      '創建詳細的代購請求以聯繫經過驗證的代理商',
     'createRequest.infoBoxTitle': '代購請求',
-    'createRequest.infoBoxDescription': '創建詳細的代購請求以聯繫經過驗證的代理商。包含規格、預算和時間表以獲得最佳結果。',
+    'createRequest.infoBoxDescription':
+      '創建詳細的代購請求以聯繫經過驗證的代理商。包含規格、預算和時間表以獲得最佳結果。',
     'createRequest.basicInformation': '基本資訊',
     'createRequest.requestTitle': '請求標題',
-    'createRequest.requestTitlePlaceholder': '您需要什麼？（例如："蘋果商店的MacBook Pro"）',
+    'createRequest.requestTitlePlaceholder':
+      '您需要什麼？（例如："蘋果商店的MacBook Pro"）',
     'createRequest.category': '類別',
     'createRequest.selectCategory': '選擇類別',
     'createRequest.description': '描述',
@@ -2412,7 +2811,8 @@ export const translations = {
     'createRequest.quantityPlaceholder': '輸入數量',
     'createRequest.specificRequirements': '具體要求',
     'createRequest.addRequirement': '新增要求',
-    'createRequest.requirementPlaceholder': '例如：顏色：黑色，尺寸：大',
+    'createRequest.requirementPlaceholder':
+      '例如：顏色：黑色，尺寸：大',
     'createRequest.budgetRange': '預算範圍',
     'createRequest.budgetMin': '最低預算',
     'createRequest.budgetMax': '最高預算',
@@ -2445,23 +2845,28 @@ export const translations = {
     'createRequest.selectCountry': '選擇國家',
     'createRequest.createRequest': '創建請求',
     'createRequest.successTitle': '請求創建成功！',
-    'createRequest.successDescription': '您的代購請求已發布。代理商將很快開始提交報價。',
+    'createRequest.successDescription':
+      '您的代購請求已發布。代理商將很快開始提交報價。',
     'createRequest.errorTitle': '創建請求失敗',
     'createRequest.errorDescription': '請稍後重試。',
-    
+
     // Create Offer Form
     'createOffer.title': '創建報價',
     'createOffer.description': '為客戶提供購物服務',
     'createOffer.infoBoxTitle': '購物服務報價',
-    'createOffer.infoBoxDescription': '創建引人注目的報價，展示您的購物專業知識。包括您的專長、定價和服務詳情。',
+    'createOffer.infoBoxDescription':
+      '創建引人注目的報價，展示您的購物專業知識。包括您的專長、定價和服務詳情。',
     'createOffer.serviceInformation': '服務資訊',
     'createOffer.offerTitle': '報價標題',
-    'createOffer.offerTitlePlaceholder': '例如："東京專業電子產品購物"',
+    'createOffer.offerTitlePlaceholder':
+      '例如："東京專業電子產品購物"',
     'createOffer.serviceDescription': '服務描述',
-    'createOffer.serviceDescriptionPlaceholder': '描述您的購物服務��經驗以及獨特之處...',
+    'createOffer.serviceDescriptionPlaceholder':
+      '描述您的購物服務��經驗以及獨特之處...',
     'createOffer.specialties': '專長',
     'createOffer.addSpecialty': '新增專長',
-    'createOffer.specialtyPlaceholder': '例如：奢侈品、電子產品、時尚',
+    'createOffer.specialtyPlaceholder':
+      '例如：奢侈品、電子產品、時尚',
     'createOffer.serviceArea': '服務區域',
     'createOffer.serviceAreaPlaceholder': '您服務的地理區域',
     'createOffer.pricingInformation': '定價資訊',
@@ -2488,7 +2893,8 @@ export const translations = {
     'createOffer.fastDeliveryDescription': '提供快遞配送選項',
     'createOffer.createOffer': '創建報價',
     'createOffer.successTitle': '報價創建成功！',
-    'createOffer.successDescription': '您的購物服務報價已發布。客戶現在可以找到並聯繫您。',
+    'createOffer.successDescription':
+      '您的購物服務報價已發布。客戶現在可以找到並聯繫您。',
     'createOffer.errorTitle': '創建報價失敗',
     'createOffer.errorDescription': '請稍後重試。',
 
@@ -2504,7 +2910,8 @@ export const translations = {
     'categories.fashion': '時尚',
     'categories.fashionDescription': '服裝、鞋子、配飾和時尚單品',
     'categories.electronics': '電子產品',
-    'categories.electronicsDescription': '手機、電腦、小工具和科技配件',
+    'categories.electronicsDescription':
+      '手機、電腦、小工具和科技配件',
     'categories.accessories': '配飾',
     'categories.accessoriesDescription': '包包、珠寶、手錶和時尚配飾',
     'categories.beauty': '美容',
@@ -2618,20 +3025,24 @@ export const translations = {
     // Phone Verification
     'phoneVerification.title': '手機驗證',
     'phoneVerification.verifyYourPhone': '驗證您的手機號碼',
-    'phoneVerification.sendCodeDescription': '我們將向您的手機號碼發送驗證碼以確認您的身份。',
+    'phoneVerification.sendCodeDescription':
+      '我們將向您的手機號碼發送驗證碼以確認您的身份。',
     'phoneVerification.phoneLabel': '手機號碼',
     'phoneVerification.phonePlaceholder': '請輸入您的手機號碼',
-    'phoneVerification.phoneHint': '請包含國家代碼（例如：+886 912 345 678）',
+    'phoneVerification.phoneHint':
+      '請包含國家代碼（例如：+886 912 345 678）',
     'phoneVerification.sendVerificationCode': '發送驗證碼',
 
     // Identity Verification
     'identityVerification.title': '身份驗證',
-    'identityVerification.description': '請提供有效的政府頒發的身份證明文件以驗證��的身份。',
+    'identityVerification.description':
+      '請提供有效的政府頒發的身份證明文件以驗證��的身份。',
 
     // Business Verification
     'businessVerification.title': '企業驗證',
     'businessVerification.businessInformation': '企業資訊',
-    'businessVerification.tellUsAboutBusiness': '告訴我們您的企業資訊',
+    'businessVerification.tellUsAboutBusiness':
+      '告訴我們您的企業資訊',
     'businessVerification.businessName': '企業名稱',
     'businessVerification.enterBusinessName': '輸入您的企業名稱',
     'businessVerification.businessType': '企業類型',
@@ -2649,7 +3060,8 @@ export const translations = {
     'businessVerification.employees201to1000': '201-1,000名員工',
     'businessVerification.employees1000Plus': '1,000名以上員工',
     'businessVerification.businessDescription': '企業描述',
-    'businessVerification.describeBusinessIndustry': '描述您的企業和行業',
+    'businessVerification.describeBusinessIndustry':
+      '描述您的企業和行業',
 
     // Document Types
     'document.passport': '護照',
@@ -2698,7 +3110,8 @@ export const translations = {
     'bank.zipCode': '郵政編碼',
     'bank.placeholders.zipCode': '輸入郵政編碼',
     'bank.addressCountry': '國家',
-    'bank.verificationProcess': '我們可能需要1-2個工作日來驗證您的銀行帳戶',
+    'bank.verificationProcess':
+      '我們可能需要1-2個工作日來驗證您的銀行帳戶',
     'bank.securityInfo': '您的銀行資訊經過加密並且��全',
     'bank.verificationTime': '驗證通常需要1-2個工作日',
     'bank.paymentsInfo': '驗證後，您可以將付款接收到此帳戶',
@@ -2747,7 +3160,8 @@ export const translations = {
     // Two-Factor Authentication
     'twoFactor.title': '雙重驗證',
     'twoFactor.secureAccount': '保護您的帳戶',
-    'twoFactor.description': '透過雙重驗證為您的帳���添加額外的安全保護。',
+    'twoFactor.description':
+      '透過雙重驗證為您的帳���添加額外的安全保護。',
     'twoFactor.recommended': '推薦',
     'twoFactor.recommendedText': '雙重驗證顯著提高帳戶安全性。',
     'twoFactor.currentlyDisabled': '雙重驗證目前已停用',
@@ -2771,21 +3185,28 @@ export const translations = {
     'about.title': '關於我們',
     'about.subtitle': '連接全球購物者',
     'about.welcomeTitle': '歡迎來到我們的平台',
-    'about.welcomeDescription': '我們透過連接買家與全球值得信賴的購物代理，正在革新人們的全球購物方式。',
+    'about.welcomeDescription':
+      '我們透過連接買家與全球值得信賴的購物代理，正在革新人們的全球購物方式。',
     'about.ourMission': '我們的使命',
-    'about.ourMissionDescription': '透過建立一個連接買家與認證購物代理的可信市場，讓全球購物對每個人都變得便捷、安全和方便。',
+    'about.ourMissionDescription':
+      '透過建立一個連接買家與認證購物代理的可信市場，讓全球購物對每個人都變得便捷、安全和方便。',
     'about.ourValues': '我們的價值觀',
     'about.customerFirst': '客戶至上',
-    'about.customerFirstDescription': '我們做出的每一個決定都優先考慮用戶的需求和滿意度。',
+    'about.customerFirstDescription':
+      '我們做出的每一個決定都優先考慮用戶的需求和滿意度。',
     'about.trustSafety': '信任與安全',
-    'about.trustSafetyDescription': '我們為所有用戶保持最高的安全和驗證標準。',
+    'about.trustSafetyDescription':
+      '我們為所有用戶保持最高的安全和驗證標準。',
     'about.globalCommunity': '全球社群',
-    'about.globalCommunityDescription': '我們相信跨越國界連接人們，創造機會。',
+    'about.globalCommunityDescription':
+      '我們相信跨越國界連接人們，創造機會。',
     'about.qualityExcellence': '品質與卓越',
-    'about.qualityExcellenceDescription': '我們在每一項服務和互動中��追求卓越。',
+    'about.qualityExcellenceDescription':
+      '我們在每一項服務和互動中��追求卓越。',
     'about.howItWorks': '運作方式',
     'about.step1Title': '建立請求',
-    'about.step1Description': '發布您的購物請求，詳細說明您需要什麼。',
+    'about.step1Description':
+      '發布您的購物請求，詳細說明您需要什麼。',
     'about.step2Title': '接收報價',
     'about.step2Description': '認證代理提交報價來滿足您的請求。',
     'about.step3Title': '選擇代理',
@@ -2805,33 +3226,45 @@ export const translations = {
     'terms.title': '服務條款',
     'terms.lastUpdated': '最後更新��2024年1月1日',
     'terms.acceptanceTitle': '1. 接受條款',
-    'terms.acceptanceText': '透過存取和使用本平台，您接受並同意受本協議條款和條件的約束。',
+    'terms.acceptanceText':
+      '透過存取和使用本平台，您接受並同意受本協議條款和條件的約束。',
     'terms.useLicenseTitle': '2. 使用許可',
-    'terms.useLicenseText': '僅允許臨時下載我們平台上的一份資料副本，用於個人、非商業性的短期瀏覽。這是許可的授予，而非所有權的轉讓，在此許可下您不得：',
+    'terms.useLicenseText':
+      '僅允許臨時下載我們平台上的一份資料副本，用於個人、非商業性的短期瀏覽。這是許可的授予，而非所有權的轉讓，在此許可下您不得：',
     'terms.useLicenseRestriction1': '修改或複製資料',
-    'terms.useLicenseRestriction2': '將資料用於任何商業目的或公開展示',
-    'terms.useLicenseRestriction3': '嘗試對平台上包含的任何軟體進行反向工程',
-    'terms.useLicenseRestriction4': '從資料中刪除任何版權或其他專有標記',
+    'terms.useLicenseRestriction2':
+      '將資料用於任何商業目的或公開展示',
+    'terms.useLicenseRestriction3':
+      '嘗試對平台上包含的任何軟體進行反向工程',
+    'terms.useLicenseRestriction4':
+      '從資料中刪除任何版權或其他專有標記',
     'terms.userAccountsTitle': '3. 用戶帳戶',
-    'terms.userAccountsText': '當您在我們這裡建立帳戶時，您必須始終提供準確、完整和最新的資訊。您有責任保護密碼並維護帳戶的機密性。',
+    'terms.userAccountsText':
+      '當您在我們這裡建立帳戶時，您必須始終提供準確、完整和最新的資訊。您有責任保護密碼並維護帳戶的機密性。',
     'terms.procurementTitle': '4. 採購服務',
-    'terms.procurementText': '我們的平台促進買家和購物代理之間的連接。我們不直接提供採購服務，而是讓經過驗證的代理向用戶提供服務。',
+    'terms.procurementText':
+      '我們的平台促進買家和購物代理之間的連接。我們不直接提供採購服務，而是讓經過驗證的代理向用戶提供服務。',
     'terms.prohibitedTitle': '5. 禁止使用',
     'terms.prohibitedText': '您不得將我們的服務用於：',
     'terms.prohibited1': '任何非法目的或引誘他人進行非法行為',
-    'terms.prohibited2': '違反任何國際、聯邦、省或州的法規、規則、法律或地方條例',
+    'terms.prohibited2':
+      '違反任何國際、聯邦、省或州的法規、規則、法律或地方條例',
     'terms.prohibited3': '侵犯我們的智慧財產權或他人的智慧財產權',
-    'terms.prohibited4': '騷擾、虐待、侮辱、傷害、誹謗、中傷、貶低、恐嚇或歧視',
+    'terms.prohibited4':
+      '騷擾、虐待、侮辱、傷害、誹謗、中傷、貶低、恐嚇或歧視',
     'terms.liabilityTitle': '6. 責任限制',
-    'terms.liabilityText': '在任何情況下，我們公司及其董事、員工、合作夥伴、代理商、供應商或關聯公司均不對任何間接、偶然、懲罰性、後果性或特殊損害��擔責任。',
+    'terms.liabilityText':
+      '在任何情況下，我們公司及其董事、員工、合作夥伴、代理商、供應商或關聯公司均不對任何間接、偶然、懲罰性、後果性或特殊損害��擔責任。',
     'terms.governingTitle': '7. 適用法律',
-    'terms.governingText': '這些條款和條件受我們公司註冊所在司法管轄區的法律管轄並按其解釋。',
+    'terms.governingText':
+      '這些條款和條件受我們公司註冊所在司法管轄區的法律管轄並按其解釋。',
 
     // Privacy Policy
     'privacy.title': '隱私政策',
     'privacy.lastUpdated': '最後更新：2024年1月1日',
     'privacy.informationWeCollect': '我們收集的資訊',
-    'privacy.informationWeCollectContent': '我們收集您直接向我們提供的資訊，例如當您建立帳戶、購買商品或聯繫我們尋求支援時。',
+    'privacy.informationWeCollectContent':
+      '我們收集您直接向我們提供的資訊，例如當您建立帳戶、購買商品或聯繫我們尋求支援時。',
     'privacy.howWeUseInfo': '我們如何使用您的資訊',
     'privacy.howWeUseInfoContent': '我們使用收集的資訊來：',
     'privacy.useInfo1': '提供、維護和改善我們的服務',
@@ -2839,18 +3272,23 @@ export const translations = {
     'privacy.useInfo3': '發送技術通知、更新、安全警報和支援訊息',
     'privacy.useInfo4': '回應您的評論、問題並提供客戶服務',
     'privacy.informationSharing': '資訊共享',
-    'privacy.informationSharingContent': '除本政策中所述情況外，我們不會在未經您同意的情況下向第三方出售、交易或以其他方式轉讓您的個人資訊。',
+    'privacy.informationSharingContent':
+      '除本政策中所述情況外，我們不會在未經您同意的情況下向第三方出售、交易或以其他方式轉讓您的個人資訊。',
     'privacy.dataSecurity': '資料安全',
-    'privacy.dataSecurityContent': '我們實施適當的安全措施來保護您的個人資訊，防止未經授權的存取、更改、披露或破壞。',
+    'privacy.dataSecurityContent':
+      '我們實施適當的安全措施來保護您的個人資訊，防止未經授權的存取、更改、披露或破壞。',
     'privacy.yourRights': '您的權利',
-    'privacy.yourRightsContent': '您有權存取、更新或刪除您的個人資訊。您也可以選擇不接收我們的某些通信。',
+    'privacy.yourRightsContent':
+      '您有權存取、更新或刪除您的個人資訊。您也可以選擇不接收我們的某些通信。',
     'privacy.contactUs': '聯繫我們',
-    'privacy.contactUsContent': '如果您對本隱私政策有任何問題，請透過我們的支援管道聯繫我們。',
+    'privacy.contactUsContent':
+      '如果您對本隱私政策有任何問題，請透過我們的支援管道聯繫我們。',
 
     // Support
     'support.title': '支援',
     'support.needHelp': '需要幫助？',
-    'support.needHelpDescription': '我們的支援團隊隨時為您解答任何問題或提供協助。',
+    'support.needHelpDescription':
+      '我們的支援團隊隨時為您解答任何問題或提供協助。',
     'support.contactMethod': '選擇您偏好的聯繫方式',
     'support.contact': '聯繫',
     'support.emailSupport': '電子郵件支援',
@@ -2859,7 +3297,7 @@ export const translations = {
     'support.liveChat': '線上客服',
     'support.liveChatDescription': '與我們的支援團隊即時聊天',
     'support.liveChatAction': '開始聊天',
-    'support.phoneSupport': '電話支援',
+    'support.phoneSupport': '電���支援',
     'support.phoneSupportDescription': '致電我們獲得即時協助',
     'support.phoneSupportAction': '立即致電',
     'support.firstName': '名',
@@ -2886,17 +3324,21 @@ export const translations = {
     'support.apiDocumentation': 'API文件',
     'support.apiDocumentationDescription': '開發者技術文件',
     'support.faq.createRequest': '如何建立購物請求？',
-    'support.faq.createRequestAnswer': '要建立購物請求，請前往建立標籤頁，填寫請求表單，包括商品詳情、預算和偏好設定，然後提交供代理審核。',
+    'support.faq.createRequestAnswer':
+      '要建立購物請求，請前往建立標籤頁，填寫請求表單，包括商品詳情、預算和偏好設定，然後提交供代理審核。',
     'support.faq.agentVerification': '如何知道代理是否已驗證？',
-    'support.faq.agentVerificationAnswer': '已驗證的代理在其姓名旁邊有藍色驗證徽章。他們已完成身份驗證，在我們平台上有良好的記錄。',
+    'support.faq.agentVerificationAnswer':
+      '已驗證的代理在其姓名旁邊有藍色驗證徽章。他們已完成身份驗證，在我們平台上有良好的記錄。',
     'support.faq.paymentMethods': '接受哪些付款方式？',
-    'support.faq.paymentMethodsAnswer': '我們接受主要信用卡、簽帳卡和各種數位支付方式。所有付款都透過我們的加密支付系統安全處理。',
+    'support.faq.paymentMethodsAnswer':
+      '我們接受主要信用卡、簽帳卡和各種數位支付方式。所有付款都透過我們的加密支付系統安全處理。',
     'support.faq.trackOrders': '如何追蹤我的訂單狀態？',
-    'support.faq.trackOrdersAnswer': '您可以在訂單標籤頁中追蹤訂單狀態。當您的代理在購���和配送過程中進行每個步驟時，您將收到即時更新。',
+    'support.faq.trackOrdersAnswer':
+      '您可以在訂單標籤頁中追蹤訂單狀態。當您的代理在購���和配送過程中進行每個步驟時，您將收到即時更新。',
 
     // Preferences - Missing selectAtLeastOne key
     'preferences.selectAtLeastOne': '請至少選擇一個類別',
-    
+
     // Preference Categories
     'preferences.categories.beauty': '美容護膚',
     'preferences.categories.home': '家具家居',
@@ -2910,26 +3352,32 @@ export const translations = {
     'preferences.categories.bags': '包包手袋',
     'preferences.categories.automotive': '汽車摩托車',
     'preferences.categories.others': '其他',
-    
+
     // Create Offer Form - Additional Fields
     'createOffer.category': '類別',
     'createOffer.price': '價格',
     'createOffer.enterPrice': '輸入價格',
     'createOffer.yourLocation': '您的位置',
     'createOffer.locationPlaceholder': '您所在的城市、國家',
-    'createOffer.locationDescription': '這有助於客戶了解配送時間和費用',
+    'createOffer.locationDescription':
+      '這有助於客戶了解配送時間和費用',
     'createOffer.productSpecifications': '產品規格',
-    'createOffer.addSpecificationPlaceholder': '新增規格（如：品牌：Nike，尺寸：大號）',
+    'createOffer.addSpecificationPlaceholder':
+      '新增規格（如：品牌：Nike，尺寸：大號）',
     'createOffer.add': '新增',
-    'createOffer.specificationsDescription': '新增技術詳情、尺寸、材料、品牌資訊等',
+    'createOffer.specificationsDescription':
+      '新增技術詳情、尺寸、材料、品牌資訊等',
     'createOffer.availableQuantity': '可用數量',
     'createOffer.quantityPlaceholder': '可提供多少單位？',
-    'createOffer.quantityDescription': '您可以提供的單位數量（預設：1）',
+    'createOffer.quantityDescription':
+      '您可以提供的單位數量（預設：1）',
     'createOffer.estimatedDeliveryTime': '預計配送時間',
     'createOffer.deliveryTimePlaceholder': '例如：3-5個工作日，1-2週',
-    'createOffer.deliveryTimeDescription': '獲取並配送此商品需要多長時間？',
+    'createOffer.deliveryTimeDescription':
+      '獲取並配送此商品需要多長時間？',
     'createOffer.deliveryOptions': '配送選項',
-    'createOffer.deliveryOptionsDescription': '選擇您可以提供的所有配送方式（可多選）',
+    'createOffer.deliveryOptionsDescription':
+      '選擇您可以提供的所有配送方式（可多選）',
     'createOffer.deliverPersonally': '親自配送',
     'createOffer.deliverPersonallyDescription': '面對面配送',
     'createOffer.domesticShipping': '國內配送',
@@ -2939,34 +3387,42 @@ export const translations = {
     'createOffer.expressDelivery': '快遞配送',
     'createOffer.expressDeliveryDescription': '快速配送',
     'createOffer.tags': '標籤',
-    'createOffer.tagPlaceholder': '新增標籤（如：奢侈品、手工製作、進口）',
+    'createOffer.tagPlaceholder':
+      '新增標籤（如：奢侈品、手工製作、進口）',
     'createOffer.tagsDescription': '新增關鍵詞幫助客戶找到您的報價',
     'createOffer.productImages': '產品圖片',
     'createOffer.uploadPhotos': '上傳產品照片來展示您的報價',
     'createOffer.chooseImages': '選擇圖片',
-    'createOffer.imageDescription': '高品質圖片可增加信任度和銷售量。推薦：3-5張照片',
-    
+    'createOffer.imageDescription':
+      '高品質圖片可增加信任度和銷售量。推薦：3-5張照片',
+
     // Create Request Form - Additional Fields
     'createRequest.successMessage': '請求建立成功！',
-    'createRequest.successMessageDescription': '您的代購請求已發布。代理將很快開始提交報價。',
+    'createRequest.successMessageDescription':
+      '您的代購請求已發布。代理將很快開始提交報價。',
     'createRequest.errorMessage': '建立請求失敗',
     'createRequest.errorMessageDescription': '請稍後再試。',
     'createRequest.productOrigin': '產品來源',
     'createRequest.selectCountryRegion': '選擇國家或地區',
-    'createRequest.productOriginDescription': '指定您希望從哪裡購買產品',
+    'createRequest.productOriginDescription':
+      '指定您希望從哪裡購買產品',
     'createRequest.designatedPurchasingLocation': '指定購買地點',
-    'createRequest.purchasingLocationPlaceholder': '具體商店、商場或購買區域',
-    'createRequest.purchasingLocationDescription': '可選：建議代理應該購物的具體商店或區域',
+    'createRequest.purchasingLocationPlaceholder':
+      '具體商店、商場或購買區域',
+    'createRequest.purchasingLocationDescription':
+      '可選：建議代理應該購物的具體商店或區域',
     'createRequest.category': '類別',
     'createRequest.quantity': '數量',
     'createRequest.quantityPlaceholder': '您需要多少件商品？',
     'createRequest.quantityDescription': '您想要購買的商品數量',
     'createRequest.description': '描述',
-    'createRequest.descriptionPlaceholder': '提供您需要什麼的總體概述...',
+    'createRequest.descriptionPlaceholder':
+      '提供您需要什麼的總體概述...',
     'createRequest.specificRequirements': '具體要求',
     'createRequest.requirementPlaceholder': '新增具體要求...',
     'createRequest.add': '新增',
-    'createRequest.requirementsDescription': '逐一新增具體特徵、型號、品牌、尺寸、顏色或技術規格',
+    'createRequest.requirementsDescription':
+      '逐一新增具體特徵、型號、品牌、尺寸、顏色或技術規格',
     'createRequest.deliveryMethod': '配送方式',
     'createRequest.shipToMe': '配送給我',
     'createRequest.shipToMeDescription': '包裹配送',
@@ -2976,15 +3432,18 @@ export const translations = {
     'createRequest.shippingNote': '商品將配送到您的地址',
     'createRequest.expectedDeliveryLocation': '預期配送地點',
     'createRequest.location': '地點',
-    'createRequest.meetingLocationPlaceholder': '您想見面的城市、州或國家',
-    'createRequest.meetingLocationDescription': '您想與代理見面交付商品的大致地點',
+    'createRequest.meetingLocationPlaceholder':
+      '您想見面的城市、州或國家',
+    'createRequest.meetingLocationDescription':
+      '您想與代理見面交付商品的大致地點',
     'createRequest.shippingAddress': '配送地址',
     'createRequest.fullName': '全名',
     'createRequest.fullNamePlaceholder': '輸入收件人全名',
     'createRequest.addressLine1': '地址第一行',
     'createRequest.addressLine1Placeholder': '街道地址、建築號碼',
     'createRequest.addressLine2': '地址第二行',
-    'createRequest.addressLine2Placeholder': '公寓、套間、單元、樓層（可選）',
+    'createRequest.addressLine2Placeholder':
+      '公寓、套間、單元、樓層（可選）',
     'createRequest.city': '城市',
     'createRequest.cityPlaceholder': '城市',
     'createRequest.state': '州/省',
@@ -3030,7 +3489,7 @@ export const translations = {
     'common.close': '閉じる',
     'common.open': '開く',
     'common.yes': 'はい',
-    'common.no': 'いいえ',
+    'common.no': 'いい��',
     'common.ok': 'OK',
     'common.confirm': '確認',
     'common.select': '選択',
@@ -3061,6 +3520,9 @@ export const translations = {
     'common.requestsFound': '{count}件のリクエストが見つかりました',
     'common.offersCount': '{count}件のオファー',
     'common.all': 'すべて',
+    'common.recently': '最近',
+    'common.reviews': 'レビュー',
+    'common.memberSince': 'メンバー開始日',
     'common.adjustSearchTerms': '検索条件を調整してください',
 
     // Search
@@ -3088,6 +3550,52 @@ export const translations = {
     'wishlist.emptyWishlist': 'ウィッシュリストは空です',
     'wishlist.startAdding': 'お気に入りのアイテムを追加しましょう',
     'wishlist.exploreItems': 'アイテムを探す',
+
+    // Messages
+    'messages.chatFeaturesTitle': 'チャット機能',
+    'messages.chatFeaturesDescription':
+      'エージェントやクライアントと直接コミュニケーション',
+    'messages.agentBadge': 'エージェント',
+    'messages.today': '今日',
+    'messages.messageAgentPlaceholder':
+      'エージェントにメッセージを入力...',
+
+    // Create Request
+    'createRequest.budgetRangeDescription':
+      '予算範囲を設定して、エージェントに価格の期待値を理解してもらいましょう',
+
+    // Offer Details
+    'offerDetails.shoppingLocation': 'ショッピング場所',
+    'offerDetails.deliveryTime': '配送時間',
+    'offerDetails.defaultProcessing': 'デフォルト処理',
+    'offerDetails.processing': '処理中',
+    'offerDetails.authenticity': '正規品保証',
+    'offerDetails.authenticityGuarantee': '正規品保証',
+    'offerDetails.updated': '更新日時',
+    'offerDetails.ordersCompleted': '完了注文数',
+    'offerDetails.offeredBy': '提供者',
+    'offerDetails.successRate': '成功率',
+    'offerDetails.offerDetails': 'オファー詳細',
+    'offerDetails.aboutThisOffer': 'このオファーについて',
+    'offerDetails.fastShipping': '高速配送',
+    'offerDetails.expressDelivery': '速達配送',
+    'offerDetails.whatsIncluded': '含まれるもの',
+    'offerDetails.serviceInclusions': 'サービス内容',
+    'offerDetails.additionalBenefits': '追加特典',
+    'offerDetails.freeCommunication': '無料コミュニケーション',
+    'offerDetails.freeCommunicationDesc': 'エージェントとの直接連絡',
+    'offerDetails.purchaseReceipt': '購入レシート',
+    'offerDetails.purchaseReceiptDesc': 'すべての購入の公式レシート',
+    'offerDetails.trackingInformation': '追跡情報',
+    'offerDetails.trackingInformationDesc': 'リアルタイム荷物追跡',
+    'offerDetails.priceBreakdown': '価格内訳',
+    'offerDetails.shoppingServiceFee': 'ショッピングサービス料',
+    'offerDetails.platformHandlingFee': 'プラットフォーム手数料',
+    'offerDetails.insuranceProtection': '保険保護',
+    'offerDetails.totalServiceCost': '総サービス費用',
+    'offerDetails.productCostNote':
+      '商品代金はチェックアウト時に追加されます',
+    'offerDetails.agentStats': 'エージェント統計',
 
     // All Agents Page
     'allAgents.title': 'すべてのエージェント',
@@ -3123,13 +3631,16 @@ export const translations = {
 
     // Preferences Setup
     'preferences.title': '興味のあるカテゴリを選択',
-    'preferences.chooseInterests': 'ショッピング設定に合った興味を選択してください',
-    'preferences.description': '興味のあるカテゴリを選択して、パーソナライズされた推奨と関連するショッピングリクエストを取得してください。',
+    'preferences.chooseInterests':
+      'ショッピング設定に合った興味を選択してください',
+    'preferences.description':
+      '興味のあるカテゴリを選択して、パーソナライズされた推奨と関連するショッピングリクエストを取得してください。',
     'preferences.productCategories': '商品カテゴリ',
     'preferences.selected': '選択済み',
     'preferences.selectedCategories': '選択されたカテゴリ',
     'preferences.completeSetup': 'セットアップ完了',
-    'preferences.selectAtLeastOne': '少なくとも1つのカテゴリを選択してください',
+    'preferences.selectAtLeastOne':
+      '少なくとも1つのカテゴリを選択してください',
 
     // Preferences Categories
     'preferences.categories.beauty': '美容とスキンケア',
@@ -3167,7 +3678,8 @@ export const translations = {
     'auth.lastName': '姓',
     'auth.resetPassword': 'パスワードリセット',
     'auth.forgotPasswordTitle': 'パスワードを忘れた場合',
-    'auth.resetPasswordDescription': 'メール���ドレスを入力してください。パスワードリセット用の認証コードをお送りします。',
+    'auth.resetPasswordDescription':
+      'メール���ドレスを入力してください。パスワードリセット用の認証コードをお送りします。',
     'auth.emailAddress': 'メールアドレス',
     'auth.enterEmailAddress': 'メールアドレスを入力してください',
     'auth.viaPhoneNo': '電話番号で',
@@ -3193,7 +3705,8 @@ export const translations = {
     'auth.alreadyHaveAccount': 'すでにアカウントをお持ちですか？',
     'auth.languages': '言語',
     'auth.selectLanguages': '話せる言語を選択してください',
-    'auth.languagesHelp': 'コミュニケーションできる言語を選択してください（最大5つ）',
+    'auth.languagesHelp':
+      'コミュニケーションできる言語を選択してください（最大5つ）',
     'auth.searchLanguages': '言語を検索...',
     'auth.selectedLanguagesCount': '{max}言語中{count}言語選択済み',
     'auth.passwordsDoNotMatch': 'パスワードが一致しません',
@@ -3201,7 +3714,8 @@ export const translations = {
 
     // Explore
     'explore.title': '探索',
-    'explore.description': 'ショッピングリクエスト、オファー、エージェントを発見',
+    'explore.description':
+      'ショッピングリクエスト、オファー、エージェントを発見',
     'explore.categories': 'カテゴリ',
     'explore.requests': 'リクエスト',
     'explore.offers': 'オファー',
@@ -3221,13 +3735,15 @@ export const translations = {
     'orders.title': '注文',
     'orders.description': 'ショ��ピングリクエストとオファーを追跡',
     'orders.signInPrompt': 'サイ���インして注文を���示',
-    'orders.signInDescription': '注文履歴にアクセスし、進捗を追跡し、ショッピングリクエストを管理します。',
+    'orders.signInDescription':
+      '注文履歴にアクセスし、進捗を追跡し、ショッピングリクエストを管理します。',
     'orders.signIn': 'サインイン',
     'orders.active': 'アクティブ',
     'orders.completed': '完了',
     'orders.cancelled': 'キャンセル',
     'orders.orderManagement': '注文管理',
-    'orders.orderManagementDescription': '代理購入リクエストとオファーを追跡し、進捗を監視し、エージェントやクライアントとコミュニケーションを取ります。',
+    'orders.orderManagementDescription':
+      '代理購入リクエストとオファーを追跡し、進捗を監視し、エージェントやクライアントとコミュニケーションを取ります。',
     'orders.totalOrders': '合計注文数',
     'orders.shoppingProgress': '��ョッピング進捗',
     'orders.itemsPurchased': '商品購入済み',
@@ -3255,7 +3771,8 @@ export const translations = {
 
     // Order Steps - Client View
     'orders.steps.requestPosted': 'リクエスト投稿済み',
-    'orders.steps.waitingForAgents': 'ショッピングエージェントからのオファーを待機中',
+    'orders.steps.waitingForAgents':
+      'ショッピングエージェントからのオファーを待機中',
     'orders.steps.agentAssigned': 'エージェント割り当て済み',
     'orders.steps.shoppingInProgress': 'ショッピング進行中',
     'orders.steps.itemsPurchased': '商品購入済み',
@@ -3269,7 +3786,8 @@ export const translations = {
     'orders.steps.requestAccepted': 'リクエスト受諾',
     'orders.steps.startingShopping': 'ショッピングプロセス開始',
     'orders.steps.shoppingStarted': 'ショッピング開始',
-    'orders.steps.findingRequestedItems': 'リクエストされた商品を検索中',
+    'orders.steps.findingRequestedItems':
+      'リクエストされた商品を検索中',
     'orders.steps.itemsBoughtSuccessfully': '商品購入成功',
     'orders.steps.packageSentToClient': 'クライアントに荷物発送',
     'orders.steps.successfullyCompleted': '正常に完了',
@@ -3279,8 +3797,10 @@ export const translations = {
     'messages.description': 'エージェントやクライアントとチャット',
     'messages.noMessages': 'まだメッセージがありません',
     'messages.startChat': '会話を開始',
-    'messages.signInPrompt': 'メッセージを表示するにはサインインしてください',
-    'messages.signInDescription': 'エージェントやクライアントとの会話にアクセスします。',
+    'messages.signInPrompt':
+      'メッセージを表示するにはサインインしてください',
+    'messages.signInDescription':
+      'エージェントやクライアントとの会話にアクセスします。',
     'messages.searchChats': 'チャット検索',
     'messages.searchPlaceholder': '会話を検索...',
     'messages.online': 'オンライン',
@@ -3322,7 +3842,8 @@ export const translations = {
     'profile.appSettings': 'アプリ設定',
     'profile.translation': '言語',
     'profile.selectLanguage': '言語選択',
-    'profile.languageDescription': 'アプリインターフェースの優先言語を選択',
+    'profile.languageDescription':
+      'アプリインターフェースの優先言語を選択',
     'profile.english': 'English',
     'profile.simplifiedChinese': '简体中文',
     'profile.traditionalChinese': '繁體中文',
@@ -3336,13 +3857,17 @@ export const translations = {
     'profile.accountDescription': 'アカウントと認証ステータスを管理',
     'profile.editProfile': 'プロフィール編集',
     'profile.emailVerification': 'メール認証',
-    'profile.emailVerificationDescPending': 'セキュリティ強化のためメールアドレスを認証してください',
+    'profile.emailVerificationDescPending':
+      'セキュリティ強化のためメールアドレスを認証してください',
     'profile.phoneVerification': '電話認証',
-    'profile.phoneVerificationDescPending': 'SMS通知を受信するため電話番号を認証してください',
+    'profile.phoneVerificationDescPending':
+      'SMS通知を受信するため電話番号を認証してください',
     'profile.identityVerification': '身元認証',
-    'profile.identityVerificationDescPending': 'プレミアム機能をアンロックするために身元を確認してください',
+    'profile.identityVerificationDescPending':
+      'プレミアム機能をアンロックするために身元を確認してください',
     'profile.businessVerification': 'ビジネス認証',
-    'profile.businessVerificationDescPending': '企業機能のために事業者確認を行ってください',
+    'profile.businessVerificationDescPending':
+      '企業機能のために事業者確認を行ってください',
     'profile.paymentSettings': '支払い設定',
     'profile.bankInformation': '銀行情報',
     'profile.creditCards': 'クレジットカード',
@@ -3356,7 +3881,8 @@ export const translations = {
     'profile.privacy': 'プライバシーポリシー',
     'profile.terms': '利用規約',
     'profile.signInPrompt': 'アカウントにサインイン',
-    'profile.signInDescription': '注文、メッセージ、パーソナライズされた推奨にアクセス。',
+    'profile.signInDescription':
+      '注文、メッセージ、パーソナライズされた推奨にアクセス。',
 
     // Edit Profile
     'editProfile.title': 'プロフィール編集',
@@ -3366,13 +3892,15 @@ export const translations = {
     'editProfile.lastName': '姓',
     'editProfile.lastNamePlaceholder': '姓を入力してください',
     'editProfile.nickname': 'ニックネーム',
-    'editProfile.nicknamePlaceholder': 'ニックネームを入力してください',
+    'editProfile.nicknamePlaceholder':
+      'ニックネームを入力してください',
     'editProfile.gender': '性別',
     'editProfile.male': '男性',
     'editProfile.female': '女性',
     'editProfile.other': 'その他',
     'editProfile.email': 'メールアドレス',
-    'editProfile.emailPlaceholder': 'メールアドレスを入力してください',
+    'editProfile.emailPlaceholder':
+      'メールアドレスを入力してください',
     'editProfile.phone': '電話番号',
     'editProfile.phonePlaceholder': '電話番号を入力してください',
     'editProfile.country': '国',
@@ -3381,12 +3909,14 @@ export const translations = {
     'editProfile.bioPlaceholder': 'あなたについて教えてください',
     'editProfile.languages': '言語',
     'editProfile.selectLanguages': '話せる言語を選択してください',
-    'editProfile.languagesHelp': 'コミュニケーションできる言語を選択してください（最大5つ）',
+    'editProfile.languagesHelp':
+      'コミュニケーションできる言語を選択してください（最大5つ）',
     'editProfile.saving': '保存中...',
 
     // Create
     'create.title': '作成',
-    'create.description': '新しいショッピングリクエストまたはオファーを作成',
+    'create.description':
+      '新しいショッピングリクエストまたはオファーを作成',
     'create.newRequest': '新しいリクエスト',
     'create.newOffer': '新しいオファー',
     'create.request': 'リクエスト',
@@ -3395,21 +3925,27 @@ export const translations = {
     'create.creatingOffer': 'オファー作成',
     'create.requestDescription': 'エージェントにショッピングを依頼',
     'create.offerDescription': 'ショッピングサービスを提供',
-    'create.signInPrompt': 'リクエストやオファーを作成するにはサインインしてください',
-    'create.signInDescription': '作成ツールにアクセスしてショッピングリクエストを投稿したり、サービスを提供したりできます。',
-    
+    'create.signInPrompt':
+      'リクエストやオファーを作成するにはサインインしてください',
+    'create.signInDescription':
+      '作成ツールにアクセスしてショッピングリクエストを投稿したり、サービスを提供したりできます。',
+
     // Create Request Form
     'createRequest.title': 'リクエスト作成',
-    'createRequest.description': '詳細な代理購入リクエストを作成して認証済みエージェントと連絡',
+    'createRequest.description':
+      '詳細な代理購入リクエストを作成して認証済みエージェントと連絡',
     'createRequest.infoBoxTitle': '代理購入リクエスト',
-    'createRequest.infoBoxDescription': '詳細な代理購入リクエストを作成して認証済みエージェントと連絡。仕様、予算、スケジュールを含めて最良の結果を得る。',
+    'createRequest.infoBoxDescription':
+      '詳細な代理購入リクエストを作成して認証済みエージェントと連絡。仕様、予算、スケジュールを含めて最良の結果を得る。',
     'createRequest.basicInformation': '基本情報',
     'createRequest.requestTitle': 'リクエストタイトル',
-    'createRequest.requestTitlePlaceholder': '何が必要ですか？（例："Apple StoreからMacBook Pro"）',
+    'createRequest.requestTitlePlaceholder':
+      '何が必要ですか？（例："Apple StoreからMacBook Pro"）',
     'createRequest.category': 'カテゴリ',
     'createRequest.selectCategory': 'カテゴリを選択',
     'createRequest.description': '説明',
-    'createRequest.descriptionPlaceholder': '必要な商品について詳しく説明してください...',
+    'createRequest.descriptionPlaceholder':
+      '必要な商品について詳しく説明してください...',
     'createRequest.quantity': '数量',
     'createRequest.quantityPlaceholder': '数量を入力',
     'createRequest.specificRequirements': '具体的な要件',
@@ -3422,11 +3958,14 @@ export const translations = {
     'createRequest.budgetMaxPlaceholder': '最大金額',
     'createRequest.locationInfo': '場所情報',
     'createRequest.productOrigin': '商品原産地',
-    'createRequest.productOriginPlaceholder': '商品はどこから購入すべきですか？',
+    'createRequest.productOriginPlaceholder':
+      '商品はどこから購入すべきですか？',
     'createRequest.purchasingLocation': '指定購入場所',
-    'createRequest.purchasingLocationPlaceholder': '特定の店舗または場所',
+    'createRequest.purchasingLocationPlaceholder':
+      '特定の店舗または場所',
     'createRequest.deliveryLocation': '予定配送場所',
-    'createRequest.deliveryLocationPlaceholder': 'どこに配送すべきですか？',
+    'createRequest.deliveryLocationPlaceholder':
+      'どこに配送すべきですか？',
     'createRequest.deliveryMethod': '配送方法',
     'createRequest.shipToMe': '配送してもらう',
     'createRequest.deliverPersonally': '直接受取',
@@ -3436,7 +3975,8 @@ export const translations = {
     'createRequest.addressLine1': '住所1',
     'createRequest.addressLine1Placeholder': '住所',
     'createRequest.addressLine2': '住所2',
-    'createRequest.addressLine2Placeholder': 'アパート、部屋番号など（任意）',
+    'createRequest.addressLine2Placeholder':
+      'アパート、部屋番号など（任意）',
     'createRequest.city': '市区町村',
     'createRequest.cityPlaceholder': '市区町村を入力',
     'createRequest.state': '都道府県',
@@ -3446,24 +3986,31 @@ export const translations = {
     'createRequest.country': '国',
     'createRequest.selectCountry': '国を選択',
     'createRequest.createRequest': 'リクエスト作成',
-    'createRequest.successTitle': 'リクエストが正常に作成されました！',
-    'createRequest.successDescription': '代理購入リクエストが投稿されました。エージェントがまもなくオファーの提出を開始します。',
+    'createRequest.successTitle':
+      'リクエストが正常に作成されました！',
+    'createRequest.successDescription':
+      '代理購入リクエストが投稿されました。エージェントがまもなくオファーの提出を開始します。',
     'createRequest.errorTitle': 'リクエストの作成に失敗しました',
     'createRequest.errorDescription': '後でもう一度お試しください。',
-    
+
     // Create Offer Form
     'createOffer.title': 'オファー作成',
-    'createOffer.description': 'クライアントにショッピングサー���スを提供',
+    'createOffer.description':
+      'クライアントにショッピングサー���スを提供',
     'createOffer.infoBoxTitle': 'ショッピングサービスオファー',
-    'createOffer.infoBoxDescription': 'ショッピングの専門知識を紹介する魅力的なオファーを作成。専門分野、価格、サービス詳細を含める。',
+    'createOffer.infoBoxDescription':
+      'ショッピングの専門知識を紹介する魅力的なオファーを作成。専門分野、価格、サービス詳細を含める。',
     'createOffer.serviceInformation': 'サービス情報',
     'createOffer.offerTitle': 'オファータイトル',
-    'createOffer.offerTitlePlaceholder': '例："東京での専門電子機器ショッピング"',
+    'createOffer.offerTitlePlaceholder':
+      '例："東京での専門電子機器ショッピング"',
     'createOffer.serviceDescription': 'サービス説明',
-    'createOffer.serviceDescriptionPlaceholder': 'ショッピングサービス、経験、独特な点について説明...',
+    'createOffer.serviceDescriptionPlaceholder':
+      'ショッピングサービス、経験、独特な点について説明...',
     'createOffer.specialties': '専門分野',
     'createOffer.addSpecialty': '専門分野を追加',
-    'createOffer.specialtyPlaceholder': '例：高級品、電子機器、ファッション',
+    'createOffer.specialtyPlaceholder':
+      '例：高級品、電子機器、ファッション',
     'createOffer.serviceArea': 'サービスエリ��',
     'createOffer.serviceAreaPlaceholder': 'サービス提供地域',
     'createOffer.pricingInformation': '価格情報',
@@ -3483,14 +4030,18 @@ export const translations = {
     'createOffer.qualityCheck': '品質チェック',
     'createOffer.qualityCheckDescription': '購入前に商品を検査',
     'createOffer.photoVerification': '写真確認',
-    'createOffer.photoVerificationDescription': '購入前に商品写真を送��',
+    'createOffer.photoVerificationDescription':
+      '購入前に商品写真を送��',
     'createOffer.giftWrapping': 'ギフトラッピング',
-    'createOffer.giftWrappingDescription': 'ギフトラッピングサービスを提供',
+    'createOffer.giftWrappingDescription':
+      'ギフトラッピングサービスを提供',
     'createOffer.fastDelivery': '迅速配送',
-    'createOffer.fastDeliveryDescription': '速達配送オプション利用可能',
+    'createOffer.fastDeliveryDescription':
+      '速達配送オプション利用可能',
     'createOffer.createOffer': 'オファー作成',
     'createOffer.successTitle': 'オファーが正常に作成されました！',
-    'createOffer.successDescription': 'ショッピングサービスオファーが投稿されました。クライアントがあなたを見つけて連絡できるようになりました。',
+    'createOffer.successDescription':
+      'ショッピングサービスオファーが投稿されました。クライアントがあなたを見つけて連絡できるようになりました。',
     'createOffer.errorTitle': 'オファーの作成に失敗しました',
     'createOffer.errorDescription': '後でもう一度お試しください。',
 
@@ -3512,11 +4063,13 @@ export const translations = {
 
     // Request Steps - Client View
     'requestSteps.client.requestPosted': 'リクエスト投稿済み',
-    'requestSteps.client.waitingForAgents': 'ショッピングエージェントからのオファーを待機中',
+    'requestSteps.client.waitingForAgents':
+      'ショッピングエージェントからのオファーを待機中',
     'requestSteps.client.agentAssigned': 'エージェント割り当て済み',
     'requestSteps.client.shoppingInProgress': 'ショッピング進行中',
     'requestSteps.client.itemsPurchased': '商品購入済み',
-    'requestSteps.client.itemsBoughtByAgent': 'エージェントが商品を購入',
+    'requestSteps.client.itemsBoughtByAgent':
+      'エージェントが商品を購入',
     'requestSteps.client.packageShipped': '配送済み',
     'requestSteps.client.packageSentOut': '荷物発送済み',
     'requestSteps.client.delivered': '配達済み',
@@ -3530,7 +4083,8 @@ export const translations = {
     'requestSteps.agent.itemsPurchased': '商品購入済み',
     'requestSteps.agent.itemsBoughtSuccessfully': '商品購入成功',
     'requestSteps.agent.packageShipped': '荷物発送済み',
-    'requestSteps.agent.packageSentToClient': 'クライアントに荷物発送',
+    'requestSteps.agent.packageSentToClient':
+      'クライアントに荷物発送',
     'requestSteps.agent.delivered': '配達完了',
     'requestSteps.agent.successfullyCompleted': '正常に完了',
 
@@ -3594,14 +4148,18 @@ export const translations = {
     'feedback.yourComments': 'コメント',
     'feedback.shareDetails': 'あなたの体験詳細を共有してください',
     'feedback.commentPlaceholder': 'あなたの体験を教えてください...',
-    'feedback.feedbackHelps': 'あなたのフィードバックはプラットフォームの改善に役立ちます',
+    'feedback.feedbackHelps':
+      'あなたのフィードバックはプラットフォームの改善に役立ちます',
     'feedback.guidelines': 'フィードバックガイドライン',
     'feedback.guideline1': '正直で建設的な意見をお願いします',
     'feedback.guideline2': '具体的な詳細を提供してください',
-    'feedback.guideline3': 'フィードバックはプロフェッショナルに保ってください',
-    'feedback.guideline4': '他の人が情報に基づいた決定を下せるよう支援してください',
+    'feedback.guideline3':
+      'フィードバックはプロフェッショナルに保ってください',
+    'feedback.guideline4':
+      '他の人が情報に基づいた決定を下せるよう支援してください',
     'feedback.submitFeedback': 'フィードバックを送信',
-    'feedback.selectRatingToContinue': '続行するには評価を選択してください',
+    'feedback.selectRatingToContinue':
+      '続行するには評価を選択してください',
     'feedback.skipForNow': '今はスキップ',
     'feedback.ratingFair': '普通',
     'feedback.outOfStars': '5つ星中',
@@ -3610,24 +4168,31 @@ export const translations = {
     // Phone Verification
     'phoneVerification.title': '電話番号認証',
     'phoneVerification.verifyYourPhone': '電話番号を認証してください',
-    'phoneVerification.sendCodeDescription': '本人確認のため、お客様の電話番号に認証コードを送信いたします。',
+    'phoneVerification.sendCodeDescription':
+      '本人確認のため、お客様の電話番号に認証コードを送信いたします。',
     'phoneVerification.phoneLabel': '電話番号',
-    'phoneVerification.phonePlaceholder': '電話番号を入力してください',
-    'phoneVerification.phoneHint': '国番号を含めてください（例：+81 90 1234 5678）',
+    'phoneVerification.phonePlaceholder':
+      '電話番号を入力してください',
+    'phoneVerification.phoneHint':
+      '国番号を含めてください（例：+81 90 1234 5678）',
     'phoneVerification.sendVerificationCode': '認証コードを送信',
 
     // Identity Verification
     'identityVerification.title': '身元認証',
-    'identityVerification.description': '身元確認のため、有効な政府発行の身分証明書を提供してください。',
+    'identityVerification.description':
+      '身元確認のため、有効な政府発行の身分証明書を提供してください。',
 
     // Business Verification
     'businessVerification.title': 'ビジネス認証',
     'businessVerification.businessInformation': 'ビジネス情報',
-    'businessVerification.tellUsAboutBusiness': 'あなたのビジネスについて教えてください',
+    'businessVerification.tellUsAboutBusiness':
+      'あなたのビジネスについて教えてください',
     'businessVerification.businessName': '会社名',
-    'businessVerification.enterBusinessName': '会社名を入力してください',
+    'businessVerification.enterBusinessName':
+      '会社名を入力してください',
     'businessVerification.businessType': '事業形態',
-    'businessVerification.selectBusinessType': '事業形態を選択してください',
+    'businessVerification.selectBusinessType':
+      '事業形態を選択してください',
     'businessVerification.corporation': '株式会社',
     'businessVerification.llc': '合同会社',
     'businessVerification.partnership': '合名会社',
@@ -3641,13 +4206,16 @@ export const translations = {
     'businessVerification.employees201to1000': '201-1,000名',
     'businessVerification.employees1000Plus': '1,000名以上',
     'businessVerification.businessDescription': '事業内容',
-    'businessVerification.describeBusinessIndustry': 'あなたの事業と業界について説明してください',
+    'businessVerification.describeBusinessIndustry':
+      'あなたの事業と業界について説明してください',
 
     // Document Types
     'document.passport': 'パスポート',
-    'document.passportDescription': '写真と個人情報が記載された有効なパスポート',
+    'document.passportDescription':
+      '写真と個人情報が記載された有効なパスポート',
     'document.driversLicense': '運転免許証',
-    'document.driversLicenseDescription': '写真付きの有効な運転免許証',
+    'document.driversLicenseDescription':
+      '写真付きの有効な運転免許証',
     'document.nationalId': '身分証明書',
     'document.nationalIdDescription': '政府発行の身分証明書',
     'document.militaryId': '軍人身分証',
@@ -3663,7 +4231,8 @@ export const translations = {
     // Bank Information
     'bank.title': '銀行情報',
     'bank.addBankInfo': '銀行情報を追加',
-    'bank.description': '支払いと送金のために銀行口座情報を追加してください。',
+    'bank.description':
+      '支払いと送金のために銀行口座情報を追加してください。',
     'bank.fullName': '氏名',
     'bank.placeholders.fullName': '口座名義人の氏名を入力',
     'bank.country': '国',
@@ -3690,10 +4259,13 @@ export const translations = {
     'bank.zipCode': '郵便番号',
     'bank.placeholders.zipCode': '郵便番号を入力してください',
     'bank.addressCountry': '国',
-    'bank.verificationProcess': '銀行口座の確認に1-2営業日かかる場合があります',
-    'bank.securityInfo': 'お客様の銀行情報は暗号化され安全に管理されています',
+    'bank.verificationProcess':
+      '銀行口座の確認に1-2営業日かかる場合があります',
+    'bank.securityInfo':
+      'お客様の銀行情報���暗号化され安全に管理されています',
     'bank.verificationTime': '確認は通常1-2営業日かかります',
-    'bank.paymentsInfo': '確認後、この口座で支払いを受け取ることができます',
+    'bank.paymentsInfo':
+      '確認後、この口座で支払いを受け取ることができます',
     'bank.save': '銀行情報を保存',
 
     // Countries
@@ -3722,38 +4294,49 @@ export const translations = {
     // Credit Cards
     'creditCards.title': 'クレジットカード',
     'creditCards.subtitle': '支払い方法',
-    'creditCards.description': 'クレジットカードと支払い方法を管理します。',
+    'creditCards.description':
+      'クレジットカードと支払い方法を管理します。',
     'creditCards.addNewCard': '新しいカードを追加',
     'creditCards.noCards': 'まだクレジットカードが追加されていません',
     'creditCards.confirmDelete': 'カードを削除',
-    'creditCards.confirmDeleteMessage': 'このクレジットカードを削除してもよろしいですか？',
+    'creditCards.confirmDeleteMessage':
+      'このクレジットカードを削除してもよろしいですか？',
     'creditCards.deleteCard': 'カードを削除',
     'creditCards.saveChanges': '変更を保存',
 
     // Add Credit Card
     'addCreditCard.paymentSecurity': '決済セキュリティ',
-    'addCreditCard.security1': 'お客様の決済情報は暗号化され安全に管理されています',
-    'addCreditCard.security2': '業界標準のセキュリティ対策を使用しています',
-    'addCreditCard.security3': 'カード情報は弊社サーバーに保存されません',
+    'addCreditCard.security1':
+      'お客様の決済情報は暗号化され安全に管理されています',
+    'addCreditCard.security2':
+      '業界標準のセキュリティ対策を使用しています',
+    'addCreditCard.security3':
+      'カード情報は弊社サーバーに保存されません',
 
     // Two-Factor Authentication
     'twoFactor.title': '二段階認証',
     'twoFactor.secureAccount': 'アカウントを保護',
-    'twoFactor.description': '二段階認証でアカウントにさらなるセキュリティ層を追加します。',
+    'twoFactor.description':
+      '二段階認証でアカウントにさらなるセキュリティ層を追加します。',
     'twoFactor.recommended': '推奨',
-    'twoFactor.recommendedText': '二段階認証はアカウントセキュリティを大幅に向上させます。',
-    'twoFactor.currentlyDisabled': '二段階認証は現在無効になっています',
+    'twoFactor.recommendedText':
+      '二段階認証はアカウントセキュリティを大幅���向上させます。',
+    'twoFactor.currentlyDisabled':
+      '二段階認証は現在無効になっています',
 
     // Change Password
     'changePassword.title': 'パスワード変更',
     'changePassword.updatePassword': 'パスワードを更新',
     'changePassword.requirements': 'パスワード要件',
     'changePassword.currentPassword': '現在のパスワード',
-    'changePassword.enterCurrentPassword': '現在のパスワードを入力してください',
+    'changePassword.enterCurrentPassword':
+      '現在のパスワードを入力してください',
     'changePassword.newPassword': '新しいパスワード',
-    'changePassword.enterNewPassword': '新しいパスワードを入力してください',
+    'changePassword.enterNewPassword':
+      '新しいパスワードを入力してください',
     'changePassword.confirmNewPassword': '新しいパスワードを確認',
-    'changePassword.passwordRequirements': 'パスワードは以下の要件を満たす必要があります：',
+    'changePassword.passwordRequirements':
+      'パスワードは以下の要件を満たす必要があります：',
     'changePassword.requirement1': '8文字以上',
     'changePassword.requirement2': '大文字と小文字を含む',
     'changePassword.requirement3': '数字または特殊文字を1つ以上含む',
@@ -3763,27 +4346,37 @@ export const translations = {
     'about.title': '会社概要',
     'about.subtitle': '世界中のショッパーをつなぐ',
     'about.welcomeTitle': 'プラットフォームへようこそ',
-    'about.welcomeDescription': '信頼できるショッピングエージェントと買い手を世界中で繋ぐことで、グローバルショッピングの革新を進めています。',
+    'about.welcomeDescription':
+      '信頼できるショッピングエージェントと買い手を世界中で繋ぐことで、グローバルショッピングの革新を進めています。',
     'about.ourMission': '私たちの使命',
-    'about.ourMissionDescription': '買い手と認証されたショッピングエージェントを繋ぐ信頼できるマーケットプレイスを構築し、誰にとってもグローバルショッピングをアクセシブル、安全、便利にすることです。',
+    'about.ourMissionDescription':
+      '買い手と認証されたショッピングエージェントを繋ぐ信頼できるマーケットプレイスを構築し、誰にとってもグローバルショッピングをアクセシブル、安全、便利にすることです。',
     'about.ourValues': '私たちの価値観',
     'about.customerFirst': 'お客様第一',
-    'about.customerFirstDescription': '私たちが行うすべての決定は、ユーザーのニーズと満足度を優先します。',
+    'about.customerFirstDescription':
+      '私たちが行うすべての決定は、ユーザーのニーズと満足度を優先します。',
     'about.trustSafety': '信頼と安全',
-    'about.trustSafetyDescription': 'すべてのユーザーに対して最高水準のセキュリティと��証を維持しています。',
+    'about.trustSafetyDescription':
+      'すべてのユーザーに対して最高水準のセキュリティと��証を維持しています。',
     'about.globalCommunity': 'グローバルコミュニティ',
-    'about.globalCommunityDescription': '国境を越えて人々を繋ぎ、機会を創出することを信じています。',
+    'about.globalCommunityDescription':
+      '国境を越えて人々を繋ぎ、機会を創出することを信じています。',
     'about.qualityExcellence': '品質と卓越性',
-    'about.qualityExcellenceDescription': 'すべてのサービスと相互作用において���越性を追求します。',
+    'about.qualityExcellenceDescription':
+      'すべてのサービスと相互作用において���越性を追求します。',
     'about.howItWorks': '仕組み',
     'about.step1Title': 'リクエスト作成',
-    'about.step1Description': '必要なものの詳細を含むショッピングリクエストを投稿します。',
+    'about.step1Description':
+      '必要なものの詳細を含むショッピングリクエストを投稿します。',
     'about.step2Title': 'オファー受信',
-    'about.step2Description': '認証されたエージェントがリクエストを満たすオファーを送信します。',
+    'about.step2Description':
+      '認証されたエージェントがリクエストを満たすオファーを送信します。',
     'about.step3Title': 'エージェント選択',
-    'about.step3Description': '最適なオファーを選択し、選択を確認します。',
+    'about.step3Description':
+      '最適なオファーを選択し、選択を確認します。',
     'about.step4Title': '配送受取',
-    'about.step4Description': '注文を追跡し、安全にアイテムを受け取ります。',
+    'about.step4Description':
+      '注文を追跡し、安全にアイテムを受け取ります。',
     'about.ourJourney': '私たちの歩み',
     'about.byTheNumbers': '数字で見る',
     'about.activeUsers': 'アクティブユーザー',
@@ -3797,62 +4390,86 @@ export const translations = {
     'terms.title': '利用規約',
     'terms.lastUpdated': '最終更新：2024年1月1日',
     'terms.acceptanceTitle': '1. 規約の受諾',
-    'terms.acceptanceText': '本プラットフォームにアクセスし使用することにより、お客様は本契約の条項および規定に拘束されることに同意し、受け入れるものとします。',
+    'terms.acceptanceText':
+      '本プラットフォームにアクセスし使用することにより、お客様は本契約の条項および規定に拘束されることに同意し、受け入れるものとします。',
     'terms.useLicenseTitle': '2. 使用許諾',
-    'terms.useLicenseText': '個人的、非商用の一時的な閲覧のみを目的として、当プラットフォーム上の資料の1つのコピーを一時的にダウンロードすることが許可されています。これはライセンスの付与であり��所有権の譲渡ではありません。このライセンスの下では以下を行うことはできません：',
+    'terms.useLicenseText':
+      '個人的、非商用の一時的な閲覧のみを目的として、当プラットフォーム上の資料の1つのコピーを一時的にダウンロードすることが許可されています。これはライセンスの付与であり��所有権の譲渡ではありません。このライセンスの下では以下を行うことはできません：',
     'terms.useLicenseRestriction1': '資料を変更またはコピーすること',
-    'terms.useLicenseRestriction2': '商用目的または公開展示のために資料を使用すること',
-    'terms.useLicenseRestriction3': 'プラットフォームに含まれるソフトウェアをリバースエンジニアリングしようと試みること',
-    'terms.useLicenseRestriction4': '資料から著作権やその他の所有権表示を削除すること',
+    'terms.useLicenseRestriction2':
+      '商用目的または公開展示のために資料を使用すること',
+    'terms.useLicenseRestriction3':
+      'プラットフォームに含まれるソフトウェアをリバースエンジニアリングしようと試みること',
+    'terms.useLicenseRestriction4':
+      '資料から著作権やその他の所有権表示を削除すること',
     'terms.userAccountsTitle': '3. ユーザーアカウント',
-    'terms.userAccountsText': '当社でアカウントを作成する際は、常に正確で完全かつ最新の情報を提供する必要があります。パスワードの保護とアカウントの機密性の維持はお客様の責任です。',
+    'terms.userAccountsText':
+      '当社でアカウントを作成する際は、常に正確で完全かつ最新の情報を提供する必要があります。パスワードの保護とアカウントの機密性の維持はお客様の責任です。',
     'terms.procurementTitle': '4. 調達サービス',
-    'terms.procurementText': '当プラットフォームは買い手とショッピングエージェント間の接続を促進します。直接的な調達サービスは提供せず、認証されたエージェントがユーザーにサービスを提供できるようにします。',
+    'terms.procurementText':
+      '当プラットフォームは買い手とショッピングエージェント間の接続を促進します。直接的な調達サービスは提供せず、認証されたエージェントがユーザーにサービスを提供できるようにします。',
     'terms.prohibitedTitle': '5. 禁止事項',
-    'terms.prohibitedText': '以下の目的で当サービスを使用することはできません：',
-    'terms.prohibited1': '違法な目的または他者に違法行為を行わせること',
-    'terms.prohibited2': '国際的、連邦、州、地方の規制、規則、法律、条例に違反すること',
+    'terms.prohibitedText':
+      '以下の目的で当サービスを使用することはできません：',
+    'terms.prohibited1':
+      '違法な目的または他者に違法行為を行わせること',
+    'terms.prohibited2':
+      '国際的、連邦、州、地方の規制、規則、法律、条例に違反すること',
     'terms.prohibited3': '当社または他者の知的財産権を侵害すること',
-    'terms.prohibited4': '嫌がらせ、虐待、侮辱、危害、中傷、誹謗、軽蔑、脅迫、差別を行うこと',
+    'terms.prohibited4':
+      '嫌がらせ、虐待、侮辱、危害、中傷、誹謗、軽蔑、脅迫、差別を行うこと',
     'terms.liabilityTitle': '6. 責任の制限',
-    'terms.liabilityText': 'いかなる場合においても、当社およびその取締役、従業員、パートナー、代理人、サプライヤー、関連会社は、間接的、偶発的、懲罰的、結果的、または特別な損害について責任を負いません。',
+    'terms.liabilityText':
+      'いかなる場合においても、当社およびその取締役、従業員、パートナー、代理人、サプライヤー、関連会社は、間接的、偶発的、懲罰的、結果的、または特別な損害について責任を負いません。',
     'terms.governingTitle': '7. 準拠法',
-    'terms.governingText': 'これらの利用規約は、当社が登録されている管轄区域の法律に準拠し、それに従って解釈されます。',
+    'terms.governingText':
+      'これらの利用規約は、当社が登録されている管轄区域の法律に準拠し、それに従って解釈されます。',
 
     // Privacy Policy
     'privacy.title': 'プライバシーポリシー',
     'privacy.lastUpdated': '最終更新：2024年1月1日',
     'privacy.informationWeCollect': '収集する情報',
-    'privacy.informationWeCollectContent': 'アカウント作成時、購入時、サポートへの連絡時など、お客様が直接提供された情報を収集します。',
+    'privacy.informationWeCollectContent':
+      'アカウント作成時、購入時、サポートへの連絡時など、お客様が直接提供された情報を収集します。',
     'privacy.howWeUseInfo': '情報の使用方法',
-    'privacy.howWeUseInfoContent': '収集した情報は以下の目的で使用します：',
+    'privacy.howWeUseInfoContent':
+      '収集した情報は以下の目的で使用します：',
     'privacy.useInfo1': 'サービスの提供、維持、改善',
     'privacy.useInfo2': '取引の処理と関連情報の送信',
-    'privacy.useInfo3': '技術通知、更新、セキュリティアラート、サポートメッセージの送信',
-    'privacy.useInfo4': 'お客様のコメントや質問への対応、カスタマーサービスの提供',
+    'privacy.useInfo3':
+      '技術通知、更新、セキュリティアラート、サポートメッセージの送信',
+    'privacy.useInfo4':
+      'お客様のコメントや質問への対応、カスタマーサービスの提供',
     'privacy.informationSharing': '情報の共有',
-    'privacy.informationSharingContent': '本ポリシーに記載されている場合を除き、お客様の同意なしに個人情報を第三者に販売、取引、または譲渡することはありません。',
+    'privacy.informationSharingContent':
+      '本ポリシーに記載されている場合を除き、お客様の同意なしに個人情報を第三者に販売、取引、または譲渡することはありません。',
     'privacy.dataSecurity': 'データセキュリティ',
-    'privacy.dataSecurityContent': '不正アクセス、改ざん、開示、破壊からお客様の個人情報を保護するため、適切なセキュリティ対策を実施しています��',
+    'privacy.dataSecurityContent':
+      '不正アクセス、改ざん、開示、破壊からお客様の個人情報を保護するため、適切なセキュリティ対策を実施しています��',
     'privacy.yourRights': 'お客様の権利',
-    'privacy.yourRightsContent': 'お客様には個人情報へのアクセス、更新、削除の権利があります。また、当社からの特定の通信をオプトアウトすることも可能です。',
+    'privacy.yourRightsContent':
+      'お客様には個人情報へのアクセス、更新、削除の権利があります。また、当社からの特定の通信をオプトアウトすることも可能です。',
     'privacy.contactUs': 'お問い合わせ',
-    'privacy.contactUsContent': 'このプライバシーポリシーについてご質問がございましたら、サポートチャンネルを通じてお問い合わせください。',
+    'privacy.contactUsContent':
+      'このプライバシーポリシーについてご質問がございましたら、サポートチャンネルを通じてお問い合わせください。',
 
     // Support
     'support.title': 'サポート',
     'support.needHelp': 'ヘルプが必要ですか？',
-    'support.needHelpDescription': 'サポートチームがご質問や問題についてお手伝いいたします。',
+    'support.needHelpDescription':
+      'サポートチームがご質問や問題についてお手伝いいたします。',
     'support.contactMethod': 'お好みの連絡方法を選択してください',
     'support.contact': '連絡',
     'support.emailSupport': 'メールサポート',
     'support.emailSupportDescription': '詳細な回答をメールで受け取る',
     'support.emailSupportAction': 'メール送信',
     'support.liveChat': 'ライブチャット',
-    'support.liveChatDescription': 'サポートチームとリアルタイムでチャット',
+    'support.liveChatDescription':
+      'サポートチームとリアルタイムでチャット',
     'support.liveChatAction': 'チャット開始',
     'support.phoneSupport': '電話サポート',
-    'support.phoneSupportDescription': 'すぐにサポートを受けるためにお電話ください',
+    'support.phoneSupportDescription':
+      'すぐにサポートを受けるためにお電話ください',
     'support.phoneSupportAction': '今すぐ電話',
     'support.firstName': '名',
     'support.firstNamePlaceholder': 'お名前を入力してください',
@@ -3867,44 +4484,61 @@ export const translations = {
     'support.subjectBilling': '請求に関する質問',
     'support.subjectFeature': '機能リクエスト',
     'support.message': 'メッセージ',
-    'support.messagePlaceholder': '問題や質問を詳しく説明してください...',
+    'support.messagePlaceholder':
+      '問題や質問を詳しく説明してください...',
     'support.sendMessage': 'メッセージ送信',
     'support.commonQuestions': 'よくある質問',
     'support.helpfulResources': '役立つリソース',
     'support.userGuide': 'ユーザーガイド',
-    'support.userGuideDescription': 'プラットフォーム使用の完全ガイド',
+    'support.userGuideDescription':
+      'プラットフォーム使用の完全ガイド',
     'support.videoTutorials': 'ビデオチュートリアル',
-    'support.videoTutorialsDescription': 'ステップバイステップのビデオ指示',
+    'support.videoTutorialsDescription':
+      'ステップバイステップのビデオ指示',
     'support.apiDocumentation': 'APIドキュメント',
     'support.apiDocumentationDescription': '開発者向け技術文書',
-    'support.faq.createRequest': 'ショッピングリクエストを作成するには？',
-    'support.faq.createRequestAnswer': 'ショッピングリクエ��トを作成するには、作成タブに移動し、商品詳細、予算、設定を記入したリクエストフォームを入力して、エージェントが確認できるよう送信してください。',
-    'support.faq.agentVerification': 'エージェントが認証されているかどうかはどうやってわかりますか？',
-    'support.faq.agentVerificationAnswer': '認証されたエージェントは名前の横に青い認証バッジが表示されます。彼らは身元確認を完了し、プラットフォームで実績があります。',
-    'support.faq.paymentMethods': 'どの支払い方法が受け入れられますか？',
-    'support.faq.paymentMethodsAnswer': '主要なクレジットカード、デビットカード、および各種デジタル決済方法を受け付けてい���す。すべての支払いは暗号化された決済システムを通じて安全に処理されます。',
-    'support.faq.trackOrders': '注文状況を追跡するにはどうすればよいですか？',
-    'support.faq.trackOrdersAnswer': '注文タブで注文状況を追跡できます。エージェントがショッピングと配送プロセスの各ステップを進行するにつれて、リアルタイムで更新を受け取ります。',
-    
+    'support.faq.createRequest':
+      'ショッピングリクエストを作成するには？',
+    'support.faq.createRequestAnswer':
+      'ショッピングリクエ��トを作成するには、作成タブに移動し、商品詳細、予算、設定を記入したリクエストフォームを入力して、エージェントが確認できるよう送信してください。',
+    'support.faq.agentVerification':
+      'エージェントが認証されているかどうかはどうやってわかりますか？',
+    'support.faq.agentVerificationAnswer':
+      '認証されたエージェントは名前の横に青い認証バッジが表示されます。彼らは身元確認を完了し、プラットフォームで実績があります。',
+    'support.faq.paymentMethods':
+      'どの支払い方法が受け入れられますか？',
+    'support.faq.paymentMethodsAnswer':
+      '主要なクレジットカード、デビットカード、および各種デジタル決済方法を受け付けてい���す。すべての支払いは暗号化された決済システムを通じて安全に処理されます。',
+    'support.faq.trackOrders':
+      '注文状況を追跡するにはどうすればよいですか？',
+    'support.faq.trackOrdersAnswer':
+      '注文タブで注文状況を追跡できます。エージェントがショッピングと配送プロセスの各ステップを進行するにつれて、リアルタイムで更新を受け取ります。',
+
     // Create Offer Form - Additional Fields
     'createOffer.category': 'カテゴリ',
     'createOffer.price': '価格',
     'createOffer.enterPrice': '価格を入力',
     'createOffer.yourLocation': 'お客様の所在地',
     'createOffer.locationPlaceholder': 'お住まいの都市、国',
-    'createOffer.locationDescription': 'これによりクライアントは配送時間と費用を理解できます',
+    'createOffer.locationDescription':
+      'これによりクライアントは配送時間と費用を理解できます',
     'createOffer.productSpecifications': '商品仕様',
-    'createOffer.addSpecificationPlaceholder': '仕様を追加（例：ブランド：Nike、サイズ：Large）',
+    'createOffer.addSpecificationPlaceholder':
+      '仕様を追加（例：ブランド：Nike、サイズ：Large）',
     'createOffer.add': '追加',
-    'createOffer.specificationsDescription': '技術詳細、寸法、材料、ブランド情報などを追加',
+    'createOffer.specificationsDescription':
+      '技術詳細、寸法、材料、ブランド情報などを追加',
     'createOffer.availableQuantity': '利用可能数量',
     'createOffer.quantityPlaceholder': '何個まで提供可能ですか？',
-    'createOffer.quantityDescription': '提供可能な単位数（デフォルト：1）',
+    'createOffer.quantityDescription':
+      '提供可能な単位数（デフォルト：1）',
     'createOffer.estimatedDeliveryTime': '配送予定時間',
     'createOffer.deliveryTimePlaceholder': '例：3-5営業日、1-2週間',
-    'createOffer.deliveryTimeDescription': 'この商品を調達して配送するのにどのくらい時間がかかりますか？',
+    'createOffer.deliveryTimeDescription':
+      'この商品を調達して配送するのにどのくらい時間がかかりますか？',
     'createOffer.deliveryOptions': '配送オプション',
-    'createOffer.deliveryOptionsDescription': '提供可能なすべての配送方法を選択してください（複数選択可）',
+    'createOffer.deliveryOptionsDescription':
+      '提供可能なすべての配送方法を選択してください（複数選択可）',
     'createOffer.deliverPersonally': '直接配送',
     'createOffer.deliverPersonallyDescription': '対面で配送',
     'createOffer.domesticShipping': '国内配送',
@@ -3914,52 +4548,69 @@ export const translations = {
     'createOffer.expressDelivery': '速達',
     'createOffer.expressDeliveryDescription': '高速配送',
     'createOffer.tags': 'タグ',
-    'createOffer.tagPlaceholder': 'タグを追加（例：高級品、ハンドメイド、輸入品）',
-    'createOffer.tagsDescription': 'クライアントがお客様のオファーを見つけやすくするキーワードを追加',
+    'createOffer.tagPlaceholder':
+      'タグを追加（例：高級品、ハンドメイド、輸入品）',
+    'createOffer.tagsDescription':
+      'クライアントがお客様のオファーを見つけやすくするキーワードを追加',
     'createOffer.productImages': '商品画像',
-    'createOffer.uploadPhotos': 'オファーを紹介するため商品写真をアップロード',
+    'createOffer.uploadPhotos':
+      'オファーを紹介するため商品写真をアップロード',
     'createOffer.chooseImages': '画像を選択',
-    'createOffer.imageDescription': '高品質な画像は信頼性と売上を向上させます。推奨：3-5枚の写真',
-    
+    'createOffer.imageDescription':
+      '高品質な画像は信頼性と売上を向上させます。推奨：3-5枚の写真',
+
     // Create Request Form - Additional Fields
-    'createRequest.successMessage': 'リクエストが正常に作成されました！',
-    'createRequest.successMessageDescription': 'プロキシショッピングリクエストが投稿���れました。エージェントがすぐにオファーの提出を開始します。',
+    'createRequest.successMessage':
+      'リクエストが正常に作成されました！',
+    'createRequest.successMessageDescription':
+      'プロキシショッピングリクエストが投稿���れました。エージェントがすぐにオファーの提出を開始します。',
     'createRequest.errorMessage': 'リクエストの作成に失敗しました',
-    'createRequest.errorMessageDescription': '後でもう一度お試しください。',
+    'createRequest.errorMessageDescription':
+      '後でもう一度お試しください。',
     'createRequest.productOrigin': '商品の原産地',
     'createRequest.selectCountryRegion': '国または地域を選択',
-    'createRequest.productOriginDescription': '商品をどこから購入したいかを指定してください',
+    'createRequest.productOriginDescription':
+      '商品をどこから購入したいかを指定してください',
     'createRequest.designatedPurchasingLocation': '指定購入場所',
-    'createRequest.purchasingLocationPlaceholder': '特定の店舗、モール、または購入エリア',
-    'createRequest.purchasingLocationDescription': '任意：エージェントが買い物すべき特定の店舗やエリアを提案',
+    'createRequest.purchasingLocationPlaceholder':
+      '特定の店舗、モール、または購入エリア',
+    'createRequest.purchasingLocationDescription':
+      '任意：エージェントが買い物すべき特定の店舗やエリアを提案',
     'createRequest.category': 'カテゴリ',
     'createRequest.quantity': '数量',
     'createRequest.quantityPlaceholder': '何個必要ですか？',
     'createRequest.quantityDescription': '購入したいアイテムの数',
     'createRequest.description': '説明',
-    'createRequest.descriptionPlaceholder': '必要なものの概要を提供してください...',
+    'createRequest.descriptionPlaceholder':
+      '必要なものの概要を提供してください...',
     'createRequest.specificRequirements': '詳細要件',
     'createRequest.requirementPlaceholder': '詳細要件を追加...',
     'createRequest.add': '追加',
-    'createRequest.requirementsDescription': '特定の機能、モデル、ブランド、サイズ、色、または技術仕様を1つずつ追加',
+    'createRequest.requirementsDescription':
+      '特定の機能、モデル、ブランド、サイズ、色、または技術仕様を1つずつ追加',
     'createRequest.deliveryMethod': '配送方法',
     'createRequest.shipToMe': '配送してください',
     'createRequest.shipToMeDescription': 'パッケージ配送',
     'createRequest.deliverPersonally': '直接配送',
     'createRequest.deliverPersonallyDescription': '対面配���',
-    'createRequest.personalDeliveryNote': 'エージェントが直接お会いしてアイテムをお渡しします',
-    'createRequest.shippingNote': 'アイテムはお客様の住所に配送されます',
+    'createRequest.personalDeliveryNote':
+      'エージェントが直接お会いしてアイテムをお渡しします',
+    'createRequest.shippingNote':
+      'アイテムはお客様の住所に配送されます',
     'createRequest.expectedDeliveryLocation': '希望配送場所',
     'createRequest.location': '場所',
-    'createRequest.meetingLocationPlaceholder': 'お会いしたい都市、州、または国',
-    'createRequest.meetingLocationDescription': 'アイテムの受け渡しのためエージェントとお会いしたい大まかな場所',
+    'createRequest.meetingLocationPlaceholder':
+      'お会いしたい都市、州、または国',
+    'createRequest.meetingLocationDescription':
+      'アイテムの受け渡しのためエージェントとお会いしたい大まかな場所',
     'createRequest.shippingAddress': '配送先住所',
     'createRequest.fullName': 'フルネーム',
     'createRequest.fullNamePlaceholder': '受取人のフルネームを入力',
     'createRequest.addressLine1': '住所1行目',
     'createRequest.addressLine1Placeholder': '番地、建物番号',
     'createRequest.addressLine2': '住所2行目',
-    'createRequest.addressLine2Placeholder': 'アパート、スイート、ユニット、階数（任意）',
+    'createRequest.addressLine2Placeholder':
+      'アパート、スイート、ユニット、階数（任意）',
     'createRequest.city': '市区町村',
     'createRequest.cityPlaceholder': '市区町村',
     'createRequest.state': '都道府県',
@@ -3969,7 +4620,8 @@ export const translations = {
     'createRequest.country': '国',
     'createRequest.selectCountry': '国を選択',
     'createRequest.attachments': '添付ファイル',
-    'createRequest.uploadDescription': '画像、文書、または仕様書をアップロード',
+    'createRequest.uploadDescription':
+      '画像、文書、または仕様書をアップロード',
     'createRequest.chooseFiles': 'ファイルを選択',
   },
 
@@ -4029,13 +4681,17 @@ export const translations = {
     'common.itemsFound': '{count}개 상품을 찾았습니다',
     'common.noResults': '결과를 찾을 수 없습니다',
     'common.noItemsFound': '상품을 찾을 수 없습니다',
-    'common.noItemsInCategory': '이 카테고리에서 상품을 찾을 수 없습니다',
+    'common.noItemsInCategory':
+      '이 카테고리에서 상품을 찾을 수 없습니다',
     'common.searchOffers': '오퍼 검색...',
     'common.offersFound': '{count}개의 오퍼를 찾았습니다',
     'common.searchRequests': '요청 검색...',
     'common.requestsFound': '{count}개의 요청을 찾았습니다',
     'common.offersCount': '{count}개의 오퍼',
     'common.all': '전체',
+    'common.recently': '최근',
+    'common.reviews': '리뷰',
+    'common.memberSince': '가입일',
     'common.adjustSearchTerms': '검색 조건을 조정해보세요',
 
     // Search
@@ -4063,6 +4719,50 @@ export const translations = {
     'wishlist.emptyWishlist': '위시리스트가 비어있습니다',
     'wishlist.startAdding': '좋아하는 상품을 추가해보세요',
     'wishlist.exploreItems': '상품 둘러보기',
+
+    // Messages
+    'messages.chatFeaturesTitle': '채팅 기능',
+    'messages.chatFeaturesDescription':
+      '에이전트와 클라이언트와 직접 소통',
+    'messages.agentBadge': '에이전트',
+    'messages.today': '오늘',
+    'messages.messageAgentPlaceholder': '에이전트에게 메시지 입력...',
+
+    // Create Request
+    'createRequest.budgetRangeDescription':
+      '예산 범위를 설정하여 에이전트가 가격 기대치를 이해할 수 있도록 도와주세요',
+
+    // Offer Details
+    'offerDetails.shoppingLocation': '쇼핑 위치',
+    'offerDetails.deliveryTime': '배송 시간',
+    'offerDetails.defaultProcessing': '기본 처리',
+    'offerDetails.processing': '처리 중',
+    'offerDetails.authenticity': '정품 보증',
+    'offerDetails.authenticityGuarantee': '정품 보증',
+    'offerDetails.updated': '업데이트 날짜',
+    'offerDetails.ordersCompleted': '완료된 주문',
+    'offerDetails.offeredBy': '제공자',
+    'offerDetails.successRate': '성공률',
+    'offerDetails.offerDetails': '오퍼 상세',
+    'offerDetails.aboutThisOffer': '이 오퍼에 대해',
+    'offerDetails.fastShipping': '빠른 배송',
+    'offerDetails.expressDelivery': '특급 배송',
+    'offerDetails.whatsIncluded': '포함 사항',
+    'offerDetails.serviceInclusions': '서비스 포함',
+    'offerDetails.additionalBenefits': '추가 혜택',
+    'offerDetails.freeCommunication': '무료 소통',
+    'offerDetails.freeCommunicationDesc': '에이전트와 직접 소통',
+    'offerDetails.purchaseReceipt': '구매 영수증',
+    'offerDetails.purchaseReceiptDesc': '모든 구매의 공식 영수증',
+    'offerDetails.trackingInformation': '추적 정보',
+    'offerDetails.trackingInformationDesc': '실시간 패키지 추적',
+    'offerDetails.priceBreakdown': '가격 세부 내역',
+    'offerDetails.shoppingServiceFee': '쇼핑 서비스 수수료',
+    'offerDetails.platformHandlingFee': '플랫폼 처리 수수료',
+    'offerDetails.insuranceProtection': '보험 보호',
+    'offerDetails.totalServiceCost': '총 서비스 비용',
+    'offerDetails.productCostNote': '상품 비용은 결제 시 추가됩니다',
+    'offerDetails.agentStats': '에이전트 통계',
 
     // All Agents Page
     'allAgents.title': '모든 에이전트',
@@ -4098,13 +4798,16 @@ export const translations = {
 
     // Preferences Setup
     'preferences.title': '관심사 선택',
-    'preferences.chooseInterests': '쇼핑 선호도에 맞는 관심사를 선택하세요',
-    'preferences.description': '관심 있는 카테고리를 선택하여 개인화된 추천과 관련 쇼핑 요청을 받아보세요.',
+    'preferences.chooseInterests':
+      '쇼핑 선호도에 맞는 관심사를 선택하세요',
+    'preferences.description':
+      '관심 있는 카테고리를 선택하여 개인화된 추천과 관련 쇼핑 요청을 받아보세요.',
     'preferences.productCategories': '상품 카테고리',
     'preferences.selected': '선택됨',
     'preferences.selectedCategories': '선택된 카테고리',
     'preferences.completeSetup': '설정 완료',
-    'preferences.selectAtLeastOne': '적어도 하나의 카테고리를 선택해주세요',
+    'preferences.selectAtLeastOne':
+      '적어도 하나의 카테고리를 선택해주세요',
 
     // Preferences Categories
     'preferences.categories.beauty': '뷰티 & 스킨케어',
@@ -4142,7 +4845,8 @@ export const translations = {
     'auth.lastName': '성',
     'auth.resetPassword': '비밀번호 재설정',
     'auth.forgotPasswordTitle': '비밀번호 찾기',
-    'auth.resetPasswordDescription': '이메일 주소를 입력하시면 비밀번호 재설정을 위한 인증번호를 보내드립니다.',
+    'auth.resetPasswordDescription':
+      '이메일 주소를 입력하시면 비밀번호 재설정을 위한 인증번호를 보내드립니다.',
     'auth.emailAddress': '이메일 주소',
     'auth.enterEmailAddress': '이메일 주소를 입력하세요',
     'auth.viaPhoneNo': '전화번호로',
@@ -4168,7 +4872,8 @@ export const translations = {
     'auth.alreadyHaveAccount': '이미 계정이 있나요?',
     'auth.languages': '언어',
     'auth.selectLanguages': '사용할 수 있는 언어를 선택하세요',
-    'auth.languagesHelp': '소통할 수 있는 언어를 선택하세요 (최대 5개)',
+    'auth.languagesHelp':
+      '소통할 수 있는 언어를 선택하세요 (최대 5개)',
     'auth.searchLanguages': '언어 검색...',
     'auth.selectedLanguagesCount': '{max}개 중 {count}개 언어 선택됨',
     'auth.passwordsDoNotMatch': '비밀번호가 일치하지 않습니다',
@@ -4196,13 +4901,15 @@ export const translations = {
     'orders.title': '주문',
     'orders.description': '쇼핑 요청과 제안을 추적하세요',
     'orders.signInPrompt': '주문을 보려면 로그인하세요',
-    'orders.signInDescription': '주문 내역에 접근하고, 진행 상황을 추적하며, 쇼핑 요청을 관리하세요.',
+    'orders.signInDescription':
+      '주문 내역에 접근하고, 진행 상황을 추적하며, 쇼핑 요청을 관리하세요.',
     'orders.signIn': '로그인',
     'orders.active': '활성',
     'orders.completed': '완료',
     'orders.cancelled': '취소됨',
     'orders.orderManagement': '주문 관리',
-    'orders.orderManagementDescription': '대리구매 요청과 제안을 추적하고, 진행 상황을 모니터링하며, 에이전트나 고객과 소통하세요.',
+    'orders.orderManagementDescription':
+      '대리구매 요청과 제안을 추적하고, 진행 상황을 모니터링하며, 에이전트나 고객과 소통하세요.',
     'orders.totalOrders': '총 주문 수',
     'orders.shoppingProgress': '쇼핑 진행 상황',
     'orders.itemsPurchased': '상품 구매 완료',
@@ -4230,7 +4937,8 @@ export const translations = {
 
     // Order Steps - Client View
     'orders.steps.requestPosted': '요청 게시됨',
-    'orders.steps.waitingForAgents': '쇼핑 에이전트의 제안을 기다리는 중',
+    'orders.steps.waitingForAgents':
+      '쇼핑 에이전트의 제안을 기다리는 중',
     'orders.steps.agentAssigned': '에이전트 배정됨',
     'orders.steps.shoppingInProgress': '쇼핑 진행 중',
     'orders.steps.itemsPurchased': '상품 구매 완료',
@@ -4255,16 +4963,19 @@ export const translations = {
     'messages.noMessages': '아직 메시지가 없습니다',
     'messages.startChat': '대화 시작',
     'messages.signInPrompt': '메시지를 보려면 로그인하세요',
-    'messages.signInDescription': '에이전트 및 고객과의 대화에 접근하세요.',
+    'messages.signInDescription':
+      '에이전트 및 고객과의 대화에 접근하세요.',
     'messages.searchChats': '채팅 검색',
     'messages.searchPlaceholder': '대화 검색...',
     'messages.chatFeaturesTitle': '메시지 및 채팅 기능',
-    'messages.chatFeaturesDescription': '대행 쇼핑 에이전트와 직접 소통하세요. 요구사항을 공유하고 견적을 받으며 한 곳에서 주문을 추적하세요. 종단간 암호화로 보안을 보장합니다.',
+    'messages.chatFeaturesDescription':
+      '대행 쇼핑 에이전트와 직접 소통하세요. 요구사항을 공유하고 견적을 받으며 한 곳에서 주문을 추적하세요. 종단간 암호화로 보안을 보장합니다.',
     'messages.agentBadge': '에이전트',
     'messages.noConversationsFound': '대화를 찾을 수 없습니다',
     'messages.tryDifferentSearch': '다른 검색어를 시도해보세요',
     'messages.noMessagesYet': '아직 메시지가 없습니다',
-    'messages.startProxyShoppingRequest': '에이전트와 연결하려면 대행 쇼핑 요청을 시작하세요',
+    'messages.startProxyShoppingRequest':
+      '에이전트와 연결하려면 대행 쇼핑 요청을 시작하세요',
     'messages.activeNow': '현재 활성',
     'messages.activeMinutesAgo': '{count}분 전 활성',
     'messages.activeHoursAgo': '{count}시간 전 활성',
@@ -4279,7 +4990,8 @@ export const translations = {
     'profile.appSettings': '앱 설정',
     'profile.translation': '언어',
     'profile.selectLanguage': '언어 선택',
-    'profile.languageDescription': '앱 인터페이스의 선호 언어를 선택하세요',
+    'profile.languageDescription':
+      '앱 인터페이스의 선호 언어를 선택하세요',
     'profile.english': 'English',
     'profile.simplifiedChinese': '简体中文',
     'profile.traditionalChinese': '繁體中文',
@@ -4293,13 +5005,17 @@ export const translations = {
     'profile.accountDescription': '계정과 인증 상태를 관리하세요',
     'profile.editProfile': '프로필 편집',
     'profile.emailVerification': '이메일 인증',
-    'profile.emailVerificationDescPending': '보안 강화를 위해 이메일을 인증하세요',
+    'profile.emailVerificationDescPending':
+      '보안 강화를 위해 이메일을 인증하세요',
     'profile.phoneVerification': '전화 인증',
-    'profile.phoneVerificationDescPending': 'SMS 알림을 받기 위해 전��번호를 인증하세요',
+    'profile.phoneVerificationDescPending':
+      'SMS 알림을 받기 위해 전��번호를 인증하세요',
     'profile.identityVerification': '신원 인증',
-    'profile.identityVerificationDescPending': '프리미엄 기능 잠금 해제를 위해 신원을 인증하세요',
+    'profile.identityVerificationDescPending':
+      '프리미엄 기능 잠금 해제를 위해 신원을 인증하세요',
     'profile.businessVerification': '사업자 인증',
-    'profile.businessVerificationDescPending': '기업 기능을 위해 사업자 인증을 받으세요',
+    'profile.businessVerificationDescPending':
+      '기업 기능을 위해 사업자 인증을 받으세요',
     'profile.paymentSettings': '결제 설정',
     'profile.bankInformation': '은행 정보',
     'profile.creditCards': '신용카드',
@@ -4313,7 +5029,8 @@ export const translations = {
     'profile.privacy': '개인정보처리방침',
     'profile.terms': '이용약관',
     'profile.signInPrompt': '계정에 로그인',
-    'profile.signInDescription': '주문, 메시지, 개인화된 추천에 접근하세요.',
+    'profile.signInDescription':
+      '주문, 메시지, 개인화된 추천에 접근하세요.',
 
     // Edit Profile
     'editProfile.title': '프로필 편집',
@@ -4338,7 +5055,8 @@ export const translations = {
     'editProfile.bioPlaceholder': '자신에 대해 소개해주세요',
     'editProfile.languages': '언어',
     'editProfile.selectLanguages': '사용할 수 있는 언어를 선택하세요',
-    'editProfile.languagesHelp': '소통할 수 있는 언어를 선택하세요 (최대 5개)',
+    'editProfile.languagesHelp':
+      '소통할 수 있는 언어를 선택하세요 (최대 5개)',
     'editProfile.saving': '저장 중...',
 
     // Create
@@ -4352,11 +5070,13 @@ export const translations = {
     'create.requestDescription': '에이전트에게 쇼핑 의뢰',
     'create.offerDescription': '쇼핑 서비스 제공',
     'create.signInPrompt': '요청이나 제안을 생성하려면 로그인하세요',
-    'create.signInDescription': '쇼핑 요청을 게시하거나 서비스를 제공하는 생성 도구에 접근하세요.',
+    'create.signInDescription':
+      '쇼핑 요청을 게시하거나 서비스를 제공하는 생성 도구에 접근하세요.',
 
     // Create Request Form
     'createRequest.infoBoxTitle': '대행 쇼핑 요청',
-    'createRequest.infoBoxDescription': '인증된 에이전트와 연결되는 상세한 대행 쇼핑 요청을 생성하세요. 최상의 결과를 위해 사양, 예산, 일정을 포함하세요.',
+    'createRequest.infoBoxDescription':
+      '인증된 에이전트와 연결되는 상세한 대행 쇼핑 요청을 생성하세요. 최상의 결과를 위해 사양, 예산, 일정을 포함하세요.',
     'createRequest.requestTitle': '요청 제목',
     'createRequest.titlePlaceholder': '무엇이 필요하세요?',
     'createRequest.budgetRange': '예산 범위',
@@ -4365,7 +5085,8 @@ export const translations = {
 
     // Create Offer Form
     'createOffer.infoBoxTitle': '쇼핑 서비스 제안',
-    'createOffer.infoBoxDescription': '쇼핑 전문 지식을 보여주는 매력적인 제안을 만드세요. 전문 분야, 가격, 서비스 세부사항을 포함하세요.',
+    'createOffer.infoBoxDescription':
+      '쇼핑 전문 지식을 보여주는 매력적인 제안을 만드세요. 전문 분야, 가격, 서비스 세부사항을 포함하세요.',
 
     // Categories
     'category.fashion': '패션',
@@ -4385,11 +5106,13 @@ export const translations = {
 
     // Request Steps - Client View
     'requestSteps.client.requestPosted': '요청 게시됨',
-    'requestSteps.client.waitingForAgents': '쇼핑 에이전트의 제안을 기다리는 중',
+    'requestSteps.client.waitingForAgents':
+      '쇼핑 에이전트의 제안을 기다리는 중',
     'requestSteps.client.agentAssigned': '에이전트 배정됨',
     'requestSteps.client.shoppingInProgress': '쇼핑 진행 중',
     'requestSteps.client.itemsPurchased': '상품 구매 완료',
-    'requestSteps.client.itemsBoughtByAgent': '에이전트가 상품 구매함',
+    'requestSteps.client.itemsBoughtByAgent':
+      '에이전트가 상품 구매함',
     'requestSteps.client.packageShipped': '배송 중',
     'requestSteps.client.packageSentOut': '패키지 발송됨',
     'requestSteps.client.delivered': '배송 완료',
@@ -4448,14 +5171,17 @@ export const translations = {
     'feedback.yourComments': '의견',
     'feedback.shareDetails': '경험에 대한 세부사항을 공유해주세요',
     'feedback.commentPlaceholder': '경험을 알려주세요...',
-    'feedback.feedbackHelps': '귀하의 피드백은 플랫폼 개선에 도움이 됩니다',
+    'feedback.feedbackHelps':
+      '귀하의 피드백은 플랫폼 개선에 도움이 됩니다',
     'feedback.guidelines': '피드백 가이드라인',
     'feedback.guideline1': '정직하고 건설적인 의견을 부탁드립니다',
     'feedback.guideline2': '구체적인 세부사항을 제공해주세요',
     'feedback.guideline3': '피드백을 전문적으로 유지해주세요',
-    'feedback.guideline4': '다른 사람들이 정보에 입각한 결정을 내릴 수 있도록 도와주세요',
+    'feedback.guideline4':
+      '다른 사람들이 정보에 입각한 결정을 내릴 수 있도록 도와주세요',
     'feedback.submitFeedback': '피드백 제출',
-    'feedback.selectRatingToContinue': '계속하려면 평가를 선택해주세요',
+    'feedback.selectRatingToContinue':
+      '계속하려면 평가를 선택해주세요',
     'feedback.skipForNow': '나중에 하기',
     'feedback.ratingFair': '보통',
     'feedback.outOfStars': '5점 만점',
@@ -4464,24 +5190,29 @@ export const translations = {
     // Phone Verification
     'phoneVerification.title': '전화번호 인증',
     'phoneVerification.verifyYourPhone': '전화번호를 인증해주세요',
-    'phoneVerification.sendCodeDescription': '본인 확인을 위해 전화번호로 인증번호를 발송해드립니다.',
+    'phoneVerification.sendCodeDescription':
+      '본인 확인을 위해 전화번호로 인증번호를 발송해드립니다.',
     'phoneVerification.phoneLabel': '전화번호',
     'phoneVerification.phonePlaceholder': '전화번호를 입력하세요',
-    'phoneVerification.phoneHint': '국가번호를 포함해주세요 (예: +82 10 1234 5678)',
+    'phoneVerification.phoneHint':
+      '국가번호를 포함해주세요 (예: +82 10 1234 5678)',
     'phoneVerification.sendVerificationCode': '인증번호 발송',
 
     // Identity Verification
     'identityVerification.title': '신원 인증',
-    'identityVerification.description': '신원 확인을 위해 유효한 정부 발행 신분증을 제공해주세요.',
+    'identityVerification.description':
+      '신원 확인을 위해 유효한 정부 발행 신분증을 제공해주세요.',
 
     // Business Verification
     'businessVerification.title': '사업자 인증',
     'businessVerification.businessInformation': '사업자 정보',
-    'businessVerification.tellUsAboutBusiness': '귀하의 사업에 대해 알려주세요',
+    'businessVerification.tellUsAboutBusiness':
+      '귀하의 사업에 대해 알려주세요',
     'businessVerification.businessName': '사업체명',
     'businessVerification.enterBusinessName': '사업체명을 입력하세요',
     'businessVerification.businessType': '사업자 유형',
-    'businessVerification.selectBusinessType': '사업자 유형을 선택하세요',
+    'businessVerification.selectBusinessType':
+      '사업자 유형을 선택하세요',
     'businessVerification.corporation': '법인',
     'businessVerification.llc': '유한회사',
     'businessVerification.partnership': '합명회사',
@@ -4495,13 +5226,16 @@ export const translations = {
     'businessVerification.employees201to1000': '201-1,000명',
     'businessVerification.employees1000Plus': '1,000명 이상',
     'businessVerification.businessDescription': '사업 설명',
-    'businessVerification.describeBusinessIndustry': '귀하의 사업과 업종에 대해 설명해주세요',
+    'businessVerification.describeBusinessIndustry':
+      '귀하의 사업과 업종에 대해 설명해주세요',
 
     // Document Types
     'document.passport': '여권',
-    'document.passportDescription': '사진과 개인정보가 있는 유효한 여권',
+    'document.passportDescription':
+      '사진과 개인정보가 있는 유효한 여권',
     'document.driversLicense': '운전면허증',
-    'document.driversLicenseDescription': '사진이 있는 유효한 운전면허증',
+    'document.driversLicenseDescription':
+      '사진이 있는 유효한 운전면허증',
     'document.nationalId': '주민등록증',
     'document.nationalIdDescription': '정부 발행 주민등록증',
     'document.militaryId': '군인신분증',
@@ -4517,7 +5251,8 @@ export const translations = {
     // Bank Information
     'bank.title': '은행 정보',
     'bank.addBankInfo': '은행 정보 추가',
-    'bank.description': '결제 및 송금을 위해 은행 계좌 정보를 추가하세요.',
+    'bank.description':
+      '결제 및 송금을 위해 은행 계좌 정보를 추가하세요.',
     'bank.fullName': '성명',
     'bank.placeholders.fullName': '계좌 소유자의 성명을 입력하세요',
     'bank.country': '국가',
@@ -4544,9 +5279,12 @@ export const translations = {
     'bank.zipCode': '우편번호',
     'bank.placeholders.zipCode': '우편번호를 입력하세요',
     'bank.addressCountry': '국가',
-    'bank.verificationProcess': '은행 계좌 확인에 1-2 영업일이 소요될 수 있습니다',
-    'bank.securityInfo': '귀하의 은행 정보는 암호화되어 안전하게 보관됩니다',
-    'bank.verificationTime': '확인은 일반적으로 1-2 영업일이 소요됩니다',
+    'bank.verificationProcess':
+      '은행 계좌 확인에 1-2 영업일이 소요될 수 있습니다',
+    'bank.securityInfo':
+      '귀하의 은행 정보는 암호화되어 안전하게 보관됩니다',
+    'bank.verificationTime':
+      '확인은 일반적으로 1-2 영업일이 소요됩니다',
     'bank.paymentsInfo': '확인 후 이 계좌로 결제를 받을 수 있습니다',
     'bank.save': '은행 정보 저장',
 
@@ -4580,34 +5318,42 @@ export const translations = {
     'creditCards.addNewCard': '새 카드 추가',
     'creditCards.noCards': '아직 추가된 신용카드가 없습니다',
     'creditCards.confirmDelete': '카드 삭제',
-    'creditCards.confirmDeleteMessage': '이 신용카드를 삭제하시겠습니까?',
+    'creditCards.confirmDeleteMessage':
+      '이 신용카드를 삭제하시겠습니까?',
     'creditCards.deleteCard': '카드 삭제',
     'creditCards.saveChanges': '변경사항 저장',
 
     // Add Credit Card
     'addCreditCard.paymentSecurity': '결제 보안',
-    'addCreditCard.security1': '귀하의 결제 정보는 암호화되어 안전하게 보관됩니다',
+    'addCreditCard.security1':
+      '귀하의 결제 정보는 암호화되어 안전하게 보관됩니다',
     'addCreditCard.security2': '업계 표준 보안 조치를 사용합니다',
-    'addCreditCard.security3': '카드 정보는 저희 서버에 저장되지 않습니다',
+    'addCreditCard.security3':
+      '카드 정보는 저희 서버에 저장되지 않습니다',
 
     // Two-Factor Authentication
     'twoFactor.title': '2단계 인증',
     'twoFactor.secureAccount': '계정 보호',
-    'twoFactor.description': '2단계 인증으로 계정에 추가 보안 계층을 더하세요.',
+    'twoFactor.description':
+      '2단계 인증으로 계정에 추가 보안 계층을 더하세요.',
     'twoFactor.recommended': '권장',
-    'twoFactor.recommendedText': '2단계 인증은 계정 보안을 크게 향상시킵니다.',
-    'twoFactor.currentlyDisabled': '2단계 인증이 현재 비활성화되어 있습니다',
+    'twoFactor.recommendedText':
+      '2단계 인증은 계정 보안을 크게 향상시킵니다.',
+    'twoFactor.currentlyDisabled':
+      '2단계 인증이 현재 비활성화되어 있습니다',
 
     // Change Password
     'changePassword.title': '비밀번호 변경',
     'changePassword.updatePassword': '비밀번호 업데이트',
     'changePassword.requirements': '비밀번호 요구사항',
     'changePassword.currentPassword': '현재 비밀번호',
-    'changePassword.enterCurrentPassword': '현재 비밀번호를 입력하세요',
+    'changePassword.enterCurrentPassword':
+      '현재 비밀번호를 입력하세요',
     'changePassword.newPassword': '새 비밀번호',
     'changePassword.enterNewPassword': '새 비밀번호를 입력하세요',
     'changePassword.confirmNewPassword': '새 비밀번호 확인',
-    'changePassword.passwordRequirements': '비밀번호는 다음 요구사항을 충족해야 합니다:',
+    'changePassword.passwordRequirements':
+      '비밀번호는 다음 요구사항을 충족해야 합니다:',
     'changePassword.requirement1': '최소 8자 이상',
     'changePassword.requirement2': '대문자와 소문자 포함',
     'changePassword.requirement3': '숫자 또는 특수문자 1개 이상 포함',
@@ -4617,27 +5363,37 @@ export const translations = {
     'about.title': '회사 소개',
     'about.subtitle': '전 세계 쇼핑객들을 연결',
     'about.welcomeTitle': '플랫폼에 오신 것을 환영합니다',
-    'about.welcomeDescription': '전 세계 신뢰할 수 있는 쇼핑 에이전트와 구매자를 연결하여 글로벌 쇼핑 방식을 혁신하고 있습니다.',
+    'about.welcomeDescription':
+      '전 세계 신뢰할 수 있는 쇼핑 에이전트와 구매자를 연결하여 글로벌 쇼핑 방식을 혁신하고 있습니다.',
     'about.ourMission': '우리의 사명',
-    'about.ourMissionDescription': '구매자와 인증된 쇼핑 에이전트를 연결하는 신뢰할 수 있는 마켓플레이스를 구축하여 모든 사람에게 글로벌 쇼핑을 접근 가능하고 안전하며 편리하게 만드는 것입니다.',
+    'about.ourMissionDescription':
+      '구매자와 인증된 쇼핑 에이전트를 연결하는 신뢰할 수 있는 마켓플레이스를 구축하여 모든 사람에게 글로벌 쇼핑을 접근 가능하고 안전하며 편리하게 만드는 것입니다.',
     'about.ourValues': '우리의 가치',
     'about.customerFirst': '고객 우선',
-    'about.customerFirstDescription': '우리가 내리는 모든 결정은 사용자의 요구와 만족도를 우선시합니다.',
+    'about.customerFirstDescription':
+      '우리가 내리는 모든 결정은 사용자의 요구와 만족도를 우선시합니다.',
     'about.trustSafety': '신뢰와 안전',
-    'about.trustSafetyDescription': '모든 사용자를 위해 최고 수준의 보안과 검증 기준을 유지합니다.',
+    'about.trustSafetyDescription':
+      '모든 사용자를 위해 최고 수준의 보안과 검증 기준을 유지합니다.',
     'about.globalCommunity': '글로벌 커뮤니티',
-    'about.globalCommunityDescription': '국경을 넘나들며 사람들을 연결하여 기회를 창출한다고 믿습니다.',
+    'about.globalCommunityDescription':
+      '국경을 넘나들며 사람들을 연결하여 기회를 창출한다고 믿습니다.',
     'about.qualityExcellence': '품질과 우수성',
-    'about.qualityExcellenceDescription': '모든 서비스와 상호작용에서 우수성을 추구합니다.',
+    'about.qualityExcellenceDescription':
+      '모든 서비스와 상호작용에서 우수성을 추구합니다.',
     'about.howItWorks': '작동 원리',
     'about.step1Title': '요청 생성',
-    'about.step1Description': '필요한 것에 대한 세부 정보와 함께 쇼핑 요청을 게시하세요.',
+    'about.step1Description':
+      '필요한 것에 대한 세부 정보와 함께 쇼핑 요청을 게시하세요.',
     'about.step2Title': '제안 받기',
-    'about.step2Description': '인증된 에이전트가 요청을 충족하는 제안을 제출합니다.',
+    'about.step2Description':
+      '인증된 에이전트가 요청을 충족하는 제안을 제출합니다.',
     'about.step3Title': '에이전트 선택',
-    'about.step3Description': '최적의 제안을 선택하고 선택을 확인하세요.',
+    'about.step3Description':
+      '최적의 제안을 선택하고 선택을 확인하세요.',
     'about.step4Title': '배송 받기',
-    'about.step4Description': '주문을 추적하고 안전하게 상품을 받으세요.',
+    'about.step4Description':
+      '주문을 추적하고 안전하게 상품을 받으세요.',
     'about.ourJourney': '우리의 여정',
     'about.byTheNumbers': '숫자로 보는',
     'about.activeUsers': '활성 사용자',
@@ -4651,52 +5407,74 @@ export const translations = {
     'terms.title': '서비스 이용약관',
     'terms.lastUpdated': '최종 업데이트: 2024년 1월 1일',
     'terms.acceptanceTitle': '1. 약관 수락',
-    'terms.acceptanceText': '본 플랫폼에 접근하고 사용함으로써 귀하는 본 계약의 약관과 조항에 구속되는 것에 동의하고 수락합니다.',
+    'terms.acceptanceText':
+      '본 플랫폼에 접근하고 사용함으로써 귀하는 본 계약의 약관과 조항에 구속되는 것에 동의하고 수락합니다.',
     'terms.useLicenseTitle': '2. 사용 라이선스',
-    'terms.useLicenseText': '개인적, 비상업적 일시적 열람 목적으로만 저희 플랫폼의 자료 사본 하나를 임시로 다운로드할 수 있는 권한이 부여됩니다. 이는 라이선스의 부여이며 소유권 이전이 아니며, 이 라이선스 하에서는 다음을 할 수 없습니다:',
+    'terms.useLicenseText':
+      '개인적, 비상업적 일시적 열람 목적으로만 저희 플랫폼의 자료 사본 하나를 임시로 다운로드할 수 있는 권한이 부여됩니다. 이는 라이선스의 부여이며 소유권 이전이 아니며, 이 라이선스 하에서는 다음을 할 수 없습니다:',
     'terms.useLicenseRestriction1': '자료를 수정하거나 복사하는 것',
-    'terms.useLicenseRestriction2': '상업적 목적이나 공개 전시를 위해 자료를 사용하는 것',
-    'terms.useLicenseRestriction3': '플랫폼에 포함된 소프트웨어를 역공학하려고 시도하는 것',
-    'terms.useLicenseRestriction4': '자료에서 저작권이나 기타 소유권 표시를 제거하는 것',
+    'terms.useLicenseRestriction2':
+      '상업적 목적이나 공개 전시를 위해 자료를 사용하는 것',
+    'terms.useLicenseRestriction3':
+      '플랫폼에 포함된 소프트웨어를 역공학하려고 시도하는 것',
+    'terms.useLicenseRestriction4':
+      '자료에서 저작권이나 기타 소유권 표시를 제거하는 것',
     'terms.userAccountsTitle': '3. 사용자 계정',
-    'terms.userAccountsText': '저희와 계정을 생성할 때는 항상 정확하고 완전하며 최신인 정보를 제공해야 합니다. 비밀번호를 보호하고 계정의 기밀성을 유지하는 것은 귀하의 책임입니다.',
+    'terms.userAccountsText':
+      '저희와 계정을 생성할 때는 항상 정확하고 완전하며 최신인 정보를 제공해야 합니다. 비밀번호를 보호하고 계정의 기밀성을 유지하는 것은 귀하의 책임입니다.',
     'terms.procurementTitle': '4. 조달 서비스',
-    'terms.procurementText': '저희 플랫폼은 구매자와 쇼핑 에이전트 간의 연결을 촉진합니다. 직접적인 조달 서비스를 제공하지는 않지만 인증된 에이전트가 사용자에게 서비스를 제공할 수 있게 합니다.',
+    'terms.procurementText':
+      '저희 플랫폼은 구매자와 쇼핑 에이전트 간의 연결을 촉진합니다. 직접적인 조달 서비스를 제공하지는 않지만 인증된 에이전트가 사용자에게 서비스를 제공할 수 있게 합니다.',
     'terms.prohibitedTitle': '5. 금지된 사용',
-    'terms.prohibitedText': '다음 목적으로는 저희 서비스를 사용할 수 없습니다:',
-    'terms.prohibited1': '불법적인 목적이나 다른 사람에게 불법 행위를 수행하도록 유도하는 것',
-    'terms.prohibited2': '국제적, 연방, 지방 또는 주 규정, 규칙, 법률 또는 지역 조례를 위반하는 것',
-    'terms.prohibited3': '저희 지적재산권이나 타인의 지적재산권을 침해하는 것',
-    'terms.prohibited4': '괴롭힘, 학대, 모욕, 해를 끼침, 명예훼손, 중상, 경시, 위협 또는 차별하는 것',
+    'terms.prohibitedText':
+      '다음 목적으로는 저희 서비스를 사용할 수 없습니다:',
+    'terms.prohibited1':
+      '불법적인 목적이나 다른 사람에게 불법 행위를 수행하도록 유도하는 것',
+    'terms.prohibited2':
+      '국제적, 연방, 지방 또는 주 규정, 규칙, 법률 또는 지역 조례를 위반하는 것',
+    'terms.prohibited3':
+      '저희 지적재산권이나 타인의 지적재산권을 침해하는 것',
+    'terms.prohibited4':
+      '괴롭힘, 학대, 모욕, 해를 끼침, 명예훼손, 중상, 경시, 위협 또는 차별하는 것',
     'terms.liabilityTitle': '6. 책임 제한',
-    'terms.liabilityText': '어떠한 경우에도 저희 회사와 그 이사, 직원, 파트너, 대리인, 공급업체 또는 계열사는 간접적, 우발적, 징벌적, 결과적 또는 특별 손해에 대해 책임지지 않습니다.',
+    'terms.liabilityText':
+      '어떠한 경우에도 저희 회사와 그 이사, 직원, 파트너, 대리인, 공급업체 또는 계열사는 간접적, 우발적, 징벌적, 결과적 또는 특별 손해에 대해 책임지지 않습니다.',
     'terms.governingTitle': '7. 준거법',
-    'terms.governingText': '이 약관과 조건은 저희 회사가 등록된 관할권의 법률에 의해 규율되고 해석됩니다.',
+    'terms.governingText':
+      '이 약관과 조건은 저희 회사가 등록된 관할권의 법률에 의해 규율되고 해석됩니다.',
 
     // Privacy Policy
     'privacy.title': '개인정보처리방침',
     'privacy.lastUpdated': '최종 업데이트: 2024년 1월 1일',
     'privacy.informationWeCollect': '수집하는 정보',
-    'privacy.informationWeCollectContent': '계정 생성, 구매, 지원 문의 시 등 귀하가 직접 제공하는 정보를 수집합니다.',
+    'privacy.informationWeCollectContent':
+      '계정 생성, 구매, 지원 문의 시 등 귀하가 직접 제공하는 정보를 수집합니다.',
     'privacy.howWeUseInfo': '정보 사용 방법',
-    'privacy.howWeUseInfoContent': '수집한 정보는 다음 목적으로 사용됩니다:',
+    'privacy.howWeUseInfoContent':
+      '수집한 정보는 다음 목적으로 사용됩니다:',
     'privacy.useInfo1': '서비스 제공, 유지 및 개선',
     'privacy.useInfo2': '거래 처리 및 관련 정보 전송',
-    'privacy.useInfo3': '기술 알림, 업데이트, 보안 경고 및 지원 메시지 전송',
+    'privacy.useInfo3':
+      '기술 알림, 업데이트, 보안 경고 및 지원 메시지 전송',
     'privacy.useInfo4': '의견, 질문에 대한 응답 및 고객 서비스 제공',
     'privacy.informationSharing': '정보 공유',
-    'privacy.informationSharingContent': '본 정책에 명시된 ���우를 제외하고는 귀하의 동의 없이 개인정보를 제3자에게 판매, 거래 또는 양도하지 않습니다.',
+    'privacy.informationSharingContent':
+      '본 정책에 명시된 ���우를 제외하고는 귀하의 동의 없이 개인정보를 제3자에게 판매, 거래 또는 양도하지 않습니다.',
     'privacy.dataSecurity': '데이터 보안',
-    'privacy.dataSecurityContent': '무단 접근, 변경, 공개 또는 파괴로부터 개인정보를 보호하기 위해 적절한 보안 조치를 구현합니다.',
+    'privacy.dataSecurityContent':
+      '무단 접근, 변경, 공개 또는 파괴로부터 개인정보를 보호하기 위해 적절한 보안 조치를 구현합니다.',
     'privacy.yourRights': '귀하의 권리',
-    'privacy.yourRightsContent': '개인정보에 대한 접근, 업데이트 또는 삭제 권리가 있습니다. 또한 저희의 특정 통신을 거부할 수도 있습니다.',
+    'privacy.yourRightsContent':
+      '개인정보에 대한 접근, 업데이트 또는 삭제 권리가 있습니다. 또한 저희의 특정 통신을 거부할 수도 있습니다.',
     'privacy.contactUs': '문의하기',
-    'privacy.contactUsContent': '이 개인정보처리방침에 대한 질문이 있으시면 지원 채널을 통해 문의해 주세요.',
+    'privacy.contactUsContent':
+      '이 개인정보처리방침에 대한 질문이 있으시면 지원 채널을 통해 문의해 주세요.',
 
     // Support
     'support.title': '지원',
     'support.needHelp': '도움이 필요하신가요?',
-    'support.needHelpDescription': '저희 지원팀이 질문이나 문제에 대해 도움을 드리겠습니다.',
+    'support.needHelpDescription':
+      '저희 지원팀이 질문이나 문제에 대해 도움을 드리겠습니다.',
     'support.contactMethod': '선호하는 연락 방법을 선택하세요',
     'support.contact': '연락',
     'support.emailSupport': '이메일 지원',
@@ -4706,7 +5484,8 @@ export const translations = {
     'support.liveChatDescription': '지원팀과 실시간으로 채팅하기',
     'support.liveChatAction': '채팅 시작',
     'support.phoneSupport': '전화 지원',
-    'support.phoneSupportDescription': '즉시 도움을 받으려면 전화하세요',
+    'support.phoneSupportDescription':
+      '즉시 도움을 받으려면 전화하세요',
     'support.phoneSupportAction': '지금 전화',
     'support.firstName': '이름',
     'support.firstNamePlaceholder': '이름을 입력하세요',
@@ -4721,28 +5500,36 @@ export const translations = {
     'support.subjectBilling': '결제 관련 질문',
     'support.subjectFeature': '기능 요청',
     'support.message': '메시지',
-    'support.messagePlaceholder': '문제나 질문을 자세히 설명해주세요...',
+    'support.messagePlaceholder':
+      '문제나 질문을 자세히 설명해주세요...',
     'support.sendMessage': '메시지 보내기',
     'support.commonQuestions': '자주 묻는 질문',
     'support.helpfulResources': '유용한 리소스',
     'support.userGuide': '사용자 가이드',
-    'support.userGuideDescription': '플랫폼 사용에 대한 완전한 가이드',
+    'support.userGuideDescription':
+      '플랫폼 사용에 대한 완전한 가이드',
     'support.videoTutorials': '비디오 튜토리얼',
     'support.videoTutorialsDescription': '단계별 비디오 지침',
     'support.apiDocumentation': 'API 문서',
     'support.apiDocumentationDescription': '개발자를 위한 기술 문서',
     'support.faq.createRequest': '쇼핑 요청을 어떻�� 생성하나요?',
-    'support.faq.createRequestAnswer': '쇼핑 요청을 생성하려면 생성 탭으로 이동하여 상품 세부정보, 예산, 선호사항을 포함한 요청 양식을 작성한 후 에이전트가 검토할 수 있도록 제출하세요.',
-    'support.faq.agentVerification': '에이전트가 인증되었는지 어떻게 알 수 있나요?',
-    'support.faq.agentVerificationAnswer': '인증된 에이전트는 이름 옆에 파란색 인증 배지가 있습니다. 그들은 신원 인증을 완료했으며 플랫폼에서 검증된 기록을 가지고 있습니다.',
+    'support.faq.createRequestAnswer':
+      '쇼핑 요청을 생성하려면 생성 탭으로 이동하여 상품 세부정보, 예산, 선호사항을 포함한 요청 양식을 작성한 후 에이전트가 검토할 수 있도록 제출하세요.',
+    'support.faq.agentVerification':
+      '에이전트가 인증되었는지 어떻게 알 수 있나요?',
+    'support.faq.agentVerificationAnswer':
+      '인증된 에이전트는 이름 옆에 파란색 인증 배지가 있습니다. 그들은 신원 인증을 완료했으며 플랫폼에서 검증된 기록을 가지고 있습니다.',
     'support.faq.paymentMethods': '어떤 결제 방법이 허용되나요?',
-    'support.faq.paymentMethodsAnswer': '주요 신용카드, 직불카드, 다양한 디지털 결제 방법을 허용합니다. 모든 결제는 암호화된 결제 시스템을 통해 안전하게 처리됩니다.',
+    'support.faq.paymentMethodsAnswer':
+      '주요 신용카드, 직불카드, 다양한 디지털 결제 방법을 허용합니다. 모든 결제는 암호화된 결제 시스템을 통해 안전하게 처리됩니다.',
     'support.faq.trackOrders': '주문 상태를 어떻게 추적할 수 있나요?',
-    'support.faq.trackOrdersAnswer': '주문 탭에서 주문 상태를 추적할 수 있습니다. 에이전트가 쇼핑 및 배송 프로세스의 각 단계를 진행할 때마다 실시간 업데이트를 받게 됩니다.',
+    'support.faq.trackOrdersAnswer':
+      '주문 탭에서 주문 상태를 추적할 수 있습니다. 에이전트가 쇼핑 및 배송 프로세스의 각 단계를 진행할 때마다 실시간 업데이트를 받게 됩니다.',
 
     // Preferences - Missing selectAtLeastOne key
-    'preferences.selectAtLeastOne': '최소 하나의 카테고리를 선택해주세요',
-    
+    'preferences.selectAtLeastOne':
+      '최소 하나의 카테고리를 선택해주세요',
+
     // Preference Categories
     'preferences.categories.beauty': '뷰티 & 스킨케어',
     'preferences.categories.home': '가구 & 홈용품',
@@ -4756,26 +5543,32 @@ export const translations = {
     'preferences.categories.bags': '가방 & 핸드백',
     'preferences.categories.automotive': '자동차 & 오토바이',
     'preferences.categories.others': '기타',
-    
+
     // Create Offer Form - Additional Fields
     'createOffer.category': '카테고리',
     'createOffer.price': '가격',
     'createOffer.enterPrice': '가격 입력',
     'createOffer.yourLocation': '귀하의 위치',
     'createOffer.locationPlaceholder': '거주하는 도시, 국가',
-    'createOffer.locationDescription': '이는 고객이 배송 시간과 비용을 이해하는데 도움이 됩니다',
+    'createOffer.locationDescription':
+      '이는 고객이 배송 시간과 비용을 이해하는데 도움이 됩니다',
     'createOffer.productSpecifications': '제품 사양',
-    'createOffer.addSpecificationPlaceholder': '사양 추가 (예: 브랜드: ���이키, 사이즈: 라지)',
+    'createOffer.addSpecificationPlaceholder':
+      '사양 추가 (예: 브랜드: ���이키, 사이즈: 라지)',
     'createOffer.add': '추가',
-    'createOffer.specificationsDescription': '기술 세부사항, 치수, 재료, 브랜드 정보 등을 추가하세요',
+    'createOffer.specificationsDescription':
+      '기술 세부사항, 치수, 재료, 브랜드 정보 등을 추가하세요',
     'createOffer.availableQuantity': '이용 가능 수량',
     'createOffer.quantityPlaceholder': '몇 개까지 제공 가능한가요?',
-    'createOffer.quantityDescription': '제공할 수 있는 단위 수량 (기본값: 1)',
+    'createOffer.quantityDescription':
+      '제공할 수 있는 단위 수량 (기본값: 1)',
     'createOffer.estimatedDeliveryTime': '예상 배송 시간',
     'createOffer.deliveryTimePlaceholder': '예: 3-5 영업일, 1-2주',
-    'createOffer.deliveryTimeDescription': '이 상품을 조달하고 배송하는데 얼마나 걸리나요?',
+    'createOffer.deliveryTimeDescription':
+      '이 상품을 조달하고 배송하는데 얼마나 걸리나요?',
     'createOffer.deliveryOptions': '배송 옵션',
-    'createOffer.deliveryOptionsDescription': '제공할 수 있는 모든 배송 방법을 선택하세요 (복수 선택 가능)',
+    'createOffer.deliveryOptionsDescription':
+      '제공할 수 있는 모든 배송 방법을 선택하세요 (복수 선택 가능)',
     'createOffer.deliverPersonally': '직접 배송',
     'createOffer.deliverPersonallyDescription': '대면 배송',
     'createOffer.domesticShipping': '국내 배송',
@@ -4785,52 +5578,70 @@ export const translations = {
     'createOffer.expressDelivery': '익스프레스 배송',
     'createOffer.expressDeliveryDescription': '빠른 배송',
     'createOffer.tags': '태그',
-    'createOffer.tagPlaceholder': '태그 추가 (예: 럭셔리, 수제, 수입품)',
-    'createOffer.tagsDescription': '고객이 귀하의 제안을 찾는데 도움이 되는 키워드를 추가하세요',
+    'createOffer.tagPlaceholder':
+      '태그 추가 (예: 럭셔리, 수제, 수입품)',
+    'createOffer.tagsDescription':
+      '고객이 귀하의 제안을 찾는데 도움이 되는 키워드를 추가하세요',
     'createOffer.productImages': '제품 이미지',
-    'createOffer.uploadPhotos': '제안을 보여주기 위한 제품 사진을 업로드하세요',
+    'createOffer.uploadPhotos':
+      '제안을 보여주기 위한 제품 사진을 업로드하세요',
     'createOffer.chooseImages': '이미지 선택',
-    'createOffer.imageDescription': '고품질 이미지는 신뢰도와 판매량을 증가시킵니다. 권장: 3-5장의 사진',
-    
+    'createOffer.imageDescription':
+      '고품질 이미지는 신뢰도와 판매량을 증가시킵니다. 권장: 3-5장의 사진',
+
     // Create Request Form - Additional Fields
-    'createRequest.successMessage': '요청이 성공적으로 생성되었습니다!',
-    'createRequest.successMessageDescription': '대리구매 요청이 게시되었습니다. 에이전트들이 곧 제안을 제출하기 시작할 것입니다.',
+    'createRequest.successMessage':
+      '요청이 성공적으로 생성되었습니다!',
+    'createRequest.successMessageDescription':
+      '대리구매 요청이 게시되었습니다. 에이전트들이 곧 제안을 제출하기 시작할 것입니다.',
     'createRequest.errorMessage': '요청 생성에 실패했습니다',
-    'createRequest.errorMessageDescription': '나중에 다시 시도해주세요.',
+    'createRequest.errorMessageDescription':
+      '나중에 다시 시도해주세요.',
     'createRequest.productOrigin': '제품 원산지',
     'createRequest.selectCountryRegion': '국가 또는 지역 선택',
-    'createRequest.productOriginDescription': '제품을 어디서 구매하고 싶은지 지정하세요',
+    'createRequest.productOriginDescription':
+      '제품을 어디서 구매하고 싶은지 지정하세요',
     'createRequest.designatedPurchasingLocation': '지정 구매 장소',
-    'createRequest.purchasingLocationPlaceholder': '특정 매장, 쇼핑몰 또는 구매 지역',
-    'createRequest.purchasingLocationDescription': '선택사항: 에이전트가 쇼핑해야 할 특정 매장이나 지역을 제안하세요',
+    'createRequest.purchasingLocationPlaceholder':
+      '특정 매장, 쇼핑몰 또는 구매 지역',
+    'createRequest.purchasingLocationDescription':
+      '선택사항: 에이전트가 쇼핑해야 할 특정 매장이나 지역을 제안하세요',
     'createRequest.category': '카테고리',
     'createRequest.quantity': '수량',
     'createRequest.quantityPlaceholder': '몇 개가 필요한가요?',
     'createRequest.quantityDescription': '구매하고 싶은 상품의 수량',
     'createRequest.description': '설명',
-    'createRequest.descriptionPlaceholder': '필요한 것에 대한 일반적인 개요를 제공하세요...',
+    'createRequest.descriptionPlaceholder':
+      '필요한 것에 대한 일반적인 개요를 제공하세요...',
     'createRequest.specificRequirements': '구체적인 요구사항',
-    'createRequest.requirementPlaceholder': '구체적인 요구사항을 추가하세요...',
+    'createRequest.requirementPlaceholder':
+      '구체적인 요구사항을 추가하세요...',
     'createRequest.add': '추가',
-    'createRequest.requirementsDescription': '구체적인 기능, 모델, 브랜드, 사이즈, 색상 또는 기술 사양을 하나씩 추가하세요',
+    'createRequest.requirementsDescription':
+      '구체적인 기능, 모델, 브랜드, 사이즈, 색상 또는 기술 사양을 하나씩 추가하세요',
     'createRequest.deliveryMethod': '배송 방법',
     'createRequest.shipToMe': '배송해 주세요',
     'createRequest.shipToMeDescription': '택배 배송',
     'createRequest.deliverPersonally': '직접 배송',
     'createRequest.deliverPersonallyDescription': '대면 배송',
-    'createRequest.personalDeliveryNote': '에이전트가 직접 만나서 상품을 전달할 것입니다',
+    'createRequest.personalDeliveryNote':
+      '에이전트가 직접 만나서 상품을 전달할 것입니다',
     'createRequest.shippingNote': '상품이 귀하의 주소로 배송됩니다',
     'createRequest.expectedDeliveryLocation': '예상 배송 장소',
     'createRequest.location': '장소',
-    'createRequest.meetingLocationPlaceholder': '만나고 싶은 도시, 주 또는 국가',
-    'createRequest.meetingLocationDescription': '상품 인계를 위해 에이전트와 만나고 싶은 대략적인 위치',
+    'createRequest.meetingLocationPlaceholder':
+      '만나고 싶은 도시, 주 또는 국가',
+    'createRequest.meetingLocationDescription':
+      '상품 인계를 위해 에이전트와 만나고 싶은 대략적인 위치',
     'createRequest.shippingAddress': '배송 주소',
     'createRequest.fullName': '성명',
-    'createRequest.fullNamePlaceholder': '받는 사람의 성명을 입력하세요',
+    'createRequest.fullNamePlaceholder':
+      '받는 사람의 성명을 입력하세요',
     'createRequest.addressLine1': '주소 1줄',
     'createRequest.addressLine1Placeholder': '도로명 주소, 건물 번호',
     'createRequest.addressLine2': '주소 2줄',
-    'createRequest.addressLine2Placeholder': '아파트, 스위트, 유닛, 층수 (선택사항)',
+    'createRequest.addressLine2Placeholder':
+      '아파트, 스위트, 유닛, 층수 (선택사항)',
     'createRequest.city': '도시',
     'createRequest.cityPlaceholder': '도시',
     'createRequest.state': '주/도',
@@ -4840,7 +5651,8 @@ export const translations = {
     'createRequest.country': '국가',
     'createRequest.selectCountry': '국가 선택',
     'createRequest.attachments': '첨부파일',
-    'createRequest.uploadDescription': '이미지, 문서 또는 사양서를 업로드하세요',
+    'createRequest.uploadDescription':
+      '이미지, 문서 또는 사양서를 업로드하세요',
     'createRequest.chooseFiles': '파일 선택',
-  }
+  },
 };
