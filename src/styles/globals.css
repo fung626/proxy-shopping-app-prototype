@@ -1,0 +1,233 @@
+/* Import fonts - uncomment the local font if you have AirbnbCereal files */
+/*
+@font-face {
+  font-family: 'AirbnbCereal';
+  src: url('/fonts/AirbnbCereal-Light.woff2') format('woff2'),
+       url('/fonts/AirbnbCereal-Light.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'AirbnbCereal';
+  src: url('/fonts/AirbnbCereal-Book.woff2') format('woff2'),
+       url('/fonts/AirbnbCereal-Book.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'AirbnbCereal';
+  src: url('/fonts/AirbnbCereal-Medium.woff2') format('woff2'),
+       url('/fonts/AirbnbCereal-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'AirbnbCereal';
+  src: url('/fonts/AirbnbCereal-Bold.woff2') format('woff2'),
+       url('/fonts/AirbnbCereal-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+*/
+
+/* Alternative: Import similar fonts from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Circular+Std:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Font family - AirbnbCereal with fallbacks */
+  --font-family: 'AirbnbCereal', 'Circular Std', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+  --font-size: 16px;
+  --background: #ffffff;
+  --foreground: #0f172a;
+  --card: #ffffff;
+  --card-foreground: #0f172a;
+  --popover: #ffffff;
+  --popover-foreground: #0f172a;
+  --primary: #dc2626;
+  --primary-foreground: #ffffff;
+  --secondary: #fef2f2;
+  --secondary-foreground: #dc2626;
+  --muted: #f9fafb;
+  --muted-foreground: #6b7280;
+  --accent: #fee2e2;
+  --accent-foreground: #dc2626;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #e5e7eb;
+  --input: #e5e7eb;
+  --input-background: #ffffff;
+  --ring: #dc2626;
+  --radius: 0.5rem;
+}
+
+.dark {
+  --background: #0f172a;
+  --foreground: #f8fafc;
+  --card: #1e293b;
+  --card-foreground: #f8fafc;
+  --popover: #1e293b;
+  --popover-foreground: #f8fafc;
+  --primary: #dc2626;
+  --primary-foreground: #ffffff;
+  --secondary: #450a0a;
+  --secondary-foreground: #fca5a5;
+  --muted: #374151;
+  --muted-foreground: #9ca3af;
+  --accent: #450a0a;
+  --accent-foreground: #fca5a5;
+  --destructive: #ef4444;
+  --destructive-foreground: #ffffff;
+  --border: #374151;
+  --input: #374151;
+  --input-background: #1e293b;
+  --ring: #dc2626;
+}
+
+@theme {
+  --default-transition-duration: 150ms;
+  --default-transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  --font-family-sans: var(--font-family);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-input-background: var(--input-background);
+  --color-ring: var(--ring);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-family);
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+html {
+  font-size: var(--font-size);
+}
+
+/* Mobile-optimized utilities */
+.safe-area-inset-bottom {
+  padding-bottom: max(0.5rem, env(safe-area-inset-bottom));
+}
+
+.safe-area-inset-top {
+  padding-top: max(0.5rem, env(safe-area-inset-top));
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Scrollbar utilities */
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Profile page button overrides for iOS-native feel */
+.profile-row-button {
+  @apply rounded-none;
+}
+
+.profile-row-button:hover {
+  @apply rounded-none;
+}
+
+/* Orders page - Shopping progress info boxes */
+.shopping-progress-box {
+  background-color: rgb(34, 197, 94, 0.1);
+  border: 1px solid rgb(34, 197, 94, 0.2);
+}
+
+.dark .shopping-progress-box {
+  background-color: rgb(34, 197, 94, 0.15);
+  border: 1px solid rgb(34, 197, 94, 0.3);
+}
+
+.shopping-progress-title {
+  color: rgb(21, 128, 61);
+}
+
+.dark .shopping-progress-title {
+  color: rgb(134, 239, 172);
+}
+
+.shopping-progress-text {
+  color: rgb(22, 101, 52);
+}
+
+.dark .shopping-progress-text {
+  color: rgb(187, 247, 208);
+}
+
+.shopping-progress-blue-text {
+  color: rgb(29, 78, 216);
+}
+
+.dark .shopping-progress-blue-text {
+  color: rgb(147, 197, 253);
+}
+
+.shopping-progress-tracking {
+  background-color: rgb(255, 255, 255);
+  border: 1px solid rgb(229, 231, 235);
+}
+
+.dark .shopping-progress-tracking {
+  background-color: rgb(31, 41, 55);
+  border: 1px solid rgb(75, 85, 99);
+}
