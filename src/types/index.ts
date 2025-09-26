@@ -59,6 +59,9 @@ export interface User {
   };
   creditCards?: CreditCard[];
   bankInformation?: BankInformation;
+  transactionPasswordEnabled?: boolean;
+  transactionPasswordSet?: boolean;
+  biometricAuthEnabled?: boolean;
 }
 
 // Demo accounts type
@@ -78,6 +81,8 @@ export interface DemoAccount extends User {
   };
   creditCards?: CreditCard[];
   bankInformation?: BankInformation;
+  transactionPasswordEnabled?: boolean;
+  transactionPasswordSet?: boolean;
 }
 
 // Authentication form types

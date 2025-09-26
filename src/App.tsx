@@ -47,7 +47,7 @@ const AppContent = React.memo(function AppContent() {
           (pageType === 'verification' && (currentPage === 'email' || currentPage === 'phone' || currentPage === 'identity' || currentPage === 'business')) ||
           (pageType === 'info' && (currentPage === 'support' || currentPage === 'privacy' || currentPage === 'terms' || currentPage === 'about-us')) ||
           (pageType === 'security' && (currentPage === 'two-factor-auth' || currentPage === 'change-password' || currentPage === 'delete-account')) ||
-          (pageType === 'account' && (currentPage === 'edit-account' || currentPage === 'bank-information' || currentPage === 'credit-cards' || currentPage === 'add-credit-card')) ||
+          (pageType === 'account' && (currentPage === 'edit-account' || currentPage === 'bank-information' || currentPage === 'credit-cards' || currentPage === 'add-credit-card' || currentPage === 'transaction-password' || currentPage === 'biometric-auth')) ||
           (pageType === 'arbitration' && currentPage === 'arbitration-centre')) {
         console.log(`Skipping timeout for ${currentPage} - using direct render`);
         return;
@@ -781,6 +781,52 @@ const AppContent = React.memo(function AppContent() {
     );
   }
 
+  // DIRECT BYPASS FOR TRANSACTION PASSWORD PAGE - AVOID TIMEOUT ISSUES
+  if (currentPage === 'transaction-password' && pageType === 'account') {
+    console.log('DIRECT BYPASS: Rendering transaction password page directly to avoid timeout');
+    
+    const TransactionPasswordPageComponent = React.lazy(() => 
+      import('./pages/TransactionPasswordPage').then(module => ({
+        default: module.TransactionPasswordPage
+      }))
+    );
+    
+    return (
+      <ErrorBoundary fallback={<FallbackComponent />}>
+        <React.Suspense fallback={<QuickLoader />}>
+          <TransactionPasswordPageComponent 
+            user={user}
+            onBack={handleBackFromPage}
+            onSave={pageManagerProps.onSave}
+          />
+        </React.Suspense>
+      </ErrorBoundary>
+    );
+  }
+
+  // DIRECT BYPASS FOR BIOMETRIC AUTH PAGE - AVOID TIMEOUT ISSUES
+  if (currentPage === 'biometric-auth' && pageType === 'account') {
+    console.log('DIRECT BYPASS: Rendering biometric auth page directly to avoid timeout');
+    
+    const BiometricAuthPageComponent = React.lazy(() => 
+      import('./pages/BiometricAuthPage').then(module => ({
+        default: module.BiometricAuthPage
+      }))
+    );
+    
+    return (
+      <ErrorBoundary fallback={<FallbackComponent />}>
+        <React.Suspense fallback={<QuickLoader />}>
+          <BiometricAuthPageComponent 
+            user={user}
+            onBack={handleBackFromPage}
+            onSave={pageManagerProps.onSave}
+          />
+        </React.Suspense>
+      </ErrorBoundary>
+    );
+  }
+
   // DIRECT BYPASS FOR REQUEST DETAILS PAGE - AVOID TIMEOUT ISSUES
   if (currentPage === 'request-details' && pageType === 'order' && selectedRequest) {
     console.log('DIRECT BYPASS: Rendering request-details directly to avoid timeout');
@@ -1011,6 +1057,8 @@ const AppContent = React.memo(function AppContent() {
         onNavigateToDeleteAccount={() => navigateToPage('security', 'delete-account')}
         onNavigateToBankInformation={() => navigateToPage('account', 'bank-information')}
         onNavigateToCreditCards={() => navigateToPage('account', 'credit-cards')}
+        onNavigateToTransactionPassword={() => navigateToPage('account', 'transaction-password')}
+        onNavigateToBiometricAuth={() => navigateToPage('account', 'biometric-auth')}
         onViewAllRequests={() => {
           setPageType('explore');
           setCurrentPage('all-requests');

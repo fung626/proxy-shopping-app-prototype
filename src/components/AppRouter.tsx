@@ -36,6 +36,8 @@ interface AppRouterProps {
   onNavigateToDeleteAccount: () => void;
   onNavigateToBankInformation: () => void;
   onNavigateToCreditCards: () => void;
+  onNavigateToTransactionPassword: () => void;
+  onNavigateToBiometricAuth: () => void;
   onViewAllRequests?: () => void;
   onViewAllOffers?: () => void;
   onViewAllAgents?: () => void;
@@ -76,6 +78,8 @@ export const AppRouter = memo(function AppRouter({
   onNavigateToDeleteAccount,
   onNavigateToBankInformation,
   onNavigateToCreditCards,
+  onNavigateToTransactionPassword,
+  onNavigateToBiometricAuth,
   onViewAllRequests,
   onViewAllOffers,
   onViewAllAgents,
@@ -152,6 +156,8 @@ export const AppRouter = memo(function AppRouter({
           onNavigateToDeleteAccount={onNavigateToDeleteAccount}
           onNavigateToBankInformation={onNavigateToBankInformation}
           onNavigateToCreditCards={onNavigateToCreditCards}
+          onNavigateToTransactionPassword={onNavigateToTransactionPassword}
+          onNavigateToBiometricAuth={onNavigateToBiometricAuth}
         />;
       default:
         return <ExploreTab />;

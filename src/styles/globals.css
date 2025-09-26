@@ -231,3 +231,91 @@ html {
   background-color: rgb(31, 41, 55);
   border: 1px solid rgb(75, 85, 99);
 }
+
+/* Offer Details Page - Authenticity and Fast Shipping boxes improvement */
+.offer-details-authenticity-box {
+  background-color: rgb(240, 253, 244);
+  border: 1px solid rgb(187, 247, 208);
+}
+
+.dark .offer-details-authenticity-box {
+  background-color: rgb(22, 101, 52, 0.3);
+  border: 1px solid rgb(22, 101, 52, 0.8);
+}
+
+.offer-details-fast-shipping-box {
+  background-color: rgb(239, 246, 255);
+  border: 1px solid rgb(191, 219, 254);
+}
+
+.dark .offer-details-fast-shipping-box {
+  background-color: rgb(30, 58, 138, 0.3);
+  border: 1px solid rgb(30, 58, 138, 0.8);
+}
+
+.offer-details-authenticity-text {
+  color: rgb(22, 101, 52);
+}
+
+.dark .offer-details-authenticity-text {
+  color: rgb(187, 247, 208);
+}
+
+.offer-details-fast-shipping-text {
+  color: rgb(30, 64, 175);
+}
+
+.dark .offer-details-fast-shipping-text {
+  color: rgb(191, 219, 254);
+}
+
+.offer-details-authenticity-subtext {
+  color: rgb(21, 128, 61);
+}
+
+.dark .offer-details-authenticity-subtext {
+  color: rgb(134, 239, 172);
+}
+
+.offer-details-fast-shipping-subtext {
+  color: rgb(29, 78, 216);
+}
+
+.dark .offer-details-fast-shipping-subtext {
+  color: rgb(147, 197, 253);
+}
+
+/* Transaction Password Page - Info box improvement */
+.transaction-password-info-box {
+  background-color: rgb(239, 246, 255);
+  border: 1px solid rgb(191, 219, 254);
+}
+
+.dark .transaction-password-info-box {
+  background-color: rgb(30, 58, 138, 0.2);
+  border: 1px solid rgb(30, 58, 138, 0.6);
+}
+
+.transaction-password-info-icon-bg {
+  background-color: rgb(219, 234, 254);
+}
+
+.dark .transaction-password-info-icon-bg {
+  background-color: rgb(30, 58, 138, 0.4);
+}
+
+.transaction-password-info-title {
+  color: rgb(30, 64, 175);
+}
+
+.dark .transaction-password-info-title {
+  color: rgb(191, 219, 254);
+}
+
+.transaction-password-info-text {
+  color: rgb(29, 78, 216);
+}
+
+.dark .transaction-password-info-text {
+  color: rgb(147, 197, 253);
+}

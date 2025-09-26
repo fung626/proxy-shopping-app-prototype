@@ -108,7 +108,6 @@
     --color-green-700: oklch(.527 .154 150.069);
     --color-green-800: oklch(.448 .119 151.328);
     --color-green-900: oklch(.393 .095 152.535);
-    --color-green-950: oklch(.266 .065 152.934);
     --color-blue-50: oklch(.97 .014 254.604);
     --color-blue-100: oklch(.932 .032 255.585);
     --color-blue-200: oklch(.882 .059 254.128);
@@ -121,8 +120,11 @@
     --color-blue-900: oklch(.379 .146 265.522);
     --color-blue-950: oklch(.282 .091 267.935);
     --color-purple-50: oklch(.977 .014 308.299);
+    --color-purple-100: oklch(.946 .033 307.174);
     --color-purple-200: oklch(.902 .063 306.703);
+    --color-purple-400: oklch(.714 .203 305.504);
     --color-purple-500: oklch(.627 .265 303.9);
+    --color-purple-600: oklch(.558 .288 302.321);
     --color-purple-800: oklch(.438 .218 303.724);
     --color-purple-900: oklch(.381 .176 304.987);
     --color-gray-100: oklch(.967 .003 264.542);
@@ -1739,6 +1741,10 @@
     border-color: var(--color-red-200);
   }
 
+  .border-red-500 {
+    border-color: var(--color-red-500);
+  }
+
   .border-transparent {
     border-color: #0000;
   }
@@ -1991,6 +1997,10 @@
 
   .bg-purple-50 {
     background-color: var(--color-purple-50);
+  }
+
+  .bg-purple-100 {
+    background-color: var(--color-purple-100);
   }
 
   .bg-red-50 {
@@ -2510,6 +2520,14 @@
 
   .text-purple-500 {
     color: var(--color-purple-500);
+  }
+
+  .text-purple-600 {
+    color: var(--color-purple-600);
+  }
+
+  .text-red-500 {
+    color: var(--color-red-500);
   }
 
   .text-red-600 {
@@ -3425,6 +3443,12 @@
   }
 
   @media (prefers-color-scheme: dark) {
+    .dark\:border-green-700 {
+      border-color: var(--color-green-700);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
     .dark\:border-green-800 {
       border-color: var(--color-green-800);
     }
@@ -3509,18 +3533,6 @@
   }
 
   @media (prefers-color-scheme: dark) {
-    .dark\:bg-green-950\/30 {
-      background-color: color-mix(in srgb, oklch(.266 .065 152.934) 30%, transparent);
-    }
-
-    @supports (color: color-mix(in lab, red, red)) {
-      .dark\:bg-green-950\/30 {
-        background-color: color-mix(in oklab, var(--color-green-950) 30%, transparent);
-      }
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
     .dark\:bg-input\/30 {
       background-color: color-mix(in srgb, var(--input) 30%, transparent);
     }
@@ -3541,6 +3553,12 @@
       .dark\:bg-orange-900\/20 {
         background-color: color-mix(in oklab, var(--color-orange-900) 20%, transparent);
       }
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .dark\:bg-purple-900 {
+      background-color: var(--color-purple-900);
     }
   }
 
@@ -3607,6 +3625,12 @@
   @media (prefers-color-scheme: dark) {
     .dark\:text-green-400 {
       color: var(--color-green-400);
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .dark\:text-purple-400 {
+      color: var(--color-purple-400);
     }
   }
 
@@ -4001,6 +4025,92 @@ html {
 .dark .shopping-progress-tracking {
   background-color: #1f2937;
   border: 1px solid #4b5563;
+}
+
+.offer-details-authenticity-box {
+  background-color: #f0fdf4;
+  border: 1px solid #bbf7d0;
+}
+
+.dark .offer-details-authenticity-box {
+  background-color: #1665344d;
+  border: 1px solid #166534cc;
+}
+
+.offer-details-fast-shipping-box {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+}
+
+.dark .offer-details-fast-shipping-box {
+  background-color: #1e3a8a4d;
+  border: 1px solid #1e3a8acc;
+}
+
+.offer-details-authenticity-text {
+  color: #166534;
+}
+
+.dark .offer-details-authenticity-text {
+  color: #bbf7d0;
+}
+
+.offer-details-fast-shipping-text {
+  color: #1e40af;
+}
+
+.dark .offer-details-fast-shipping-text {
+  color: #bfdbfe;
+}
+
+.offer-details-authenticity-subtext {
+  color: #15803d;
+}
+
+.dark .offer-details-authenticity-subtext {
+  color: #86efac;
+}
+
+.offer-details-fast-shipping-subtext {
+  color: #1d4ed8;
+}
+
+.dark .offer-details-fast-shipping-subtext {
+  color: #93c5fd;
+}
+
+.transaction-password-info-box {
+  background-color: #eff6ff;
+  border: 1px solid #bfdbfe;
+}
+
+.dark .transaction-password-info-box {
+  background-color: #1e3a8a33;
+  border: 1px solid #1e3a8a99;
+}
+
+.transaction-password-info-icon-bg {
+  background-color: #dbeafe;
+}
+
+.dark .transaction-password-info-icon-bg {
+  background-color: #1e3a8a66;
+}
+
+.transaction-password-info-title {
+  color: #1e40af;
+}
+
+.dark .transaction-password-info-title {
+  color: #bfdbfe;
+}
+
+.transaction-password-info-text {
+  color: #1d4ed8;
+}
+
+.dark .transaction-password-info-text {
+  color: #93c5fd;
 }
 
 @property --tw-translate-x {

@@ -363,20 +363,20 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
               
               {/* Additional offer highlights */}
               <div className="grid grid-cols-2 gap-3 mt-4">
-                <div className="p-3 rounded-lg bg-green-50 dark:bg-green-950/30 border border-green-200 dark:border-green-800">
+                <div className="p-3 rounded-lg offer-details-authenticity-box">
                   <div className="flex items-center space-x-2 mb-1">
                     <Shield className="h-4 w-4 text-green-600" />
-                    <span className="text-sm font-medium text-green-800 dark:text-green-200">{t('offerDetails.authenticity')}</span>
+                    <span className="text-sm font-medium offer-details-authenticity-text">{t('offerDetails.authenticity')}</span>
                   </div>
-                  <p className="text-xs text-green-700 dark:text-green-300">{t('offerDetails.authenticityGuarantee')}</p>
+                  <p className="text-xs offer-details-authenticity-subtext">{t('offerDetails.authenticityGuarantee')}</p>
                 </div>
                 
-                <div className="p-3 rounded-lg bg-blue-50 dark:bg-blue-950/30 border border-blue-200 dark:border-blue-800">
+                <div className="p-3 rounded-lg offer-details-fast-shipping-box">
                   <div className="flex items-center space-x-2 mb-1">
                     <Truck className="h-4 w-4 text-blue-600" />
-                    <span className="text-sm font-medium text-blue-800 dark:text-blue-200">{t('offerDetails.fastShipping')}</span>
+                    <span className="text-sm font-medium offer-details-fast-shipping-text">{t('offerDetails.fastShipping')}</span>
                   </div>
-                  <p className="text-xs text-blue-700 dark:text-blue-300">{t('offerDetails.expressDelivery')}</p>
+                  <p className="text-xs offer-details-fast-shipping-subtext">{t('offerDetails.expressDelivery')}</p>
                 </div>
               </div>
             </div>
