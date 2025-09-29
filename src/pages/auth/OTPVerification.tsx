@@ -94,7 +94,7 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
           </div>
 
           {/* Demo Info */}
-          <div className="mb-8 p-4 bg-muted/30 rounded-xl text-left">
+          <div className="mb-8 p-4 bg-card border border-border rounded-xl text-left">
             <h3 className="font-medium text-foreground mb-2">{t('auth.demoMode')}</h3>
             <p className="text-sm text-muted-foreground">
               {t('auth.demoModeDescription')}
@@ -115,7 +115,7 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
                     onChange={(e) => handleInputChange(index, e.target.value)}
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={handlePaste}
-                    className="w-12 h-12 text-center text-lg font-medium bg-muted/20 border-muted rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
+                    className="w-12 h-12 text-center text-lg font-medium bg-input-background border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
                     maxLength={1}
                     autoComplete="off"
                   />

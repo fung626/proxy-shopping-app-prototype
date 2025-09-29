@@ -98,7 +98,7 @@ export function BiometricAuthPage({
         <div className="space-y-6">
           {/* Main Toggle */}
           <div className="space-y-2">
-            <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+            <div className="flex items-center justify-between p-4 bg-card border border-border rounded-lg">
               <div className="flex items-center space-x-3">
                 <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
                   <Fingerprint className="h-5 w-5 text-primary" />
@@ -118,7 +118,7 @@ export function BiometricAuthPage({
 
           {/* Information Cards */}
           <div className="space-y-4">
-            <div className="p-4 bg-muted/50 rounded-lg">
+            <div className="p-4 bg-card border border-border rounded-lg">
               <div className="flex items-start space-x-3">
                 <div className="w-8 h-8 bg-blue-100 dark:bg-blue-900 rounded-full flex items-center justify-center flex-shrink-0">
                   <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400" />
@@ -130,7 +130,7 @@ export function BiometricAuthPage({
               </div>
             </div>
 
-            <div className="p-4 bg-muted/50 rounded-lg">
+            <div className="p-4 bg-card border border-border rounded-lg">
               <div className="flex items-start space-x-3">
                 <div className="w-8 h-8 bg-green-100 dark:bg-green-900 rounded-full flex items-center justify-center flex-shrink-0">
                   <Fingerprint className="h-4 w-4 text-green-600 dark:text-green-400" />
@@ -142,7 +142,7 @@ export function BiometricAuthPage({
               </div>
             </div>
 
-            <div className="p-4 bg-muted/50 rounded-lg">
+            <div className="p-4 bg-card border border-border rounded-lg">
               <div className="flex items-start space-x-3">
                 <div className="w-8 h-8 bg-purple-100 dark:bg-purple-900 rounded-full flex items-center justify-center flex-shrink-0">
                   <Smartphone className="h-4 w-4 text-purple-600 dark:text-purple-400" />
@@ -156,23 +156,23 @@ export function BiometricAuthPage({
           </div>
 
           {/* Security Notice */}
-          <div className="p-4 bg-muted/50 rounded-lg">
-            <h4 className="font-medium mb-2">{t('biometricAuth.securityNoticeTitle')}</h4>
-            <ul className="text-sm text-muted-foreground space-y-1">
-              <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground" />
+          <div className="p-4 bg-card border border-border rounded-lg">
+            <h4 className="font-medium text-foreground mb-3">{t('biometricAuth.securityNoticeTitle')}</h4>
+            <ul className="text-sm text-muted-foreground space-y-2">
+              <li className="flex items-start space-x-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <span>{t('biometricAuth.securityPoint1')}</span>
               </li>
-              <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground" />
+              <li className="flex items-start space-x-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <span>{t('biometricAuth.securityPoint2')}</span>
               </li>
-              <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground" />
+              <li className="flex items-start space-x-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <span>{t('biometricAuth.securityPoint3')}</span>
               </li>
-              <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 rounded-full bg-muted-foreground" />
+              <li className="flex items-start space-x-3">
+                <div className="w-1.5 h-1.5 rounded-full bg-primary mt-2 flex-shrink-0" />
                 <span>{t('biometricAuth.securityPoint4')}</span>
               </li>
             </ul>
@@ -180,14 +180,14 @@ export function BiometricAuthPage({
 
           {/* Current Status */}
           {biometricEnabled && (
-            <div className="p-3 bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-700 rounded-md">
-              <div className="flex items-center space-x-2">
-                <Fingerprint className="h-5 w-5 text-green-600 dark:text-green-400" />
-                <span className="font-medium text-green-800 dark:text-green-200">
+            <div className="p-4 biometric-auth-active-box rounded-lg">
+              <div className="flex items-center space-x-3">
+                <Fingerprint className="h-5 w-5 biometric-auth-active-icon" />
+                <span className="font-semibold biometric-auth-active-title">
                   {t('biometricAuth.biometricActive')}
                 </span>
               </div>
-              <p className="text-sm text-green-700 dark:text-green-300 mt-1">
+              <p className="text-sm biometric-auth-active-text mt-2">
                 {t('biometricAuth.biometricActiveDescription')}
               </p>
             </div>

@@ -25,48 +25,165 @@ const AppContent = React.memo(function AppContent() {
   const [selectedAgentId, setSelectedAgentId] = useState<string | null>(null);
   const [inChatView, setInChatView] = useState(false);
   const [favorites, setFavorites] = useState<Set<number>>(new Set());
+  const [pageLoadStartTime, setPageLoadStartTime] = useState<number | null>(null);
 
-  // Emergency reset for timeout protection
+  // Global safety timeouts - BUT ONLY for pages that DON'T use direct bypass
+  React.useEffect(() => {
+    if (currentPage && pageType) {
+      const startTime = Date.now();
+      setPageLoadStartTime(startTime);
+      
+      // List of pages that use direct bypasses - NO timeout needed for these
+      const directBypassPages = [
+        'offer-details', 'view-offers', 'category', 'wishlist', 'request-details', 
+        'explore-request-details', 'all-agents', 'all-offers', 'all-requests', 'search',
+        'email', 'phone', 'identity', 'business', 'support', 'privacy', 'terms', 'about-us',
+        'two-factor-auth', 'change-password', 'delete-account', 'edit-account', 
+        'bank-information', 'credit-cards', 'add-credit-card', 'transaction-password', 
+        'biometric-auth', 'arbitration-centre'
+      ];
+      
+      // Skip global timeouts for direct bypass pages - they handle their own errors
+      if (directBypassPages.includes(currentPage)) {
+        console.log(`✅ Global timeout SKIPPED for direct bypass page: ${pageType}/${currentPage}`);
+        return;
+      }
+      
+      console.warn(`⚠️ Global timeout ACTIVE for PageManager page: ${pageType}/${currentPage}`);
+      
+      // First timeout - give a warning
+      const warningTimeout = setTimeout(() => {
+        console.warn(`⚠️ PageManager page ${pageType}/${currentPage} taking longer than expected (5s)`);
+      }, 5000);
+      
+      // Second timeout - serious warning
+      const criticalTimeout = setTimeout(() => {
+        console.error(`🚨 CRITICAL: PageManager page ${pageType}/${currentPage} exceeded 8s - preparing emergency reset`);
+      }, 8000);
+      
+      // Final timeout - force reset
+      const globalTimeout = setTimeout(() => {
+        const elapsed = Date.now() - startTime;
+        console.error(`🚨 GLOBAL SAFETY TIMEOUT: PageManager page ${pageType}/${currentPage} exceeded 10s limit (${elapsed}ms)`);
+        console.error('FORCING EMERGENCY RESET TO PREVENT INFINITE LOADING');
+        emergencyReset();
+      }, 10000); // 10 second absolute maximum
+      
+      return () => {
+        clearTimeout(warningTimeout);
+        clearTimeout(criticalTimeout);
+        clearTimeout(globalTimeout);
+        setPageLoadStartTime(null);
+      };
+    }
+  }, [currentPage, pageType]);
+
+  // Additional safety: reset if stuck on same page for too long - BUT ONLY for PageManager pages
+  React.useEffect(() => {
+    if (currentPage && pageType) {
+      // List of pages that use direct bypasses - NO stuck detection needed
+      const directBypassPages = [
+        'offer-details', 'view-offers', 'category', 'wishlist', 'request-details', 
+        'explore-request-details', 'all-agents', 'all-offers', 'all-requests', 'search',
+        'email', 'phone', 'identity', 'business', 'support', 'privacy', 'terms', 'about-us',
+        'two-factor-auth', 'change-password', 'delete-account', 'edit-account', 
+        'bank-information', 'credit-cards', 'add-credit-card', 'transaction-password', 
+        'biometric-auth', 'arbitration-centre'
+      ];
+      
+      // Skip stuck detection for direct bypass pages
+      if (directBypassPages.includes(currentPage)) {
+        return;
+      }
+      
+      const stuckTimeout = setTimeout(() => {
+        console.error(`🚨 STUCK PAGE DETECTION: PageManager page ${pageType}/${currentPage} has been active for 30s`);
+        console.error('User may be stuck - providing emergency reset option');
+        
+        // Show a toast or overlay option for the user to manually reset
+        const shouldReset = window.confirm(
+          `The page "${currentPage}" seems to be taking a long time to load. Would you like to go back to the home screen?`
+        );
+        
+        if (shouldReset) {
+          emergencyReset();
+        }
+      }, 30000); // 30 second check for stuck pages
+      
+      return () => clearTimeout(stuckTimeout);
+    }
+  }, [currentPage, pageType]);
+
+  // Enhanced emergency reset with better logging and cleanup
   const emergencyReset = useCallback(() => {
-    console.warn('Emergency reset triggered');
+    console.warn('🚨 EMERGENCY RESET TRIGGERED');
+    console.warn('Resetting all page state to prevent infinite loading...');
+    
+    // Clear all page state immediately
     setCurrentPage(null);
     setPageType(null);
     setSelectedRequest(null);
     setSelectedOffer(null);
     setSelectedCategory(null);
     setShowAuth(false);
-  }, []);
+    setInChatView(false);
+    setSelectedAgentId(null);
+    
+    // Force active tab back to explore if not already there
+    if (activeTab !== 'explore') {
+      console.warn('Forcing tab back to explore to ensure stable state');
+      setActiveTab('explore');
+    }
+    
+    console.warn('✅ Emergency reset completed - app should be stable now');
+  }, [activeTab]);
 
-  // Timeout protection - skip for pages we handle directly
+  // Enhanced timeout protection with shorter timeouts and better error handling
   React.useEffect(() => {
     if (currentPage && pageType) {
       console.log(`Loading page: ${pageType}/${currentPage} at ${new Date().toISOString()}`);
       
-      // Skip timeout for pages we handle directly to avoid timeout issues
-      if (currentPage === 'offer-details' || currentPage === 'view-offers' || currentPage === 'category' || currentPage === 'wishlist' || currentPage === 'request-details' || currentPage === 'explore-request-details' || currentPage === 'all-agents' || currentPage === 'all-offers' || currentPage === 'all-requests' || currentPage === 'search' ||
-          (pageType === 'verification' && (currentPage === 'email' || currentPage === 'phone' || currentPage === 'identity' || currentPage === 'business')) ||
-          (pageType === 'info' && (currentPage === 'support' || currentPage === 'privacy' || currentPage === 'terms' || currentPage === 'about-us')) ||
-          (pageType === 'security' && (currentPage === 'two-factor-auth' || currentPage === 'change-password' || currentPage === 'delete-account')) ||
-          (pageType === 'account' && (currentPage === 'edit-account' || currentPage === 'bank-information' || currentPage === 'credit-cards' || currentPage === 'add-credit-card' || currentPage === 'transaction-password' || currentPage === 'biometric-auth')) ||
-          (pageType === 'arbitration' && currentPage === 'arbitration-centre')) {
-        console.log(`Skipping timeout for ${currentPage} - using direct render`);
+      // List of pages that use direct bypasses - no timeout needed
+      const directBypassPages = [
+        'offer-details', 'view-offers', 'category', 'wishlist', 'request-details', 
+        'explore-request-details', 'all-agents', 'all-offers', 'all-requests', 'search',
+        'email', 'phone', 'identity', 'business', 'support', 'privacy', 'terms', 'about-us',
+        'two-factor-auth', 'change-password', 'delete-account', 'edit-account', 
+        'bank-information', 'credit-cards', 'add-credit-card', 'transaction-password', 
+        'biometric-auth', 'arbitration-centre'
+      ];
+      
+      if (directBypassPages.includes(currentPage)) {
+        console.log(`✓ Direct bypass page: ${currentPage} - no timeout needed`);
         return;
       }
       
-      const timeout = 5000; // 5s for other pages
+      // Much shorter timeout for remaining pages to prevent hanging
+      const timeout = 2000; // Reduced to 2s to prevent long hangs
+      
+      console.warn(`⚠️ Using PageManager for ${pageType}/${currentPage} - applying ${timeout}ms timeout`);
       
       const timeoutId = setTimeout(() => {
-        console.error(`TIMEOUT: Page ${pageType}/${currentPage} failed to load after ${timeout}ms`);
-        console.error('Current state:', { currentPage, pageType, selectedRequest, selectedOffer, selectedCategory });
+        console.error(`❌ CRITICAL TIMEOUT: Page ${pageType}/${currentPage} failed to load after ${timeout}ms`);
+        console.error('Forcing emergency reset to prevent infinite loading...');
+        console.error('State snapshot:', { 
+          currentPage, 
+          pageType, 
+          selectedRequest: !!selectedRequest, 
+          selectedOffer: !!selectedOffer, 
+          selectedCategory: !!selectedCategory,
+          timestamp: new Date().toISOString()
+        });
+        
+        // Force reset immediately
         emergencyReset();
       }, timeout);
       
       return () => {
-        console.log(`Cleaning up timeout for ${pageType}/${currentPage}`);
         clearTimeout(timeoutId);
       };
     }
-  }, [currentPage, pageType, emergencyReset, selectedOffer, selectedRequest, selectedCategory]);
+  }, [currentPage, pageType, emergencyReset]);
 
   // Basic handlers without complex memoization
   const handleTabChange = (tab: AppTab) => setActiveTab(tab);
@@ -256,19 +373,45 @@ const AppContent = React.memo(function AppContent() {
     }
   };
 
-  // Fallback component
-  const FallbackComponent = () => (
+  // Enhanced fallback component with more debugging info
+  const FallbackComponent = ({ error }: { error?: Error }) => (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="text-center max-w-md">
         <div className="text-6xl mb-4">⚠️</div>
         <h2 className="text-xl font-semibold mb-2">Something went wrong</h2>
-        <p className="text-muted-foreground mb-4">We're having trouble loading this page.</p>
-        <button
-          onClick={emergencyReset}
-          className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
-        >
-          Go Back to Home
-        </button>
+        <p className="text-muted-foreground mb-2">We're having trouble loading this page.</p>
+        {error && (
+          <details className="text-xs text-muted-foreground mb-4 text-left">
+            <summary className="cursor-pointer mb-2">Error Details</summary>
+            <pre className="bg-muted p-2 rounded text-xs overflow-auto">
+              {error.message}
+            </pre>
+          </details>
+        )}
+        {currentPage && pageType && (
+          <p className="text-xs text-muted-foreground mb-4">
+            Failed page: {pageType}/{currentPage}
+            {pageLoadStartTime && (
+              <span className="block">
+                Load time: {Date.now() - pageLoadStartTime}ms
+              </span>
+            )}
+          </p>
+        )}
+        <div className="flex gap-2 justify-center">
+          <button
+            onClick={emergencyReset}
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
+          >
+            Go Back to Home
+          </button>
+          <button
+            onClick={() => window.location.reload()}
+            className="px-4 py-2 bg-muted text-muted-foreground rounded-lg hover:bg-muted/80"
+          >
+            Reload App
+          </button>
+        </div>
       </div>
     </div>
   );
@@ -806,7 +949,7 @@ const AppContent = React.memo(function AppContent() {
 
   // DIRECT BYPASS FOR BIOMETRIC AUTH PAGE - AVOID TIMEOUT ISSUES
   if (currentPage === 'biometric-auth' && pageType === 'account') {
-    console.log('DIRECT BYPASS: Rendering biometric auth page directly to avoid timeout');
+    console.log('✅ DIRECT BYPASS: Rendering biometric auth page directly (NO TIMEOUT WARNINGS)');
     
     const BiometricAuthPageComponent = React.lazy(() => 
       import('./pages/BiometricAuthPage').then(module => ({
@@ -975,11 +1118,41 @@ const AppContent = React.memo(function AppContent() {
     );
   }
 
-  // Render other pages with protection
+  // Render remaining pages with enhanced error protection
   if (currentPage && pageType) {
+    console.warn(`⚠️ FALLBACK: Using PageManager for ${pageType}/${currentPage}`);
+    console.warn('This page should ideally have a direct bypass to prevent timeout issues');
+    
+    // Additional safety check - if we've been here too long, reset
+    const renderStartTime = Date.now();
+    
     return (
-      <ErrorBoundary fallback={<FallbackComponent />}>
-        <React.Suspense fallback={<QuickLoader />}>
+      <ErrorBoundary 
+        fallback={<FallbackComponent />}
+        onError={(error) => {
+          console.error('PageManager Error Boundary triggered:', error);
+          console.error('Forcing emergency reset due to PageManager error');
+          setTimeout(emergencyReset, 100);
+        }}
+      >
+        <React.Suspense 
+          fallback={
+            <div className="min-h-screen bg-background flex items-center justify-center">
+              <div className="text-center">
+                <QuickLoader />
+                <p className="text-sm text-muted-foreground mt-4">
+                  Loading {pageType}/{currentPage}...
+                </p>
+                <button
+                  onClick={emergencyReset}
+                  className="mt-4 px-4 py-2 text-sm bg-destructive text-destructive-foreground rounded hover:bg-destructive/90"
+                >
+                  Cancel Loading
+                </button>
+              </div>
+            </div>
+          }
+        >
           <PageManager
             currentPage={currentPage}
             pageType={pageType}

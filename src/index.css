@@ -1520,6 +1520,10 @@
     overflow: hidden;
   }
 
+  .overflow-auto {
+    overflow: auto;
+  }
+
   .overflow-hidden {
     overflow: hidden;
   }
@@ -2910,6 +2914,18 @@
   }
 
   @media (hover: hover) {
+    .hover\:bg-muted\/80:hover {
+      background-color: color-mix(in srgb, var(--muted) 80%, transparent);
+    }
+
+    @supports (color: color-mix(in lab, red, red)) {
+      .hover\:bg-muted\/80:hover {
+        background-color: color-mix(in oklab, var(--color-muted) 80%, transparent);
+      }
+    }
+  }
+
+  @media (hover: hover) {
     .hover\:bg-primary\/90:hover {
       background-color: color-mix(in srgb, var(--primary) 90%, transparent);
     }
@@ -3443,12 +3459,6 @@
   }
 
   @media (prefers-color-scheme: dark) {
-    .dark\:border-green-700 {
-      border-color: var(--color-green-700);
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
     .dark\:border-green-800 {
       border-color: var(--color-green-800);
     }
@@ -3607,12 +3617,6 @@
   @media (prefers-color-scheme: dark) {
     .dark\:text-blue-400 {
       color: var(--color-blue-400);
-    }
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .dark\:text-green-200 {
-      color: var(--color-green-200);
     }
   }
 
@@ -4111,6 +4115,40 @@ html {
 
 .dark .transaction-password-info-text {
   color: #93c5fd;
+}
+
+.biometric-auth-active-box {
+  background-color: #f0fdf4;
+  border: 1px solid #22c55e;
+}
+
+.dark .biometric-auth-active-box {
+  background-color: #1665344d;
+  border: 1px solid #22c55ecc;
+}
+
+.biometric-auth-active-title {
+  color: #15803d;
+}
+
+.dark .biometric-auth-active-title {
+  color: #86efac;
+}
+
+.biometric-auth-active-text {
+  color: #166534;
+}
+
+.dark .biometric-auth-active-text {
+  color: #bbf7d0;
+}
+
+.biometric-auth-active-icon {
+  color: #22c55e;
+}
+
+.dark .biometric-auth-active-icon {
+  color: #86efac;
 }
 
 @property --tw-translate-x {

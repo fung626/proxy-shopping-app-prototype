@@ -319,3 +319,38 @@ html {
 .dark .transaction-password-info-text {
   color: rgb(147, 197, 253);
 }
+
+/* Biometric Authentication Page - Active status box improvement */
+.biometric-auth-active-box {
+  background-color: rgb(240, 253, 244);
+  border: 1px solid rgb(34, 197, 94);
+}
+
+.dark .biometric-auth-active-box {
+  background-color: rgb(22, 101, 52, 0.3);
+  border: 1px solid rgb(34, 197, 94, 0.8);
+}
+
+.biometric-auth-active-title {
+  color: rgb(21, 128, 61);
+}
+
+.dark .biometric-auth-active-title {
+  color: rgb(134, 239, 172);
+}
+
+.biometric-auth-active-text {
+  color: rgb(22, 101, 52);
+}
+
+.dark .biometric-auth-active-text {
+  color: rgb(187, 247, 208);
+}
+
+.biometric-auth-active-icon {
+  color: rgb(34, 197, 94);
+}
+
+.dark .biometric-auth-active-icon {
+  color: rgb(134, 239, 172);
+}

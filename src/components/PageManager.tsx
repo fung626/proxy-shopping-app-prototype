@@ -94,16 +94,38 @@ export const PageManager = memo(function PageManager({
   onNavigateToMakeOffer,
   onNavigateToOfferDetails
 }: PageManagerProps) {
-  // Add timeout protection
+  // Enhanced timeout protection and error logging
   useEffect(() => {
     if (currentPage && pageType) {
-      console.debug(`PageManager rendering: ${pageType}/${currentPage}`);
+      console.warn(`⚠️ PageManager: Rendering ${pageType}/${currentPage} - this should be handled by direct bypass!`);
+      
+      // Set a short timeout for PageManager renders
+      const timeout = setTimeout(() => {
+        console.error(`❌ PageManager timeout: ${pageType}/${currentPage} taking too long to render`);
+        console.error('Consider adding this page to the direct bypass list in App.tsx');
+        onBack(); // Force navigation back to prevent hanging
+      }, 3000); // 3 second timeout for PageManager renders
+      
+      return () => clearTimeout(timeout);
     }
-  }, [currentPage, pageType]);
+  }, [currentPage, pageType, onBack]);
 
-  if (!currentPage) return null;
+  if (!currentPage) {
+    console.warn('PageManager: No currentPage provided, returning null');
+    return null;
+  }
+
+  // Quick validation
+  if (!pageType) {
+    console.error('PageManager: No pageType provided');
+    onBack();
+    return null;
+  }
 
   const renderPage = () => {
+    const renderStartTime = Date.now();
+    console.debug(`PageManager: Starting render for ${pageType}/${currentPage}`);
+    
     try {
       // Order pages
   if (pageType === 'order') {
@@ -408,16 +430,48 @@ export const PageManager = memo(function PageManager({
     }
   }
 
-    return null;
+    // Unknown page
+    console.error(`❌ PageManager: Unknown page ${pageType}/${currentPage}`);
+    console.error('This page should be handled by direct bypass in App.tsx');
+    
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-background">
+        <div className="text-center max-w-md p-4">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h2 className="text-xl font-semibold mb-2">Page Not Found</h2>
+          <p className="text-muted-foreground mb-4">
+            The page "{pageType}/{currentPage}" is not recognized by PageManager.
+          </p>
+          <button
+            onClick={onBack}
+            className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
+          >
+            Go Back
+          </button>
+        </div>
+      </div>
+    );
+    
     } catch (error) {
-      console.error('PageManager render error:', error);
+      const renderTime = Date.now() - renderStartTime;
+      console.error(`❌ PageManager render error for ${pageType}/${currentPage}:`, error);
+      console.error(`Render time: ${renderTime}ms`);
+      console.error('Stack trace:', error instanceof Error ? error.stack : 'Unknown error');
+      
       return (
         <div className="flex items-center justify-center min-h-screen bg-background">
-          <div className="text-center">
-            <p className="text-destructive mb-4">Error loading page</p>
+          <div className="text-center max-w-md p-4">
+            <div className="text-6xl mb-4">💥</div>
+            <h2 className="text-xl font-semibold mb-2">Render Error</h2>
+            <p className="text-muted-foreground mb-2">
+              Failed to render {pageType}/{currentPage}
+            </p>
+            <p className="text-sm text-muted-foreground mb-4">
+              Error: {error instanceof Error ? error.message : 'Unknown error'}
+            </p>
             <button
               onClick={onBack}
-              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg"
+              className="px-4 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90"
             >
               Go Back
             </button>
@@ -428,7 +482,24 @@ export const PageManager = memo(function PageManager({
   };
 
   return (
-    <Suspense fallback={<LoadingSpinner />}>
+    <Suspense 
+      fallback={
+        <div className="flex items-center justify-center min-h-screen bg-background">
+          <div className="text-center">
+            <LoadingSpinner />
+            <p className="text-sm text-muted-foreground mt-4">
+              Loading {pageType}/{currentPage}...
+            </p>
+            <button
+              onClick={onBack}
+              className="mt-4 px-3 py-1 text-xs bg-muted text-muted-foreground rounded hover:bg-muted/80"
+            >
+              Cancel
+            </button>
+          </div>
+        </div>
+      }
+    >
       {renderPage()}
     </Suspense>
   );
