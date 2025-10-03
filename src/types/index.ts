@@ -1,9 +1,36 @@
 // Authentication types
-export type AuthStep = 'signin' | 'signup' | 'otp' | 'preferences' | 'forgot-password' | 'reset-password';
+export type AuthStep =
+  | 'signin'
+  | 'signup'
+  | 'otp'
+  | 'preferences'
+  | 'forgot-password'
+  | 'reset-password';
 
-// App navigation types
-export type AppTab = 'explore' | 'messages' | 'create' | 'orders' | 'profile';
-export type PageType = 'order' | 'info' | 'verification' | 'security' | 'account' | 'arbitration' | 'explore';
+// App navigation types (moved to types/routing.ts for better organization)
+export type AppTab =
+  | 'explore'
+  | 'messages'
+  | 'create'
+  | 'orders'
+  | 'profile';
+export type PageType =
+  | 'order'
+  | 'info'
+  | 'verification'
+  | 'security'
+  | 'account'
+  | 'arbitration'
+  | 'explore';
+
+// Re-export routing types for backward compatibility
+export type {
+  NavigationState,
+  PageProps,
+  RouteConfig,
+  RouteGroup,
+  RouteParams,
+} from './routing';
 
 // Credit Card types
 export interface CreditCard {
@@ -30,6 +57,7 @@ export interface BankInformation {
 
 // User types
 export interface User {
+  id: string;
   name: string;
   email: string;
   capabilities?: {
@@ -104,6 +132,7 @@ export interface SignUpData {
   password: string;
   confirmPassword: string;
   profilePicture?: string;
+  languages?: string[];
   agreeToTerms: boolean;
 }
 
@@ -128,10 +157,50 @@ export interface ShoppingOffer {
   shoppingLocation: string;
   deliveryOptions: ('pickup' | 'ship')[];
   availableQuantity: number;
-  estimatedDelivery: string;
+  estimatedDelivery: {
+    start: number;
+    end: number;
+    unit: 'days' | 'weeks' | 'months';
+  };
   specifications?: string[];
   tags?: string[];
   status: 'active' | 'sold' | 'inactive';
   createdAt: string;
   updatedAt: string;
+}
+
+// Shopping Request types
+export interface ShoppingRequest {
+  id: string;
+  userId: string;
+  userName: string;
+  title: string;
+  description: string;
+  category: string;
+  budget: {
+    min: number;
+    max: number;
+  };
+  currency: string;
+  images?: string[];
+  targetLocation: string;
+  preferredShoppingLocation: string;
+  quantity: number;
+  urgency: 'low' | 'medium' | 'high';
+  expectedDelivery: {
+    start: number;
+    end: number;
+    unit: 'days' | 'weeks' | 'months';
+  };
+  requirements?: string[];
+  tags?: string[];
+  status:
+    | 'active'
+    | 'offers_received'
+    | 'accepted'
+    | 'completed'
+    | 'cancelled';
+  createdAt: string;
+  updatedAt: string;
+  deadline?: string;
 }

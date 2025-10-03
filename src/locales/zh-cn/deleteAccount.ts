@@ -1,0 +1,27 @@
+// Delete Account translations - Placeholder (Simplified Chinese) - English content for now
+export const deleteAccount = {
+  title: 'Delete account',
+  deleteYourAccount: 'Delete your account',
+  warning: 'This action cannot be undone. Proceed with caution.',
+  whatWillBeDeleted: 'What will be deleted',
+  profileInfo: 'Profile information',
+  requestsOrders: 'Requests and orders',
+  messageHistory: 'Message history',
+  verificationStatus: 'Verification status',
+  paymentMethods: 'Payment methods',
+  preferences: 'Preferences',
+  confirmPassword: 'Confirm password',
+  enterPassword: 'Enter your password',
+  understandingText:
+    'I understand the consequences of deleting my account.',
+  alternatives: 'Alternatives to deleting',
+  alternative1: 'Deactivate account',
+  alternative2: 'Contact support',
+  alternative3: 'Export my data',
+  alternative4: 'Change privacy settings',
+  deleting: 'Deleting...',
+  deleteMyAccount: 'Delete my account',
+  passwordRequired: 'Password is required',
+  confirmUnderstanding: 'You must confirm that you understand',
+  deleteError: 'Unable to delete account',
+};

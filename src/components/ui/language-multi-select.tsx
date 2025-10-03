@@ -1,10 +1,16 @@
-import React, { useState } from 'react';
+import { useLanguage } from '@/store/LanguageContext';
 import { Check, ChevronDown, X } from 'lucide-react';
-import { Button } from './button';
-import { Popover, PopoverContent, PopoverTrigger } from './popover';
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from './command';
+import { useState } from 'react';
 import { Badge } from './badge';
-import { useLanguage } from '../../store/LanguageContext';
+import { Button } from './button';
+import {
+  Command,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+} from './command';
+import { Popover, PopoverContent, PopoverTrigger } from './popover';
 
 interface LanguageOption {
   value: string;
@@ -79,32 +85,32 @@ const LANGUAGES: LanguageOption[] = [
   { value: 'az', label: 'Azərbaycan' },
   { value: 'kk', label: 'Қазақ' },
   { value: 'ky', label: 'Кыргыз' },
-  { value: 'uz', label: 'O\'zbek' },
+  { value: 'uz', label: "O'zbek" },
   { value: 'mn', label: 'Монгол' },
   { value: 'bo', label: 'བོད་སྐད' },
   { value: 'ug', label: 'ئۇيغۇر' },
 ];
 
-export function LanguageMultiSelect({ 
-  value = [], 
-  onValueChange, 
-  placeholder, 
+export function LanguageMultiSelect({
+  value = [],
+  onValueChange,
+  placeholder,
   className,
   disabled,
-  maxSelected = 10
+  maxSelected = 10,
 }: LanguageMultiSelectProps) {
   const { t } = useLanguage();
   const [open, setOpen] = useState(false);
 
   const handleSelect = (selectedValue: string) => {
     if (!onValueChange) return;
-    
+
     const currentValue = value || [];
     let newValue: string[];
-    
+
     if (currentValue.includes(selectedValue)) {
       // Remove if already selected
-      newValue = currentValue.filter(v => v !== selectedValue);
+      newValue = currentValue.filter((v) => v !== selectedValue);
     } else {
       // Add if not selected and under limit
       if (currentValue.length < maxSelected) {
@@ -113,17 +119,19 @@ export function LanguageMultiSelect({
         return; // Don't add if at max limit
       }
     }
-    
+
     onValueChange(newValue);
   };
 
   const handleRemove = (valueToRemove: string) => {
     if (!onValueChange) return;
-    const newValue = (value || []).filter(v => v !== valueToRemove);
+    const newValue = (value || []).filter((v) => v !== valueToRemove);
     onValueChange(newValue);
   };
 
-  const selectedLanguages = LANGUAGES.filter(lang => value?.includes(lang.value));
+  const selectedLanguages = LANGUAGES.filter((lang) =>
+    value?.includes(lang.value)
+  );
   const displayText = placeholder || t('auth.selectLanguages');
 
   return (
@@ -136,9 +144,11 @@ export function LanguageMultiSelect({
           className={`w-full justify-between bg-input-background border-border hover:bg-input-background ${className}`}
           disabled={disabled}
         >
-          <div className="flex flex-wrap gap-1 flex-1 min-h-[20px]">
+          <div className="flex gap-1 flex-1 min-h-[20px] overflow-hidden">
             {selectedLanguages.length === 0 ? (
-              <span className="text-muted-foreground">{displayText}</span>
+              <span className="text-muted-foreground">
+                {displayText}
+              </span>
             ) : (
               selectedLanguages.map((language) => (
                 <Badge
@@ -171,17 +181,24 @@ export function LanguageMultiSelect({
           <CommandGroup className="max-h-[300px] overflow-y-auto">
             {LANGUAGES.map((language) => {
               const isSelected = value?.includes(language.value);
-              const isAtMaxLimit = value && value.length >= maxSelected && !isSelected;
-              
+              const isAtMaxLimit =
+                value && value.length >= maxSelected && !isSelected;
+
               return (
                 <CommandItem
                   key={language.value}
                   onSelect={() => handleSelect(language.value)}
-                  className={`${isAtMaxLimit ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
+                  className={`${
+                    isAtMaxLimit
+                      ? 'opacity-50 cursor-not-allowed'
+                      : 'cursor-pointer'
+                  }`}
                   disabled={isAtMaxLimit}
                 >
                   <Check
-                    className={`mr-2 h-4 w-4 ${isSelected ? 'opacity-100' : 'opacity-0'}`}
+                    className={`mr-2 h-4 w-4 ${
+                      isSelected ? 'opacity-100' : 'opacity-0'
+                    }`}
                   />
                   {language.label}
                 </CommandItem>
@@ -190,7 +207,10 @@ export function LanguageMultiSelect({
           </CommandGroup>
           {value && value.length > 0 && (
             <div className="p-2 border-t text-xs text-muted-foreground">
-              {t('auth.selectedLanguagesCount', { count: value.length, max: maxSelected })}
+              {t('auth.selectedLanguagesCount', {
+                count: value.length,
+                max: maxSelected,
+              })}
             </div>
           )}
         </Command>

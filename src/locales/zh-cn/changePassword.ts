@@ -1,0 +1,20 @@
+// Change Password translations - Placeholder (Simplified Chinese) - English content for now
+export const changePassword = {
+  title: 'Change password',
+  updatePassword: 'Update password',
+  requirements: 'Password requirements',
+  currentPassword: 'Current password',
+  enterCurrentPassword: 'Enter current password',
+  newPassword: 'New password',
+  enterNewPassword: 'Enter new password',
+  confirmNewPassword: 'Confirm new password',
+  passwordsDoNotMatch: 'Passwords do not match',
+  samePassword: 'New password must be different',
+  requirement1: 'At least 8 characters',
+  requirement2: 'Include a number',
+  requirement3: 'Include a special character',
+  passwordRequirements: 'Your password must meet the requirements',
+  changeButton: 'Change password',
+  updating: 'Updating...',
+  error: 'Unable to change password',
+};

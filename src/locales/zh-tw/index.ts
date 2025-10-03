@@ -1,0 +1,24 @@
+﻿// Index file for Chinese (Traditional) translations
+export { about } from './about';
+export { auth } from './auth';
+export { categories } from './categories';
+export { changePassword } from './changePassword';
+export { common } from './common';
+export { countries } from './countries';
+export { create } from './create';
+export { createOffer } from './createOffer';
+export { createRequest } from './createRequest';
+export { deleteAccount } from './deleteAccount';
+export { editProfile } from './editProfile';
+export { explore } from './explore';
+export { messages } from './messages';
+export { nav } from './nav';
+export { orders } from './orders';
+export { preferences } from './preferences';
+export { privacy } from './privacy';
+export { profile } from './profile';
+export { search } from './search';
+export { support } from './support';
+export { terms } from './terms';
+export { transactionPassword } from './transactionPassword';
+export { wishlist } from './wishlist';

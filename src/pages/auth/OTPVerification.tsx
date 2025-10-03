@@ -1,8 +1,8 @@
-import { useState, useRef } from 'react';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { useLanguage } from '@/store/LanguageContext';
 import { ArrowLeft } from 'lucide-react';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import { useLanguage } from '../../store/LanguageContext';
+import { useRef, useState } from 'react';
 
 interface OTPVerificationProps {
   email: string;
@@ -12,7 +12,13 @@ interface OTPVerificationProps {
   isSignUp: boolean;
 }
 
-export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }: OTPVerificationProps) {
+export function OTPVerification({
+  email,
+  loginType,
+  onVerify,
+  onBack,
+  isSignUp,
+}: OTPVerificationProps) {
   const { t } = useLanguage();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [isLoading, setIsLoading] = useState(false);
@@ -31,12 +37,12 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
   const handleInputChange = (index: number, value: string) => {
     // Only allow digits
     const digit = value.replace(/\D/g, '');
-    
+
     if (digit.length <= 1) {
       const newOtp = [...otp];
       newOtp[index] = digit;
       setOtp(newOtp);
-      
+
       // Auto-advance to next input if digit is entered
       if (digit && index < 5) {
         inputRefs.current[index + 1]?.focus();
@@ -44,7 +50,10 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
     }
   };
 
-  const handleKeyDown = (index: number, e: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
     // Handle backspace to move to previous input
     if (e.key === 'Backspace' && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
@@ -53,15 +62,18 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
 
   const handlePaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
     e.preventDefault();
-    const pastedData = e.clipboardData.getData('text').replace(/\D/g, '').slice(0, 6);
-    
+    const pastedData = e.clipboardData
+      .getData('text')
+      .replace(/\D/g, '')
+      .slice(0, 6);
+
     if (pastedData) {
       const newOtp = [...otp];
       for (let i = 0; i < 6; i++) {
         newOtp[i] = pastedData[i] || '';
       }
       setOtp(newOtp);
-      
+
       // Focus the next empty input or the last input
       const nextIndex = Math.min(pastedData.length, 5);
       inputRefs.current[nextIndex]?.focus();
@@ -87,7 +99,9 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
         <div className="max-w-sm mx-auto text-center">
           {/* Title */}
           <div className="mb-8">
-            <h1 className="text-3xl font-semibold text-foreground mb-3">{t('auth.verifyCode')}</h1>
+            <h1 className="text-3xl font-semibold text-foreground mb-3">
+              {t('auth.verifyCode')}
+            </h1>
             <p className="text-muted-foreground leading-relaxed">
               {t('auth.verificationCodeSent')}
             </p>
@@ -95,7 +109,9 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
 
           {/* Demo Info */}
           <div className="mb-8 p-4 bg-card border border-border rounded-xl text-left">
-            <h3 className="font-medium text-foreground mb-2">{t('auth.demoMode')}</h3>
+            <h3 className="font-medium text-foreground mb-2">
+              {t('auth.demoMode')}
+            </h3>
             <p className="text-sm text-muted-foreground">
               {t('auth.demoModeDescription')}
             </p>
@@ -112,7 +128,9 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
                     type="text"
                     inputMode="numeric"
                     value={otp[index]}
-                    onChange={(e) => handleInputChange(index, e.target.value)}
+                    onChange={(e) =>
+                      handleInputChange(index, e.target.value)
+                    }
                     onKeyDown={(e) => handleKeyDown(index, e)}
                     onPaste={handlePaste}
                     className="w-12 h-12 text-center text-lg font-medium bg-input-background border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all"
@@ -125,7 +143,8 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
 
             <div className="mt-6 text-center">
               <p className="text-sm text-muted-foreground mb-2">
-                {t('auth.resendCodeIn')} <span className="font-medium">00:55</span>
+                {t('auth.resendCodeIn')}{' '}
+                <span className="font-medium">00:55</span>
               </p>
             </div>
 
@@ -139,7 +158,11 @@ export function OTPVerification({ email, loginType, onVerify, onBack, isSignUp }
           </form>
 
           <div className="mt-6">
-            <Button variant="link" onClick={handleResend} className="text-primary text-sm font-medium">
+            <Button
+              variant="link"
+              onClick={handleResend}
+              className="text-primary text-sm font-medium"
+            >
               {t('auth.resendCode')}
             </Button>
           </div>

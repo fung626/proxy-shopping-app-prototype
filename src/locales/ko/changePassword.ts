@@ -1,0 +1,20 @@
+// Change Password translations - Korean
+export const changePassword = {
+  title: '비밀번호 변경',
+  updatePassword: '비밀번호를 업데이트합니다',
+  requirements: '비밀번호 요구사항',
+  currentPassword: '현재 비밀번호',
+  enterCurrentPassword: '현재 비밀번호를 입력하세요',
+  newPassword: '새 비밀번호',
+  enterNewPassword: '새 비밀번호를 입력하세요',
+  confirmNewPassword: '새 비밀번호 확인',
+  passwordsDoNotMatch: '비밀번호가 일치하지 않습니다',
+  samePassword: '새 비밀번호는 이전 비밀번호와 달라야 합니다',
+  requirement1: '최소 8자',
+  requirement2: '문자와 숫자 혼합',
+  requirement3: '특수 문자 포함',
+  passwordRequirements: '비밀번호 요구사항',
+  changeButton: '비밀번호 변경',
+  updating: '업데이트 중...',
+  error: '비밀번호 업데이트 실패',
+};

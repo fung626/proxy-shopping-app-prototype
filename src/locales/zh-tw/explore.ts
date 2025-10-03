@@ -1,0 +1,22 @@
+// Explore translations - Chinese Traditional
+export const explore = {
+  featured: '精選',
+  trending: '熱門趨勢',
+  newArrivals: '新品到貨',
+  topRated: '高評分',
+  bestDeals: '超值優惠',
+  nearYou: '附近',
+  categories: '分類',
+  viewAll: '檢視全部',
+  loadMore: '載入更多',
+  refreshing: '重新整理中...',
+  noItemsFound: '未找到商品',
+  exploreMore: '探索更多',
+  filters: '篩選器',
+  sortBy: '排序',
+  priceAsc: '價格：低到高',
+  priceDesc: '價格：高到低',
+  newest: '最新',
+  popularity: '熱門度',
+  rating: '評分',
+};

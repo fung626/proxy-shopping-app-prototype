@@ -1,0 +1,20 @@
+// Change Password translations - English
+export const changePassword = {
+  title: 'Change Password',
+  updatePassword: 'Update your password',
+  requirements: 'Password requirements',
+  currentPassword: 'Current password',
+  enterCurrentPassword: 'Enter current password',
+  newPassword: 'New password',
+  enterNewPassword: 'Enter new password',
+  confirmNewPassword: 'Confirm new password',
+  passwordsDoNotMatch: 'Passwords do not match',
+  samePassword: 'New password must be different',
+  requirement1: 'At least 8 characters',
+  requirement2: 'A mix of letters and numbers',
+  requirement3: 'Include a special character',
+  passwordRequirements: 'Password requirements',
+  changeButton: 'Change Password',
+  updating: 'Updating...',
+  error: 'Failed to update password',
+};

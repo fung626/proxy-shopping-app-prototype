@@ -1,7 +1,16 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { translations } from './translations-consolidated';
+import {
+  getNestedTranslation,
+  SupportedLanguage,
+  translations,
+} from '@/locales';
+import React, {
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
-type Language = 'en' | 'zh-cn' | 'zh-tw' | 'ja' | 'ko';
+type Language = SupportedLanguage;
 
 interface LanguageContextType {
   language: Language;
@@ -9,16 +18,24 @@ interface LanguageContextType {
   t: (key: string, params?: Record<string, any>) => string;
 }
 
-const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
+const LanguageContext = createContext<
+  LanguageContextType | undefined
+>(undefined);
 
-// Use the consolidated translations
+// Use the modular translations
 const translationsData = translations;
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
+export function LanguageProvider({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [language, setLanguage] = useState<Language>('en');
 
   useEffect(() => {
-    const savedLanguage = localStorage.getItem('language') as Language;
+    const savedLanguage = localStorage.getItem(
+      'language'
+    ) as Language;
     if (savedLanguage && translationsData[savedLanguage]) {
       setLanguage(savedLanguage);
     }
@@ -31,32 +48,45 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 
   const t = (key: string, params?: Record<string, any>): string => {
     const translation = translationsData[language];
-    
+
     if (!translation) {
-      console.error(`Translation object not found for language: ${language}`);
+      console.error(
+        `Translation object not found for language: ${language}`
+      );
       return key;
     }
-    
-    let text = translation[key as keyof typeof translation] as string;
-    
-    if (!text) {
-      console.warn(`Translation missing for key: ${key} in language: ${language}`);
+
+    // Handle nested keys (e.g., 'nav.explore' or 'common.cancel')
+    const text = getNestedTranslation(translation, key);
+
+    if (!text || text === key) {
+      console.warn(
+        `Translation missing for key: ${key} in language: ${language}`
+      );
       return key;
     }
 
     // Handle parameter substitution
-    if (params) {
-      Object.keys(params).forEach(param => {
+    if (params && typeof text === 'string') {
+      return Object.keys(params).reduce((result, param) => {
         const placeholder = `{${param}}`;
-        text = text.replace(new RegExp(placeholder, 'g'), String(params[param]));
-      });
+        return result.replace(
+          new RegExp(
+            placeholder.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'),
+            'g'
+          ),
+          String(params[param])
+        );
+      }, text);
     }
 
     return text;
   };
 
   return (
-    <LanguageContext.Provider value={{ language, setLanguage: handleSetLanguage, t }}>
+    <LanguageContext.Provider
+      value={{ language, setLanguage: handleSetLanguage, t }}
+    >
       {children}
     </LanguageContext.Provider>
   );
@@ -65,7 +95,9 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
 export function useLanguage() {
   const context = useContext(LanguageContext);
   if (context === undefined) {
-    throw new Error('useLanguage must be used within a LanguageProvider');
+    throw new Error(
+      'useLanguage must be used within a LanguageProvider'
+    );
   }
   return context;
 }

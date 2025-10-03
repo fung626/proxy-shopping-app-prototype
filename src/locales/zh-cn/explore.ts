@@ -1,0 +1,22 @@
+// Explore translations - Chinese Simplified
+export const explore = {
+  featured: '精选',
+  trending: '热门趋势',
+  newArrivals: '新品到货',
+  topRated: '高评分',
+  bestDeals: '超值优惠',
+  nearYou: '附近',
+  categories: '分类',
+  viewAll: '查看全部',
+  loadMore: '加载更多',
+  refreshing: '刷新中...',
+  noItemsFound: '未找到商品',
+  exploreMore: '探索更多',
+  filters: '过滤器',
+  sortBy: '排序',
+  priceAsc: '价格：低到高',
+  priceDesc: '价格：高到低',
+  newest: '最新',
+  popularity: '热门度',
+  rating: '评分',
+};

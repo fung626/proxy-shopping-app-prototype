@@ -1,4 +1,4 @@
-import { ImageWithFallback } from '../figma/ImageWithFallback';
+import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 
 export interface ChatMessageData {
   id: string;
@@ -22,25 +22,34 @@ interface ChatMessageProps {
   showAvatar?: boolean;
 }
 
-export function ChatMessage({ message, agentAvatar, agentName, showAvatar }: ChatMessageProps) {
+export function ChatMessage({
+  message,
+  agentAvatar,
+  agentName,
+  showAvatar,
+}: ChatMessageProps) {
   const isUser = message.sender === 'user';
-  
+
   const formatTime = (date: Date) => {
-    return date.toLocaleTimeString('en-US', { 
-      hour: 'numeric', 
+    return date.toLocaleTimeString('en-US', {
+      hour: 'numeric',
       minute: '2-digit',
-      hour12: true 
+      hour12: true,
     });
   };
 
   const getStatusIcon = () => {
     if (!isUser) return null;
-    
+
     switch (message.status) {
       case 'sending':
-        return <div className="w-3 h-3 rounded-full bg-muted-foreground/50 animate-pulse" />;
+        return (
+          <div className="w-3 h-3 rounded-full bg-muted-foreground/50 animate-pulse" />
+        );
       case 'sent':
-        return <div className="w-3 h-3 rounded-full bg-muted-foreground" />;
+        return (
+          <div className="w-3 h-3 rounded-full bg-muted-foreground" />
+        );
       case 'delivered':
         return <div className="w-3 h-3 rounded-full bg-primary/60" />;
       case 'read':
@@ -65,7 +74,7 @@ export function ChatMessage({ message, agentAvatar, agentName, showAvatar }: Cha
             )}
           </div>
         );
-      
+
       case 'location':
         return (
           <div className="bg-muted/20 rounded-lg p-3 max-w-xs">
@@ -73,15 +82,19 @@ export function ChatMessage({ message, agentAvatar, agentName, showAvatar }: Cha
               <div className="w-6 h-6 bg-primary/20 rounded-full flex items-center justify-center">
                 <span className="text-xs">📍</span>
               </div>
-              <span className="font-medium text-sm">{message.location?.name || 'Location'}</span>
+              <span className="font-medium text-sm">
+                {message.location?.name || 'Location'}
+              </span>
             </div>
-            <p className="text-xs text-muted-foreground">{message.location?.address}</p>
+            <p className="text-xs text-muted-foreground">
+              {message.location?.address}
+            </p>
             {message.content && (
               <p className="mt-2 text-sm">{message.content}</p>
             )}
           </div>
         );
-      
+
       case 'document':
         return (
           <div className="bg-muted/20 rounded-lg p-3 max-w-xs">
@@ -90,8 +103,12 @@ export function ChatMessage({ message, agentAvatar, agentName, showAvatar }: Cha
                 <span className="text-xs">📄</span>
               </div>
               <div className="flex-1 min-w-0">
-                <p className="font-medium text-sm truncate">{message.documentName || 'Document'}</p>
-                <p className="text-xs text-muted-foreground">PDF • 2.1 MB</p>
+                <p className="font-medium text-sm truncate">
+                  {message.documentName || 'Document'}
+                </p>
+                <p className="text-xs text-muted-foreground">
+                  PDF • 2.1 MB
+                </p>
               </div>
             </div>
             {message.content && (
@@ -99,15 +116,25 @@ export function ChatMessage({ message, agentAvatar, agentName, showAvatar }: Cha
             )}
           </div>
         );
-      
+
       default:
-        return <p className="text-sm leading-relaxed">{message.content}</p>;
+        return (
+          <p className="text-sm leading-relaxed">{message.content}</p>
+        );
     }
   };
 
   return (
-    <div className={`flex ${isUser ? 'justify-end' : 'justify-start'} mb-4`}>
-      <div className={`flex ${isUser ? 'flex-row-reverse' : 'flex-row'} max-w-[80%] items-end space-x-2`}>
+    <div
+      className={`flex ${
+        isUser ? 'justify-end' : 'justify-start'
+      } mb-4`}
+    >
+      <div
+        className={`flex ${
+          isUser ? 'flex-row-reverse' : 'flex-row'
+        } max-w-[80%] items-end space-x-2`}
+      >
         {/* Avatar */}
         {!isUser && showAvatar && (
           <ImageWithFallback
@@ -116,10 +143,8 @@ export function ChatMessage({ message, agentAvatar, agentName, showAvatar }: Cha
             className="w-8 h-8 rounded-full object-cover flex-shrink-0"
           />
         )}
-        {!isUser && !showAvatar && (
-          <div className="w-8" />
-        )}
-        
+        {!isUser && !showAvatar && <div className="w-8" />}
+
         {/* Message Bubble */}
         <div
           className={`rounded-2xl px-4 py-2 ${
@@ -129,14 +154,20 @@ export function ChatMessage({ message, agentAvatar, agentName, showAvatar }: Cha
           }`}
         >
           {renderMessageContent()}
-          
+
           {/* Time and Status */}
-          <div className={`flex items-center justify-between mt-1 ${
-            isUser ? 'flex-row-reverse' : 'flex-row'
-          }`}>
-            <span className={`text-xs ${
-              isUser ? 'text-primary-foreground/70' : 'text-muted-foreground'
-            }`}>
+          <div
+            className={`flex items-center justify-between mt-1 ${
+              isUser ? 'flex-row-reverse' : 'flex-row'
+            }`}
+          >
+            <span
+              className={`text-xs ${
+                isUser
+                  ? 'text-primary-foreground/70'
+                  : 'text-muted-foreground'
+              }`}
+            >
               {formatTime(message.timestamp)}
             </span>
             {getStatusIcon()}

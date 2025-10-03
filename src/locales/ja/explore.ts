@@ -1,0 +1,22 @@
+// Explore translations - Japanese
+export const explore = {
+  featured: '注目',
+  trending: 'トレンド',
+  newArrivals: '新着',
+  topRated: '高評価',
+  bestDeals: 'お得な商品',
+  nearYou: '近くの商品',
+  categories: 'カテゴリー',
+  viewAll: '全て見る',
+  loadMore: 'もっと読み込む',
+  refreshing: '更新中...',
+  noItemsFound: '商品が見つかりません',
+  exploreMore: 'もっと探索',
+  filters: 'フィルター',
+  sortBy: '並び替え',
+  priceAsc: '価格：安い順',
+  priceDesc: '価格：高い順',
+  newest: '新しい順',
+  popularity: '人気順',
+  rating: '評価順',
+};

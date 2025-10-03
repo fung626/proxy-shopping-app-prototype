@@ -1,5 +1,11 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './select';
-import { COUNTRIES } from '../../config/countries';
+import { COUNTRIES } from '@/config/countries';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from './select';
 
 interface CountrySelectProps {
   value?: string;
@@ -9,15 +15,19 @@ interface CountrySelectProps {
   disabled?: boolean;
 }
 
-export function CountrySelect({ 
-  value, 
-  onValueChange, 
-  placeholder = "Select a country",
+export function CountrySelect({
+  value,
+  onValueChange,
+  placeholder = 'Select a country',
   className,
-  disabled
+  disabled,
 }: CountrySelectProps) {
   return (
-    <Select value={value} onValueChange={onValueChange} disabled={disabled}>
+    <Select
+      value={value}
+      onValueChange={onValueChange}
+      disabled={disabled}
+    >
       <SelectTrigger className={className}>
         <SelectValue placeholder={placeholder} />
       </SelectTrigger>

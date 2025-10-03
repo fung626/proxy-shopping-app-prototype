@@ -1,20 +1,30 @@
-import { useState, useRef } from 'react';
-import { Send, Plus, Image, MapPin, Paperclip, Smile } from 'lucide-react';
-import { Button } from '../ui/button';
-import { Textarea } from '../ui/textarea';
+import { Button } from '@/components/ui/button';
+import { Textarea } from '@/components/ui/textarea';
+import {
+  Image,
+  MapPin,
+  Paperclip,
+  Plus,
+  Send,
+  Smile,
+} from 'lucide-react';
+import { useRef, useState } from 'react';
 
 interface ChatInputProps {
-  onSendMessage: (content: string, type: 'text' | 'image' | 'location' | 'document') => void;
+  onSendMessage: (
+    content: string,
+    type: 'text' | 'image' | 'location' | 'document'
+  ) => void;
   onTyping?: (isTyping: boolean) => void;
   disabled?: boolean;
   placeholder?: string;
 }
 
-export function ChatInput({ 
-  onSendMessage, 
-  onTyping, 
+export function ChatInput({
+  onSendMessage,
+  onTyping,
   disabled = false,
-  placeholder = "Type a message..." 
+  placeholder = 'Type a message...',
 }: ChatInputProps) {
   const [message, setMessage] = useState('');
   const [showAttachments, setShowAttachments] = useState(false);
@@ -41,15 +51,18 @@ export function ChatInput({
     }
   };
 
-  const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const handleTextChange = (
+    e: React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     const value = e.target.value;
     setMessage(value);
     onTyping?.(value.length > 0);
-    
+
     // Auto-resize textarea
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
-      textareaRef.current.style.height = Math.min(textareaRef.current.scrollHeight, 120) + 'px';
+      textareaRef.current.style.height =
+        Math.min(textareaRef.current.scrollHeight, 120) + 'px';
     }
   };
 
@@ -57,7 +70,9 @@ export function ChatInput({
     fileInputRef.current?.click();
   };
 
-  const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileSelect = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = e.target.files?.[0];
     if (file) {
       // In a real app, you'd upload the file and get a URL
@@ -123,7 +138,11 @@ export function ChatInput({
           className="h-10 w-10 flex-shrink-0"
           disabled={disabled}
         >
-          <Plus className={`h-5 w-5 transition-transform ${showAttachments ? 'rotate-45' : ''}`} />
+          <Plus
+            className={`h-5 w-5 transition-transform ${
+              showAttachments ? 'rotate-45' : ''
+            }`}
+          />
         </Button>
 
         {/* Message Input */}
@@ -138,7 +157,7 @@ export function ChatInput({
             className="min-h-[40px] max-h-[120px] resize-none rounded-2xl border-muted bg-muted/50 px-4 py-2 pr-12 text-sm focus:border-primary focus:ring-1 focus:ring-primary"
             rows={1}
           />
-          
+
           {/* Emoji Button */}
           <Button
             variant="ghost"

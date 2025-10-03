@@ -1,6 +1,6 @@
-import { RadioGroup, RadioGroupItem } from './radio-group';
+import { useLanguage } from '@/store/LanguageContext';
 import { Label } from './label';
-import { useLanguage } from '../../store/LanguageContext';
+import { RadioGroup, RadioGroupItem } from './radio-group';
 
 interface GenderRadioGroupProps {
   value: string;
@@ -9,11 +9,11 @@ interface GenderRadioGroupProps {
   className?: string;
 }
 
-export function GenderRadioGroup({ 
-  value, 
-  onValueChange, 
+export function GenderRadioGroup({
+  value,
+  onValueChange,
   variant = 'default',
-  className = '' 
+  className = '',
 }: GenderRadioGroupProps) {
   const { t } = useLanguage();
 
@@ -21,25 +21,29 @@ export function GenderRadioGroup({
     { value: 'male', labelKey: 'auth.male' },
     { value: 'female', labelKey: 'auth.female' },
     { value: 'other', labelKey: 'auth.other' },
-    { value: 'prefer-not-to-say', labelKey: 'auth.preferNotToSay' }
+    { value: 'prefer-not-to-say', labelKey: 'auth.preferNotToSay' },
   ];
 
-  const containerClassName = variant === 'compact' ? 'flex space-x-6' : 'grid grid-cols-2 gap-3';
-  const labelClassName = variant === 'compact' ? '' : 'text-sm font-normal cursor-pointer';
+  const containerClassName =
+    variant === 'compact'
+      ? 'flex space-x-6'
+      : 'grid grid-cols-2 gap-3';
+  const labelClassName =
+    variant === 'compact' ? '' : 'text-sm font-normal cursor-pointer';
 
   return (
-    <RadioGroup 
-      value={value} 
+    <RadioGroup
+      value={value}
       onValueChange={onValueChange}
       className={`${containerClassName} ${className}`}
     >
       {genderOptions.map((option) => (
-        <div key={option.value} className="flex items-center space-x-2">
+        <div
+          key={option.value}
+          className="flex items-center space-x-2"
+        >
           <RadioGroupItem value={option.value} id={option.value} />
-          <Label 
-            htmlFor={option.value} 
-            className={labelClassName}
-          >
+          <Label htmlFor={option.value} className={labelClassName}>
             {t(option.labelKey)}
           </Label>
         </div>

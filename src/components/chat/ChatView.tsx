@@ -1,11 +1,11 @@
-import { useState, useEffect, useRef } from 'react';
+import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/store/LanguageContext';
 import { ArrowLeft, MoreVertical } from 'lucide-react';
-import { Button } from '../ui/button';
-import { ImageWithFallback } from '../figma/ImageWithFallback';
-import { ChatMessage, ChatMessageData } from './ChatMessage';
+import { useEffect, useRef, useState } from 'react';
 import { ChatInput } from './ChatInput';
-import { Badge } from '../ui/badge';
-import { useLanguage } from '../../store/LanguageContext';
+import { ChatMessage, ChatMessageData } from './ChatMessage';
 
 export interface ChatData {
   id: string;
@@ -20,10 +20,18 @@ export interface ChatData {
 interface ChatViewProps {
   chat: ChatData;
   onBack: () => void;
-  onSendMessage: (chatId: string, content: string, type: 'text' | 'image' | 'location' | 'document') => void;
+  onSendMessage: (
+    chatId: string,
+    content: string,
+    type: 'text' | 'image' | 'location' | 'document'
+  ) => void;
 }
 
-export function ChatView({ chat, onBack, onSendMessage }: ChatViewProps) {
+export function ChatView({
+  chat,
+  onBack,
+  onSendMessage,
+}: ChatViewProps) {
   const { t } = useLanguage();
   const [isTyping, setIsTyping] = useState(false);
   const [agentTyping, setAgentTyping] = useState(false);
@@ -45,29 +53,41 @@ export function ChatView({ chat, onBack, onSendMessage }: ChatViewProps) {
     }
   }, [isTyping]);
 
-  const handleSendMessage = (content: string, type: 'text' | 'image' | 'location' | 'document') => {
+  const handleSendMessage = (
+    content: string,
+    type: 'text' | 'image' | 'location' | 'document'
+  ) => {
     onSendMessage(chat.id, content, type);
   };
 
   const formatLastSeen = (date?: Date) => {
     if (!date) return '';
     const now = new Date();
-    const diffInMinutes = Math.floor((now.getTime() - date.getTime()) / (1000 * 60));
-    
+    const diffInMinutes = Math.floor(
+      (now.getTime() - date.getTime()) / (1000 * 60)
+    );
+
     if (diffInMinutes < 1) return t('messages.activeNow');
-    if (diffInMinutes < 60) return t('messages.activeMinutesAgo', { count: diffInMinutes });
-    if (diffInMinutes < 1440) return t('messages.activeHoursAgo', { count: Math.floor(diffInMinutes / 60) });
-    return t('messages.activeDaysAgo', { count: Math.floor(diffInMinutes / 1440) });
+    if (diffInMinutes < 60)
+      return t('messages.activeMinutesAgo', { count: diffInMinutes });
+    if (diffInMinutes < 1440)
+      return t('messages.activeHoursAgo', {
+        count: Math.floor(diffInMinutes / 60),
+      });
+    return t('messages.activeDaysAgo', {
+      count: Math.floor(diffInMinutes / 1440),
+    });
   };
 
   const groupMessagesByDate = (messages: ChatMessageData[]) => {
-    const groups: { date: string; messages: ChatMessageData[] }[] = [];
+    const groups: { date: string; messages: ChatMessageData[] }[] =
+      [];
     let currentDate = '';
     let currentGroup: ChatMessageData[] = [];
 
     messages.forEach((message) => {
       const messageDate = message.timestamp.toDateString();
-      
+
       if (messageDate !== currentDate) {
         if (currentGroup.length > 0) {
           groups.push({ date: currentDate, messages: currentGroup });
@@ -97,10 +117,10 @@ export function ChatView({ chat, onBack, onSendMessage }: ChatViewProps) {
     } else if (date.toDateString() === yesterday.toDateString()) {
       return t('messages.yesterday');
     } else {
-      return date.toLocaleDateString('en-US', { 
-        weekday: 'long', 
-        month: 'short', 
-        day: 'numeric' 
+      return date.toLocaleDateString('en-US', {
+        weekday: 'long',
+        month: 'short',
+        day: 'numeric',
       });
     }
   };
@@ -132,17 +152,30 @@ export function ChatView({ chat, onBack, onSendMessage }: ChatViewProps) {
                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></div>
               )}
             </div>
-            
+
             <div className="flex-1 min-w-0">
-              <h2 className="font-semibold text-foreground truncate">{chat.agentName}</h2>
+              <h2 className="font-semibold text-foreground truncate">
+                {chat.agentName}
+              </h2>
               <div className="flex items-center space-x-2">
-                <p className="text-xs text-muted-foreground truncate">{chat.requestTitle}</p>
-                <Badge variant="secondary" className="text-xs px-1.5 py-0.5">{t('messages.agentBadge')}</Badge>
+                <p className="text-xs text-muted-foreground truncate">
+                  {chat.requestTitle}
+                </p>
+                <Badge
+                  variant="secondary"
+                  className="text-xs px-1.5 py-0.5"
+                >
+                  {t('messages.agentBadge')}
+                </Badge>
               </div>
               {chat.isOnline ? (
-                <p className="text-xs text-green-600">{t('messages.online')}</p>
+                <p className="text-xs text-green-600">
+                  {t('messages.online')}
+                </p>
               ) : (
-                <p className="text-xs text-muted-foreground">{formatLastSeen(chat.lastSeen)}</p>
+                <p className="text-xs text-muted-foreground">
+                  {formatLastSeen(chat.lastSeen)}
+                </p>
               )}
             </div>
           </div>
@@ -172,10 +205,10 @@ export function ChatView({ chat, onBack, onSendMessage }: ChatViewProps) {
 
             {/* Messages for this date */}
             {group.messages.map((message, index) => {
-              const showAvatar = message.sender === 'agent' && (
-                index === 0 || 
-                group.messages[index - 1]?.sender === 'user'
-              );
+              const showAvatar =
+                message.sender === 'agent' &&
+                (index === 0 ||
+                  group.messages[index - 1]?.sender === 'user');
 
               return (
                 <ChatMessage
@@ -201,9 +234,18 @@ export function ChatView({ chat, onBack, onSendMessage }: ChatViewProps) {
               />
               <div className="bg-muted rounded-2xl rounded-bl-md px-4 py-2">
                 <div className="flex space-x-1">
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '0ms' }} />
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '150ms' }} />
-                  <div className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce" style={{ animationDelay: '300ms' }} />
+                  <div
+                    className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                    style={{ animationDelay: '0ms' }}
+                  />
+                  <div
+                    className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                    style={{ animationDelay: '150ms' }}
+                  />
+                  <div
+                    className="w-2 h-2 bg-muted-foreground rounded-full animate-bounce"
+                    style={{ animationDelay: '300ms' }}
+                  />
                 </div>
               </div>
             </div>
@@ -217,7 +259,9 @@ export function ChatView({ chat, onBack, onSendMessage }: ChatViewProps) {
       <ChatInput
         onSendMessage={handleSendMessage}
         onTyping={setIsTyping}
-        placeholder={t('messages.messageAgentPlaceholder', { name: chat.agentName })}
+        placeholder={t('messages.messageAgentPlaceholder', {
+          name: chat.agentName,
+        })}
       />
     </div>
   );

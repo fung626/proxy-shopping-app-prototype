@@ -1,14 +1,23 @@
-import { Home, CirclePlus, MessageCircle, Package, User } from 'lucide-react';
-import { useLanguage } from '../store/LanguageContext';
+import { useLanguage } from '@/store/LanguageContext';
+import {
+  CirclePlus,
+  Home,
+  MessageCircle,
+  Package,
+  User,
+} from 'lucide-react';
 
 interface TabNavigationProps {
   activeTab: string;
   onTabChange: (tab: string) => void;
 }
 
-export function TabNavigation({ activeTab, onTabChange }: TabNavigationProps) {
+export function TabNavigation({
+  activeTab,
+  onTabChange,
+}: TabNavigationProps) {
   const { t } = useLanguage();
-  
+
   const tabs = [
     { id: 'explore', label: t('nav.explore'), icon: Home },
     { id: 'create', label: t('nav.create'), icon: CirclePlus },
@@ -23,15 +32,13 @@ export function TabNavigation({ activeTab, onTabChange }: TabNavigationProps) {
         {tabs.map((tab) => {
           const Icon = tab.icon;
           const isActive = activeTab === tab.id;
-          
+
           return (
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
               className={`flex flex-col items-center space-y-1 px-4 py-2 transition-colors ${
-                isActive 
-                  ? 'text-primary' 
-                  : 'text-muted-foreground'
+                isActive ? 'text-primary' : 'text-muted-foreground'
               }`}
             >
               <Icon size={22} strokeWidth={isActive ? 2 : 1.5} />

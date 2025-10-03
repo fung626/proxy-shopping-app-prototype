@@ -1,179 +1,183 @@
-import { useState, memo } from 'react';
-import { TabNavigation } from '../layouts/TabNavigation';
-import { ExploreTab } from '../pages/ExploreTab';
-import { CreateTab } from '../pages/CreateTab';
-import { MessagesTab } from '../pages/MessagesTab';
-import { OrdersTab } from '../pages/OrdersTab';
-import { ProfileTab } from '../pages/ProfileTab';
-import { AppTab, User } from '../types';
+import { useAuth } from '@/hooks/useAuth';
+import { useNavigation } from '@/hooks/useNavigation';
+import { TabNavigation } from '@/layouts/TabNavigation';
+import { allRoutes } from '@/routes';
+import { AppTab, PageProps } from '@/types/routing';
+import { ArrowLeft } from 'lucide-react';
+import React, { memo, Suspense, useMemo } from 'react';
+import { Route, Routes, useParams } from 'react-router-dom';
+import { LoadingSpinner } from './LoadingSpinner';
+import { RouteGuard } from './RouteGuard';
+import { Button } from './ui/button';
 
 interface AppRouterProps {
-  user: User | null;
   activeTab: AppTab;
   onTabChange: (tab: AppTab) => void;
-  selectedAgentId: string | null;
-  inChatView: boolean;
-  onChatViewChange: (inChatView: boolean) => void;
-  onShowAuth: () => void;
   onLogout: () => void;
-  onNavigateToRequestDetails: (request: any) => void;
-  onNavigateToExploreRequestDetails: (request: any) => void;
-  onNavigateToViewOffers: (request: any) => void;
-  onNavigateToFeedback: (request: any) => void;
-  onNavigateToViewFeedback: (request: any) => void;
-  onContactAgent: (agentId: string) => void;
-  onNavigateToPrivacyPolicy: () => void;
-  onNavigateToTermsOfService: () => void;
-  onNavigateToSupport: () => void;
-  onNavigateToAboutUs: () => void;
-  onNavigateToEmailVerification: () => void;
-  onNavigateToPhoneVerification: () => void;
-  onNavigateToIdentityVerification: () => void;
-  onNavigateToBusinessVerification: () => void;
-  onNavigateToChangePassword: () => void;
-  onNavigateToTwoFactorAuth: () => void;
-  onNavigateToEditAccount: () => void;
-  onNavigateToDeleteAccount: () => void;
-  onNavigateToBankInformation: () => void;
-  onNavigateToCreditCards: () => void;
-  onNavigateToTransactionPassword: () => void;
-  onNavigateToBiometricAuth: () => void;
-  onViewAllRequests?: () => void;
-  onViewAllOffers?: () => void;
-  onViewAllAgents?: () => void;
-  onNavigateToCategory?: (category: string) => void;
-  onNavigateToOfferDetails?: (offer: any) => void;
-  favorites?: Set<number>;
-  onToggleFavorite?: (itemId: number) => void;
-  onNavigateToWishlist?: () => void;
-  onNavigateToSearch?: (query?: string) => void;
+}
+
+// Wrapper for pages that need route parameters
+function RouteParamsWrapper({
+  Component,
+  routeProps,
+}: {
+  Component: React.ComponentType<any>;
+  routeProps: PageProps;
+}) {
+  const params = useParams();
+  return <Component {...params} {...routeProps} />;
+}
+
+// Generic placeholder for unimplemented detail pages
+function DetailPagePlaceholder({
+  title,
+  onBack,
+}: {
+  title: string;
+  onBack: () => void;
+}) {
+  return (
+    <div className="p-4 text-center">
+      <h2 className="text-lg font-medium mb-4">{title}</h2>
+      <p className="text-gray-600 mb-4">{title} page coming soon</p>
+      <Button onClick={onBack} variant="outline">
+        <ArrowLeft className="w-4 h-4 mr-2" />
+        Back
+      </Button>
+    </div>
+  );
+}
+
+// 404 Not Found page
+function NotFoundPage() {
+  const { navigateToRoute } = useNavigation();
+
+  return (
+    <div className="flex items-center justify-center min-h-screen">
+      <div className="text-center space-y-4">
+        <div className="text-lg font-medium text-gray-600">
+          Page not found
+        </div>
+        <button
+          onClick={() => navigateToRoute('/')}
+          className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+        >
+          Go Home
+        </button>
+      </div>
+    </div>
+  );
 }
 
 export const AppRouter = memo(function AppRouter({
-  user,
   activeTab,
   onTabChange,
-  selectedAgentId,
-  inChatView,
-  onChatViewChange,
-  onShowAuth,
   onLogout,
-  onNavigateToRequestDetails,
-  onNavigateToExploreRequestDetails,
-  onNavigateToViewOffers,
-  onNavigateToFeedback,
-  onNavigateToViewFeedback,
-  onContactAgent,
-  onNavigateToPrivacyPolicy,
-  onNavigateToTermsOfService,
-  onNavigateToSupport,
-  onNavigateToAboutUs,
-  onNavigateToEmailVerification,
-  onNavigateToPhoneVerification,
-  onNavigateToIdentityVerification,
-  onNavigateToBusinessVerification,
-  onNavigateToChangePassword,
-  onNavigateToTwoFactorAuth,
-  onNavigateToEditAccount,
-  onNavigateToDeleteAccount,
-  onNavigateToBankInformation,
-  onNavigateToCreditCards,
-  onNavigateToTransactionPassword,
-  onNavigateToBiometricAuth,
-  onViewAllRequests,
-  onViewAllOffers,
-  onViewAllAgents,
-  onNavigateToCategory,
-  onNavigateToOfferDetails,
-  favorites,
-  onToggleFavorite,
-  onNavigateToWishlist,
-  onNavigateToSearch
 }: AppRouterProps) {
+  const { user, redirectToAuth } = useAuth();
+  const { goBack, navigateToRoute, showTabNavigation } =
+    useNavigation();
+
+  // Memoize common page props to prevent unnecessary re-renders
+  const commonPageProps = useMemo(
+    (): PageProps => ({
+      onBack: goBack,
+      onComplete: () => navigateToRoute('/profile'),
+      onSave: () => navigateToRoute('/profile'),
+      onConfirm: () => {
+        onLogout();
+        navigateToRoute('/');
+      },
+      onShowAuth: () => redirectToAuth(),
+      onSignIn: () => redirectToAuth(),
+      user,
+    }),
+    [goBack, navigateToRoute, onLogout, user, redirectToAuth]
+  );
 
   const handleTabChange = (tab: string) => {
     onTabChange(tab as AppTab);
-    if (tab !== 'messages') {
-      onChatViewChange(false);
-    }
   };
 
-  const renderTabContent = () => {
-    switch (activeTab) {
-      case 'explore':
-        return <ExploreTab 
-          user={user}
-          onNavigateToRequestDetails={onNavigateToExploreRequestDetails}
-          onContactAgent={onContactAgent}
-          onViewAllRequests={onViewAllRequests}
-          onViewAllOffers={onViewAllOffers}
-          onViewAllAgents={onViewAllAgents}
-          onNavigateToCategory={onNavigateToCategory}
-          onNavigateToOfferDetails={onNavigateToOfferDetails}
-          onNavigateToWishlist={onNavigateToWishlist}
-          onNavigateToSearch={onNavigateToSearch}
-          favorites={favorites}
-          onToggleFavorite={onToggleFavorite}
-        />;
-      case 'messages':
-        return <MessagesTab 
-          user={user}
-          onSignIn={onShowAuth}
-          onChatViewChange={onChatViewChange} 
-          selectedAgentId={selectedAgentId}
-        />;
-      case 'create':
-        return <CreateTab 
-          user={user}
-          onSignIn={onShowAuth}
-        />;
-      case 'orders':
-        return <OrdersTab 
-          user={user} 
-          onSignIn={onShowAuth}
-          onViewDetails={onNavigateToRequestDetails}
-          onViewOffers={onNavigateToViewOffers}
-          onContactAgent={onContactAgent}
-          onLeaveFeedback={onNavigateToFeedback}
-          onViewFeedback={onNavigateToViewFeedback}
-        />;
-      case 'profile':
-        return <ProfileTab 
-          user={user} 
-          onSignIn={onShowAuth} 
-          onLogout={onLogout}
-          onNavigateToPrivacyPolicy={onNavigateToPrivacyPolicy}
-          onNavigateToTermsOfService={onNavigateToTermsOfService}
-          onNavigateToSupport={onNavigateToSupport}
-          onNavigateToAboutUs={onNavigateToAboutUs}
-          onNavigateToEmailVerification={onNavigateToEmailVerification}
-          onNavigateToPhoneVerification={onNavigateToPhoneVerification}
-          onNavigateToIdentityVerification={onNavigateToIdentityVerification}
-          onNavigateToBusinessVerification={onNavigateToBusinessVerification}
-          onNavigateToChangePassword={onNavigateToChangePassword}
-          onNavigateToTwoFactorAuth={onNavigateToTwoFactorAuth}
-          onNavigateToEditAccount={onNavigateToEditAccount}
-          onNavigateToDeleteAccount={onNavigateToDeleteAccount}
-          onNavigateToBankInformation={onNavigateToBankInformation}
-          onNavigateToCreditCards={onNavigateToCreditCards}
-          onNavigateToTransactionPassword={onNavigateToTransactionPassword}
-          onNavigateToBiometricAuth={onNavigateToBiometricAuth}
-        />;
-      default:
-        return <ExploreTab />;
-    }
-  };
+  // Generate routes from configuration
+  const routeElements = useMemo(() => {
+    return allRoutes.map((route) => {
+      const { path, element: Component, requireAuth } = route;
+
+      // Special handling for detail pages that aren't implemented yet
+      if (path === '/offers/:id') {
+        return (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <DetailPagePlaceholder
+                title="Offer Details"
+                onBack={goBack}
+              />
+            }
+          />
+        );
+      }
+
+      if (path === '/requests/:id') {
+        return (
+          <Route
+            key={path}
+            path={path}
+            element={
+              <DetailPagePlaceholder
+                title="Request Details"
+                onBack={goBack}
+              />
+            }
+          />
+        );
+      }
+
+      // Regular route with optional authentication guard
+      const element = path.includes(':') ? (
+        <RouteParamsWrapper
+          Component={Component}
+          routeProps={commonPageProps}
+        />
+      ) : (
+        <Component {...commonPageProps} />
+      );
+
+      return (
+        <Route
+          key={path}
+          path={path}
+          element={
+            <RouteGuard requireAuth={requireAuth}>
+              <Suspense fallback={<LoadingSpinner />}>
+                {element}
+              </Suspense>
+            </RouteGuard>
+          }
+        />
+      );
+    });
+  }, [commonPageProps, goBack]);
 
   return (
     <div className="h-screen flex flex-col bg-background text-foreground">
       <main className="flex-1 overflow-y-auto">
-        {renderTabContent()}
+        <Suspense fallback={<LoadingSpinner />}>
+          <Routes>
+            {routeElements}
+
+            {/* Fallback route */}
+            <Route path="*" element={<NotFoundPage />} />
+          </Routes>
+        </Suspense>
       </main>
-      
-      {!inChatView && (
-        <TabNavigation 
-          activeTab={activeTab} 
-          onTabChange={handleTabChange} 
+
+      {showTabNavigation && (
+        <TabNavigation
+          activeTab={activeTab}
+          onTabChange={handleTabChange}
         />
       )}
     </div>
