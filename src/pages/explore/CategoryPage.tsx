@@ -4,7 +4,6 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/store/LanguageContext';
 import {
-  ArrowLeft,
   Clock,
   Heart,
   MapPin,
@@ -175,6 +174,7 @@ export function CategoryPage({
   const currentCategory =
     categoryData[category as keyof typeof categoryData] ||
     categoryData.fashion;
+
   const allItems = [
     ...currentCategory.requests.map((item) => ({
       ...item,
@@ -224,26 +224,7 @@ export function CategoryPage({
   return (
     <div className="flex-1 bg-background pb-20">
       {/* Header */}
-      <div className="bg-card px-4 pt-8 pb-4 border-b border-border">
-        <div className="flex items-center space-x-4 mb-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            className="p-2"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <div>
-            <h1 className="text-xl font-semibold text-foreground">
-              {currentCategory.title}
-            </h1>
-            <p className="text-sm text-muted-foreground">
-              {currentCategory.description}
-            </p>
-          </div>
-        </div>
-
+      <div className="px-4 pt-4 pb-4">
         {/* Search Bar */}
         <div className="relative">
           <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
@@ -257,7 +238,6 @@ export function CategoryPage({
           />
         </div>
       </div>
-
       {/* Content */}
       <div className="px-4 py-6">
         <div className="mb-4">
@@ -265,7 +245,6 @@ export function CategoryPage({
             {t('common.itemsFound', { count: filteredItems.length })}
           </span>
         </div>
-
         {filteredItems.length === 0 ? (
           <div className="text-center py-8">
             <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />

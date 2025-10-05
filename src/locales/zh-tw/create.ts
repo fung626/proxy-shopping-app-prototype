@@ -19,4 +19,7 @@ export const create = {
     '請詳細描述您的請求，以便代理人能夠更好地協助您。',
   offerDescription:
     '請詳細描述您的報價，以便買家能夠更好地了解您的產品或服務。',
+  description: '開始建立請求或報價，與代理購物者建立聯繫。',
+  signInPrompt: '登入以開始建立',
+  signInDescription: '建立代理購物請求或報價，與全球代理建立聯繫。',
 };

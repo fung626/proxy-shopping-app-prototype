@@ -22,19 +22,7 @@ import {
 } from 'lucide-react';
 import { memo, useCallback, useMemo, useState } from 'react';
 
-interface OfferDetailsPageProps {
-  offer: any;
-  onBack: () => void;
-  onContactAgent: (agentId: string) => void;
-  onCreateOrder?: (offer: any) => void;
-}
-
-export const OfferDetailsPage = memo(function OfferDetailsPage({
-  offer,
-  onBack,
-  onContactAgent,
-  onCreateOrder,
-}: OfferDetailsPageProps) {
+export const OfferDetailsPage = memo(function OfferDetailsPage() {
   const { t } = useLanguage();
   const [showFullDescription, setShowFullDescription] =
     useState(false);
@@ -95,12 +83,10 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
   };
 
   // Use offer data directly if available, fall back to defaults only when needed
-  const offerData = offer || defaultOfferData;
+  const offerData = defaultOfferData;
 
   // Handle both single image and images array formats - simplified
-  const displayImages =
-    offerData.images ||
-    (offerData.image ? [offerData.image] : defaultOfferData.images);
+  const displayImages = offerData.images;
 
   // Mock agent data
   const agentData = {
@@ -178,13 +164,13 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
   }, [displayImages, offerData.title, offerData.description]);
 
   const handleContactAgent = () => {
-    onContactAgent(offerData.agentId);
+    // onContactAgent(offerData.agentId);
   };
 
   const handleCreateOrder = () => {
-    if (onCreateOrder) {
-      onCreateOrder(offerData);
-    }
+    // if (onCreateOrder) {
+    //   onCreateOrder(offerData);
+    // }
   };
 
   const handleShare = () => {
@@ -200,7 +186,7 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
           <Button
             variant="ghost"
             size="icon"
-            onClick={onBack}
+            // onClick={onBack}
             className="bg-white/90 backdrop-blur-sm hover:bg-white rounded-full shadow-lg"
           >
             <ArrowLeft className="h-5 w-5 text-gray-900" />
@@ -681,7 +667,7 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
             <Button
               onClick={handleCreateOrder}
               className="flex-1"
-              disabled={!onCreateOrder}
+              // disabled={!onCreateOrder}
             >
               <Package className="h-4 w-4 mr-2" />
               Order Now

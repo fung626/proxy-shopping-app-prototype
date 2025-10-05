@@ -1,29 +1,10 @@
-import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/store/LanguageContext';
-import { ArrowLeft } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
 
 export function TermsOfServicePage() {
   const { t } = useLanguage();
-  const navigate = useNavigate();
-
-  const handleBack = () => {
-    navigate(-1);
-  };
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="flex items-center p-4 pt-6 border-b">
-        <Button variant="ghost" size="icon" onClick={handleBack}>
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <h1 className="text-lg font-semibold ml-4">
-          {t('terms.title')}
-        </h1>
-      </div>
-
-      {/* Content */}
       <div className="p-4 pb-20 max-w-2xl mx-auto">
         <div className="space-y-6">
           <section>

@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useLanguage } from '@/store/LanguageContext';
-import { ArrowLeft, CreditCard, Eye, EyeOff } from 'lucide-react';
+import { CreditCard, Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -53,8 +53,8 @@ export function BankInformationPage({
     accountNumber: '',
     routingNumber: '',
     accountType: 'checking',
-    country: 'US',
-    currency: 'USD',
+    country: 'HK',
+    currency: 'HKD',
     swiftCode: '',
     iban: '',
     address: {
@@ -62,7 +62,7 @@ export function BankInformationPage({
       city: '',
       state: '',
       zipCode: '',
-      country: 'US',
+      country: 'HK',
     },
   });
 
@@ -190,21 +190,6 @@ export function BankInformationPage({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="sticky top-0 bg-background border-b border-border px-4 py-3">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate('/profile')}
-            className="mr-3"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-lg font-semibold">{t('bank.title')}</h1>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="p-4">
         <div className="mb-6">
@@ -289,7 +274,6 @@ export function BankInformationPage({
               </SelectContent>
             </Select>
           </div>
-
           {/* Currency */}
           <div className="space-y-2">
             <Label htmlFor="currency">{t('bank.currency')}</Label>
@@ -335,7 +319,6 @@ export function BankInformationPage({
               </SelectContent>
             </Select>
           </div>
-
           {/* Bank Name */}
           <div className="space-y-2">
             <Label htmlFor="bankName">{t('bank.bankName')}</Label>
@@ -354,7 +337,6 @@ export function BankInformationPage({
               </p>
             )}
           </div>
-
           {/* Account Type */}
           <div className="space-y-2">
             <Label htmlFor="accountType">
@@ -383,7 +365,6 @@ export function BankInformationPage({
               </SelectContent>
             </Select>
           </div>
-
           {/* Account Number */}
           <div className="space-y-2">
             <Label htmlFor="accountNumber">
@@ -425,7 +406,6 @@ export function BankInformationPage({
               </p>
             )}
           </div>
-
           {/* Routing Number for US or SWIFT for International */}
           {!isInternational ? (
             <div className="space-y-2">
@@ -510,7 +490,6 @@ export function BankInformationPage({
               </div>
             </>
           )}
-
           {/* Bank Address */}
           <div className="space-y-4">
             <h3 className="font-medium">{t('bank.bankAddress')}</h3>
@@ -534,7 +513,6 @@ export function BankInformationPage({
                 </p>
               )}
             </div>
-
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="city">{t('bank.city')}</Label>
@@ -553,7 +531,6 @@ export function BankInformationPage({
                   </p>
                 )}
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="state">
                   {t('bank.stateProvince')}
@@ -568,7 +545,6 @@ export function BankInformationPage({
                 />
               </div>
             </div>
-
             <div className="grid grid-cols-2 gap-4">
               <div className="space-y-2">
                 <Label htmlFor="zipCode">{t('bank.zipCode')}</Label>
@@ -587,7 +563,6 @@ export function BankInformationPage({
                   </p>
                 )}
               </div>
-
               <div className="space-y-2">
                 <Label htmlFor="addressCountry">
                   {t('bank.addressCountry')}
@@ -641,14 +616,12 @@ export function BankInformationPage({
               </div>
             </div>
           </div>
-
           {/* Error Message */}
           {error && (
             <div className="p-3 bg-destructive/10 border border-destructive/20 rounded-md">
               <p className="text-sm text-destructive">{error}</p>
             </div>
           )}
-
           {/* Verification Information */}
           <div className="p-4 bg-muted/50 rounded-lg">
             <h4 className="font-medium mb-2">
@@ -669,7 +642,6 @@ export function BankInformationPage({
               </li>
             </ul>
           </div>
-
           {/* Submit Button */}
           <Button
             type="submit"

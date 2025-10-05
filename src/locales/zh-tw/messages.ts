@@ -49,4 +49,7 @@ export const messages = {
   today: '今天',
   yesterday: '昨天',
   messageAgentPlaceholder: '傳送訊息給 {name}...',
+  signInPrompt: '登入以查看訊息',
+  signInDescription: '訪問您與代理和客戶的對話。',
+  description: '描述佔位符',
 };

@@ -96,4 +96,8 @@ export const orders = {
   contactClient: '聯絡客戶',
   noOrdersYet: '尚無請求',
   createRequestPrompt: '建立代購請求以開始使用。',
+  description: 'Description placeholder', // Placeholder for missing key
+  signInPrompt: 'Sign in to view orders', // Placeholder for missing key
+  signInDescription:
+    'Access your order history and tracking information.', // Placeholder for missing key
 };

@@ -1,4 +1,3 @@
-import { OverlayLoading } from '@/components/OverlayLoading';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -34,17 +33,23 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export function ProfileTab() {
-  const { loading, user, logout, redirectToAuth } = useAuth();
+  // const { start: startLoading, stop: stopLoading } =
+  //   useLoadingStore();
+  const { user, logout, redirectToAuth } = useAuth();
   const navigate = useNavigate();
   const { theme, toggleTheme } = useTheme();
   const { language, setLanguage, t } = useLanguage();
   const [notifications, setNotifications] = useState(true);
   const [languageSheetOpen, setLanguageSheetOpen] = useState(false);
 
+  // useEffect(() => {
+  //   startLoading('profile-tab', 'Loading...');
+  //   return () => stopLoading('profile-tab');
+  // }, []);
+
   if (!user) {
     return (
       <div className="flex-1 bg-background pb-20 relative">
-        <OverlayLoading isLoading={true} />
         <div className="py-4 space-y-6">
           {/* Sign In Prompt */}
           <div className="text-center py-12">
@@ -421,7 +426,6 @@ export function ProfileTab() {
 
   return (
     <div className="flex-1 bg-background pb-20 relative">
-      <OverlayLoading isLoading={loading} />
       <div className="py-4 space-y-6">
         {/* User Profile Header */}
         <div className="p-6 mx-4">

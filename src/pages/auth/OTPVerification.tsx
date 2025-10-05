@@ -1,7 +1,6 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { useLanguage } from '@/store/LanguageContext';
-import { ArrowLeft } from 'lucide-react';
 import { useRef, useState } from 'react';
 
 interface OTPVerificationProps {
@@ -86,15 +85,6 @@ export function OTPVerification({
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 pt-12">
-        <Button variant="ghost" size="icon" onClick={onBack}>
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div className="flex-1" />
-      </div>
-
-      {/* Content */}
       <div className="flex-1 px-6 py-8">
         <div className="max-w-sm mx-auto text-center">
           {/* Title */}
@@ -124,7 +114,9 @@ export function OTPVerification({
                 {[0, 1, 2, 3, 4, 5].map((index) => (
                   <Input
                     key={index}
-                    ref={(el) => (inputRefs.current[index] = el)}
+                    ref={(el) => {
+                      inputRefs.current[index] = el;
+                    }}
                     type="text"
                     inputMode="numeric"
                     value={otp[index]}

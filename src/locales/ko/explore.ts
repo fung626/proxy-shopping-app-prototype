@@ -26,4 +26,5 @@ export const explore = {
   topShoppingOffers: '인기 쇼핑 오퍼',
   requestsForYou: '당신을 위한 요청',
   topRatedAgents: '최고 평점 에이전트',
+  agentsContact: '에이전트에게 연락하기',
 };

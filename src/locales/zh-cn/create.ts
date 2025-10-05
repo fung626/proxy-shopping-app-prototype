@@ -19,4 +19,7 @@ export const create = {
     '请描述请求的详细信息，以便代理能够更好地支持您。',
   offerDescription:
     '请描述报价的详细信息，以便买家能够更好地理解您的产品或服务。',
+  description: '开始创建请求或报价，与代理购物者建立联系。',
+  signInPrompt: '登录以开始创建',
+  signInDescription: '创建代理购物请求或报价，与全球代理建立联系。',
 };

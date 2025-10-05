@@ -1,4 +1,5 @@
 import { COUNTRIES } from '@/config/countries';
+import { useLanguage } from '@/store/LanguageContext';
 import {
   Select,
   SelectContent,
@@ -22,6 +23,7 @@ export function CountrySelect({
   className,
   disabled,
 }: CountrySelectProps) {
+  const { t } = useLanguage();
   return (
     <Select
       value={value}
@@ -33,8 +35,8 @@ export function CountrySelect({
       </SelectTrigger>
       <SelectContent>
         {COUNTRIES.map((country) => (
-          <SelectItem key={country} value={country}>
-            {country}
+          <SelectItem key={country.id} value={country.id}>
+            {t(country.translationKey)}
           </SelectItem>
         ))}
       </SelectContent>

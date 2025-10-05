@@ -10,4 +10,6 @@ export const wishlist = {
   removeFromWishlist: 'ウィッシュリストから削除',
   addedToWishlist: 'ウィッシュリストに追加されました',
   removedFromWishlist: 'ウィッシュリストから削除されました',
+  noItemsFound: 'アイテムが見つかりません',
+  tryAdjusting: '検索やフィルタを調整してみてください',
 };

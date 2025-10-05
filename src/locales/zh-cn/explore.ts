@@ -19,4 +19,10 @@ export const explore = {
   newest: '最新',
   popularity: '热门度',
   rating: '评分',
+  searchPlaceholder: '搜索产品和服务...',
+  popularCategories: '热门分类',
+  topShoppingOffers: '热门购物优惠',
+  requestsForYou: '为您推荐的请求',
+  topRatedAgents: '高评分代理',
+  agentsContact: '联系代理',
 };

@@ -84,19 +84,7 @@ interface RequestDetailsPageProps {
   onNavigateToArbitration?: () => void;
 }
 
-export function RequestDetailsPage({
-  request,
-  onBack,
-  onContactAgent,
-  onContactClient,
-  onViewOffers,
-  onCancelRequest,
-  onShareRequest,
-  onViewFeedback,
-  onLeaveFeedback,
-  onUpdateStatus,
-  onNavigateToArbitration,
-}: RequestDetailsPageProps) {
+export function RequestDetailsPage() {
   const { t } = useLanguage();
 
   // Status update state for agents

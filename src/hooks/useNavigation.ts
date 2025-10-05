@@ -3,6 +3,7 @@ import {
   getTabFromPath,
   shouldShowTabNavigation,
 } from '@/routes';
+import { useLanguage } from '@/store/LanguageContext';
 import { AppTab } from '@/types/routing';
 import { useCallback, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -17,16 +18,17 @@ export interface NavigationHistory {
 export function useNavigation() {
   const navigate = useNavigate();
   const location = useLocation();
+  const { t } = useLanguage();
 
   // Get current navigation state
   const navigationState = useMemo(
     () => ({
       activeTab: getTabFromPath(location.pathname) as AppTab,
       showTabNavigation: shouldShowTabNavigation(location.pathname),
-      pageTitle: getPageTitle(location.pathname),
+      pageTitle: getPageTitle(location.pathname, t),
       currentPath: location.pathname,
     }),
-    [location.pathname]
+    [location.pathname, t]
   );
 
   // Navigation functions

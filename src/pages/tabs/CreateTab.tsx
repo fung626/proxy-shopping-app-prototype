@@ -19,7 +19,6 @@ export function CreateTab({ user, onShowAuth }: CreateTabProps) {
   const [showModeDescription, setShowModeDescription] =
     useState(true);
 
-  // If user is not authenticated
   if (!user) {
     return (
       <div className="flex-1 bg-background pb-20">
@@ -32,7 +31,6 @@ export function CreateTab({ user, onShowAuth }: CreateTabProps) {
             {t('create.description')}
           </p>
         </div>
-
         {/* Sign In Prompt */}
         <div className="px-4 py-8">
           <div className="text-center py-12">
@@ -52,8 +50,6 @@ export function CreateTab({ user, onShowAuth }: CreateTabProps) {
     );
   }
 
-  // All authenticated users can create both requests and offers
-  // Roles are determined per request/transaction, not per account
   return (
     <div className="flex-1 bg-background pb-20 flex flex-col">
       {/* Header with Mode Toggle */}
@@ -61,7 +57,6 @@ export function CreateTab({ user, onShowAuth }: CreateTabProps) {
         <h1 className="text-3xl font-semibold text-foreground mb-6">
           Create
         </h1>
-
         {/* Mode Toggle */}
         <div className="bg-muted/50 rounded-lg p-1 mb-4">
           <div className="grid grid-cols-2 gap-1">
@@ -91,7 +86,6 @@ export function CreateTab({ user, onShowAuth }: CreateTabProps) {
             </Button>
           </div>
         </div>
-
         {/* Mode Description */}
         {showModeDescription && (
           <div className="mb-0 p-4 bg-muted/50 rounded-xl">
@@ -138,24 +132,14 @@ export function CreateTab({ user, onShowAuth }: CreateTabProps) {
           </div>
         )}
       </div>
-
       {/* Content based on selected mode */}
       <div className="flex-1 min-h-0">
         {activeMode === 'request' ? (
-          <CreateRequestContent user={user} />
+          <CreateRequestForm user={user} />
         ) : (
-          <CreateOfferContent user={user} />
+          <CreateOfferForm user={user} />
         )}
       </div>
     </div>
   );
-}
-
-// Components for the actual form content
-function CreateRequestContent({ user }: { user: User }) {
-  return <CreateRequestForm user={user} />;
-}
-
-function CreateOfferContent({ user }: { user: User }) {
-  return <CreateOfferForm user={user} />;
 }

@@ -45,12 +45,13 @@ export const messages = {
   agentBadge: '에이전트',
   online: '온라인',
   activeNow: '지금 활동 중',
-  activeMinutesAgo: '{count}분 전',
-  activeHoursAgo: '{count}시간 전',
-  activeDaysAgo: '{count}일 전',
+  activeMinutesAgo: '{count}m ago',
+  activeHoursAgo: '{count}h ago',
+  activeDaysAgo: '{count}d ago',
   today: '오늘',
   yesterday: '어제',
   messageAgentPlaceholder: '{name}에게 메시지...',
   signInPrompt: '로그인하여 메시지 보기',
   signInDescription: '에이전트 및 고객과의 대화에 액세스하세요.',
+  description: '설명', // Placeholder for missing key
 };

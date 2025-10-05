@@ -19,4 +19,10 @@ export const explore = {
   newest: '新しい順',
   popularity: '人気順',
   rating: '評価順',
+  searchPlaceholder: '製品とサービスを検索...',
+  popularCategories: '人気のカテゴリ',
+  topShoppingOffers: '人気のショッピングオファー',
+  requestsForYou: 'あなたへのリクエスト',
+  topRatedAgents: '高評価のエージェント',
+  agentsContact: '代理に連絡',
 };

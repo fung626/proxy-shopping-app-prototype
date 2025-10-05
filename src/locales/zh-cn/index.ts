@@ -1,5 +1,6 @@
 ﻿// Index file for Chinese (Simplified) translations
 export { about } from './about';
+export { agents } from './agents';
 export { auth } from './auth';
 export { categories } from './categories';
 export { changePassword } from './changePassword';
@@ -17,6 +18,7 @@ export { orders } from './orders';
 export { preferences } from './preferences';
 export { privacy } from './privacy';
 export { profile } from './profile';
+export { recommendations } from './recommendations';
 export { search } from './search';
 export { support } from './support';
 export { terms } from './terms';

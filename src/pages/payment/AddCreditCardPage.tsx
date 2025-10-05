@@ -9,7 +9,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { useLanguage } from '@/store/LanguageContext';
-import { ArrowLeft, CreditCard, Eye, EyeOff } from 'lucide-react';
+import { CreditCard, Eye, EyeOff } from 'lucide-react';
 import { useState } from 'react';
 
 interface CreditCardInfo {
@@ -193,23 +193,6 @@ export function AddCreditCardPage({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="sticky top-0 bg-background border-b border-border px-4 py-3">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onBack}
-            className="mr-3"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-lg font-semibold">
-            {t('addCreditCard.title')}
-          </h1>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="p-4">
         <div className="mb-6">

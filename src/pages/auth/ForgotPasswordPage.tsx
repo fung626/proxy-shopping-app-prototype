@@ -3,7 +3,7 @@ import { AuthInput } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { useLanguage } from '@/store/LanguageContext';
-import { ArrowLeft, CheckCircle, Mail, Phone } from 'lucide-react';
+import { CheckCircle, Mail, Phone } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -60,16 +60,6 @@ export function ForgotPasswordPage() {
   if (isSubmitted) {
     return (
       <div className="min-h-screen bg-background flex flex-col">
-        {/* Header */}
-        <div className="flex items-center p-4 pt-12">
-          <Button variant="ghost" size="icon" onClick={handleBack}>
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-xl font-semibold ml-4">
-            {t('auth.checkYourInbox')}
-          </h1>
-        </div>
-
         {/* Success Content */}
         <div className="flex-1 px-4 py-6">
           <div className="max-w-md mx-auto text-center">
@@ -113,16 +103,6 @@ export function ForgotPasswordPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <div className="flex items-center p-4 pt-12">
-        <Button variant="ghost" size="icon" onClick={handleBack}>
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <h1 className="text-xl font-semibold ml-4">
-          {t('auth.resetPassword')}
-        </h1>
-      </div>
-
       {/* Content */}
       <div className="flex-1 px-4 py-6">
         <div className="max-w-md mx-auto">

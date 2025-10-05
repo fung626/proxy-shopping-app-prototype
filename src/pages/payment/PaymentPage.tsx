@@ -6,7 +6,6 @@ import { Separator } from '@/components/ui/separator';
 import { useLanguage } from '@/store/LanguageContext';
 import { User } from '@/types';
 import {
-  ArrowLeft,
   CheckCircle,
   CreditCard as CreditCardIcon,
   Lock,
@@ -314,23 +313,6 @@ export function PaymentPage({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="sticky top-0 bg-background border-b border-border px-4 py-3">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onBack}
-            className="mr-3"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-lg font-semibold">
-            {t('payment.title')}
-          </h1>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="p-4">
         {/* Header Section */}

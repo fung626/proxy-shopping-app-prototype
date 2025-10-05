@@ -1,19 +1,19 @@
+import { CATEGORIES } from '@/config/categories';
+import { COUNTRIES } from '@/config/countries';
 import { useLanguage } from '@/store/LanguageContext';
 import { User } from '@/types';
 import {
   DollarSign,
   MapPin,
   Plus,
-  Truck,
   Upload,
   User as UserIcon,
   X,
 } from 'lucide-react';
-import React, { useMemo, useState } from 'react';
-import { toast } from 'sonner@2.0.3';
+import React, { useState } from 'react';
+import { toast } from 'sonner';
 import { CreateFormLoadingOverlay } from './CreateFormLoadingOverlay';
 import { Button } from './ui/button';
-import { CountrySelect } from './ui/country-select';
 import { Input } from './ui/input';
 import {
   Select,
@@ -52,107 +52,21 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
       postalCode: '',
       country: '',
     },
-    deliveryMethod: 'ship',
+    deliveryMethod: 'personal', // 'ship' or 'personal',
   });
 
   const [newRequirement, setNewRequirement] = useState('');
 
-  const categories = useMemo(
-    () => [
-      { id: 'beauty', name: 'Beauty & Skincare' },
-      { id: 'home', name: 'Furniture & Home' },
-      { id: 'food', name: 'Food' },
-      { id: 'electronics', name: 'Electronics' },
-      { id: 'toys', name: 'Toys & Dolls' },
-      { id: 'stationery', name: 'Stationery' },
-      { id: 'fashion', name: 'Fashion' },
-      { id: 'sports', name: 'Sports & Fitness' },
-      { id: 'accessories', name: 'Watches & Jewelry' },
-      { id: 'bags', name: 'Bags & Handbags' },
-      { id: 'automotive', name: 'Cars & Motorcycles' },
-      { id: 'others', name: 'Others' },
-    ],
-    []
-  );
-
-  const countries = useMemo(
-    () => [
-      { id: 'us', name: 'United States' },
-      { id: 'jp', name: 'Japan' },
-      { id: 'kr', name: 'South Korea' },
-      { id: 'cn', name: 'China' },
-      { id: 'tw', name: 'Taiwan' },
-      { id: 'hk', name: 'Hong Kong' },
-      { id: 'sg', name: 'Singapore' },
-      { id: 'my', name: 'Malaysia' },
-      { id: 'th', name: 'Thailand' },
-      { id: 'ph', name: 'Philippines' },
-      { id: 'id', name: 'Indonesia' },
-      { id: 'vn', name: 'Vietnam' },
-      { id: 'in', name: 'India' },
-      { id: 'au', name: 'Australia' },
-      { id: 'nz', name: 'New Zealand' },
-      { id: 'uk', name: 'United Kingdom' },
-      { id: 'fr', name: 'France' },
-      { id: 'de', name: 'Germany' },
-      { id: 'it', name: 'Italy' },
-      { id: 'es', name: 'Spain' },
-      { id: 'nl', name: 'Netherlands' },
-      { id: 'se', name: 'Sweden' },
-      { id: 'no', name: 'Norway' },
-      { id: 'dk', name: 'Denmark' },
-      { id: 'fi', name: 'Finland' },
-      { id: 'ch', name: 'Switzerland' },
-      { id: 'at', name: 'Austria' },
-      { id: 'be', name: 'Belgium' },
-      { id: 'ca', name: 'Canada' },
-      { id: 'mx', name: 'Mexico' },
-      { id: 'br', name: 'Brazil' },
-      { id: 'ar', name: 'Argentina' },
-      { id: 'cl', name: 'Chile' },
-      { id: 'co', name: 'Colombia' },
-      { id: 'pe', name: 'Peru' },
-      { id: 'ae', name: 'United Arab Emirates' },
-      { id: 'sa', name: 'Saudi Arabia' },
-      { id: 'il', name: 'Israel' },
-      { id: 'tr', name: 'Turkey' },
-      { id: 'eg', name: 'Egypt' },
-      { id: 'za', name: 'South Africa' },
-      { id: 'ng', name: 'Nigeria' },
-      { id: 'ke', name: 'Kenya' },
-      { id: 'ru', name: 'Russia' },
-      { id: 'ua', name: 'Ukraine' },
-      { id: 'pl', name: 'Poland' },
-      { id: 'cz', name: 'Czech Republic' },
-      { id: 'hu', name: 'Hungary' },
-      { id: 'ro', name: 'Romania' },
-      { id: 'bg', name: 'Bulgaria' },
-      { id: 'gr', name: 'Greece' },
-      { id: 'pt', name: 'Portugal' },
-      { id: 'ie', name: 'Ireland' },
-      { id: 'lv', name: 'Latvia' },
-      { id: 'lt', name: 'Lithuania' },
-      { id: 'ee', name: 'Estonia' },
-      { id: 'is', name: 'Iceland' },
-    ],
-    []
-  );
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
       console.log('Creating request:', formData);
-
-      // Show success message
       toast.success(t('createRequest.successMessage'), {
         description: t('createRequest.successMessageDescription'),
       });
-
       // Reset form
       setFormData({
         title: '',
@@ -174,7 +88,7 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
           postalCode: '',
           country: '',
         },
-        deliveryMethod: 'ship',
+        deliveryMethod: 'personal',
       });
     } catch (error) {
       toast.error(t('createRequest.errorMessage'), {
@@ -220,7 +134,6 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
             </div>
           </div>
         )}
-
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Request Title */}
@@ -238,7 +151,6 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
               required
             />
           </div>
-
           {/* Budget Range */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -284,7 +196,6 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
               {t('createRequest.budgetRangeDescription')}
             </p>
           </div>
-
           {/* Product Origin */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -307,9 +218,9 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
                 </div>
               </SelectTrigger>
               <SelectContent>
-                {countries.map((country) => (
+                {COUNTRIES.map((country) => (
                   <SelectItem key={country.id} value={country.id}>
-                    {country.name}
+                    {t(country.translationKey)}
                   </SelectItem>
                 ))}
               </SelectContent>
@@ -318,7 +229,6 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
               {t('createRequest.productOriginDescription')}
             </p>
           </div>
-
           {/* Designated Purchasing Location */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -344,16 +254,15 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
               {t('createRequest.purchasingLocationDescription')}
             </p>
           </div>
-
           {/* Category Selection */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               {t('createRequest.category')} *
             </label>
             <div className="grid grid-cols-2 gap-3">
-              {categories.map((category) => {
+              {CATEGORIES.map((category) => {
                 const isSelected = formData.category === category.id;
-
+                const Icon = category.icon;
                 return (
                   <Button
                     key={category.id}
@@ -367,15 +276,15 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
                     }
                     className="h-auto py-3 px-4 text-left justify-start"
                   >
+                    <Icon className="h-4 w-4 text-muted-foreground mr-2" />
                     <div className="text-sm font-medium">
-                      {category.name}
+                      {t(category.translationKey)}
                     </div>
                   </Button>
                 );
               })}
             </div>
           </div>
-
           {/* Quantity */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -396,7 +305,6 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
               {t('createRequest.quantityDescription')}
             </p>
           </div>
-
           {/* Description */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -415,7 +323,6 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
               required
             />
           </div>
-
           {/* Specific Requirements */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -467,7 +374,6 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
                 {t('createRequest.add')}
               </Button>
             </div>
-
             {/* Requirements list */}
             {formData.specificRequirements.length > 0 && (
               <div className="space-y-2 mb-3">
@@ -504,281 +410,43 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
                 )}
               </div>
             )}
-
             <p className="text-xs text-muted-foreground">
               {t('createRequest.requirementsDescription')}
             </p>
           </div>
-
-          {/* Delivery Method */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              {t('createRequest.deliveryMethod')} *
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              <Button
-                type="button"
-                variant={
-                  formData.deliveryMethod === 'ship'
-                    ? 'default'
-                    : 'outline'
-                }
-                onClick={() =>
-                  setFormData({ ...formData, deliveryMethod: 'ship' })
-                }
-                className="flex items-center justify-center space-x-2 h-auto py-4"
-              >
-                <Truck className="h-4 w-4" />
-                <div className="text-left">
-                  <div className="font-medium">
-                    {t('createRequest.shipToMe')}
-                  </div>
-                  <div className="text-xs opacity-70">
-                    {t('createRequest.shipToMeDescription')}
-                  </div>
-                </div>
-              </Button>
-              <Button
-                type="button"
-                variant={
-                  formData.deliveryMethod === 'personal'
-                    ? 'default'
-                    : 'outline'
-                }
-                onClick={() =>
-                  setFormData({
-                    ...formData,
-                    deliveryMethod: 'personal',
-                  })
-                }
-                className="flex items-center justify-center space-x-2 h-auto py-4"
-              >
-                <UserIcon className="h-4 w-4" />
-                <div className="text-left">
-                  <div className="font-medium">
-                    {t('createRequest.deliverPersonally')}
-                  </div>
-                  <div className="text-xs opacity-70">
-                    {t('createRequest.deliverPersonallyDescription')}
-                  </div>
-                </div>
-              </Button>
+          <div className="space-y-4">
+            <div className="flex items-center space-x-2 mb-3">
+              <UserIcon className="h-4 w-4 text-primary" />
+              <h3 className="font-medium text-foreground">
+                {t('createRequest.expectedDeliveryLocation')}
+              </h3>
             </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              {formData.deliveryMethod === 'personal'
-                ? t('createRequest.personalDeliveryNote')
-                : t('createRequest.shippingNote')}
-            </p>
+            <div>
+              <label className="block text-sm font-medium text-foreground mb-2">
+                {t('createRequest.location')} *
+              </label>
+              <div className="relative">
+                <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder={t(
+                    'createRequest.meetingLocationPlaceholder'
+                  )}
+                  value={formData.expectedDeliveryLocation}
+                  onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                      expectedDeliveryLocation: e.target.value,
+                    })
+                  }
+                  className="pl-10 bg-input-background border-border"
+                  required
+                />
+              </div>
+              <p className="text-xs text-muted-foreground mt-1">
+                {t('createRequest.meetingLocationDescription')}
+              </p>
+            </div>
           </div>
-
-          {/* Expected Delivery Location - Only show when "Deliver Personally" is selected */}
-          {formData.deliveryMethod === 'personal' && (
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2 mb-3">
-                <UserIcon className="h-4 w-4 text-primary" />
-                <h3 className="font-medium text-foreground">
-                  {t('createRequest.expectedDeliveryLocation')}
-                </h3>
-              </div>
-
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-2">
-                  {t('createRequest.location')} *
-                </label>
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    placeholder={t(
-                      'createRequest.meetingLocationPlaceholder'
-                    )}
-                    value={formData.expectedDeliveryLocation}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        expectedDeliveryLocation: e.target.value,
-                      })
-                    }
-                    className="pl-10 bg-input-background border-border"
-                    required
-                  />
-                </div>
-                <p className="text-xs text-muted-foreground mt-1">
-                  {t('createRequest.meetingLocationDescription')}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {/* Shipping Address - Only show when "Ship to Me" is selected */}
-          {formData.deliveryMethod === 'ship' && (
-            <div className="space-y-4">
-              <div className="flex items-center space-x-2 mb-3">
-                <Truck className="h-4 w-4 text-primary" />
-                <h3 className="font-medium text-foreground">
-                  {t('createRequest.shippingAddress')}
-                </h3>
-              </div>
-
-              {/* Full Name */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-1">
-                  {t('createRequest.fullName')} *
-                </label>
-                <Input
-                  placeholder={t('createRequest.fullNamePlaceholder')}
-                  value={formData.shippingAddress.fullName}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      shippingAddress: {
-                        ...formData.shippingAddress,
-                        fullName: e.target.value,
-                      },
-                    })
-                  }
-                  className="bg-input-background border-border"
-                  required
-                />
-              </div>
-
-              {/* Address Line 1 */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-1">
-                  {t('createRequest.addressLine1')} *
-                </label>
-                <Input
-                  placeholder={t(
-                    'createRequest.addressLine1Placeholder'
-                  )}
-                  value={formData.shippingAddress.addressLine1}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      shippingAddress: {
-                        ...formData.shippingAddress,
-                        addressLine1: e.target.value,
-                      },
-                    })
-                  }
-                  className="bg-input-background border-border"
-                  required
-                />
-              </div>
-
-              {/* Address Line 2 */}
-              <div>
-                <label className="block text-sm font-medium text-foreground mb-1">
-                  {t('createRequest.addressLine2')}
-                </label>
-                <Input
-                  placeholder={t(
-                    'createRequest.addressLine2Placeholder'
-                  )}
-                  value={formData.shippingAddress.addressLine2}
-                  onChange={(e) =>
-                    setFormData({
-                      ...formData,
-                      shippingAddress: {
-                        ...formData.shippingAddress,
-                        addressLine2: e.target.value,
-                      },
-                    })
-                  }
-                  className="bg-input-background border-border"
-                />
-              </div>
-
-              {/* City and State */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">
-                    {t('createRequest.city')} *
-                  </label>
-                  <Input
-                    placeholder={t('createRequest.cityPlaceholder')}
-                    value={formData.shippingAddress.city}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        shippingAddress: {
-                          ...formData.shippingAddress,
-                          city: e.target.value,
-                        },
-                      })
-                    }
-                    className="bg-input-background border-border"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">
-                    {t('createRequest.state')} *
-                  </label>
-                  <Input
-                    placeholder={t('createRequest.statePlaceholder')}
-                    value={formData.shippingAddress.state}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        shippingAddress: {
-                          ...formData.shippingAddress,
-                          state: e.target.value,
-                        },
-                      })
-                    }
-                    className="bg-input-background border-border"
-                    required
-                  />
-                </div>
-              </div>
-
-              {/* Postal Code and Country */}
-              <div className="grid grid-cols-2 gap-3">
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">
-                    {t('createRequest.postalCode')} *
-                  </label>
-                  <Input
-                    placeholder={t(
-                      'createRequest.postalCodePlaceholder'
-                    )}
-                    value={formData.shippingAddress.postalCode}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        shippingAddress: {
-                          ...formData.shippingAddress,
-                          postalCode: e.target.value,
-                        },
-                      })
-                    }
-                    className="bg-input-background border-border"
-                    required
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-foreground mb-1">
-                    {t('createRequest.country')} *
-                  </label>
-                  <CountrySelect
-                    value={formData.shippingAddress.country}
-                    onValueChange={(value) =>
-                      setFormData({
-                        ...formData,
-                        shippingAddress: {
-                          ...formData.shippingAddress,
-                          country: value,
-                        },
-                      })
-                    }
-                    placeholder={t('createRequest.selectCountry')}
-                    className="bg-input-background border-border"
-                  />
-                </div>
-              </div>
-            </div>
-          )}
-
           {/* File Upload */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -794,7 +462,6 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
               </Button>
             </div>
           </div>
-
           {/* Submit Button */}
           <div className="pt-4">
             <Button

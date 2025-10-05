@@ -43,12 +43,13 @@ export const messages = {
   agentBadge: '代理',
   online: '在线',
   activeNow: '当前在线',
-  activeMinutesAgo: '{count} 分钟前',
-  activeHoursAgo: '{count} 小时前',
+  activeMinutesAgo: '{count}分钟前',
+  activeHoursAgo: '{count}小时前',
   activeDaysAgo: '{count}天前',
   today: '今天',
   yesterday: '昨天',
   messageAgentPlaceholder: '给{name}发消息...',
   signInPrompt: '登录查看消息',
   signInDescription: '访问您与代理和客户的对话。',
+  description: 'Description placeholder', // Placeholder for missing key
 };

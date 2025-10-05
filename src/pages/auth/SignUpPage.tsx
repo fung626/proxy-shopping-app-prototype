@@ -2,11 +2,9 @@ import {
   SignUpForm,
   SignUpFormData,
 } from '@/components/auth/SignUpForm';
-import { Button } from '@/components/ui/button';
 import { PreferencesSetup } from '@/pages/auth/PreferencesSetup';
 import AuthService from '@/services/authService';
 import { useLanguage } from '@/store/LanguageContext';
-import { ArrowLeft } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -174,12 +172,6 @@ export function SignUpPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <div className="flex items-center p-4">
-        <Button variant="ghost" size="icon" onClick={handleBack}>
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-      </div>
       {/* Content */}
       {currentStep === 'form' ? (
         <SignUpForm

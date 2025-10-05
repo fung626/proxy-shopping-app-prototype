@@ -10,4 +10,6 @@ export const wishlist = {
   removeFromWishlist: '从愿望清单移除',
   addedToWishlist: '已添加到愿望清单',
   removedFromWishlist: '已从愿望清单移除',
+  noItemsFound: '未找到商品',
+  tryAdjusting: '请调整您的搜索或过滤条件',
 };

@@ -10,4 +10,8 @@ export const wishlist = {
   removeFromWishlist: '위시리스트에서 제거',
   addedToWishlist: '위시리스트에 추가되었습니다',
   removedFromWishlist: '위시리스트에서 제거되었습니다',
+  noItemsFound:
+    '\uc0c1\ud488\uc774 \ubc1c\uacac\ub418\uc9c0 \uc54a\uc2b5\ub2c8\ub2e4',
+  tryAdjusting:
+    '\uac80\uc0c9 \ub610\ub294 \ud544\ud130\ub97c \uc870\uc808\ud574\ubcf4\uc138\uc694',
 };

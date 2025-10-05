@@ -4,14 +4,14 @@ import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
 import AuthService from '@/services/authService';
 import { useLanguage } from '@/store/LanguageContext';
-import { ArrowLeft, Eye, EyeOff } from 'lucide-react';
+import { Eye, EyeOff } from 'lucide-react';
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export function SignInPage() {
   const navigate = useNavigate();
   const { t } = useLanguage();
-  const { initializeAuth, redirectAfterAuth } = useAuth();
+  const { initialize: initializeAuth, redirectAfterAuth } = useAuth();
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -38,7 +38,6 @@ export function SignInPage() {
         setError(error.message || 'auth.signInFailed');
         return;
       }
-
       // Re-initialize auth to get user data
       await initializeAuth();
       redirectAfterAuth();
@@ -60,19 +59,6 @@ export function SignInPage() {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={() => navigate(-1)}
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div className="flex-1" />
-      </div>
-
-      {/* Form */}
       <div className="flex-1 px-6 py-8">
         <div className="max-w-sm mx-auto">
           {/* Title */}
@@ -84,7 +70,6 @@ export function SignInPage() {
               {t('auth.welcomeBack')}
             </p>
           </div>
-
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="space-y-1">
               <Label
@@ -103,7 +88,6 @@ export function SignInPage() {
                 required
               />
             </div>
-
             <div className="space-y-1">
               <Label
                 htmlFor="password"
@@ -137,13 +121,11 @@ export function SignInPage() {
                 </Button>
               </div>
             </div>
-
             {error && error.length > 0 && (
               <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
                 <p className="text-red-800 text-sm">{t(error)}</p>
               </div>
             )}
-
             <div className="text-right">
               <Button
                 type="button"
@@ -154,7 +136,6 @@ export function SignInPage() {
                 {t('auth.forgotPassword')}
               </Button>
             </div>
-
             <Button
               type="submit"
               className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl mt-8"
@@ -163,7 +144,6 @@ export function SignInPage() {
               {loading ? t('auth.signingIn') : t('auth.signIn')}
             </Button>
           </form>
-
           {/* Social Login */}
           <div className="mt-8">
             <div className="relative">
@@ -176,7 +156,6 @@ export function SignInPage() {
                 </span>
               </div>
             </div>
-
             <div className="mt-6 flex justify-center space-x-6">
               <Button
                 variant="ghost"

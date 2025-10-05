@@ -10,4 +10,6 @@ export const wishlist = {
   removeFromWishlist: 'Remove from Wishlist',
   addedToWishlist: 'Added to wishlist',
   removedFromWishlist: 'Removed from wishlist',
+  noItemsFound: 'No items found',
+  tryAdjusting: 'Try adjusting your search or filter',
 };

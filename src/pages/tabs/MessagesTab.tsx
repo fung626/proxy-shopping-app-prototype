@@ -26,14 +26,11 @@ export function MessagesTab({
   );
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Get selectedAgentId from location state
   const selectedAgentId = location.state?.selectedAgentId;
 
-  // Check authentication first
   if (!user) {
     return (
       <div className="flex-1 bg-background pb-20">
-        {/* Header */}
         <div className="bg-card px-4 pt-12 pb-6">
           <h1 className="text-3xl font-semibold text-foreground">
             {t('nav.messages')}
@@ -42,8 +39,6 @@ export function MessagesTab({
             {t('messages.description')}
           </p>
         </div>
-
-        {/* Sign In Prompt */}
         <div className="px-4 py-8">
           <div className="text-center py-12">
             <MessageCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />

@@ -6,7 +6,6 @@ import { Switch } from '@/components/ui/switch';
 import { useLanguage } from '@/store/LanguageContext';
 import {
   AlertCircle,
-  ArrowLeft,
   Check,
   CheckCircle,
   Copy,
@@ -112,23 +111,6 @@ export function TwoFactorAuthPage({}: TwoFactorAuthPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="sticky top-0 bg-background border-b border-border px-4 py-3">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={onBack}
-            className="mr-3"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-lg font-semibold">
-            {t('twoFactor.title')}
-          </h1>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="p-4">
         {setupStep === 'disabled' && (

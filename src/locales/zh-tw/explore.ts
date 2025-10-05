@@ -19,4 +19,10 @@ export const explore = {
   newest: '最新',
   popularity: '熱門度',
   rating: '評分',
+  searchPlaceholder: '搜尋產品和服務...',
+  popularCategories: '熱門分類',
+  topShoppingOffers: '熱門購物優惠',
+  requestsForYou: '為您推薦的請求',
+  topRatedAgents: '高評分代理',
+  agentsContact: '聯繫代理',
 };

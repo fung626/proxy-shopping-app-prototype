@@ -96,4 +96,7 @@ export const orders = {
   contactClient: '联系客户',
   noOrdersYet: '尚无请求',
   createRequestPrompt: '创建代购请求以开始使用。',
+  description: '跟踪您的代购请求和订单。',
+  signInPrompt: '登录以查看订单',
+  signInDescription: '访问您的订单历史和跟踪信息。',
 };

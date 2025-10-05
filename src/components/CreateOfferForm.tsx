@@ -1,18 +1,10 @@
+import CURRENCIES from '@/config/currencies';
 import { useLanguage } from '@/store/LanguageContext';
 import { User } from '@/types';
-import {
-  Camera,
-  DollarSign,
-  MapPin,
-  Package,
-  Plane,
-  Truck,
-  User as UserIcon,
-  X,
-  Zap,
-} from 'lucide-react';
+import { CATEGORIES } from '@/utils/categories';
+import { Camera, DollarSign, MapPin, Package, X } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
-import { toast } from 'sonner@2.0.3';
+import { toast } from 'sonner';
 import { CreateFormLoadingOverlay } from './CreateFormLoadingOverlay';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
@@ -70,74 +62,24 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
     []
   );
 
-  const currencies = useMemo(
-    () => [
-      { id: 'USD', name: 'USD ($)' },
-      { id: 'EUR', name: 'EUR (€)' },
-      { id: 'GBP', name: 'GBP (£)' },
-      { id: 'JPY', name: 'JPY (¥)' },
-      { id: 'KRW', name: 'KRW (₩)' },
-      { id: 'CNY', name: 'CNY (¥)' },
-      { id: 'HKD', name: 'HKD (HK$)' },
-      { id: 'SGD', name: 'SGD (S$)' },
-      { id: 'AUD', name: 'AUD (A$)' },
-      { id: 'CAD', name: 'CAD (C$)' },
-    ],
-    []
-  );
-
-  const deliveryOptionsConfig = useMemo(
-    () => [
-      {
-        id: 'local-pickup',
-        label: t('createOffer.deliverPersonally'),
-        description: t('createOffer.deliverPersonallyDescription'),
-        icon: UserIcon,
-      },
-      {
-        id: 'domestic-shipping',
-        label: t('createOffer.domesticShipping'),
-        description: t('createOffer.domesticShippingDescription'),
-        icon: Truck,
-      },
-      {
-        id: 'international-shipping',
-        label: t('createOffer.international'),
-        description: t('createOffer.internationalDescription'),
-        icon: Plane,
-      },
-      {
-        id: 'express-delivery',
-        label: t('createOffer.expressDelivery'),
-        description: t('createOffer.expressDeliveryDescription'),
-        icon: Zap,
-      },
-    ],
-    [t]
-  );
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
       console.log('Creating offer:', formData);
-
       // Show success message
       toast.success(t('createOffer.successTitle'), {
         description: t('createOffer.successDescription'),
       });
-
       // Reset form
       setFormData({
         title: '',
         description: '',
         category: '',
         price: '',
-        currency: 'USD',
+        currency: 'HKD',
         location: '',
         availableQuantity: '1',
         estimatedDelivery: '',
@@ -194,15 +136,6 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
     });
   };
 
-  const toggleDeliveryOption = (optionId: string) => {
-    setFormData({
-      ...formData,
-      deliveryOptions: formData.deliveryOptions.includes(optionId)
-        ? formData.deliveryOptions.filter((id) => id !== optionId)
-        : [...formData.deliveryOptions, optionId],
-    });
-  };
-
   return (
     <>
       <CreateFormLoadingOverlay
@@ -238,7 +171,6 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
             </div>
           </div>
         )}
-
         {/* Form */}
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Offer Title */}
@@ -256,16 +188,15 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
               required
             />
           </div>
-
           {/* Category */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               {t('createOffer.category')} *
             </label>
             <div className="grid grid-cols-2 gap-3">
-              {categories.map((category) => {
+              {CATEGORIES.map((category) => {
                 const isSelected = formData.category === category.id;
-
+                const Icon = category.icon;
                 return (
                   <Button
                     key={category.id}
@@ -279,23 +210,23 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
                     }
                     className="h-auto py-3 px-4 text-left justify-start"
                   >
+                    <Icon className="h-4 w-4 text-muted-foreground mr-2" />
                     <div className="text-sm font-medium">
-                      {category.name}
+                      {t(category.translationKey)}
                     </div>
                   </Button>
                 );
               })}
             </div>
           </div>
-
           {/* Price and Currency */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               {t('createOffer.price')} *
             </label>
-            <div className="grid grid-cols-2 gap-3">
-              <div className="relative">
-                <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <div className="grid grid-cols-6 gap-3">
+              <div className="col-span-4 relative">
+                <DollarSign className="absolute left-3 top-[14px] h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder={t('createOffer.enterPrice')}
                   value={formData.price}
@@ -311,33 +242,37 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
                   required
                 />
               </div>
-              <Select
-                value={formData.currency}
-                onValueChange={(value) =>
-                  setFormData({ ...formData, currency: value })
-                }
-              >
-                <SelectTrigger className="bg-input-background border-border">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  {currencies.map((currency) => (
-                    <SelectItem key={currency.id} value={currency.id}>
-                      {currency.name}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+              <div className="col-span-2">
+                <Select
+                  value={formData.currency}
+                  onValueChange={(value) =>
+                    setFormData({ ...formData, currency: value })
+                  }
+                >
+                  <SelectTrigger className="bg-input-background border-border">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {CURRENCIES.map((currency) => (
+                      <SelectItem
+                        key={currency.id}
+                        value={currency.id}
+                      >
+                        {currency.name}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
             </div>
           </div>
-
           {/* Location */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
               {t('createOffer.yourLocation')} *
             </label>
             <div className="relative">
-              <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <MapPin className="absolute left-3 top-[14px] h-4 w-4 text-muted-foreground" />
               <Input
                 placeholder={t('createOffer.locationPlaceholder')}
                 value={formData.location}
@@ -355,7 +290,6 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
               {t('createOffer.locationDescription')}
             </p>
           </div>
-
           {/* Description */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -376,7 +310,6 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
               required
             />
           </div>
-
           {/* Product Specifications */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -430,12 +363,10 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
                 ))}
               </div>
             )}
-
             <p className="text-xs text-muted-foreground">
               {t('createOffer.specificationsDescription')}
             </p>
           </div>
-
           {/* Available Quantity */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -479,45 +410,6 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
               {t('createOffer.deliveryTimeDescription')}
             </p>
           </div>
-
-          {/* Delivery Options */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              {t('createOffer.deliveryOptions')} *
-            </label>
-            <div className="grid grid-cols-2 gap-3">
-              {deliveryOptionsConfig.map((option) => {
-                const isSelected = formData.deliveryOptions.includes(
-                  option.id
-                );
-                const IconComponent = option.icon;
-
-                return (
-                  <Button
-                    key={option.id}
-                    type="button"
-                    variant={isSelected ? 'default' : 'outline'}
-                    onClick={() => toggleDeliveryOption(option.id)}
-                    className="flex items-center justify-center space-x-2 h-auto py-4"
-                  >
-                    <IconComponent className="h-4 w-4" />
-                    <div className="text-left">
-                      <div className="font-medium">
-                        {option.label}
-                      </div>
-                      <div className="text-xs opacity-70">
-                        {option.description}
-                      </div>
-                    </div>
-                  </Button>
-                );
-              })}
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              {t('createOffer.deliveryOptionsDescription')}
-            </p>
-          </div>
-
           {/* Tags */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -572,12 +464,10 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
                 ))}
               </div>
             )}
-
             <p className="text-xs text-muted-foreground">
               {t('createOffer.tagsDescription')}
             </p>
           </div>
-
           {/* Photo Upload */}
           <div>
             <label className="block text-sm font-medium text-foreground mb-2">
@@ -596,7 +486,6 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
               {t('createOffer.imageDescription')}
             </p>
           </div>
-
           {/* Submit Button */}
           <div className="pt-4">
             <Button

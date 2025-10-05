@@ -100,7 +100,6 @@ export function SignUpForm({
             {t('auth.joinPlatform')}
           </p>
         </div>
-
         <form onSubmit={handleSubmit} className="space-y-5">
           {/* Avatar Upload */}
           <div className="space-y-1">
@@ -139,7 +138,6 @@ export function SignUpForm({
               </div>
             </div>
           </div>
-
           <div className="space-y-1">
             <Label
               htmlFor="name"
@@ -157,7 +155,6 @@ export function SignUpForm({
               required
             />
           </div>
-
           <div className="space-y-1">
             <Label
               htmlFor="lastName"
@@ -175,7 +172,6 @@ export function SignUpForm({
               required
             />
           </div>
-
           <div className="space-y-1">
             <Label
               htmlFor="nickname"
@@ -193,7 +189,6 @@ export function SignUpForm({
               required
             />
           </div>
-
           <div className="space-y-3">
             <Label className="text-sm font-medium text-foreground">
               {t('auth.gender')}
@@ -206,7 +201,6 @@ export function SignUpForm({
               variant="default"
             />
           </div>
-
           <div className="space-y-1">
             <Label
               htmlFor="email"
@@ -225,7 +219,6 @@ export function SignUpForm({
               required
             />
           </div>
-
           <div className="space-y-1">
             <Label
               htmlFor="phone"
@@ -246,7 +239,6 @@ export function SignUpForm({
               variant="auth"
             />
           </div>
-
           <div className="space-y-1">
             <Label
               htmlFor="country"
@@ -262,7 +254,6 @@ export function SignUpForm({
               placeholder="Select your country"
             />
           </div>
-
           <div className="space-y-1">
             <Label
               htmlFor="bio"
@@ -282,7 +273,6 @@ export function SignUpForm({
               {formData.bio.length}/300
             </p>
           </div>
-
           <div className="space-y-1">
             <Label className="text-sm font-medium text-foreground">
               {t('auth.languages')}
@@ -299,7 +289,6 @@ export function SignUpForm({
               {t('auth.languagesHelp')}
             </p>
           </div>
-
           <div className="space-y-1">
             <Label
               htmlFor="password"
@@ -334,7 +323,6 @@ export function SignUpForm({
               </Button>
             </div>
           </div>
-
           <div className="space-y-1">
             <Label
               htmlFor="confirmPassword"
@@ -371,7 +359,6 @@ export function SignUpForm({
               </Button>
             </div>
           </div>
-
           <div className="flex items-start space-x-3 pt-2">
             <input
               type="checkbox"
@@ -395,13 +382,11 @@ export function SignUpForm({
               </Button>
             </div>
           </div>
-
           {error && (
             <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
               <p className="text-red-800 text-sm">{error}</p>
             </div>
           )}
-
           <Button
             type="submit"
             className="w-full h-12 bg-primary hover:bg-primary/90 text-primary-foreground font-medium rounded-xl mt-8"
@@ -412,7 +397,6 @@ export function SignUpForm({
               : t('auth.continueToPreferences')}
           </Button>
         </form>
-
         {/* Social Login */}
         <div className="mt-8">
           <div className="relative">
@@ -425,7 +409,6 @@ export function SignUpForm({
               </span>
             </div>
           </div>
-
           <div className="mt-6 flex justify-center space-x-6">
             <Button
               variant="ghost"
@@ -485,7 +468,6 @@ export function SignUpForm({
             </Button>
           </div>
         </div>
-
         <div className="mt-8 text-center">
           <span className="text-muted-foreground text-sm">
             {t('auth.alreadyHaveAccount')}{' '}

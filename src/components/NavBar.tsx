@@ -1,22 +1,28 @@
+import { useLanguage } from '@/store/LanguageContext';
 import { ArrowLeft } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from './ui/button';
 
 interface NavBarProps {
+  className?: string;
   title?: string;
+  subTitle?: string;
+  large?: boolean;
   showBack?: boolean;
   onBack?: () => void;
   rightAction?: React.ReactNode;
-  className?: string;
 }
 
 export function NavBar({
+  className = '',
   title,
+  subTitle,
+  large = false,
   showBack = true,
   onBack,
   rightAction,
-  className = '',
 }: NavBarProps) {
+  const { t } = useLanguage();
   const navigate = useNavigate();
 
   const handleBack = () => {
@@ -29,10 +35,9 @@ export function NavBar({
 
   return (
     <header
-      className={`safe-area-inset-top bg-background border-b border-border sticky top-0 z-50 ${className}`}
+      className={`safe-area-inset-top bg-background border-border sticky top-0 z-50 ${className}`}
     >
       <div className="flex items-center justify-between h-14 px-4">
-        {/* Left side - Back button */}
         <div className="flex items-center">
           {showBack && (
             <Button
@@ -45,18 +50,21 @@ export function NavBar({
             </Button>
           )}
           {!showBack && <div className="w-9" />}{' '}
-          {/* Spacer for alignment */}
         </div>
-        {/* Center - Title */}
-        <div className="flex-1 text-center px-4">
-          <h1 className="text-lg font-semibold text-foreground truncate">
-            {title}
-          </h1>
+        <div className="flex-1 px-4">
+          {title && (
+            <h1 className="text-lg font-semibold text-foreground truncate">
+              {t(title)}
+            </h1>
+          )}
+          {subTitle && (
+            <p className="text-sm text-muted-foreground truncate">
+              {t(subTitle)}
+            </p>
+          )}
         </div>
-        {/* Right side - Action or spacer */}
         <div className="flex items-center">
           {rightAction || <div className="w-9" />}{' '}
-          {/* Spacer for alignment */}
         </div>
       </div>
     </header>

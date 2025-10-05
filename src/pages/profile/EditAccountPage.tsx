@@ -12,7 +12,7 @@ import { PhoneInput } from '@/components/ui/phone-input';
 import { Textarea } from '@/components/ui/textarea';
 import { useLanguage } from '@/store/LanguageContext';
 import { User } from '@/types';
-import { ArrowLeft, Camera, Check, X } from 'lucide-react';
+import { Camera, Check, X } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -164,23 +164,6 @@ export function EditAccountPage({ user }: EditAccountPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="bg-card border-b border-border px-4 py-3 safe-area-inset-top">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleCancel}
-            className="mr-3"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-lg font-semibold">
-            {t('editProfile.title')}
-          </h1>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="px-4 py-4">
         {/* Profile Info Section */}

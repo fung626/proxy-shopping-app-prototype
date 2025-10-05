@@ -45,12 +45,13 @@ export const messages = {
   agentBadge: 'エージェント',
   online: 'オンライン',
   activeNow: '現在アクティブ',
-  activeMinutesAgo: '{count}分前',
-  activeHoursAgo: '{count}時間前',
-  activeDaysAgo: '{count}日前',
+  activeMinutesAgo: '{count}m ago',
+  activeHoursAgo: '{count}h ago',
+  activeDaysAgo: '{count}d ago',
   today: '今日',
   yesterday: '昨日',
   messageAgentPlaceholder: '{name}にメッセージ...',
   signInPrompt: 'サインインしてメッセージを表示',
   signInDescription: 'エージェントや顧客との会話にアクセスします。',
+  description: '説明', // Placeholder for missing key
 };

@@ -6,14 +6,10 @@ interface AuthProviderProps {
 }
 
 export function AuthProvider({ children }: AuthProviderProps) {
-  const initializeAuth = useAuthStore(
-    (state) => state.initializeAuth
-  );
-
+  const initialize = useAuthStore((state) => state.initialize);
   useEffect(() => {
-    initializeAuth();
-  }, [initializeAuth]);
-
+    initialize();
+  }, [initialize]);
   return <>{children}</>;
 }
 

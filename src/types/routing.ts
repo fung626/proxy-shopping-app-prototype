@@ -4,9 +4,11 @@ export interface RouteConfig {
   element: React.ComponentType<any>;
   requireAuth?: boolean;
   showTabNavigation?: boolean;
+  showNavBar?: boolean;
   preload?: boolean;
   meta?: {
     title?: string;
+    subTitle?: string;
     description?: string;
   };
 }

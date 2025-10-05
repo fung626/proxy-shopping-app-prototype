@@ -1,5 +1,4 @@
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
-import { NavBarLarge } from '@/components/NavBarLarge';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -302,14 +301,6 @@ export function SearchPage({
 
   return (
     <div className="flex-1 bg-background pb-20">
-      <NavBarLarge
-        title={t('common.search')}
-        onBack={onBack}
-        showFilter={true}
-        onFilter={handleFilter}
-        headerContent={headerContent}
-      />
-
       {/* Results */}
       <div className="px-4 py-6">
         <div className="mb-4">

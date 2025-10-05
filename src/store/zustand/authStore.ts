@@ -1,44 +1,43 @@
 import authService from '@/services/authService';
-import UserService from '@/services/userService';
+import { userSupabaseService } from '@/services/userSupabaseService';
 import { User } from '@/types';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 interface AuthState {
   user: User | null;
-  loading: boolean;
   isAuthenticated: boolean;
   setUser: (user: User | null) => void;
-  initializeAuth: () => Promise<void>;
+  initialize: () => Promise<void>;
   logout: () => Promise<void>;
-  clearAuth: () => void;
+  clear: () => void;
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
       user: null,
-      loading: true,
       isAuthenticated: false,
-
       setUser: (user: User | null) => {
         set({
           user,
           isAuthenticated: !!user,
-          loading: false,
         });
       },
-
-      initializeAuth: async () => {
+      initialize: async () => {
         try {
-          set({ loading: true });
-          const currentUser = await UserService.getCurrentUser();
-
+          // Use the loading store for auth initialization
+          const { start: startLoading, stop: stopLoading } =
+            await import('./loadingStore').then((m) =>
+              m.useLoadingStore.getState()
+            );
+          startLoading('auth-init', 'Loading...');
+          const currentUser =
+            await userSupabaseService.getCurrentUser();
           if (currentUser?.email) {
             set({
               user: currentUser,
               isAuthenticated: true,
-              loading: false,
             });
             console.log(
               '✅ User restored from Supabase:',
@@ -48,44 +47,52 @@ export const useAuthStore = create<AuthState>()(
             set({
               user: null,
               isAuthenticated: false,
-              loading: false,
             });
             console.log('ℹ️ No authenticated user found');
           }
+          stopLoading('auth-init');
         } catch (error) {
           console.warn('⚠️ Auth initialization failed:', error);
           set({
             user: null,
             isAuthenticated: false,
-            loading: false,
           });
+          const { stop: stopLoading } = await import(
+            './loadingStore'
+          ).then((m) => m.useLoadingStore.getState());
+          stopLoading('auth-init');
         }
       },
-
       logout: async () => {
         try {
+          const { start: startLoading, stop: stopLoading } =
+            await import('./loadingStore').then((m) =>
+              m.useLoadingStore.getState()
+            );
+          startLoading('auth-logout', 'Signing out...');
           await authService.signOut();
           set({
             user: null,
             isAuthenticated: false,
-            loading: false,
           });
+          stopLoading('auth-logout');
         } catch (error) {
           console.error('Logout failed:', error);
           // Still clear local state even if logout fails
           set({
             user: null,
             isAuthenticated: false,
-            loading: false,
           });
+          const { stop: stopLoading } = await import(
+            './loadingStore'
+          ).then((m) => m.useLoadingStore.getState());
+          stopLoading('auth-logout');
         }
       },
-
-      clearAuth: () => {
+      clear: () => {
         set({
           user: null,
           isAuthenticated: false,
-          loading: false,
         });
       },
     }),

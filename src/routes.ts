@@ -193,17 +193,17 @@ export const routeGroups: RouteGroup[] = [
         showTabNavigation: true,
         preload: true,
         meta: {
-          title: 'Explore',
+          title: 'nav.titles.explore',
           description: 'Discover shopping opportunities',
         },
       },
       {
         path: '/messages',
         element: MessagesTab,
-        requireAuth: true,
+        // requireAuth: true,
         showTabNavigation: true,
         meta: {
-          title: 'Messages',
+          title: 'nav.titles.messages',
           description: 'Chat with agents and clients',
         },
       },
@@ -212,17 +212,17 @@ export const routeGroups: RouteGroup[] = [
         element: CreateTab,
         showTabNavigation: true,
         meta: {
-          title: 'Create',
+          title: 'nav.titles.create',
           description: 'Create offers and requests',
         },
       },
       {
         path: '/orders',
         element: OrdersTab,
-        requireAuth: true,
+        //requireAuth: true,
         showTabNavigation: true,
         meta: {
-          title: 'Orders',
+          title: 'nav.titles.orders',
           description: 'Manage your orders',
         },
       },
@@ -231,7 +231,7 @@ export const routeGroups: RouteGroup[] = [
         element: ProfileTab,
         showTabNavigation: true,
         meta: {
-          title: 'Profile',
+          title: 'nav.titles.profile',
           description: 'Manage your account',
         },
       },
@@ -246,7 +246,7 @@ export const routeGroups: RouteGroup[] = [
         element: WishlistsPage,
         requireAuth: true,
         meta: {
-          title: 'Wishlist',
+          title: 'nav.titles.wishlist',
           description: 'Your saved items',
         },
       },
@@ -254,7 +254,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/explore/search',
         element: SearchPage,
         meta: {
-          title: 'Search',
+          title: 'nav.titles.search',
           description: 'Search for offers and requests',
         },
       },
@@ -262,7 +262,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/explore/all-offers',
         element: AllOffersPage,
         meta: {
-          title: 'All Offers',
+          title: 'nav.titles.allOffers',
           description: 'Browse all available offers',
         },
       },
@@ -270,7 +270,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/explore/all-requests',
         element: AllRequestsPage,
         meta: {
-          title: 'All Requests',
+          title: 'nav.titles.allRequests',
           description: 'Browse all shopping requests',
         },
       },
@@ -278,7 +278,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/explore/all-agents',
         element: AllAgentsPage,
         meta: {
-          title: 'All Agents',
+          title: 'nav.titles.allAgents',
           description: 'Browse all shopping agents',
         },
       },
@@ -286,7 +286,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/explore/category/:category',
         element: CategoryPage,
         meta: {
-          title: 'Category',
+          title: 'nav.titles.category',
           description: 'Browse category items',
         },
       },
@@ -298,16 +298,18 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/offers/:id',
         element: OfferDetailsPage,
+        showNavBar: false,
         meta: {
-          title: 'Offer Details',
+          title: 'nav.titles.offerDetails',
           description: 'View offer details',
         },
       },
       {
         path: '/requests/:id',
         element: RequestDetailsPage,
+        showNavBar: false,
         meta: {
-          title: 'Request Details',
+          title: 'nav.titles.requestDetails',
           description: 'View request details',
         },
       },
@@ -322,7 +324,7 @@ export const routeGroups: RouteGroup[] = [
         element: EmailVerificationPage,
         requireAuth: true,
         meta: {
-          title: 'Email Verification',
+          title: 'nav.titles.emailVerification',
           description: 'Verify your email address',
         },
       },
@@ -331,7 +333,7 @@ export const routeGroups: RouteGroup[] = [
         element: PhoneVerificationPage,
         requireAuth: true,
         meta: {
-          title: 'Phone Verification',
+          title: 'nav.titles.phoneVerification',
           description: 'Verify your phone number',
         },
       },
@@ -340,7 +342,7 @@ export const routeGroups: RouteGroup[] = [
         element: IdentityVerificationPage,
         requireAuth: true,
         meta: {
-          title: 'Identity Verification',
+          title: 'nav.titles.identityVerification',
           description: 'Verify your identity',
         },
       },
@@ -349,7 +351,7 @@ export const routeGroups: RouteGroup[] = [
         element: BusinessVerificationPage,
         requireAuth: true,
         meta: {
-          title: 'Business Verification',
+          title: 'nav.titles.businessVerification',
           description: 'Verify your business',
         },
       },
@@ -358,7 +360,7 @@ export const routeGroups: RouteGroup[] = [
         element: ChangePasswordPage,
         requireAuth: true,
         meta: {
-          title: 'Change Password',
+          title: 'nav.titles.changePassword',
           description: 'Update your password',
         },
       },
@@ -367,7 +369,7 @@ export const routeGroups: RouteGroup[] = [
         element: TwoFactorAuthPage,
         requireAuth: true,
         meta: {
-          title: 'Two-Factor Authentication',
+          title: 'nav.titles.twoFactorAuth',
           description: 'Manage 2FA settings',
         },
       },
@@ -376,7 +378,7 @@ export const routeGroups: RouteGroup[] = [
         element: EditAccountPage,
         requireAuth: true,
         meta: {
-          title: 'Edit Account',
+          title: 'nav.titles.editAccount',
           description: 'Update your profile',
         },
       },
@@ -385,7 +387,7 @@ export const routeGroups: RouteGroup[] = [
         element: DeleteAccountPage,
         requireAuth: true,
         meta: {
-          title: 'Delete Account',
+          title: 'nav.titles.deleteAccount',
           description: 'Delete your account',
         },
       },
@@ -394,7 +396,7 @@ export const routeGroups: RouteGroup[] = [
         element: BankInformationPage,
         requireAuth: true,
         meta: {
-          title: 'Bank Information',
+          title: 'nav.titles.bankInformation',
           description: 'Manage bank details',
         },
       },
@@ -403,7 +405,7 @@ export const routeGroups: RouteGroup[] = [
         element: CreditCardsPage,
         requireAuth: true,
         meta: {
-          title: 'Credit Cards',
+          title: 'nav.titles.creditCards',
           description: 'Manage payment methods',
         },
       },
@@ -412,7 +414,7 @@ export const routeGroups: RouteGroup[] = [
         element: TransactionPasswordPage,
         requireAuth: true,
         meta: {
-          title: 'Transaction Password',
+          title: 'nav.titles.transactionPassword',
           description: 'Set transaction password',
         },
       },
@@ -421,7 +423,7 @@ export const routeGroups: RouteGroup[] = [
         element: BiometricAuthPage,
         requireAuth: true,
         meta: {
-          title: 'Biometric Authentication',
+          title: 'nav.titles.biometricAuth',
           description: 'Manage biometric login',
         },
       },
@@ -435,7 +437,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/info/support',
         element: SupportPage,
         meta: {
-          title: 'Support',
+          title: 'nav.titles.support',
           description: 'Get help and support',
         },
       },
@@ -443,7 +445,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/info/privacy',
         element: PrivacyPolicyPage,
         meta: {
-          title: 'Privacy Policy',
+          title: 'nav.titles.privacy',
           description: 'Our privacy policy',
         },
       },
@@ -451,7 +453,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/info/terms',
         element: TermsOfServicePage,
         meta: {
-          title: 'Terms of Service',
+          title: 'nav.titles.terms',
           description: 'Terms and conditions',
         },
       },
@@ -459,7 +461,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/info/about-us',
         element: AboutUsPage,
         meta: {
-          title: 'About Us',
+          title: 'nav.titles.aboutUs',
           description: 'Learn about our company',
         },
       },
@@ -473,7 +475,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/auth/signin',
         element: SignInPage,
         meta: {
-          title: 'Sign In',
+          // title: 'nav.titles.signIn',
           description: 'Sign in to your account',
         },
       },
@@ -481,7 +483,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/auth/signup',
         element: SignUpPage,
         meta: {
-          title: 'Sign Up',
+          // title: 'nav.titles.signUp',
           description: 'Create a new account',
         },
       },
@@ -489,15 +491,15 @@ export const routeGroups: RouteGroup[] = [
         path: '/auth/forgot-password',
         element: ForgotPasswordPage,
         meta: {
-          title: 'Forgot Password',
-          description: 'Reset your password',
+          // title: 'nav.titles.forgotPassword',
+          subTitle: 'auth.forgotPasswordTitle',
         },
       },
       {
         path: '/auth/callback',
         element: AuthCallbackPage,
         meta: {
-          title: 'Completing Sign In',
+          // title: 'nav.titles.authCallback',
           description: 'Processing authentication',
         },
       },
@@ -515,6 +517,12 @@ export const getRouteByPath = (
   path: string
 ): RouteConfig | undefined => {
   return allRoutes.find((route) => route.path === path);
+};
+
+export const getRouteConfig = (
+  path: string
+): RouteConfig | undefined => {
+  return getRouteByPath(path);
 };
 
 export const getTabFromPath = (pathname: string): string => {
@@ -545,7 +553,23 @@ export const shouldShowTabNavigation = (
   ].includes(pathname);
 };
 
-export const getPageTitle = (pathname: string): string => {
+export const getPageTitle = (
+  pathname: string,
+  t?: (key: string) => string
+): string | undefined => {
   const route = getRouteByPath(pathname);
-  return route?.meta?.title || 'ProxyShop';
+  const title = route?.meta?.title;
+
+  // If no title or no translation function, return as is
+  if (!title || !t) {
+    return title;
+  }
+
+  // If title is a translation key (contains dots), translate it
+  if (title.includes('.')) {
+    return t(title);
+  }
+
+  // Otherwise return the title as is
+  return title;
 };

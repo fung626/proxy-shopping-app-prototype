@@ -1,7 +1,11 @@
 import { AppRouter } from '@/components/AppRouter';
 import { ErrorBoundary } from '@/components/ErrorHandler';
+import { LoadingOverlay } from '@/components/LoadingOverlay';
+import { NavBar } from '@/components/NavBar';
 import { Toaster } from '@/components/ui/sonner';
-import { getTabFromPath } from '@/routes';
+import { useNavigation } from '@/hooks/useNavigation';
+import { TabNavigation } from '@/layouts/TabNavigation';
+import { getRouteByPath, getTabFromPath } from '@/routes';
 import { AuthProvider } from '@/store/AuthContext';
 import { LanguageProvider } from '@/store/LanguageContext';
 import { ThemeProvider, useTheme } from '@/store/ThemeContext';
@@ -18,9 +22,14 @@ import {
 
 const AppContent = React.memo(function AppContent() {
   const { theme } = useTheme();
-  const { loading, logout } = useAuthStore();
+  const { logout } = useAuthStore();
   const navigate = useNavigate();
   const location = useLocation();
+  const { showTabNavigation, pageTitle } = useNavigation();
+
+  // Determine when to show navbar based on route configuration
+  const route = getRouteByPath(location.pathname);
+  const shouldShowNavBar = route?.showNavBar ?? false;
 
   const [activeTab, setActiveTab] = useState<AppTab>('explore');
 
@@ -40,6 +49,10 @@ const AppContent = React.memo(function AppContent() {
     navigate(tabRoutes[tab]);
   };
 
+  const handleTabChangeString = (tab: string) => {
+    handleTabChange(tab as AppTab);
+  };
+
   const handleLogout = async () => {
     try {
       await logout();
@@ -49,13 +62,9 @@ const AppContent = React.memo(function AppContent() {
     }
   };
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center min-h-screen bg-background">
-        <div className="w-6 h-6 border-2 border-red-200 border-t-red-600 rounded-full animate-spin"></div>
-      </div>
-    );
-  }
+  const handleBack = () => {
+    navigate(-1);
+  };
 
   return (
     <div
@@ -63,19 +72,29 @@ const AppContent = React.memo(function AppContent() {
         theme === 'dark' ? 'dark' : ''
       }`}
     >
-      <Routes>
-        <Route
-          path="/*"
-          element={
-            <AppRouter
-              activeTab={activeTab}
-              onTabChange={handleTabChange}
-              onLogout={handleLogout}
-            />
-          }
+      {shouldShowNavBar && (
+        <NavBar
+          title={pageTitle}
+          onBack={handleBack}
+          showBack={location.pathname !== '/'}
         />
-      </Routes>
+      )}
+      <main className="flex-1 overflow-y-auto">
+        <Routes>
+          <Route
+            path="/*"
+            element={<AppRouter onLogout={handleLogout} />}
+          />
+        </Routes>
+      </main>
+      {showTabNavigation && (
+        <TabNavigation
+          activeTab={activeTab}
+          onTabChange={handleTabChangeString}
+        />
+      )}
       <Toaster position="top-center" />
+      <LoadingOverlay />
     </div>
   );
 });
