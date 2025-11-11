@@ -1,6 +1,7 @@
 // Categories translations - English
 export const categories = {
   all: 'All Categories',
+  tickets: 'Tickets',
   beauty: 'Beauty & Personal Care',
   home: 'Home & Garden',
   food: 'Food & Beverages',

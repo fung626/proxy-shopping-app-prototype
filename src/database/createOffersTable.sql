@@ -17,6 +17,9 @@ CREATE TABLE IF NOT EXISTS offers (
     tags TEXT [],
     delivery_options TEXT [],
     images TEXT [],
+    processing_time TEXT,
+    agent_id UUID,
+    availability TEXT,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

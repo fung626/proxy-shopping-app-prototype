@@ -261,6 +261,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/explore/all-offers',
         element: AllOffersPage,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.allOffers',
           description: 'Browse all available offers',
@@ -269,6 +270,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/explore/all-requests',
         element: AllRequestsPage,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.allRequests',
           description: 'Browse all shopping requests',
@@ -277,6 +279,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/explore/all-agents',
         element: AllAgentsPage,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.allAgents',
           description: 'Browse all shopping agents',
@@ -285,6 +288,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/explore/category/:category',
         element: CategoryPage,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.category',
           description: 'Browse category items',
@@ -436,6 +440,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/info/support',
         element: SupportPage,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.support',
           description: 'Get help and support',
@@ -444,6 +449,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/info/privacy',
         element: PrivacyPolicyPage,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.privacy',
           description: 'Our privacy policy',
@@ -452,6 +458,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/info/terms',
         element: TermsOfServicePage,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.terms',
           description: 'Terms and conditions',
@@ -460,6 +467,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/info/about-us',
         element: AboutUsPage,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.aboutUs',
           description: 'Learn about our company',
@@ -474,26 +482,17 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/auth/signin',
         element: SignInPage,
-        meta: {
-          // title: 'nav.titles.signIn',
-          description: 'Sign in to your account',
-        },
+        showNavBar: true,
       },
       {
         path: '/auth/signup',
         element: SignUpPage,
-        meta: {
-          // title: 'nav.titles.signUp',
-          description: 'Create a new account',
-        },
+        showNavBar: true,
       },
       {
         path: '/auth/forgot-password',
         element: ForgotPasswordPage,
-        meta: {
-          // title: 'nav.titles.forgotPassword',
-          subTitle: 'auth.forgotPasswordTitle',
-        },
+        showNavBar: true,
       },
       {
         path: '/auth/callback',
@@ -516,7 +515,13 @@ export const allRoutes: RouteConfig[] = routeGroups.flatMap(
 export const getRouteByPath = (
   path: string
 ): RouteConfig | undefined => {
-  return allRoutes.find((route) => route.path === path);
+  return allRoutes.find((route) => {
+    // Replace dynamic segments (e.g., :id) with a regex wildcard
+    const routePattern = new RegExp(
+      `^${route.path.replace(/:[^/]+/g, '[^/]+')}$`
+    );
+    return routePattern.test(path);
+  });
 };
 
 export const getRouteConfig = (

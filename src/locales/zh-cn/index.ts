@@ -14,6 +14,7 @@ export { editProfile } from './editProfile';
 export { explore } from './explore';
 export { messages } from './messages';
 export { nav } from './nav';
+export { offerDetails } from './offerDetails';
 export { orders } from './orders';
 export { preferences } from './preferences';
 export { privacy } from './privacy';

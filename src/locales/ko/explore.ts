@@ -23,7 +23,7 @@ export const explore = {
   allOffers: '모든 오퍼',
   allRequests: '모든 요청',
   popularCategories: '인기 카테고리',
-  topShoppingOffers: '인기 쇼핑 오퍼',
+  topOffers: '인기 쇼핑 오퍼',
   requestsForYou: '당신을 위한 요청',
   topRatedAgents: '최고 평점 에이전트',
   agentsContact: '에이전트에게 연락하기',

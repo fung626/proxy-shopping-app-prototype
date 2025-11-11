@@ -1,6 +1,7 @@
 // Categories translations - Japanese
 export const categories = {
   all: '全て',
+  tickets: 'チケット',
   beauty: '美容',
   home: 'ホーム',
   food: '食品',

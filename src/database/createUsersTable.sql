@@ -1,4 +1,5 @@
 -- Drop the table if it exists
+SET foreign_key_checks = 0;
 DROP TABLE IF EXISTS users;
 -- Create the table if it doesn't exist
 CREATE TABLE IF NOT EXISTS users (
@@ -24,6 +25,10 @@ CREATE TABLE IF NOT EXISTS users (
     transaction_password_enabled BOOLEAN DEFAULT false,
     transaction_password_set BOOLEAN DEFAULT false,
     biometric_auth_enabled BOOLEAN DEFAULT false,
+    rating NUMBER DEFAULT 0,
+    reviews NUMBER DEFAULT 0,
+    totals JSONB DEFAULT '{"offers": 0, "requests": 0, "completed_offers": 0, "completed_requests": 0}',
+    success_rate NUMBER DEFAULT 0,
     created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
     updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );

@@ -1,13 +1,12 @@
-import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel';
+// import {
+//   Carousel,
+//   CarouselContent,
+//   CarouselItem,
+//   CarouselNext,
+//   CarouselPrevious,
+// } from '@/components/ui/carousel';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { ProgressSteps } from '@/components/ui/progress-steps';
@@ -413,7 +412,7 @@ export function RequestDetailsPage() {
               </div>
 
               <div className="p-4 bg-muted/30 rounded-lg">
-                <Carousel
+                {/* <Carousel
                   className="w-full"
                   opts={{
                     align: 'start',
@@ -439,7 +438,7 @@ export function RequestDetailsPage() {
                       <CarouselNext className="right-2 bg-background/80 hover:bg-background border-0" />
                     </>
                   )}
-                </Carousel>
+                </Carousel> */}
               </div>
             </div>
           )}

@@ -1,75 +1,73 @@
-import {
-  Car,
-  Dumbbell,
-  Gamepad2,
-  Home,
-  MoreHorizontal,
-  PenTool,
-  Shirt,
-  ShoppingBag,
-  Smartphone,
-  Sparkles,
-  UtensilsCrossed,
-  Watch,
-} from 'lucide-react';
-
 export interface Category {
   id: string;
   translationKey: string;
-  icon: any;
+  icon: string; // Updated to use image paths
 }
 
 export const CATEGORIES: Category[] = [
   {
     id: 'beauty',
     translationKey: 'categories.beauty',
-    icon: Sparkles,
+    icon: '/images/cosmetics.svg',
   },
-  { id: 'home', translationKey: 'categories.home', icon: Home },
+  {
+    id: 'tickets',
+    translationKey: 'categories.tickets',
+    icon: '/images/ticket.svg',
+  },
+  {
+    id: 'home',
+    translationKey: 'categories.home',
+    icon: '/images/cost-of-living.svg',
+  },
   {
     id: 'food',
     translationKey: 'categories.food',
-    icon: UtensilsCrossed,
+    icon: '/images/restaurant.svg',
   },
   {
     id: 'electronics',
     translationKey: 'categories.electronics',
-    icon: Smartphone,
+    icon: '/images/gadgets.svg',
   },
-  { id: 'toys', translationKey: 'categories.toys', icon: Gamepad2 },
+  {
+    id: 'toys',
+    translationKey: 'categories.toys',
+    icon: '/images/toys.svg',
+  },
   {
     id: 'stationery',
     translationKey: 'categories.stationery',
-    icon: PenTool,
+    icon: '/images/stationery.svg',
   },
   {
     id: 'fashion',
     translationKey: 'categories.fashion',
-    icon: Shirt,
+    icon: '/images/fashion.svg',
   },
   {
     id: 'sports',
     translationKey: 'categories.sports',
-    icon: Dumbbell,
+    icon: '/images/sport.svg',
   },
   {
     id: 'accessories',
     translationKey: 'categories.accessories',
-    icon: Watch,
+    icon: '/images/accessories.svg',
   },
   {
     id: 'bags',
     translationKey: 'categories.bags',
-    icon: ShoppingBag,
+    icon: '/images/bags.svg',
   },
   {
     id: 'automotive',
     translationKey: 'categories.automotive',
-    icon: Car,
+    icon: '/images/sedan.svg',
   },
   {
     id: 'others',
     translationKey: 'categories.others',
-    icon: MoreHorizontal,
+    icon: '/images/others.svg',
   },
 ];

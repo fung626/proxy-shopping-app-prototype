@@ -1,6 +1,7 @@
 // Categories translations - Chinese Traditional
 export const categories = {
   all: '全部',
+  tickets: '門票',
   beauty: '美容',
   home: '家居',
   food: '食品',

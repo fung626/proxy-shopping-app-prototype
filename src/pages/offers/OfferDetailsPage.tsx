@@ -1,14 +1,21 @@
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
-import { ProductDetailsCarousel } from '@/components/ProductDetailsCarousel';
 import { Avatar } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import Carousel from '@/components/ui/carousel/carousel';
 import { Separator } from '@/components/ui/separator';
+import {
+  offersSupabaseService as offerService,
+  SupabaseOffer,
+} from '@/services/offersSupabaseService';
+import {
+  SupabaseUser,
+  userSupabaseService as userService,
+} from '@/services/userSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import {
   ArrowLeft,
   CheckCircle2,
-  ChevronDown,
   Clock,
   Heart,
   MapPin,
@@ -20,110 +27,78 @@ import {
   Truck,
   Zap,
 } from 'lucide-react';
-import { memo, useCallback, useMemo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { OfferDetailsSkeleton } from './OfferDetailsSkeleton';
 
 export const OfferDetailsPage = memo(function OfferDetailsPage() {
   const { t } = useLanguage();
-  const [showFullDescription, setShowFullDescription] =
-    useState(false);
-  const [isFavorited, setIsFavorited] = useState(false);
+  const navigate = useNavigate();
+  const { id } = useParams<{ id: string }>();
+
+  const [data, setData] = useState<SupabaseOffer | null>(null);
+  const [agent, setAgent] = useState<SupabaseUser | null>(null);
+  const [loading, setLoading] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [isFavorited, setIsFavorited] = useState(false);
 
-  // Default offer data -  to match Airbnb style
-  const defaultOfferData = {
-    id: 1,
-    title: 'Korean K-Beauty Skincare Set',
-    price: 89.99,
-    currency: 'USD',
-    agentName: 'Rio Mays',
-    agentId: 'agent_rio_mays',
-    agentRating: 4.8,
-    agentReviews: 67,
-    agentVerified: true,
-    agentSince: '2023',
-    location: 'Seoul, South Korea',
-    shoppingLocation: 'Myeongdong District',
-    estimatedDelivery: '5-7 days',
-    processingTime: '1-2 business days',
-    category: 'Beauty & Health',
-    totalOrders: 156,
-    successRate: 98,
-    availability: 'In Stock',
-    lastUpdated: '2 hours ago',
-    description: `Authentic Korean skincare products from top K-beauty brands. This curated set includes cleansers, serums, moisturizers, and sheet masks from popular brands like COSRX, The Ordinary, and Innisfree.
+  useEffect(() => {
+    const fetchData = async () => {
+      if (!id) return;
+      setLoading(true);
+      try {
+        const offerData = await offerService.getOfferById(id);
+        if (offerData) {
+          const user = await userService.getUserById(
+            offerData.user_id
+          );
+          setData(offerData as SupabaseOffer);
+        }
+      } catch (error) {
+        console.error('Error fetching offer data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, [id]);
 
-I personally source all products from official stores in Seoul's famous Myeongdong beauty district, ensuring 100% authenticity. Each item comes with original packaging and receipts for verification.
+  if (!data) {
+    return <div>{t('common.error')}</div>;
+  }
 
-Having lived in Seoul for 5 years, I have deep knowledge of the local beauty market and access to exclusive products that aren't available internationally. I guarantee genuine products with proper storage and handling.
-
-All items are checked for expiration dates (minimum 12 months remaining) and include any promotional samples or gifts that come with purchase.`,
-    images: [
-      'https://images.unsplash.com/photo-1686831451322-8d8e234a51e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrb3JlYW4lMjBza2luY2FyZSUyMGJlYXV0eSUyMHByb2R1Y3RzfGVufDF8fHx8MTc1ODcwNTYxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      'https://images.unsplash.com/photo-1522335789203-aabd1fc54bc9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrb3JlYW4lMjBiZWF1dHklMjBza2luY2FyZSUyMHByb2R1Y3RzfGVufDF8fHx8MTc1ODcwNTYxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      'https://images.unsplash.com/photo-1596462502278-27bfdc403348?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrb3JlYW4lMjBiZWF1dHklMjBza2luY2FyZSUyMHByb2R1Y3RzfGVufDF8fHx8MTc1ODcwNTYxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      'https://images.unsplash.com/photo-1631731436255-8b5dec5a8bec?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrb3JlYW4lMjBiZWF1dHklMjBza2luY2FyZSUyMHByb2R1Y3RzfGVufDF8fHx8MTc1ODcwNTYxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-    ],
-    agentImage:
-      'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwcm9mZXNzaW9uYWwlMjBtYW4lMjBidXNpbmVzcyUyMHBvcnRyYWl0fGVufDF8fHx8MTc1ODYxNjU4MHww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-    features: [
-      'Authentic products from official stores',
-      'Professional packaging and protection',
-      'Detailed product information included',
-      'Express shipping available',
-      'Quality guarantee with receipt verification',
-    ],
-    tags: [
-      'authentic',
-      'trending',
-      'k-beauty',
-      'skincare',
-      'premium',
-    ],
-  };
-
-  // Use offer data directly if available, fall back to defaults only when needed
-  const offerData = defaultOfferData;
-
-  // Handle both single image and images array formats - simplified
-  const displayImages = offerData.images;
-
-  // Mock agent data
+  const displayImages = data.images || [];
   const agentData = {
-    name: offerData.agentName || 'Agent',
-    rating: offerData.agentRating || 4.5,
-    reviews: offerData.agentReviews || 0,
-    since: offerData.agentSince || '2023',
-    verified: offerData.agentVerified || false,
-    image: offerData.agentImage || '',
-    totalOrders: offerData.totalOrders || 0,
-    successRate: offerData.successRate || 95,
+    // name: agent?.name || 'Agent',
+    // rating: agent?.rating || 4.5,
+    // reviews: agent?.reviews || 0,
+    // since: agent?.since || '2023',
+    // verified: agent?.verified || false,
+    // image: agent?.image || '',
+    // totalOrders: agent?.totalOrders || 0,
+    // successRate: agent?.successRate || 95,
   };
 
-  // Offer features
   const offerFeatures = [
     {
       icon: MapPin,
       title: t('offerDetails.shoppingLocation'),
-      description: `${offerData.location || t('common.unknown')} • ${
-        offerData.shoppingLocation ||
-        t('offerDetails.variousLocations')
+      description: `${data.location || t('common.unknown')} • ${
+        data.shopping_location || t('offerDetails.variousLocations')
       }`,
     },
     {
       icon: Clock,
       title: t('offerDetails.deliveryTime'),
-      description: `${
-        offerData.estimatedDelivery || t('common.tbd')
-      } • ${
-        offerData.processingTime ||
-        t('offerDetails.defaultProcessing')
+      description: `${data.estimated_delivery || t('common.tbd')} • ${
+        data.processing_time || t('offerDetails.defaultProcessing')
       } ${t('offerDetails.processing')}`,
     },
     {
       icon: Package,
       title: t('common.category'),
-      description: offerData.category || t('common.general'),
+      description: data.category || t('common.general'),
     },
     {
       icon: Shield,
@@ -133,49 +108,53 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
   ];
 
   const currencySymbol =
-    offerData.currency === 'USD'
+    data.currency === 'USD'
       ? '$'
-      : offerData.currency === 'EUR'
+      : data.currency === 'EUR'
       ? '€'
-      : offerData.currency === 'GBP'
+      : data.currency === 'GBP'
       ? '£'
       : '¥';
 
-  // Image handling
-  const handleImageClick = useCallback(
-    (image: any, index: number) => {
-      setSelectedImageIndex(index);
-      setIsImageModalOpen(true);
-    },
-    []
-  );
+  const onBack = () => {
+    navigate(-1);
+  };
 
-  // Convert images to carousel format
-  const carouselImages = useMemo(() => {
-    return displayImages.map((imageUrl: string, index: number) => ({
-      id: `image-${index}`,
-      imageUrl,
-      title: `${offerData.title} - Image ${index + 1}`,
-      description:
-        index === 0
-          ? offerData.description?.substring(0, 100) + '...'
-          : undefined,
-    }));
-  }, [displayImages, offerData.title, offerData.description]);
+  // const handleImageClick = useCallback(
+  //   (image: string, index: number) => {
+  //     setSelectedImageIndex(index);
+  //     setIsImageModalOpen(true);
+  //   },
+  //   []
+  // );
+
+  // const carouselImages = useMemo(() => {
+  //   return displayImages.map((imageUrl, index) => ({
+  //     id: `image-${index}`,
+  //     imageUrl,
+  //     title: `${data.title} - Image ${index + 1}`,
+  //     description:
+  //       index === 0
+  //         ? data.description?.substring(0, 100) + '...'
+  //         : undefined,
+  //   }));
+  // }, [displayImages, data.title, data.description]);
 
   const handleContactAgent = () => {
-    // onContactAgent(offerData.agentId);
+    console.log('Contact agent:', data.user_id);
   };
 
   const handleCreateOrder = () => {
-    // if (onCreateOrder) {
-    //   onCreateOrder(offerData);
-    // }
+    console.log('Create order for offer:', data.id);
   };
 
   const handleShare = () => {
-    console.log('Share offer');
+    console.log('Share offer:', data.id);
   };
+
+  if (loading) {
+    return <OfferDetailsSkeleton />;
+  }
 
   return (
     <div className="min-h-screen bg-background">
@@ -186,7 +165,7 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
           <Button
             variant="ghost"
             size="icon"
-            // onClick={onBack}
+            onClick={onBack}
             className="bg-white/90 backdrop-blur-sm hover:bg-white rounded-full shadow-lg"
           >
             <ArrowLeft className="h-5 w-5 text-gray-900" />
@@ -216,69 +195,56 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
             </Button>
           </div>
         </div>
-
         {/* Product Image Carousel */}
         <div className="aspect-[4/3]">
-          <ProductDetailsCarousel
-            images={carouselImages}
-            productTitle=""
-            onImageClick={handleImageClick}
+          <Carousel
             className="h-full"
-          />
+            // slides={carouselImages}
+          ></Carousel>
         </div>
       </div>
-
       {/* Content */}
       <div className="px-4 pb-40">
         {/* Title Section */}
         <div className="py-6">
           <div className="flex items-start justify-between mb-2">
             <h1 className="text-2xl font-semibold text-foreground pr-4">
-              {offerData.title || 'Product'}
+              {data.title || 'Product'}
             </h1>
-            {offerData.availability === 'In Stock' && (
+            {data.availability === 'In Stock' && (
               <Badge className="bg-green-500 text-white">
                 <Zap className="h-3 w-3 mr-1" />
                 {t('offerDetails.available')}
               </Badge>
             )}
           </div>
-
           <p className="text-muted-foreground mb-4">
-            {offerData.category || t('common.general')} •{' '}
-            {offerData.location || t('offerDetails.variousLocations')}
+            {data.category || t('common.general')} •{' '}
+            {data.location || t('offerDetails.variousLocations')}
           </p>
-
           <div className="flex items-center space-x-4 text-sm text-muted-foreground">
             <div className="flex items-center space-x-1">
               <Clock className="h-4 w-4" />
               <span>
-                {t('offerDetails.updated')}{' '}
-                {offerData.lastUpdated || t('common.recently')}
+                {t('offerDetails.updated')} {t('common.recently')}
               </span>
             </div>
             <div className="flex items-center space-x-1">
               <Package className="h-4 w-4" />
-              <span>
-                {offerData.totalOrders || 0}{' '}
-                {t('offerDetails.ordersCompleted')}
-              </span>
+              <span>0 {t('offerDetails.ordersCompleted')}</span>
             </div>
           </div>
-
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mt-4">
-            {(offerData.tags || []).map(
-              (tag: string, index: number) => (
-                <Badge
-                  key={index}
-                  variant="secondary"
-                  className="text-xs"
-                >
-                  {tag}
-                </Badge>
-              )
-            )}
+            {(data.tags || []).map((tag: string, index: number) => (
+              <Badge
+                key={index}
+                variant="secondary"
+                className="text-xs"
+              >
+                {tag}
+              </Badge>
+            ))}
           </div>
         </div>
 
@@ -368,19 +334,8 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
             {/* Main Description */}
             <div className="space-y-3">
               <p className="text-foreground leading-relaxed">
-                {showFullDescription
-                  ? offerData.description ||
-                    'Our experienced shopping agent will carefully source and purchase the requested items for you. We specialize in finding authentic, high-quality products while providing excellent customer service throughout the entire shopping process.'
-                  : (
-                      offerData.description ||
-                      'Our experienced shopping agent will carefully source and purchase the requested items for you. We specialize in finding authentic, high-quality products while providing excellent customer service throughout the entire shopping process.'
-                    ).slice(0, 300)}
-                {(
-                  offerData.description ||
-                  'Our experienced shopping agent will carefully source and purchase the requested items for you. We specialize in finding authentic, high-quality products while providing excellent customer service throughout the entire shopping process.'
-                ).length > 300 &&
-                  !showFullDescription &&
-                  '...'}
+                {data.description ||
+                  'Our experienced shopping agent will carefully source and purchase the requested items for you. We specialize in finding authentic, high-quality products while providing excellent customer service throughout the entire shopping process.'}
               </p>
 
               {/* Additional offer highlights */}
@@ -410,28 +365,6 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
                 </div>
               </div>
             </div>
-
-            {(
-              offerData.description ||
-              'Our experienced shopping agent will carefully source and purchase the requested items for you. We specialize in finding authentic, high-quality products while providing excellent customer service throughout the entire shopping process.'
-            ).length > 300 && (
-              <Button
-                variant="ghost"
-                onClick={() =>
-                  setShowFullDescription(!showFullDescription)
-                }
-                className="p-0 h-auto font-medium text-foreground hover:bg-transparent"
-              >
-                {showFullDescription
-                  ? t('common.showLess')
-                  : t('common.showMore')}
-                <ChevronDown
-                  className={`h-4 w-4 ml-1 transition-transform ${
-                    showFullDescription ? 'rotate-180' : ''
-                  }`}
-                />
-              </Button>
-            )}
           </div>
         </div>
 
@@ -450,15 +383,13 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
                 {t('offerDetails.serviceInclusions')}
               </h4>
               <div className="grid grid-cols-1 gap-3">
-                {(
-                  offerData.features || [
-                    'Professional shopping service',
-                    'Product authenticity verification',
-                    'Secure packaging and handling',
-                    'Real-time order updates',
-                    'Quality inspection before shipping',
-                  ]
-                ).map((feature: string, index: number) => (
+                {[
+                  'Professional shopping service',
+                  'Product authenticity verification',
+                  'Secure packaging and handling',
+                  'Real-time order updates',
+                  'Quality inspection before shipping',
+                ].map((feature: string, index: number) => (
                   <div
                     key={index}
                     className="flex items-start space-x-3 p-3 rounded-lg bg-muted/30"
@@ -529,7 +460,7 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
                     </span>
                     <span className="font-medium">
                       {currencySymbol}
-                      {(offerData.price * 0.8).toFixed(2)}
+                      {(data.price * 0.8).toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -538,7 +469,7 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
                     </span>
                     <span className="font-medium">
                       {currencySymbol}
-                      {(offerData.price * 0.1).toFixed(2)}
+                      {(data.price * 0.1).toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -547,7 +478,7 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
                     </span>
                     <span className="font-medium">
                       {currencySymbol}
-                      {(offerData.price * 0.1).toFixed(2)}
+                      {(data.price * 0.1).toFixed(2)}
                     </span>
                   </div>
                   <Separator className="my-2" />
@@ -555,7 +486,7 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
                     <span>{t('offerDetails.totalServiceCost')}</span>
                     <span>
                       {currencySymbol}
-                      {offerData.price}
+                      {data.price}
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
@@ -627,11 +558,11 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
             </svg>
           </button>
           <div className="max-w-4xl max-h-full">
-            <ProductDetailsCarousel
+            {/* <ProductDetailsCarousel
               images={carouselImages}
               onImageClick={() => {}} // Prevent nested modals
               className="max-h-[80vh]"
-            />
+            /> */}
           </div>
         </div>
       )}
@@ -643,15 +574,14 @@ All items are checked for expiration dates (minimum 12 months remaining) and inc
             <div className="flex items-baseline space-x-1">
               <span className="text-xl font-semibold text-foreground">
                 {currencySymbol}
-                {offerData.price || '0.00'}
+                {data.price || '0.00'}
               </span>
               <span className="text-sm text-muted-foreground">
                 total
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
-              {offerData.estimatedDelivery || 'TBD'} delivery • All
-              fees included
+              {'TBD'} delivery • All fees included
             </p>
           </div>
 

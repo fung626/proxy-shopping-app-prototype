@@ -8,9 +8,9 @@ import { useLanguage } from '@/store/LanguageContext';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Length = 6;
+const Length = 8;
 
-const TopShoppingOffersSection = () => {
+const TopOffersSection = () => {
   const { t } = useLanguage();
   const navigate = useNavigate();
 
@@ -35,7 +35,7 @@ const TopShoppingOffersSection = () => {
   return (
     <section>
       <div className="flex justify-between items-center mb-4">
-        <h2>{t('explore.topShoppingOffers')}</h2>
+        <h2>{t('explore.topOffers')}</h2>
         <Button
           variant="ghost"
           size="sm"
@@ -59,4 +59,4 @@ const TopShoppingOffersSection = () => {
   );
 };
 
-export default TopShoppingOffersSection;
+export default TopOffersSection;

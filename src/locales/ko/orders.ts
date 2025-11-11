@@ -97,8 +97,7 @@ export const orders = {
   contactClient: '클라이언트에게 연락',
   noOrdersYet: '아직 요청이 없습니다',
   createRequestPrompt: '프록시 쇼핑 요청을 생성하여 시작하세요.',
-  description: 'Description placeholder', // Placeholder for missing key
-  signInPrompt: 'Sign in to view orders', // Placeholder for missing key
-  signInDescription:
-    'Access your order history and tracking information.', // Placeholder for missing key
+  description: '프록시 쇼핑 요청 및 주문을 추적하세요.',
+  signInPrompt: '주문을 보려면 로그인하세요',
+  signInDescription: '주문 내역 및 추적 정보를 확인하세요.',
 };

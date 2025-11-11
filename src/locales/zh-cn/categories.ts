@@ -1,6 +1,7 @@
 // Categories translations - Chinese Simplified
 export const categories = {
   all: '全部',
+  tickets: '门票',
   beauty: '美容',
   home: '家居',
   food: '食品',

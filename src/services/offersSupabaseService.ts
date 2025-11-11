@@ -19,6 +19,20 @@ export interface SupabaseOffer {
   created_at: string;
   updated_at: string;
   status?: string;
+  processing_time?: string;
+  agent_id?: string;
+  availability?: string;
+  agent_details?: {
+    id: string;
+    name: string;
+    rating: number;
+    reviews: number;
+    since: string;
+    verified: boolean;
+    image: string;
+    totalOrders: number;
+    successRate: number;
+  };
 }
 
 export interface OfferFilters {

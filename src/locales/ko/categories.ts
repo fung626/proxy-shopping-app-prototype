@@ -1,6 +1,7 @@
 // Categories translations - Korean
 export const categories = {
   all: '전체',
+  tickets: '티켓',
   beauty: '뷰티',
   home: '홈',
   food: '식품',

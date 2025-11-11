@@ -23,7 +23,7 @@ export const explore = {
   allOffers: 'All Offers',
   allRequests: 'All Requests',
   popularCategories: 'Popular Categories',
-  topShoppingOffers: 'Top Shopping Offers',
+  topOffers: 'Top Offers',
   requestsForYou: 'Requests for You',
   topRatedAgents: 'Top Rated Agents',
 };

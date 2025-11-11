@@ -3,11 +3,11 @@ import { useLanguage } from '@/store/LanguageContext';
 import { useWishlistStore } from '@/store/zustand';
 import { Heart, Search } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import PopularCategoriesSection from '../explore/PopularCategoriesSection';
-import RecommendationsSection from '../explore/RecommendationsSection';
-import RequestsForYouSection from '../explore/RequestsForYouSection';
-import TopRatedAgentsSection from '../explore/TopRatedAgentsSection';
-import TopShoppingOffersSection from '../explore/TopShoppingOffersSection';
+import PopularCategoriesSection from '../explore/components/PopularCategoriesSection';
+import RecommendationsSection from '../explore/components/RecommendationsSection';
+import RequestsForYouSection from '../explore/components/RequestsForYouSection';
+import TopOffersSection from '../explore/components/TopOffersSection';
+import TopRatedAgentsSection from '../explore/components/TopRatedAgentsSection';
 
 export function ExploreTab() {
   const { t } = useLanguage();
@@ -59,7 +59,7 @@ export function ExploreTab() {
       </div>
       <div className="px-4 py-6 space-y-6">
         <PopularCategoriesSection />
-        <TopShoppingOffersSection />
+        <TopOffersSection />
         <RequestsForYouSection />
         <TopRatedAgentsSection />
         <RecommendationsSection />
