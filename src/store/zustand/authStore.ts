@@ -1,4 +1,4 @@
-import authService from '@/services/authService';
+import authService from '@/services/authSupabaseService';
 import { userSupabaseService } from '@/services/userSupabaseService';
 import { User } from '@/types';
 import { create } from 'zustand';

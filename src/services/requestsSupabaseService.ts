@@ -144,6 +144,28 @@ export class RequestsSupabaseService {
     }
   }
 
+  async getRequesByIds(
+    requestIds: string[]
+  ): Promise<SupabaseRequest[]> {
+    try {
+      const { data, error } = await supabase
+        .from('requests')
+        .select('*')
+        .in('id', requestIds)
+        .order('created_at', { ascending: false });
+
+      if (error) {
+        console.error('Error fetching requests by IDs:', error);
+        throw error;
+      }
+
+      return data || [];
+    } catch (error) {
+      console.error('Error in getRequesByIds:', error);
+      throw error;
+    }
+  }
+
   // Create new request
   async createRequest(
     requestData: Partial<SupabaseRequest>

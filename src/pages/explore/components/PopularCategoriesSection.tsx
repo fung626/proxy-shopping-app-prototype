@@ -13,26 +13,25 @@ const PopularCategoriesSection = () => {
       </div>
       <div className="overflow-x-auto scrollbar-hide">
         <div className="flex space-x-3 pb-2">
-          {CATEGORIES.map((category) => (
-            <button
-              key={category.id}
-              onClick={() =>
-                navigate(`/explore/category/${category.id}`)
-              }
-              className="flex-shrink-0 p-3 rounded-xl bg-muted/50 hover:bg-muted/70 transition-colors text-center w-28 h-28"
-            >
-              <div className="w-16 h-16 rounded-lg mb-2 bg-primary/10 flex items-center justify-center mx-auto">
-                <img
-                  src={category.icon}
-                  alt={getCategoryName(category.id, t)}
-                  className="h-8 w-8 object-contain"
-                />
-              </div>
-              <p className="font-medium text-xs leading-tight">
-                {getCategoryName(category.id, t)}
-              </p>
-            </button>
-          ))}
+          {CATEGORIES.map((category) => {
+            const IconComponent = category.icon;
+            return (
+              <button
+                key={category.id}
+                onClick={() =>
+                  navigate(`/explore/category/${category.id}`)
+                }
+                className="flex-shrink-0 p-3 rounded-xl bg-muted/50 hover:bg-muted/70 transition-colors text-center w-28 h-28"
+              >
+                <div className="w-16 h-16 rounded-full mb-2 bg-primary/10 flex items-center justify-center mx-auto">
+                  <IconComponent />
+                </div>
+                <p className="font-medium text-xs leading-tight">
+                  {getCategoryName(category.id, t)}
+                </p>
+              </button>
+            );
+          })}
         </div>
       </div>
     </section>

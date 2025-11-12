@@ -1,5 +1,5 @@
 import { supabase } from '@/supabase/client';
-import authService, { User } from './authService';
+import authService, { User } from './authSupabaseService';
 
 export interface SupabaseUser extends User {
   rating: number;
@@ -115,6 +115,9 @@ class UserSupabaseService {
     }
   }
 }
+
+// Create and export singleton instance
+export default new UserSupabaseService();
 
 // Export singleton instance
 export const userSupabaseService = new UserSupabaseService();

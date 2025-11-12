@@ -1,6 +1,7 @@
 // Preferences translations - Japanese
 export const preferences = {
   title: '設定',
+  setup: 'セットアップ',
   chooseInterests: '興味のあることを選択',
   description:
     'あなたの体験をパーソナライズするために興味のあるカテゴリを選択してください',

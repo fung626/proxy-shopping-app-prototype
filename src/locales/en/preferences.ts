@@ -1,6 +1,7 @@
 // Preferences translations - English
 export const preferences = {
   title: 'Preferences',
+  setup: 'Setup',
   chooseInterests: 'Choose Your Interests',
   description:
     'Select categories that interest you to personalize your experience',

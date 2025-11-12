@@ -53,4 +53,18 @@ export const countries = {
   ireland: '爱尔兰',
   iceland: '冰岛',
   north_korea: '朝鲜',
+
+  // Additional countries
+  argentina: '阿根廷',
+  chile: '智利',
+  colombia: '哥伦比亚',
+  peru: '秘鲁',
+  nigeria: '尼日利亚',
+  kenya: '肯尼亚',
+  ukraine: '乌克兰',
+  romania: '罗马尼亚',
+  bulgaria: '保加利亚',
+  latvia: '拉脱维亚',
+  lithuania: '立陶宛',
+  estonia: '爱沙尼亚',
 };

@@ -1,30 +1,35 @@
 import OfferCard from '@/components/OfferCard';
+import { PullToRefresh } from '@/components/PullToRefresh';
 import RequestCardB from '@/components/RequestCardB';
 import { Input } from '@/components/ui/input';
-import { offersSupabaseService } from '@/services/offersSupabaseService';
+import {
+  offersSupabaseService,
+  SupabaseOffer,
+} from '@/services/offersSupabaseService';
+import {
+  requestsSupabaseService,
+  SupabaseRequest,
+} from '@/services/requestsSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { Package, Search } from 'lucide-react';
-import { useEffect, useMemo, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 interface CategoryPageProps {
   category: string;
   onBack: () => void;
 }
 
-export function CategoryPage({
-  category,
-  onBack,
-}: CategoryPageProps) {
+export function CategoryPage({ category }: CategoryPageProps) {
   const { t } = useLanguage();
-  const navigate = useNavigate();
+
+  const [loading, setLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [favorites, setFavorites] = useState<Set<string>>(new Set());
-  const [categoryData, setCategoryData] = useState<{
+  const [data, setData] = useState<{
     title: string;
     description: string;
-    requests: any[];
-    offers: any[];
+    requests: SupabaseRequest[];
+    offers: SupabaseOffer[];
   }>({
     title: '',
     description: '',
@@ -32,36 +37,55 @@ export function CategoryPage({
     offers: [],
   });
 
-  useEffect(() => {
-    const fetchCategoryData = async () => {
+  const fetch = useCallback(
+    async (isRefresh = false) => {
       try {
+        if (isRefresh) {
+          setRefreshing(true);
+        } else {
+          setLoading(true);
+        }
+        const requests = await requestsSupabaseService.getRequests({
+          category,
+        });
         const offers = await offersSupabaseService.getOffers({
           category,
         });
-        setCategoryData({
+        setData({
           title: t(`categories.${category}`),
-          description: t(`categories.${category}Description`),
-          requests: [], // Adjust if requests are fetched differently
+          description: t(`categories.${category}_description`),
+          requests,
           offers,
         });
       } catch (error) {
         console.error('Error fetching category data:', error);
+      } finally {
+        setLoading(false);
+        setRefreshing(false);
       }
-    };
+    },
+    [category, t]
+  );
 
-    fetchCategoryData();
-  }, [category, t]);
+  useEffect(() => {
+    fetch();
+  }, [fetch]);
 
   const allItems = [
-    ...categoryData.requests.map((item) => ({
+    ...data.requests.map((item) => ({
       ...item,
       type: 'request',
     })),
-    ...categoryData.offers.map((item) => ({
+    ...data.offers.map((item) => ({
       ...item,
       type: 'offer',
     })),
-  ];
+  ].sort((a, b) => {
+    // Sort by date, newest first
+    const dateA = new Date(a.created_at || 0);
+    const dateB = new Date(b.created_at || 0);
+    return dateB.getTime() - dateA.getTime();
+  });
 
   // Filter items based on search only
   const filteredItems = useMemo(() => {
@@ -72,24 +96,13 @@ export function CategoryPage({
           item.title
             .toLowerCase()
             .includes(searchQuery.toLowerCase()) ||
-          item.description
+          (item.description || '')
             .toLowerCase()
             .includes(searchQuery.toLowerCase())
       );
     }
-
     return items;
   }, [allItems, searchQuery]);
-
-  const toggleFavorite = (id: string) => {
-    const newFavorites = new Set(favorites);
-    if (newFavorites.has(id)) {
-      newFavorites.delete(id);
-    } else {
-      newFavorites.add(id);
-    }
-    setFavorites(newFavorites);
-  };
 
   const handleSearchChange = (
     e: React.ChangeEvent<HTMLInputElement>
@@ -97,18 +110,24 @@ export function CategoryPage({
     setSearchQuery(e.target.value);
   };
 
-  console.log('[DEBUG] CategoryPage Rendered', filteredItems);
+  const handleRefresh = useCallback(async () => {
+    await fetch(true);
+  }, [fetch]);
+
+  // console.log('[DEBUG] CategoryPage Rendered', filteredItems);
 
   return (
-    <div className="flex-1 bg-background pb-20">
-      {/* Header */}
+    <PullToRefresh
+      onRefresh={handleRefresh}
+      refreshing={refreshing}
+      className="flex-1 bg-background pb-20"
+    >
       <div className="px-4 pt-4 pb-4">
-        {/* Search Bar */}
         <div className="relative">
           <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />
           <Input
             placeholder={t('common.searchInCategory', {
-              category: categoryData.title,
+              category: data.title,
             })}
             value={searchQuery}
             onChange={handleSearchChange}
@@ -116,7 +135,6 @@ export function CategoryPage({
           />
         </div>
       </div>
-      {/* Content */}
       <div className="px-4 py-6">
         <div className="mb-4">
           <span className="text-muted-foreground text-sm">
@@ -137,16 +155,26 @@ export function CategoryPage({
           </div>
         ) : (
           <div className="grid grid-cols-2 gap-3">
-            {filteredItems.map((item) =>
-              item.type === 'request' ? (
-                <RequestCardB key={item.id} request={item} />
-              ) : (
-                <OfferCard key={item.id} offer={item} />
-              )
-            )}
+            {loading
+              ? Array.from({ length: 12 }).map((_, index) => (
+                  <OfferCard key={index} loading />
+                ))
+              : filteredItems.map((item) =>
+                  item.type === 'request' ? (
+                    <RequestCardB
+                      key={item.id}
+                      request={item as SupabaseRequest}
+                    />
+                  ) : (
+                    <OfferCard
+                      key={item.id}
+                      offer={item as SupabaseOffer}
+                    />
+                  )
+                )}
           </div>
         )}
       </div>
-    </div>
+    </PullToRefresh>
   );
 }

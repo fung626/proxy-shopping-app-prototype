@@ -2,11 +2,11 @@ import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { offersSupabaseService } from '@/services/offersSupabaseService';
+import { requestsSupabaseService } from '@/services/requestsSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
-import type { WishlistItem } from '@/store/zustand/wishlistStore';
 import { useWishlistStore } from '@/store/zustand/wishlistStore';
 import {
-  Calendar,
   Heart,
   MapPin,
   Package,
@@ -14,8 +14,25 @@ import {
   Share2,
   Trash2,
 } from 'lucide-react';
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+
+// Combined interface for display
+interface WishlistDisplayItem {
+  id: string;
+  type: 'offer' | 'request';
+  title: string;
+  price?: number;
+  currency?: string;
+  budget_min?: number;
+  budget_max?: number;
+  location?: string;
+  images?: string[];
+  agentName?: string;
+  clientName?: string;
+  rating?: number;
+  reviews?: number;
+}
 
 export function WishlistsPage() {
   const { t } = useLanguage();
@@ -24,9 +41,70 @@ export function WishlistsPage() {
   const [selectedFilter, setSelectedFilter] = useState<
     'all' | 'offer' | 'request'
   >('all');
+  const [wishlistItems, setWishlistItems] = useState<
+    WishlistDisplayItem[]
+  >([]);
+  const [loading, setLoading] = useState(true);
 
   const { getWishlist, removeWishlistItem } = useWishlistStore();
-  const wishlistItems = useMemo(() => getWishlist(), [getWishlist]);
+  const wishlistIds = useMemo(() => getWishlist(), [getWishlist]);
+
+  // Fetch full data for wishlist items
+  useEffect(() => {
+    const fetchWishlistData = async () => {
+      setLoading(true);
+      const items: WishlistDisplayItem[] = [];
+      for (const item of wishlistIds) {
+        try {
+          // Try to fetch as offer first
+          const offer = await offersSupabaseService.getOfferById(
+            item.id
+          );
+          if (offer) {
+            items.push({
+              id: offer.id,
+              type: 'offer',
+              title: offer.title,
+              price: offer.price,
+              currency: offer.currency,
+              location: offer.location,
+              images: offer.images,
+              agentName: offer.agent_details?.name,
+              rating: offer.agent_details?.rating,
+              reviews: offer.agent_details?.reviews,
+            });
+            continue;
+          }
+          // Try to fetch as request
+          const request =
+            await requestsSupabaseService.getRequestById(item.id);
+          if (request) {
+            items.push({
+              id: request.id,
+              type: 'request',
+              title: request.title,
+              budget_min: request.budget_min,
+              budget_max: request.budget_max,
+              currency: request.currency,
+              location: request.expected_delivery_location,
+              images: request.images,
+              clientName: request.user_name,
+            });
+          }
+        } catch (error) {
+          console.error(
+            'Error fetching wishlist item:',
+            item.id,
+            error
+          );
+        }
+      }
+      setWishlistItems(items);
+      setLoading(false);
+    };
+
+    fetchWishlistData();
+  }, [wishlistIds]);
 
   // Filter and search functionality
   const filteredItems = useMemo(() => {
@@ -53,7 +131,7 @@ export function WishlistsPage() {
     return filtered;
   }, [wishlistItems, selectedFilter, searchQuery]);
 
-  const handleItemClick = (item: WishlistItem) => {
+  const handleItemClick = (item: WishlistDisplayItem) => {
     if (item.type === 'offer') {
       navigate(`/offers/${item.id}`);
     } else {
@@ -66,7 +144,10 @@ export function WishlistsPage() {
     removeWishlistItem(itemId);
   };
 
-  const handleShare = (item: WishlistItem, e: React.MouseEvent) => {
+  const handleShare = (
+    item: WishlistDisplayItem,
+    e: React.MouseEvent
+  ) => {
     e.stopPropagation();
     console.log('Share item:', item);
   };
@@ -137,7 +218,25 @@ export function WishlistsPage() {
       </div>
       {/* Content */}
       <div className="p-4 pb-20">
-        {filteredItems.length === 0 ? (
+        {loading ? (
+          <div className="space-y-4">
+            {Array.from({ length: 3 }).map((_, i) => (
+              <div
+                key={i}
+                className="bg-card rounded-xl border border-border p-4 animate-pulse"
+              >
+                <div className="flex space-x-4">
+                  <div className="w-20 h-20 rounded-lg bg-muted"></div>
+                  <div className="flex-1 space-y-2">
+                    <div className="h-4 bg-muted rounded w-3/4"></div>
+                    <div className="h-3 bg-muted rounded w-1/2"></div>
+                    <div className="h-3 bg-muted rounded w-2/3"></div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        ) : filteredItems.length === 0 ? (
           <div className="text-center py-12">
             <div className="w-20 h-20 mx-auto mb-4 rounded-full bg-muted/50 flex items-center justify-center">
               <Heart className="h-8 w-8 text-muted-foreground" />
@@ -192,12 +291,6 @@ export function WishlistsPage() {
                               ? t('common.offer')
                               : t('common.request')}
                           </Badge>
-                          <Badge
-                            variant="outline"
-                            className="text-xs"
-                          >
-                            {item.category}
-                          </Badge>
                         </div>
                         <h3 className="font-medium line-clamp-2 text-sm leading-tight mb-1">
                           {item.title}
@@ -249,10 +342,16 @@ export function WishlistsPage() {
                               <MapPin className="h-3 w-3" />
                               <span>{item.location}</span>
                             </div>
-                            <div className="flex items-center space-x-1">
-                              <Package className="h-3 w-3" />
-                              <span>{item.estimatedDelivery}</span>
-                            </div>
+                            {item.rating && (
+                              <div className="flex items-center space-x-1">
+                                <span className="text-yellow-500">
+                                  ★
+                                </span>
+                                <span>
+                                  {item.rating} ({item.reviews})
+                                </span>
+                              </div>
+                            )}
                           </div>
                         </>
                       ) : (
@@ -268,9 +367,7 @@ export function WishlistsPage() {
                             </div>
                             <div className="flex items-center space-x-1 text-xs">
                               <Package className="h-3 w-3 text-blue-500" />
-                              <span>
-                                {item.bids} {t('common.offers')}
-                              </span>
+                              <span>{t('common.request')}</span>
                             </div>
                           </div>
                           <div className="flex items-center space-x-4 text-xs text-muted-foreground">
@@ -279,22 +376,15 @@ export function WishlistsPage() {
                               <span>{item.location}</span>
                             </div>
                             <div className="flex items-center space-x-1">
-                              <Calendar className="h-3 w-3" />
-                              <span>
-                                {t('request.deadline')}:{' '}
-                                {item.deadline
-                                  ? new Date(
-                                      item.deadline
-                                    ).toLocaleDateString()
-                                  : t('common.noDeadline')}
+                              <span className="text-xs text-muted-foreground">
+                                {item.currency}
                               </span>
                             </div>
                           </div>
                         </>
                       )}
                       <div className="text-xs text-muted-foreground">
-                        {t('wishlist.added')}{' '}
-                        {new Date(item.addedAt).toLocaleDateString()}
+                        {t('wishlist.addedToWishlist')}
                       </div>
                     </div>
                   </div>

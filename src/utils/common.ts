@@ -13,4 +13,11 @@ const getDefaultImage = (category: string) => {
   return defaultImages[category] || defaultImages.default;
 };
 
-export { getDefaultImage };
+const capitalize = (str?: string) => {
+  if (!str || (str && typeof str !== 'string') || str.length === 0) {
+    return str; // Handle empty or non-string inputs
+  }
+  return str.charAt(0).toUpperCase() + str.slice(1);
+};
+
+export { capitalize, getDefaultImage };

@@ -1,73 +1,88 @@
+import { ComponentType, SVGProps } from 'react';
+import AccessoriesIcon from '../assets/accessories.svg?react';
+import BagsIcon from '../assets/bags.svg?react';
+import CosmeticsIcon from '../assets/cosmetics.svg?react';
+import CostOfLivingIcon from '../assets/cost-of-living.svg?react';
+import FashionIcon from '../assets/fashion.svg?react';
+import GadgetsIcon from '../assets/gadgets.svg?react';
+import OthersIcon from '../assets/others.svg?react';
+import RestaurantIcon from '../assets/restaurant.svg?react';
+import SedanIcon from '../assets/sedan.svg?react';
+import SportsIcon from '../assets/sport.svg?react';
+import StationeryIcon from '../assets/stationery.svg?react';
+import TicketIcon from '../assets/ticket.svg?react';
+import ToysIcon from '../assets/toys.svg?react';
+
 export interface Category {
   id: string;
   translationKey: string;
-  icon: string; // Updated to use image paths
+  icon: ComponentType<SVGProps<SVGSVGElement>>;
 }
 
 export const CATEGORIES: Category[] = [
   {
     id: 'beauty',
     translationKey: 'categories.beauty',
-    icon: '/images/cosmetics.svg',
+    icon: CosmeticsIcon,
   },
   {
     id: 'tickets',
     translationKey: 'categories.tickets',
-    icon: '/images/ticket.svg',
+    icon: TicketIcon,
   },
   {
     id: 'home',
     translationKey: 'categories.home',
-    icon: '/images/cost-of-living.svg',
+    icon: CostOfLivingIcon,
   },
   {
     id: 'food',
     translationKey: 'categories.food',
-    icon: '/images/restaurant.svg',
+    icon: RestaurantIcon,
   },
   {
     id: 'electronics',
     translationKey: 'categories.electronics',
-    icon: '/images/gadgets.svg',
+    icon: GadgetsIcon,
   },
   {
     id: 'toys',
     translationKey: 'categories.toys',
-    icon: '/images/toys.svg',
+    icon: ToysIcon,
   },
   {
     id: 'stationery',
     translationKey: 'categories.stationery',
-    icon: '/images/stationery.svg',
+    icon: StationeryIcon,
   },
   {
     id: 'fashion',
     translationKey: 'categories.fashion',
-    icon: '/images/fashion.svg',
+    icon: FashionIcon,
   },
   {
     id: 'sports',
     translationKey: 'categories.sports',
-    icon: '/images/sport.svg',
+    icon: SportsIcon,
   },
   {
     id: 'accessories',
     translationKey: 'categories.accessories',
-    icon: '/images/accessories.svg',
+    icon: AccessoriesIcon,
   },
   {
     id: 'bags',
     translationKey: 'categories.bags',
-    icon: '/images/bags.svg',
+    icon: BagsIcon,
   },
   {
     id: 'automotive',
     translationKey: 'categories.automotive',
-    icon: '/images/sedan.svg',
+    icon: SedanIcon,
   },
   {
     id: 'others',
     translationKey: 'categories.others',
-    icon: '/images/others.svg',
+    icon: OthersIcon,
   },
 ];

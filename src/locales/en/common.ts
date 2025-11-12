@@ -75,4 +75,13 @@ export const common = {
   done: 'Done',
   retry: 'Retry',
   fillAllFields: 'Please fill out all required fields',
+  pullToRefresh: 'Pull to refresh',
+  releaseToRefresh: 'Release to refresh',
+  refreshing: 'Refreshing...',
+  urgencyLow: 'Not urgent',
+  urgencyMedium: 'Quite urgent',
+  urgencyHigh: 'Very urgent',
+  days: 'days',
+  months: 'months',
+  years: 'years',
 };

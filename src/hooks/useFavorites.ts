@@ -1,54 +1,57 @@
 import { useWishlistStore } from '@/store/zustand';
 import { useCallback } from 'react';
 
-interface FavoriteItem {
-  id: string;
-  type: 'offer' | 'request';
-  title: string;
-  price?: number;
-  currency?: string;
-  budget_min?: number;
-  budget_max?: number;
-  location?: string;
-  category?: string;
-  images?: string[];
-  addedAt?: string;
-}
-
 /**
  * Custom hook for managing favorites functionality
  * Provides easy-to-use methods for handling favorites in components
+ *
+ * Note: This now works with the simplified wishlist store that only stores IDs
  */
 export const useFavorites = () => {
   const {
-    favorites,
-    toggleFavorite: storeToggleFavorite,
-    addFavorite,
-    removeFavorite,
-    isFavorite,
-    getFavorites,
-    getFavoritesByType,
-    clearFavorites,
-    getFavoriteCount,
+    wishlist,
+    toggleWishlistItem,
+    addWishlistItem,
+    removeWishlistItem,
+    isWishlistItem,
+    getWishlist,
+    clearWishlist,
+    getWishlistCount,
   } = useWishlistStore();
 
   /**
-   * Toggle favorite status for an item
+   * Toggle favorite status for an item by ID
    * @param id - The item ID
-   * @param item - The item data (required when adding to favorites)
+   * @param type - The item type (required for adding new items)
    */
   const toggleFavorite = useCallback(
-    (id: string, item?: FavoriteItem) => {
-      if (item) {
-        storeToggleFavorite(id, {
-          ...item,
-          addedAt: new Date().toISOString(),
-        });
-      } else {
-        storeToggleFavorite(id);
-      }
+    (id: string, type?: 'offer' | 'request') => {
+      toggleWishlistItem(id, type);
     },
-    [storeToggleFavorite]
+    [toggleWishlistItem]
+  );
+
+  /**
+   * Add item to favorites by ID
+   * @param id - The item ID
+   * @param type - The item type
+   */
+  const addFavorite = useCallback(
+    (id: string, type: 'offer' | 'request') => {
+      addWishlistItem({ id, type });
+    },
+    [addWishlistItem]
+  );
+
+  /**
+   * Remove item from favorites by ID
+   * @param id - The item ID
+   */
+  const removeFavorite = useCallback(
+    (id: string) => {
+      removeWishlistItem(id);
+    },
+    [removeWishlistItem]
   );
 
   /**
@@ -56,32 +59,36 @@ export const useFavorites = () => {
    * @param id - The item ID
    * @returns boolean indicating if the item is favorited
    */
-  const checkIsFavorite = useCallback(
+  const isFavorite = useCallback(
     (id: string) => {
-      return isFavorite(id);
+      return isWishlistItem(id);
     },
-    [isFavorite]
+    [isWishlistItem]
   );
+
+  /**
+   * Get all favorite item IDs
+   * @returns Array of favorite item IDs
+   */
+  const getFavorites = useCallback(() => {
+    return getWishlist();
+  }, [getWishlist]);
 
   return {
     // State
-    favorites,
+    favorites: wishlist,
 
     // Actions
     toggleFavorite,
-    addFavorite: (item: FavoriteItem) =>
-      addFavorite({ ...item, addedAt: new Date().toISOString() }),
+    addFavorite,
     removeFavorite,
-    isFavorite: checkIsFavorite,
+    isFavorite,
 
     // Getters
     getFavorites,
-    getFavoritesByType,
-    getFavoriteCount,
+    getFavoriteCount: getWishlistCount,
 
     // Utilities
-    clearFavorites,
+    clearFavorites: clearWishlist,
   };
 };
-
-export type { FavoriteItem };

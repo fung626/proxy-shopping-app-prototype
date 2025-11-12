@@ -75,4 +75,10 @@ export const common = {
   done: '완료',
   retry: '다시 시도',
   fillAllFields: '필수 항목을 모두 입력해주세요',
+  urgencylow: '긴급하지 않음',
+  urgencyMedium: '다소 긴급함',
+  urgencyHigh: '매우 긴급함',
+  days: '일',
+  months: '개월',
+  years: '년',
 };

@@ -75,4 +75,10 @@ export const common = {
   done: '完成',
   retry: '重试',
   fillAllFields: '请填写所有必填字段',
+  urgencylow: '不紧急',
+  urgencyMedium: '相当紧急',
+  urgencyHigh: '非常紧急',
+  days: '天',
+  months: '个月',
+  years: '年',
 };

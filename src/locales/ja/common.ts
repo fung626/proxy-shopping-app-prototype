@@ -75,4 +75,10 @@ export const common = {
   done: '完了',
   retry: '再試行',
   fillAllFields: '必須フィールドをすべて入力してください',
+  urgencylow: '緊急ではない',
+  urgencyMedium: 'やや緊急',
+  urgencyHigh: '非常に緊急',
+  days: '日',
+  months: 'ヶ月',
+  years: '年',
 };

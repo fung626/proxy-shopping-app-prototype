@@ -15,7 +15,7 @@ interface OfferCardProps {
 const OfferCard = ({ loading, offer }: OfferCardProps) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const { wishlist, toggleWishlistItem } = useWishlistStore();
+  const { isWishlistItem, toggleWishlistItem } = useWishlistStore();
 
   if (loading) {
     return (
@@ -29,7 +29,7 @@ const OfferCard = ({ loading, offer }: OfferCardProps) => {
     );
   }
 
-  console.log('[DEBUG] OfferCard', offer, wishlist);
+  // console.log('[DEBUG] OfferCard', offer, wishlist);
 
   return (
     <div
@@ -48,18 +48,18 @@ const OfferCard = ({ loading, offer }: OfferCardProps) => {
           size="sm"
           variant="ghost"
           className={`absolute top-2 right-2 h-8 w-8 p-0 bg-card/80 hover:bg-card rounded-full ${
-            offer && wishlist.has(offer.id)
+            offer && isWishlistItem(offer.id)
               ? 'text-primary'
               : 'text-muted-foreground'
           }`}
           onClick={(e) => {
             e.stopPropagation();
-            if (offer) toggleWishlistItem(offer.id);
+            if (offer) toggleWishlistItem(offer.id, 'offer');
           }}
         >
           <Heart
             className={`h-4 w-4 ${
-              offer && wishlist.has(offer.id) ? 'fill-current' : ''
+              offer && isWishlistItem(offer.id) ? 'fill-current' : ''
             }`}
           />
         </Button>
@@ -87,7 +87,9 @@ const OfferCard = ({ loading, offer }: OfferCardProps) => {
           </span>
           <Badge className="text-xs">
             {offer?.estimated_delivery
-              ? `${offer.estimated_delivery.start} - ${offer.estimated_delivery.end} ${offer.estimated_delivery.type}`
+              ? `${offer.estimated_delivery.start} - ${
+                  offer.estimated_delivery.end
+                } ${t(`common.${offer.estimated_delivery.type}`)}`
               : 'TBD'}
           </Badge>
         </div>

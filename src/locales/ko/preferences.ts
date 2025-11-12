@@ -1,6 +1,7 @@
 // Preferences translations - Korean
 export const preferences = {
   title: '환경설정',
+  setup: '설정',
   chooseInterests: '관심사 선택',
   description:
     '개인 맞춤 경험을 위해 관심 있는 카테고리를 선택하세요',

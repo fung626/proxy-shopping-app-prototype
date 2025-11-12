@@ -24,6 +24,7 @@ export interface SignUpData {
   languages?: string[];
   avatar?: File | null;
   agreeToTerms?: boolean;
+  preferences: string[];
 }
 
 export interface SignInData {
@@ -42,12 +43,10 @@ export interface UpdateProfileData {
   company?: string;
   job_title?: string;
   languages?: string[];
-  preferences?: {
-    categories: string[];
-  };
+  preferences?: string[];
 }
 
-class AuthService {
+class AuthSupabaseService {
   // Get current session
   async getCurrentSession(): Promise<{
     data: { session: Session | null };
@@ -279,7 +278,9 @@ class AuthService {
 }
 
 // Create and export singleton instance
-export default new AuthService();
+export default new AuthSupabaseService();
+
+export const authSupabaseService = new AuthSupabaseService();
 
 // Export types
 export type { AuthError, Session, User } from '@supabase/supabase-js';

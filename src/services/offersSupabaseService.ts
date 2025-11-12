@@ -140,6 +140,25 @@ export class OffersSupabaseService {
     }
   }
 
+  async getOfferByIds(offerIds: string[]): Promise<SupabaseOffer[]> {
+    try {
+      const { data, error } = await supabase
+        .from('offers')
+        .select('*')
+        .in('id', offerIds);
+
+      if (error) {
+        console.error('Error fetching offers by IDs:', error);
+        throw error;
+      }
+
+      return data || [];
+    } catch (error) {
+      console.error('Error in getOfferByIds:', error);
+      throw error;
+    }
+  }
+
   // Create new offer
   async createOffer(
     offerData: Partial<SupabaseOffer>
@@ -315,6 +334,9 @@ export class OffersSupabaseService {
     }
   }
 }
+
+// Create and export singleton instance
+export default new OffersSupabaseService();
 
 // Create and export singleton instance
 export const offersSupabaseService = new OffersSupabaseService();

@@ -1,6 +1,7 @@
 // Preferences translations - Chinese Traditional
 export const preferences = {
   title: '偏好設定',
+  setup: '設定',
   chooseInterests: '選擇您的興趣',
   description: '選擇您感興趣的類別以個人化您的體驗',
   productCategories: '產品類別',

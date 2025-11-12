@@ -2,6 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { SupabaseRequest } from '@/services/requestsSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { useWishlistStore } from '@/store/zustand';
+import { capitalize } from '@/utils/common';
 import { Heart, MapPin } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -15,7 +16,7 @@ interface RequestCardBProps {
 const RequestCardB = ({ loading, request }: RequestCardBProps) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const { wishlist, toggleWishlistItem } = useWishlistStore();
+  const { isWishlistItem, toggleWishlistItem } = useWishlistStore();
 
   if (loading) {
     return (
@@ -46,18 +47,18 @@ const RequestCardB = ({ loading, request }: RequestCardBProps) => {
           size="sm"
           variant="ghost"
           className={`absolute top-2 right-2 h-8 w-8 p-0 bg-card/80 hover:bg-card rounded-full ${
-            request && wishlist.has(request.id)
+            request && isWishlistItem(request.id)
               ? 'text-primary'
               : 'text-muted-foreground'
           }`}
           onClick={(e) => {
             e.stopPropagation();
-            // if (request) toggleWishlistItem(request.id, request);
+            if (request) toggleWishlistItem(request.id, 'request');
           }}
         >
           <Heart
             className={`h-4 w-4 ${
-              request && wishlist.has(request.id)
+              request && isWishlistItem(request.id)
                 ? 'fill-current'
                 : ''
             }`}
@@ -103,7 +104,7 @@ const RequestCardB = ({ loading, request }: RequestCardBProps) => {
             variant="outline"
             className="text-xs whitespace-nowrap"
           >
-            {request?.urgency}
+            {t(`common.urgency${capitalize(request?.urgency)}`)}
           </Badge>
         </div>
       </div>

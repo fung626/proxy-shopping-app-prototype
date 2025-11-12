@@ -149,6 +149,11 @@ const SignUpPage = lazy(() =>
     default: m.SignUpPage,
   }))
 );
+const SignUpPreferencesPage = lazy(() =>
+  import('@/pages/auth/SignUpPreferencesPage').then((m) => ({
+    default: m.SignUpPreferencesPage,
+  }))
+);
 const ForgotPasswordPage = lazy(() =>
   import('@/pages/auth/ForgotPasswordPage').then((m) => ({
     default: m.ForgotPasswordPage,
@@ -487,6 +492,11 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/auth/signup',
         element: SignUpPage,
+        showNavBar: true,
+      },
+      {
+        path: '/auth/signup-preferences',
+        element: SignUpPreferencesPage,
         showNavBar: true,
       },
       {

@@ -53,4 +53,18 @@ export const countries = {
   ireland: 'Ireland',
   iceland: 'Iceland',
   north_korea: 'North Korea',
+
+  // Additional countries
+  argentina: 'Argentina',
+  chile: 'Chile',
+  colombia: 'Colombia',
+  peru: 'Peru',
+  nigeria: 'Nigeria',
+  kenya: 'Kenya',
+  ukraine: 'Ukraine',
+  romania: 'Romania',
+  bulgaria: 'Bulgaria',
+  latvia: 'Latvia',
+  lithuania: 'Lithuania',
+  estonia: 'Estonia',
 };

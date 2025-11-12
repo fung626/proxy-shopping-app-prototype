@@ -12,7 +12,7 @@ import TopRatedAgentsSection from '../explore/components/TopRatedAgentsSection';
 export function ExploreTab() {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const { wishlist } = useWishlistStore();
+  const { getWishlistCount } = useWishlistStore();
 
   return (
     <div className="flex-1 bg-background pb-20">
@@ -30,15 +30,15 @@ export function ExploreTab() {
             >
               <Heart
                 className={`h-6 w-6 ${
-                  wishlist.size > 0
+                  getWishlistCount() > 0
                     ? 'text-primary fill-current'
                     : 'text-muted-foreground'
                 }`}
               />
-              {wishlist.size > 0 && (
+              {getWishlistCount() > 0 && (
                 <div className="absolute -top-1 -right-1 w-5 h-5 bg-primary rounded-full flex items-center justify-center">
                   <span className="text-white text-xs font-medium">
-                    {wishlist.size}
+                    {getWishlistCount()}
                   </span>
                 </div>
               )}

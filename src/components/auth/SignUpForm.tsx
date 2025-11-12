@@ -6,9 +6,11 @@ import { Label } from '@/components/ui/label';
 import { LanguageMultiSelect } from '@/components/ui/language-multi-select';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { Textarea } from '@/components/ui/textarea';
+import AuthService from '@/services/authSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { Camera, Eye, EyeOff } from 'lucide-react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export interface SignUpFormData {
   firstName: string;
@@ -27,26 +29,12 @@ export interface SignUpFormData {
   agreeToTerms: boolean;
 }
 
-interface SignUpFormProps {
-  onSubmit: (data: SignUpFormData) => void;
-  onBack?: () => void;
-  onNavigateToTerms: () => void;
-  onNavigateToSignIn: () => void;
-  onSocialAuth: (provider: 'google' | 'facebook' | 'apple') => void;
-  isLoading: boolean;
-  error?: string;
-}
-
-export function SignUpForm({
-  onSubmit,
-  onBack,
-  onNavigateToTerms,
-  onNavigateToSignIn,
-  onSocialAuth,
-  isLoading,
-  error,
-}: SignUpFormProps) {
+export const SignUpForm = () => {
+  const navigate = useNavigate();
   const { t } = useLanguage();
+
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string>();
   const [formData, setFormData] = useState<SignUpFormData>({
     firstName: '',
     lastName: '',
@@ -83,9 +71,61 @@ export function SignUpForm({
     setFormData((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    onSubmit(formData);
+  const handleSubmit = (_: React.FormEvent) => {
+    setError('');
+    // Validation
+    if (!formData.nickname.trim()) {
+      setError(t('auth.nicknameRequired'));
+      return;
+    }
+    if (!formData.email.trim()) {
+      setError(t('auth.emailRequired'));
+      return;
+    }
+    if (formData.password.length < 8) {
+      setError(t('auth.passwordTooShort'));
+      return;
+    }
+    if (formData.password !== formData.confirmPassword) {
+      setError(t('auth.passwordsDoNotMatch'));
+      return;
+    }
+    if (!formData.agreeToTerms) {
+      setError(t('auth.agreeToTerms'));
+      return;
+    }
+
+    sessionStorage.setItem(
+      'signupFormData',
+      JSON.stringify(formData)
+    );
+    navigate('/auth/signup-preferences');
+  };
+
+  const handleSocialAuth = async (
+    provider: 'google' | 'facebook' | 'apple'
+  ) => {
+    try {
+      let error;
+      switch (provider) {
+        case 'google':
+          ({ error } = await AuthService.signInWithGoogle());
+          break;
+        case 'facebook':
+          ({ error } = await AuthService.signInWithFacebook());
+          break;
+        case 'apple':
+          ({ error } = await AuthService.signInWithApple());
+          break;
+      }
+      if (error) {
+        setError(error.message || t(`auth.${provider}SignInFailed`));
+      }
+    } catch (error: any) {
+      setError(error.message || t(`auth.${provider}SignInFailed`));
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -152,7 +192,6 @@ export function SignUpForm({
                 updateFormData('firstName', e.target.value)
               }
               placeholder={t('auth.firstName')}
-              required
             />
           </div>
           <div className="space-y-1">
@@ -169,7 +208,6 @@ export function SignUpForm({
                 updateFormData('lastName', e.target.value)
               }
               placeholder={t('auth.lastName')}
-              required
             />
           </div>
           <div className="space-y-1">
@@ -235,7 +273,6 @@ export function SignUpForm({
               onCountryCodeChange={(value) =>
                 updateFormData('countryCode', value)
               }
-              required
               variant="auth"
             />
           </div>
@@ -375,7 +412,7 @@ export function SignUpForm({
               <Button
                 type="button"
                 variant="link"
-                onClick={onNavigateToTerms}
+                onClick={() => navigate('/info/terms')}
                 className="p-0 h-auto text-primary text-sm font-medium underline"
               >
                 {t('auth.termsConditions')}
@@ -414,7 +451,7 @@ export function SignUpForm({
               variant="ghost"
               size="icon"
               className="w-12 h-12 rounded-full border border-muted hover:bg-muted/50"
-              onClick={() => onSocialAuth('facebook')}
+              onClick={() => handleSocialAuth('facebook')}
               disabled={isLoading}
             >
               <svg
@@ -429,7 +466,7 @@ export function SignUpForm({
               variant="ghost"
               size="icon"
               className="w-12 h-12 rounded-full border border-muted hover:bg-muted/50"
-              onClick={() => onSocialAuth('google')}
+              onClick={() => handleSocialAuth('google')}
               disabled={isLoading}
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24">
@@ -455,7 +492,7 @@ export function SignUpForm({
               variant="ghost"
               size="icon"
               className="w-12 h-12 rounded-full border border-muted hover:bg-muted/50"
-              onClick={() => onSocialAuth('apple')}
+              onClick={() => handleSocialAuth('apple')}
               disabled={isLoading}
             >
               <svg
@@ -474,7 +511,7 @@ export function SignUpForm({
           </span>
           <Button
             variant="link"
-            onClick={onNavigateToSignIn}
+            onClick={() => navigate('/auth/signin')}
             className="p-0 h-auto text-primary text-sm font-medium"
           >
             {t('auth.signIn')}
@@ -483,4 +520,4 @@ export function SignUpForm({
       </div>
     </div>
   );
-}
+};

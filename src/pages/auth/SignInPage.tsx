@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import { AuthInput } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useAuth } from '@/hooks/useAuth';
-import AuthService from '@/services/authService';
+import AuthService from '@/services/authSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { Eye, EyeOff } from 'lucide-react';
 import React, { useState } from 'react';

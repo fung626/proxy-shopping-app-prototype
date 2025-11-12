@@ -15,7 +15,7 @@ interface RequestCardAProps {
 const RequestCardA = ({ loading, request }: RequestCardAProps) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
-  const { wishlist, toggleWishlistItem } = useWishlistStore();
+  const { isWishlistItem, toggleWishlistItem } = useWishlistStore();
 
   if (loading) {
     return (
@@ -49,18 +49,18 @@ const RequestCardA = ({ loading, request }: RequestCardAProps) => {
           size="sm"
           variant="ghost"
           className={`absolute top-2 right-2 h-8 w-8 p-0 bg-card/80 hover:bg-card rounded-full ${
-            request && wishlist.has(request.id)
+            request && isWishlistItem(request.id)
               ? 'text-primary'
               : 'text-muted-foreground'
           }`}
           onClick={(e) => {
             e.stopPropagation();
-            // if (request) toggleWishlistItem(request.id, request);
+            if (request) toggleWishlistItem(request.id, 'request');
           }}
         >
           <Heart
             className={`h-4 w-4 ${
-              request && wishlist.has(request.id)
+              request && isWishlistItem(request.id)
                 ? 'fill-current'
                 : ''
             }`}
