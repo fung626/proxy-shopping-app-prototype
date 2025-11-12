@@ -36,6 +36,8 @@ export interface SupabaseOffer {
 }
 
 export interface OfferFilters {
+  name?: string;
+  description?: string;
   category?: string;
   location?: string;
   priceMin?: number;
@@ -52,6 +54,15 @@ export class OffersSupabaseService {
       let query = supabase.from('offers').select('*');
 
       // Apply filters
+      if (filters?.name) {
+        query = query.ilike('title', `%${filters.name}%`);
+      }
+      if (filters?.description) {
+        query = query.ilike(
+          'description',
+          `%${filters.description}%`
+        );
+      }
       if (filters?.category) {
         query = query.eq('category', filters.category);
       }

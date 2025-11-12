@@ -52,7 +52,7 @@ interface AgentOffer {
 interface ViewOffersPageProps {
   requestTitle: string;
   offers: AgentOffer[];
-  onBack: () => void;
+
   onContactAgent: (agentId: string) => void;
   onAcceptOffer: (offer: any) => void;
 }

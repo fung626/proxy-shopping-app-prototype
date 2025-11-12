@@ -19,7 +19,7 @@ export const explore = {
   newest: '最新',
   popularity: '热门度',
   rating: '评分',
-  searchPlaceholder: '搜索产品和服务...',
+  searchPlaceholder: '搜索热门代购报价和请求',
   popularCategories: '热门分类',
   topOffers: '热门代购报价',
   requestsForYou: '为您推荐的请求',

@@ -151,14 +151,17 @@ class AuthSupabaseService {
     email: string
   ): Promise<{ data: any; error: AuthError | null }> {
     return await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: `${window.location.origin}/reset-password`,
+      redirectTo: `${window.location.origin}/auth/reset-password`,
     });
   }
 
   // Update password
   async updatePassword(
+    authCode: string,
     password: string
   ): Promise<{ data: any; error: AuthError | null }> {
+    const res = await supabase.auth.exchangeCodeForSession(authCode);
+    console.log('[DEBUG] UpdatePassword', res);
     return await supabase.auth.updateUser({ password });
   }
 
@@ -273,6 +276,15 @@ class AuthSupabaseService {
       options: {
         redirectTo: `${window.location.origin}/auth/callback`,
       },
+    });
+  }
+
+  // Forgot password
+  async forgotPassword(
+    email: string
+  ): Promise<{ data: any; error: AuthError | null }> {
+    return await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${window.location.origin}/auth/reset-password`,
     });
   }
 }

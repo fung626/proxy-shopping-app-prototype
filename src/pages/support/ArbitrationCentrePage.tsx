@@ -18,7 +18,7 @@ import { toast } from 'sonner';
 interface ArbitrationCentrePageProps {
   user: User | null;
   request?: any;
-  onBack: () => void;
+
   onSubmit?: (arbitrationData: any) => void;
 }
 

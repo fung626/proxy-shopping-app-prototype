@@ -41,4 +41,12 @@ export const about = {
   welcomeDescription:
     'Connecting shoppers and agents worldwide for a seamless proxy shopping experience.',
   welcomeTitle: 'Welcome to ProxyShop',
+  getInTouch: 'Get in Touch',
+  email: 'Email',
+  haveQuestions:
+    "Have questions or suggestions? We'd love to hear from you.",
+  support: 'Support',
+  business: 'Business',
+  completedOrders: 'Completed Orders',
+  satisfactionRate: 'Satisfaction Rate',
 };

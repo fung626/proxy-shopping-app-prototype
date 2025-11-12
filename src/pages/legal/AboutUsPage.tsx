@@ -15,7 +15,7 @@ interface AboutUsPageProps {
   onBack?: () => void;
 }
 
-export function AboutUsPage({ onBack }: AboutUsPageProps = {}) {
+export function AboutUsPage(props: AboutUsPageProps) {
   const { t } = useLanguage();
 
   const teamValues = [
@@ -243,7 +243,7 @@ export function AboutUsPage({ onBack }: AboutUsPageProps = {}) {
                 25K+
               </div>
               <div className="text-sm text-muted-foreground">
-                Completed Orders
+                {t('about.completedOrders')}
               </div>
             </Card>
             <Card className="p-4 text-center">
@@ -251,7 +251,7 @@ export function AboutUsPage({ onBack }: AboutUsPageProps = {}) {
                 98%
               </div>
               <div className="text-sm text-muted-foreground">
-                Satisfaction Rate
+                {t('about.satisfactionRate')}
               </div>
             </Card>
           </div>
@@ -261,22 +261,25 @@ export function AboutUsPage({ onBack }: AboutUsPageProps = {}) {
 
         {/* Contact Information */}
         <div className="space-y-4 pb-8">
-          <h3 className="font-semibold text-lg">Get in Touch</h3>
+          <h3 className="font-semibold text-lg">
+            {t('about.getInTouch')}
+          </h3>
           <div className="p-4 bg-muted/30 rounded-lg space-y-3">
             <p className="text-sm text-muted-foreground">
-              Have questions or suggestions? We'd love to hear from
-              you.
+              {t('about.haveQuestions')}
             </p>
             <div className="space-y-2 text-sm">
               <div className="flex justify-between">
-                <span className="text-muted-foreground">Email:</span>
+                <span className="text-muted-foreground">
+                  {t('about.email')}:
+                </span>
                 <span className="font-medium">
                   hello@proxyshop.com
                 </span>
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  Support:
+                  {t('about.support')}:
                 </span>
                 <span className="font-medium">
                   support@proxyshop.com
@@ -284,7 +287,7 @@ export function AboutUsPage({ onBack }: AboutUsPageProps = {}) {
               </div>
               <div className="flex justify-between">
                 <span className="text-muted-foreground">
-                  Business:
+                  {t('about.business')}:
                 </span>
                 <span className="font-medium">
                   business@proxyshop.com

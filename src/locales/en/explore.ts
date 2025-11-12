@@ -19,7 +19,7 @@ export const explore = {
   newest: 'Newest',
   popularity: 'Popularity',
   rating: 'Rating',
-  searchPlaceholder: 'Search products and services...',
+  searchPlaceholder: 'Search popular proxy offers and requests',
   allOffers: 'All Offers',
   allRequests: 'All Requests',
   popularCategories: 'Popular Categories',

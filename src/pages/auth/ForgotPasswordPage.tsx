@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button';
 import { AuthInput } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { PhoneInput } from '@/components/ui/phone-input';
+import authSupabaseService from '@/services/authSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { CheckCircle, Mail, Phone } from 'lucide-react';
 import React, { useState } from 'react';
@@ -36,9 +37,13 @@ export function ForgotPasswordPage() {
 
     setLoading(true);
     try {
-      // Here you would integrate with your password reset service
       if (activeTab === 'email') {
-        console.log('Password reset requested for email:', email);
+        const { error } = await authSupabaseService.forgotPassword(
+          email
+        );
+        if (error) {
+          throw new Error(error.message);
+        }
       } else {
         console.log(
           'Password reset requested for phone:',
@@ -51,10 +56,6 @@ export function ForgotPasswordPage() {
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleBack = () => {
-    navigate(-1);
   };
 
   if (isSubmitted) {
@@ -78,7 +79,6 @@ export function ForgotPasswordPage() {
                     contact: `${countryCode}${phone}`,
                   })}
             </p>
-
             <div className="space-y-3">
               <Button
                 onClick={() => setIsSubmitted(false)}

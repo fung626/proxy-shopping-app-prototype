@@ -25,9 +25,7 @@ import {
 import { useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-interface AllAgentsPageProps {
-  onBack: () => void;
-}
+interface AllAgentsPageProps {}
 
 export function AllAgentsPage({ onBack }: AllAgentsPageProps) {
   const { t } = useLanguage();

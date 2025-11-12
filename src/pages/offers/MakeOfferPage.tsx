@@ -41,7 +41,7 @@ interface MakeOfferPageProps {
     deliveryMethod?: string;
     images?: string[];
   };
-  onBack: () => void;
+
   onSubmitOffer: (offer: any) => void;
 }
 

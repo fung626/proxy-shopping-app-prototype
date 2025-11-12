@@ -13,6 +13,7 @@ import {
   userSupabaseService as userService,
 } from '@/services/userSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
+import { getCurrencySymbol } from '@/utils/common';
 import {
   ArrowLeft,
   CheckCircle2,
@@ -25,8 +26,10 @@ import {
   Shield,
   Star,
   Truck,
+  User,
   Zap,
 } from 'lucide-react';
+import moment from 'moment';
 import { memo, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { OfferDetailsSkeleton } from './OfferDetailsSkeleton';
@@ -36,24 +39,31 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
 
-  const [data, setData] = useState<SupabaseOffer | null>(null);
-  const [agent, setAgent] = useState<SupabaseUser | null>(null);
+  const [offerData, setOfferData] = useState<SupabaseOffer | null>(
+    null
+  );
+  const [agentData, setAgentData] = useState<SupabaseUser | null>(
+    null
+  );
   const [loading, setLoading] = useState(false);
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isFavorited, setIsFavorited] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetch = async () => {
       if (!id) return;
       setLoading(true);
       try {
-        const offerData = await offerService.getOfferById(id);
-        if (offerData) {
-          const user = await userService.getUserById(
-            offerData.user_id
-          );
-          setData(offerData as SupabaseOffer);
+        const offer = await offerService.getOfferById(id);
+        if (offer) {
+          setOfferData(offer);
+          const agent = await userService.getUserById(offer.user_id);
+          if (agent) {
+            setAgentData({
+              ...agent,
+            });
+          }
         }
       } catch (error) {
         console.error('Error fetching offer data:', error);
@@ -61,44 +71,34 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
         setLoading(false);
       }
     };
-    fetchData();
+    fetch();
   }, [id]);
-
-  if (!data) {
-    return <div>{t('common.error')}</div>;
-  }
-
-  const displayImages = data.images || [];
-  const agentData = {
-    // name: agent?.name || 'Agent',
-    // rating: agent?.rating || 4.5,
-    // reviews: agent?.reviews || 0,
-    // since: agent?.since || '2023',
-    // verified: agent?.verified || false,
-    // image: agent?.image || '',
-    // totalOrders: agent?.totalOrders || 0,
-    // successRate: agent?.successRate || 95,
-  };
 
   const offerFeatures = [
     {
       icon: MapPin,
       title: t('offerDetails.shoppingLocation'),
-      description: `${data.location || t('common.unknown')} • ${
-        data.shopping_location || t('offerDetails.variousLocations')
+      description: `${offerData?.location || t('common.unknown')} • ${
+        offerData?.shopping_location ||
+        t('offerDetails.variousLocations')
       }`,
     },
     {
       icon: Clock,
       title: t('offerDetails.deliveryTime'),
-      description: `${data.estimated_delivery || t('common.tbd')} • ${
-        data.processing_time || t('offerDetails.defaultProcessing')
+      description: `${
+        `${offerData?.estimated_delivery?.start} - ${offerData?.estimated_delivery?.end} ${offerData?.estimated_delivery?.type}` ||
+        t('common.tbd')
+      } • ${
+        offerData?.processing_time ||
+        t('offerDetails.defaultProcessing')
       } ${t('offerDetails.processing')}`,
     },
     {
       icon: Package,
       title: t('common.category'),
-      description: data.category || t('common.general'),
+      description:
+        t(`categories.${offerData?.category}`) || t('common.general'),
     },
     {
       icon: Shield,
@@ -107,14 +107,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
     },
   ];
 
-  const currencySymbol =
-    data.currency === 'USD'
-      ? '$'
-      : data.currency === 'EUR'
-      ? '€'
-      : data.currency === 'GBP'
-      ? '£'
-      : '¥';
+  const currencySymbol = getCurrencySymbol(offerData?.currency);
 
   const onBack = () => {
     navigate(-1);
@@ -132,29 +125,41 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
   //   return displayImages.map((imageUrl, index) => ({
   //     id: `image-${index}`,
   //     imageUrl,
-  //     title: `${data.title} - Image ${index + 1}`,
+  //     title: `${offerData?.title} - Image ${index + 1}`,
   //     description:
   //       index === 0
-  //         ? data.description?.substring(0, 100) + '...'
+  //         ? offerData?.description?.substring(0, 100) + '...'
   //         : undefined,
   //   }));
-  // }, [displayImages, data.title, data.description]);
+  // }, [displayImages, offerData?.title, offerData?.description]);
 
   const handleContactAgent = () => {
-    console.log('Contact agent:', data.user_id);
+    console.log('Contact agent:', offerData?.user_id);
   };
 
   const handleCreateOrder = () => {
-    console.log('Create order for offer:', data.id);
+    console.log('Create order for offer:', offerData?.id);
   };
 
   const handleShare = () => {
-    console.log('Share offer:', data.id);
+    console.log('Share offer:', offerData?.id);
   };
 
   if (loading) {
     return <OfferDetailsSkeleton />;
   }
+
+  const translatedInclusions = [
+    t('offerDetails.professionalShoppingService'),
+    t('offerDetails.productAuthenticityVerification'),
+    t('offerDetails.securePackagingHandling'),
+    t('offerDetails.realTimeOrderUpdates'),
+    t('offerDetails.qualityInspectionBeforeShipping'),
+  ];
+
+  const memberSince = agentData?.created_at
+    ? moment(agentData.created_at).fromNow()
+    : t('common.unknown');
 
   return (
     <div className="min-h-screen bg-background">
@@ -197,10 +202,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
         </div>
         {/* Product Image Carousel */}
         <div className="aspect-[4/3]">
-          <Carousel
-            className="h-full"
-            // slides={carouselImages}
-          ></Carousel>
+          <Carousel slides={offerData?.images || []} />
         </div>
       </div>
       {/* Content */}
@@ -209,9 +211,9 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
         <div className="py-6">
           <div className="flex items-start justify-between mb-2">
             <h1 className="text-2xl font-semibold text-foreground pr-4">
-              {data.title || 'Product'}
+              {offerData?.title || 'Product'}
             </h1>
-            {data.availability === 'In Stock' && (
+            {offerData?.availability === 'In Stock' && (
               <Badge className="bg-green-500 text-white">
                 <Zap className="h-3 w-3 mr-1" />
                 {t('offerDetails.available')}
@@ -219,8 +221,12 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             )}
           </div>
           <p className="text-muted-foreground mb-4">
-            {data.category || t('common.general')} •{' '}
-            {data.location || t('offerDetails.variousLocations')}
+            {offerData?.category
+              ? t(`categories.${offerData.category}`)
+              : t('common.general')}{' '}
+            •{' '}
+            {offerData?.location ||
+              t('offerDetails.variousLocations')}
           </p>
           <div className="flex items-center space-x-4 text-sm text-muted-foreground">
             <div className="flex items-center space-x-1">
@@ -236,15 +242,17 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
           </div>
           {/* Tags */}
           <div className="flex flex-wrap gap-2 mt-4">
-            {(data.tags || []).map((tag: string, index: number) => (
-              <Badge
-                key={index}
-                variant="secondary"
-                className="text-xs"
-              >
-                {tag}
-              </Badge>
-            ))}
+            {(offerData?.tags || []).map(
+              (tag: string, index: number) => (
+                <Badge
+                  key={index}
+                  variant="secondary"
+                  className="text-xs"
+                >
+                  #{tag}
+                </Badge>
+              )
+            )}
           </div>
         </div>
 
@@ -253,31 +261,34 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
         {/* Agent Info */}
         <div className="py-6">
           <h3 className="font-semibold mb-4">
-            {t('offerDetails.offeredBy')} {agentData.name}
+            {t('offerDetails.offeredBy')} {agentData?.nickname}
           </h3>
-
           <div className="flex items-center space-x-4">
-            <Avatar className="w-16 h-16">
-              <ImageWithFallback
-                src={agentData.image}
-                alt={agentData.name}
-                className="w-full h-full object-cover"
-              />
+            <Avatar className="flex items-center justify-center w-16 h-16 bg-slate-50">
+              {agentData?.image ? (
+                <ImageWithFallback
+                  src={agentData?.image}
+                  alt={agentData?.nickname || 'Agent Avatar'}
+                  className="w-full h-full object-cover"
+                />
+              ) : (
+                <User className="w-8 h-8 text-muted-foreground" />
+              )}
             </Avatar>
-
             <div className="flex-1">
               <div className="flex items-center space-x-2 mb-1">
                 <div className="flex items-center space-x-1">
                   <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
                   <span className="font-medium">
-                    {agentData.rating}
+                    {agentData?.rating || t('offerDetails.noRatings')}
                   </span>
                 </div>
                 <span className="text-muted-foreground">•</span>
                 <span className="text-muted-foreground">
-                  {agentData.reviews} {t('common.reviews')}
+                  {`${agentData?.reviews} ${t('common.reviews')}` ||
+                    t('common.noReviews')}
                 </span>
-                {agentData.verified && (
+                {agentData?.verified && (
                   <>
                     <span className="text-muted-foreground">•</span>
                     <div className="flex items-center space-x-1">
@@ -290,9 +301,9 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                 )}
               </div>
               <p className="text-sm text-muted-foreground">
-                {t('common.memberSince')} {agentData.since} •{' '}
-                {agentData.successRate}%{' '}
-                {t('offerDetails.successRate')}
+                {`${t('common.memberSince')} ${memberSince} • ${
+                  agentData?.success_rate
+                }% ${t('offerDetails.successRate')}`}
               </p>
             </div>
           </div>
@@ -334,10 +345,9 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             {/* Main Description */}
             <div className="space-y-3">
               <p className="text-foreground leading-relaxed">
-                {data.description ||
+                {offerData?.description ||
                   'Our experienced shopping agent will carefully source and purchase the requested items for you. We specialize in finding authentic, high-quality products while providing excellent customer service throughout the entire shopping process.'}
               </p>
-
               {/* Additional offer highlights */}
               <div className="grid grid-cols-2 gap-3 mt-4">
                 <div className="p-3 rounded-lg offer-details-authenticity-box">
@@ -383,23 +393,19 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                 {t('offerDetails.serviceInclusions')}
               </h4>
               <div className="grid grid-cols-1 gap-3">
-                {[
-                  'Professional shopping service',
-                  'Product authenticity verification',
-                  'Secure packaging and handling',
-                  'Real-time order updates',
-                  'Quality inspection before shipping',
-                ].map((feature: string, index: number) => (
-                  <div
-                    key={index}
-                    className="flex items-start space-x-3 p-3 rounded-lg bg-muted/30"
-                  >
-                    <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
-                    <span className="text-sm leading-relaxed">
-                      {feature}
-                    </span>
-                  </div>
-                ))}
+                {translatedInclusions.map(
+                  (feature: string, index: number) => (
+                    <div
+                      key={index}
+                      className="flex items-start space-x-3 p-3 rounded-lg bg-muted/30"
+                    >
+                      <CheckCircle2 className="h-4 w-4 text-green-500 flex-shrink-0 mt-0.5" />
+                      <span className="text-sm leading-relaxed">
+                        {feature}
+                      </span>
+                    </div>
+                  )
+                )}
               </div>
             </div>
 
@@ -460,7 +466,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                     </span>
                     <span className="font-medium">
                       {currencySymbol}
-                      {(data.price * 0.8).toFixed(2)}
+                      {(offerData?.price ?? 0).toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -469,7 +475,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                     </span>
                     <span className="font-medium">
                       {currencySymbol}
-                      {(data.price * 0.1).toFixed(2)}
+                      {(offerData?.price ?? 0).toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between">
@@ -478,7 +484,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                     </span>
                     <span className="font-medium">
                       {currencySymbol}
-                      {(data.price * 0.1).toFixed(2)}
+                      {(offerData?.price * 0.1).toFixed(2)}
                     </span>
                   </div>
                   <Separator className="my-2" />
@@ -486,7 +492,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                     <span>{t('offerDetails.totalServiceCost')}</span>
                     <span>
                       {currencySymbol}
-                      {data.price}
+                      {offerData?.price}
                     </span>
                   </div>
                   <p className="text-xs text-muted-foreground mt-2">
@@ -503,14 +509,14 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
         {/* Agent Stats */}
         <div className="py-6">
           <h3 className="font-semibold mb-4">
-            {agentData.name}
+            {agentData?.nickname}
             {t('offerDetails.agentStats')}
           </h3>
 
           <div className="grid grid-cols-3 gap-4 p-4 rounded-lg bg-muted/30">
             <div className="text-center">
               <div className="text-lg font-semibold text-foreground">
-                {agentData.totalOrders}
+                {agentData?.total_orders}
               </div>
               <div className="text-xs text-muted-foreground">
                 Orders
@@ -518,7 +524,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             </div>
             <div className="text-center">
               <div className="text-lg font-semibold text-foreground">
-                {agentData.successRate}%
+                {agentData?.success_rate}%
               </div>
               <div className="text-xs text-muted-foreground">
                 Success Rate
@@ -526,7 +532,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             </div>
             <div className="text-center">
               <div className="text-lg font-semibold text-foreground">
-                {agentData.rating}
+                {agentData?.rating}
               </div>
               <div className="text-xs text-muted-foreground">
                 Rating
@@ -574,7 +580,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             <div className="flex items-baseline space-x-1">
               <span className="text-xl font-semibold text-foreground">
                 {currencySymbol}
-                {data.price || '0.00'}
+                {offerData?.price || '0.00'}
               </span>
               <span className="text-sm text-muted-foreground">
                 total

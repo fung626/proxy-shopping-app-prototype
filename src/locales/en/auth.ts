@@ -95,4 +95,15 @@ export const auth = {
   continueToPreferences: 'Continue to Preferences',
   signInFailed:
     'Sign in failed. Please check your credentials and try again.',
+  resetPasswordTitle: 'Reset Your Password',
+  newPassword: 'New Password',
+  enterNewPassword: 'Enter your new password',
+  confirmNewPassword: 'Confirm your new password',
+  saveNewPassword: 'Save New Password',
+  passwordResetSuccess: 'Password reset successful!',
+  passwordResetSuccessDescription:
+    'You can now sign in with your new password.',
+  saving: 'Saving...',
+  invalidResetToken: 'Invalid reset token.',
+  resetPasswordFailed: 'Failed to reset password.',
 };

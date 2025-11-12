@@ -19,7 +19,7 @@ export interface ChatData {
 
 interface ChatViewProps {
   chat: ChatData;
-  onBack: () => void;
+
   onSendMessage: (
     chatId: string,
     content: string,

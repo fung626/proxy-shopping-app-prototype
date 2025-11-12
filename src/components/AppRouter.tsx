@@ -1,7 +1,7 @@
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigation } from '@/hooks/useNavigation';
 import { OfferDetailsPage } from '@/pages/offers/OfferDetailsPage';
-import { RequestDetailsPage } from '@/pages/requests/RequestDetailsPage';
+import { RequestDetailsPage } from '@/pages/orders/RequestDetailsPage';
 import { allRoutes } from '@/routes';
 import { PageProps } from '@/types/routing';
 import React, { memo, Suspense, useMemo } from 'react';

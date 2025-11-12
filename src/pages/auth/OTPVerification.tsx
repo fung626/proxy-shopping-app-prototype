@@ -7,7 +7,7 @@ interface OTPVerificationProps {
   email: string;
   loginType: 'email' | 'phone';
   onVerify: (otp: string) => void;
-  onBack: () => void;
+
   isSignUp: boolean;
 }
 

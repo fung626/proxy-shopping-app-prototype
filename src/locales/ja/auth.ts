@@ -88,6 +88,11 @@ export const auth = {
   resetPasswordPhoneDescription:
     '電話番号を入力すると、パスワードリセット用のコードをSMSで送信します。',
   resetPasswordSuccess: 'パスワードリセットメールが送信されました',
+  resetPasswordTitle: 'パスワードをリセット',
+  resetPasswordFailed: 'パスワードのリセットに失敗しました。',
+  newPassword: '新しいパスワード',
+  enterNewPassword: '新しいパスワードを入力してください',
+  confirmNewPassword: '新しいパスワードを確認してください',
   searchLanguages: '言語を検索...',
   selectCountry: '国を選択してください',
   selectLanguages: '話せる言語を選択してください',
@@ -133,4 +138,10 @@ export const auth = {
   dragDropImage: 'ここに画像をドラッグ＆ドロップ',
   supportedFormats: 'JPG、PNG、GIFをサポート',
   maxFileSize: '最大ファイルサイズ：5MB',
+  saveNewPassword: '新しいパスワードを保存',
+  passwordResetSuccess: 'パスワードのリセットに成功しました！',
+  passwordResetSuccessDescription:
+    '新しいパスワードでログインできます。',
+  saving: '保存中...',
+  invalidResetToken: '無効なリセットトークンです。',
 };

@@ -31,4 +31,14 @@ export const offerDetails = {
   productCostNote: '注意：产品成本可能会有所变化。',
   totalServiceCost: '总服务费用',
   agentStats: '代理统计数据',
+  professionalShoppingService: '\u4e13\u4e1a\u8d2d\u7269\u670d\u52a1',
+  productAuthenticityVerification:
+    '\u4ea7\u54c1\u771f\u5b9e\u6027\u9a8c\u8bc1',
+  securePackagingHandling:
+    '\u4fdd\u969c\u5305\u88c5\u548c\u5904\u7406',
+  realTimeOrderUpdates: '\u5b9e\u65f6\u8ba2\u5355\u66f4\u65b0',
+  qualityInspectionBeforeShipping:
+    '\u53d1\u8d27\u524d\u8d28\u91cf\u68c0\u67e5',
+  noRatings: '\u6682\u65e0\u8bc4\u5206',
+  noReviews: '\u6682\u65e0\u8bc4\u8bba',
 };

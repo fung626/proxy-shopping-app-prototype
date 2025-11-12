@@ -34,4 +34,13 @@ export const offerDetails = {
   productCostNote: 'Note: Product cost may vary.',
   totalServiceCost: 'Total Service Cost',
   agentStats: 'Agent Statistics',
+  professionalShoppingService: 'Professional shopping service',
+  productAuthenticityVerification:
+    'Product authenticity verification',
+  securePackagingHandling: 'Secure packaging and handling',
+  realTimeOrderUpdates: 'Real-time order updates',
+  qualityInspectionBeforeShipping:
+    'Quality inspection before shipping',
+  noRatings: 'No ratings yet',
+  noReviews: 'No reviews yet',
 };

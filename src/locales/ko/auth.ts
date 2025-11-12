@@ -22,6 +22,9 @@ export const auth = {
   signInError: '로그인 실패',
   signUpError: '회원가입 실패',
   resetPasswordSuccess: '비밀번호 재설정 이메일이 전송되었습니다',
+  passwordResetSuccess: '비밀번호 재설정 성공!',
+  passwordResetSuccessDescription:
+    '이제 새 비밀번호로 로그인할 수 있습니다.',
   usePhoneInstead: '전화번호로 대신하기',
   useEmailInstead: '이메일로 대신하기',
   viaPhone: '전화번호로',
@@ -104,4 +107,12 @@ export const auth = {
   continueToPreferences: '선호도 설정 계속하기',
   signInFailed:
     '로그인에 실패했습니다. 자격 증명을 확인하고 다시 시도해주세요.',
+  resetPasswordTitle: '비밀번호 재설정',
+  newPassword: '새 비밀번호',
+  enterNewPassword: '새 비밀번호를 입력하세요',
+  confirmNewPassword: '새 비밀번호를 확인하세요',
+  saveNewPassword: '새 비밀번호 저장',
+  saving: '저장 중...',
+  invalidResetToken: '유효하지 않은 재설정 토큰입니다.',
+  resetPasswordFailed: '비밀번호 재설정에 실패했습니다.',
 };

@@ -19,7 +19,7 @@ export const explore = {
   newest: '新しい順',
   popularity: '人気順',
   rating: '評価順',
-  searchPlaceholder: '製品とサービスを検索...',
+  searchPlaceholder: '人気のプロキシオファーとリクエストを検索',
   popularCategories: '人気のカテゴリ',
   topOffers: '人気のショッピングオファー',
   requestsForYou: 'あなたへのリクエスト',

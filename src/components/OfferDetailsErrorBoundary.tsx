@@ -1,9 +1,9 @@
+import { AlertTriangle, ArrowLeft } from 'lucide-react';
 import React, { Component, ReactNode } from 'react';
-import { ArrowLeft, AlertTriangle } from 'lucide-react';
 
 interface Props {
   children: ReactNode;
-  onBack: () => void;
+
   offer?: any;
 }
 
@@ -12,7 +12,10 @@ interface State {
   error?: Error;
 }
 
-export class OfferDetailsErrorBoundary extends Component<Props, State> {
+export class OfferDetailsErrorBoundary extends Component<
+  Props,
+  State
+> {
   constructor(props: Props) {
     super(props);
     this.state = { hasError: false };
@@ -24,7 +27,11 @@ export class OfferDetailsErrorBoundary extends Component<Props, State> {
   }
 
   componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
-    console.error('OfferDetails error details:', { error, errorInfo, offer: this.props.offer });
+    console.error('OfferDetails error details:', {
+      error,
+      errorInfo,
+      offer: this.props.offer,
+    });
   }
 
   render() {
@@ -47,9 +54,12 @@ export class OfferDetailsErrorBoundary extends Component<Props, State> {
           <div className="flex items-center justify-center min-h-96 p-8">
             <div className="text-center max-w-md">
               <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
-              <h2 className="text-xl font-semibold mb-2">Unable to load offer details</h2>
+              <h2 className="text-xl font-semibold mb-2">
+                Unable to load offer details
+              </h2>
               <p className="text-gray-600 mb-6">
-                There was an issue loading this offer. Please try again or go back to browse other offers.
+                There was an issue loading this offer. Please try
+                again or go back to browse other offers.
               </p>
               <button
                 onClick={this.props.onBack}

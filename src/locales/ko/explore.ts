@@ -19,7 +19,7 @@ export const explore = {
   newest: '최신순',
   popularity: '인기순',
   rating: '평점순',
-  searchPlaceholder: '상품 및 서비스 검색...',
+  searchPlaceholder: '인기 있는 프록시 제안 및 요청 검색',
   allOffers: '모든 오퍼',
   allRequests: '모든 요청',
   popularCategories: '인기 카테고리',

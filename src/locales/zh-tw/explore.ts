@@ -19,7 +19,7 @@ export const explore = {
   newest: '最新',
   popularity: '熱門度',
   rating: '評分',
-  searchPlaceholder: '搜尋產品和服務...',
+  searchPlaceholder: '搜尋熱門代購報價和請求',
   popularCategories: '熱門分類',
   topOffers: '熱門代購報價',
   requestsForYou: '為您推薦的請求',

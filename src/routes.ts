@@ -159,6 +159,11 @@ const ForgotPasswordPage = lazy(() =>
     default: m.ForgotPasswordPage,
   }))
 );
+const ResetPasswordPage = lazy(() =>
+  import('@/pages/auth/ResetPasswordPage').then((m) => ({
+    default: m.ResetPasswordPage,
+  }))
+);
 const AuthCallbackPage = lazy(() =>
   import('@/pages/auth/AuthCallbackPage').then((m) => ({
     default: m.AuthCallbackPage,
@@ -232,6 +237,16 @@ export const routeGroups: RouteGroup[] = [
         },
       },
       {
+        path: '/orders/requests/:id',
+        element: RequestDetailsPage,
+        //requireAuth: true,
+        showTabNavigation: true,
+        meta: {
+          title: 'nav.titles.orders',
+          description: 'Manage your orders',
+        },
+      },
+      {
         path: '/profile',
         element: ProfileTab,
         showTabNavigation: true,
@@ -258,6 +273,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/explore/search',
         element: SearchPage,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.search',
           description: 'Search for offers and requests',
@@ -502,6 +518,11 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/auth/forgot-password',
         element: ForgotPasswordPage,
+        showNavBar: true,
+      },
+      {
+        path: '/auth/reset-password',
+        element: ResetPasswordPage,
         showNavBar: true,
       },
       {

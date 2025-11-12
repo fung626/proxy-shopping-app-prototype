@@ -37,4 +37,12 @@ export const about = {
   milestone2023Launch: 'プラットフォーム開始',
   milestone2024Users: '10,000+ユーザー参加',
   milestone2024Security: 'セキュリティ強化実施',
+  getInTouch: 'お問い合わせ',
+  email: 'メール',
+  haveQuestions:
+    'ご質問やご提案がございましたら、お気軽にお問い合わせください。',
+  support: 'サポート',
+  business: 'ビジネス',
+  completedOrders: '完了した注文',
+  satisfactionRate: '満足度',
 };

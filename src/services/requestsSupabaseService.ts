@@ -1,3 +1,4 @@
+import { RequestDetailsPageProps } from '@/pages/orders/RequestDetailsPage';
 import { supabase } from '@/supabase/client';
 
 export interface SupabaseRequest {
@@ -403,3 +404,49 @@ export class RequestsSupabaseService {
 }
 
 export const requestsSupabaseService = new RequestsSupabaseService();
+export async function getRequestById(
+  requestId: string
+): Promise<RequestDetailsPageProps['request'] | null> {
+  try {
+    const { data, error } = await supabase
+      .from('requests')
+      .select('*')
+      .eq('id', requestId)
+      .single();
+
+    if (error) {
+      console.error('Error fetching request:', error);
+      throw error;
+    }
+
+    // Map SupabaseRequest to RequestDetailsPageProps['request']
+    return {
+      id: data.id,
+      title: data.title,
+      description: data.description || '',
+      status: data.status || 'Active',
+      step: 1, // Default step; adjust based on your logic
+      role: 'client', // Default role; adjust based on your logic
+      agent: data.offers?.[0]?.user_name,
+      client: data.user_name,
+      location: data.expected_delivery_location || '',
+      createdDate: data.created_at,
+      category: data.category || '',
+      deliveryMethod: data.delivery_method as 'ship' | 'personal',
+      budget: data.budget_min
+        ? `${data.budget_min}-${data.budget_max}`
+        : undefined,
+      timeline: data.expected_delivery?.start,
+      requirements: data.specific_requirements,
+      images: data.images,
+      isPurchased: false, // Default value; adjust based on your logic
+      isShipped: false, // Default value; adjust based on your logic
+      purchaseDate: undefined,
+      shippingDate: undefined,
+      trackingNumber: undefined,
+    };
+  } catch (error) {
+    console.error('Error in getRequestById:', error);
+    throw error;
+  }
+}

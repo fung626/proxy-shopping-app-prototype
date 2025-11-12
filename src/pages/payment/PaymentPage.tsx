@@ -37,7 +37,7 @@ interface PaymentPageProps {
     };
   };
   user?: User;
-  onBack: () => void;
+
   onPaymentSuccess: (paymentData: any) => void;
 }
 

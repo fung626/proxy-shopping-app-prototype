@@ -33,4 +33,12 @@ export const offerDetails = {
   productCostNote: '注: 製品の価格は変動する場合があります。',
   agentStats: 'エージェント統計',
   totalServiceCost: '総サービス費用',
+  professionalShoppingService:
+    'プロフェッショナルショッピングサービス',
+  productAuthenticityVerification: '製品の真正性検証',
+  securePackagingHandling: '安全な梱包と取り扱い',
+  realTimeOrderUpdates: 'リアルタイム注文更新',
+  qualityInspectionBeforeShipping: '発送前の品質検査',
+  noRatings: '評価なし',
+  noReviews: '評価なし',
 };

@@ -31,4 +31,11 @@ export const offerDetails = {
   productCostNote: '注意：產品成本可能會有所變化。',
   agentStats: '代理統計數據',
   totalServiceCost: '總服務費用',
+  professionalShoppingService: '專業購物服務',
+  productAuthenticityVerification: '產品真實性驗證',
+  securePackagingHandling: '安全包裝和處理',
+  realTimeOrderUpdates: '即時訂單更新',
+  qualityInspectionBeforeShipping: '發貨前質量檢查',
+  noRatings: '\u6682\u7121\u8a55\u50f9',
+  noReviews: '\u6682\u7121\u8a55\u8ad6',
 };

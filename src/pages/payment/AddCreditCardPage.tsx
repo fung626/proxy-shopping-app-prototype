@@ -34,7 +34,6 @@ interface CreditCardInfo {
 }
 
 interface AddCreditCardPageProps {
-  onBack: () => void;
   onSave: (card: CreditCardInfo) => void;
   user?: any;
 }

@@ -16,7 +16,6 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 interface CategoryPageProps {
   category: string;
-  onBack: () => void;
 }
 
 export function CategoryPage({ category }: CategoryPageProps) {

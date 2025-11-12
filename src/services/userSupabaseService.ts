@@ -2,11 +2,14 @@ import { supabase } from '@/supabase/client';
 import authService, { User } from './authSupabaseService';
 
 export interface SupabaseUser extends User {
+  nickname?: string;
   rating: number;
   reviews: number;
   since: string;
   verified: boolean;
   image: string;
+  success_rate: number;
+  total_orders: number;
 }
 
 class UserSupabaseService {

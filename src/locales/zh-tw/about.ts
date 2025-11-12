@@ -31,4 +31,11 @@ export const about = {
   milestone2023Launch: '平台上線',
   milestone2024Users: '10,000+ 用戶加入',
   milestone2024Security: '安全升級實施',
+  getInTouch: '聯繫我們',
+  email: '電子郵件',
+  haveQuestions: '如有任何問題或建議，請隨時與我們聯繫。',
+  support: '支持',
+  business: '商務',
+  completedOrders: '已完成訂單',
+  satisfactionRate: '滿意率',
 };

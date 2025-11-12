@@ -31,7 +31,6 @@ interface ViewFeedbackPageProps {
     status: string;
   };
   feedback: Feedback[];
-  onBack: () => void;
 }
 
 export function ViewFeedbackPage({

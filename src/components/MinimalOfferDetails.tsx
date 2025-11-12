@@ -1,17 +1,15 @@
-import React from 'react';
-
 interface MinimalOfferDetailsProps {
   offer: any;
-  onBack: () => void;
+
   onContactAgent: (agentId: string) => void;
   onCreateOrder?: (offer: any) => void;
 }
 
-export function MinimalOfferDetails({ 
-  offer, 
-  onBack, 
-  onContactAgent, 
-  onCreateOrder 
+export function MinimalOfferDetails({
+  offer,
+  onBack,
+  onContactAgent,
+  onCreateOrder,
 }: MinimalOfferDetailsProps) {
   console.log('MinimalOfferDetails rendering with offer:', offer);
 
@@ -69,7 +67,10 @@ export function MinimalOfferDetails({
           <div className="flex items-center space-x-3">
             <div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center">
               <span className="text-red-600 font-medium">
-                {agentName.split(' ').map(n => n[0]).join('')}
+                {agentName
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')}
               </span>
             </div>
             <div>
@@ -83,7 +84,8 @@ export function MinimalOfferDetails({
         <div>
           <h3 className="font-medium mb-2">Description</h3>
           <p className="text-gray-600">
-            High-quality product available for purchase through our trusted agent network.
+            High-quality product available for purchase through our
+            trusted agent network.
           </p>
         </div>
       </div>
@@ -95,7 +97,7 @@ export function MinimalOfferDetails({
             <div className="text-xl font-semibold">${price}</div>
             <p className="text-sm text-gray-600">Total price</p>
           </div>
-          
+
           <div className="flex space-x-3">
             <button
               onClick={handleContactAgent}

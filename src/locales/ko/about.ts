@@ -38,4 +38,11 @@ export const about = {
   milestone2023Launch: '플랫폼 출시',
   milestone2024Users: '10,000+ 사용자 가입',
   milestone2024Security: '보안 강화 적용',
+  getInTouch: '문의하기',
+  email: '이메일',
+  haveQuestions: '질문이나 제안이 있으시면 언제든지 연락주세요.',
+  support: '지원',
+  business: '비즈니스',
+  completedOrders: '완료된 주문',
+  satisfactionRate: '만족도',
 };

@@ -31,4 +31,11 @@ export const offerDetails = {
   productCostNote: '참고: 제품 비용은 변동될 수 있습니다.',
   totalServiceCost: '총 서비스 비용',
   agentStats: '에이전트 통계',
+  professionalShoppingService: '전문 쇼핑 서비스',
+  productAuthenticityVerification: '제품 진품 검증',
+  securePackagingHandling: '안전한 포장 및 처리',
+  realTimeOrderUpdates: '실시간 주문 업데이트',
+  qualityInspectionBeforeShipping: '배송 전 품질 검사',
+  noRatings: '\uc810\uc218 \uc5c6\uc74c',
+  noReviews: '\ud3c9\uac00 \uc5c6\uc74c',
 };

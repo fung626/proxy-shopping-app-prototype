@@ -31,4 +31,11 @@ export const about = {
   milestone2023Launch: '平台上线',
   milestone2024Users: '10,000+ 用户加入',
   milestone2024Security: '安全升级实施',
+  getInTouch: '联系我们',
+  email: '电子邮件',
+  haveQuestions: '如有任何问题或建议，请随时与我们联系。',
+  support: '支持',
+  business: '商务',
+  completedOrders: '已完成订单',
+  satisfactionRate: '满意率',
 };

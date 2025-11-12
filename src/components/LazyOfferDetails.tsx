@@ -1,21 +1,27 @@
+import {
+  ArrowLeft,
+  Clock,
+  MapPin,
+  MessageCircle,
+  Package,
+  Star,
+} from 'lucide-react';
 import React, { useState } from 'react';
-import { ArrowLeft, MessageCircle, Package, MapPin, Clock, Star } from 'lucide-react';
-import { Button } from './ui/button';
-import { Badge } from './ui/badge';
 import { ImageWithFallback } from './figma/ImageWithFallback';
+import { Button } from './ui/button';
 
 interface LazyOfferDetailsProps {
   offer: any;
-  onBack: () => void;
+
   onContactAgent: (agentId: string) => void;
   onCreateOrder?: (offer: any) => void;
 }
 
-export const LazyOfferDetails = React.memo(function LazyOfferDetails({ 
-  offer, 
-  onBack, 
-  onContactAgent, 
-  onCreateOrder 
+export const LazyOfferDetails = React.memo(function LazyOfferDetails({
+  offer,
+  onBack,
+  onContactAgent,
+  onCreateOrder,
 }: LazyOfferDetailsProps) {
   const [imageLoading, setImageLoading] = useState(true);
 
@@ -30,14 +36,21 @@ export const LazyOfferDetails = React.memo(function LazyOfferDetails({
     agentReviews: 67,
     location: 'Seoul, South Korea',
     estimatedDelivery: '5-7 days',
-    description: 'Authentic Korean skincare products from top K-beauty brands.',
-    image: 'https://images.unsplash.com/photo-1686831451322-8d8e234a51e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrb3JlYW4lMjBza2luY2FyZSUyMGJlYXV0eSUyMHByb2R1Y3RzfGVufDF8fHx8MTc1ODcwNTYxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-    ...offer
+    description:
+      'Authentic Korean skincare products from top K-beauty brands.',
+    image:
+      'https://images.unsplash.com/photo-1686831451322-8d8e234a51e1?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxrb3JlYW4lMjBza2luY2FyZSUyMGJlYXV0eSUyMHByb2R1Y3RzfGVufDF8fHx8MTc1ODcwNTYxOXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
+    ...offer,
   };
 
-  const currencySymbol = offerData.currency === 'USD' ? '$' : 
-                        offerData.currency === 'EUR' ? '€' : 
-                        offerData.currency === 'GBP' ? '£' : '¥';
+  const currencySymbol =
+    offerData.currency === 'USD'
+      ? '$'
+      : offerData.currency === 'EUR'
+      ? '€'
+      : offerData.currency === 'GBP'
+      ? '£'
+      : '¥';
 
   const handleContactAgent = () => {
     onContactAgent(offerData.agentId);
@@ -62,7 +75,9 @@ export const LazyOfferDetails = React.memo(function LazyOfferDetails({
           >
             <ArrowLeft className="h-5 w-5" />
           </Button>
-          <h1 className="text-lg font-semibold truncate flex-1 mx-4">Offer Details</h1>
+          <h1 className="text-lg font-semibold truncate flex-1 mx-4">
+            Offer Details
+          </h1>
           <div className="w-10" /> {/* Spacer for centering */}
         </div>
       </div>
@@ -88,12 +103,17 @@ export const LazyOfferDetails = React.memo(function LazyOfferDetails({
         <div className="p-4 space-y-6">
           {/* Title and Price */}
           <div>
-            <h2 className="text-xl font-semibold mb-2">{offerData.title}</h2>
+            <h2 className="text-xl font-semibold mb-2">
+              {offerData.title}
+            </h2>
             <div className="flex items-baseline space-x-1 mb-2">
               <span className="text-2xl font-bold text-primary">
-                {currencySymbol}{offerData.price}
+                {currencySymbol}
+                {offerData.price}
               </span>
-              <span className="text-sm text-muted-foreground">total</span>
+              <span className="text-sm text-muted-foreground">
+                total
+              </span>
             </div>
           </div>
 
@@ -101,7 +121,10 @@ export const LazyOfferDetails = React.memo(function LazyOfferDetails({
           <div className="flex items-center space-x-3 p-3 bg-muted/50 rounded-lg">
             <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center">
               <span className="text-sm font-medium text-primary">
-                {offerData.agentName.split(' ').map(n => n[0]).join('')}
+                {offerData.agentName
+                  .split(' ')
+                  .map((n) => n[0])
+                  .join('')}
               </span>
             </div>
             <div className="flex-1">
@@ -123,7 +146,9 @@ export const LazyOfferDetails = React.memo(function LazyOfferDetails({
             </div>
             <div className="flex items-center space-x-2">
               <Clock className="h-4 w-4 text-muted-foreground" />
-              <span className="text-sm">{offerData.estimatedDelivery}</span>
+              <span className="text-sm">
+                {offerData.estimatedDelivery}
+              </span>
             </div>
           </div>
 
@@ -143,15 +168,18 @@ export const LazyOfferDetails = React.memo(function LazyOfferDetails({
           <div className="mb-3">
             <div className="flex items-baseline space-x-1">
               <span className="text-xl font-semibold">
-                {currencySymbol}{offerData.price}
+                {currencySymbol}
+                {offerData.price}
               </span>
-              <span className="text-sm text-muted-foreground">total</span>
+              <span className="text-sm text-muted-foreground">
+                total
+              </span>
             </div>
             <p className="text-xs text-muted-foreground">
               {offerData.estimatedDelivery} delivery
             </p>
           </div>
-          
+
           <div className="flex space-x-3">
             <Button
               variant="outline"

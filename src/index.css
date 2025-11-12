@@ -5,3 +5,42 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  /* Embla Carousel Styles */
+  .embla {
+    @apply w-full h-full relative;
+  }
+
+  .embla__viewport {
+    @apply overflow-hidden w-full h-full;
+  }
+
+  .embla__container {
+    @apply flex h-full;
+  }
+
+  .embla__slide {
+    @apply flex-shrink-0 flex-grow-0 basis-full min-w-0 relative;
+  }
+
+  .embla__slide__img {
+    @apply w-full h-full object-cover block;
+  }
+
+  .embla__controls {
+    @apply absolute bottom-4 left-1/2 -translate-x-1/2 z-20;
+  }
+
+  .embla__dots {
+    @apply flex gap-2 items-center justify-center;
+  }
+
+  .embla__dot {
+    @apply w-2 h-2 rounded-full bg-white/50 border-0 p-0 cursor-pointer transition-all duration-300 hover:bg-white/70;
+  }
+
+  .embla__dot--selected {
+    @apply bg-white w-6;
+  }
+}

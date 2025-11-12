@@ -20,4 +20,17 @@ const capitalize = (str?: string) => {
   return str.charAt(0).toUpperCase() + str.slice(1);
 };
 
-export { capitalize, getDefaultImage };
+const getCurrencySymbol = (currencyCode?: string) => {
+  if (!currencyCode) {
+    return '$'; // Default to USD if no currency code is provided
+  }
+  const currencySymbols: { [key: string]: string } = {
+    USD: '$',
+    EUR: '€',
+    GBP: '£',
+    JPY: '¥',
+  };
+  return currencySymbols[currencyCode] || currencySymbols.USD;
+};
+
+export { capitalize, getCurrencySymbol, getDefaultImage };

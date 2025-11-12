@@ -14,7 +14,7 @@ interface FeedbackPageProps {
     client?: string;
     status: string;
   };
-  onBack: () => void;
+
   onSubmitFeedback: (feedback: {
     rating: number;
     comment: string;
