@@ -19,6 +19,7 @@ import {
   useLocation,
   useNavigate,
 } from 'react-router-dom';
+import { ModalProvider } from './components/modal';
 
 const AppContent = React.memo(function AppContent() {
   const { theme } = useTheme();
@@ -79,14 +80,16 @@ const AppContent = React.memo(function AppContent() {
           showBack={location.pathname !== '/'}
         />
       )}
-      <main className="flex-1 overflow-y-auto">
-        <Routes>
-          <Route
-            path="/*"
-            element={<AppRouter onLogout={handleLogout} />}
-          />
-        </Routes>
-      </main>
+      <ModalProvider>
+        <main className="flex-1 overflow-y-auto">
+          <Routes>
+            <Route
+              path="/*"
+              element={<AppRouter onLogout={handleLogout} />}
+            />
+          </Routes>
+        </main>
+      </ModalProvider>
       {showTabNavigation && (
         <TabNavigation
           activeTab={activeTab}

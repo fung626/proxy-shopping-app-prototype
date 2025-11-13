@@ -81,4 +81,5 @@ export const common = {
   days: '日',
   months: 'ヶ月',
   years: '年',
+  alert: 'アラート',
 };

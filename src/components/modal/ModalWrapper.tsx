@@ -26,7 +26,7 @@ const ModalWrapper: FC<ModalWrapperProps> = ({
 
   return (
     <div
-      className="fixed inset-0 z-10 flex items-center justify-center bg-gray-600 bg-opacity-50"
+      className="h-screen w-screen fixed inset-0 z-10 flex items-center justify-center bg-gray-600 bg-opacity-50"
       onClick={handleClose}
     >
       <div

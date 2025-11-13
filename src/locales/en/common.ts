@@ -84,4 +84,5 @@ export const common = {
   days: 'days',
   months: 'months',
   years: 'years',
+  alert: 'Alert',
 };
