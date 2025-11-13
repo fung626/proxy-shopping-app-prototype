@@ -79,6 +79,7 @@ export const auth = {
   enterPhoneNumber: 'Enter your phone number',
   rememberPassword: 'Remember your password?',
   signUpFailed: 'Sign up failed. Please try again.',
+  signUpSuccess: 'Account created successfully!',
   creatingAccount: 'Creating Account...',
   firstNameRequired: 'First name is required',
   lastNameRequired: 'Last name is required',

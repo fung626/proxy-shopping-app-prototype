@@ -47,6 +47,7 @@ export const auth = {
   enterPhoneNumber: '请输入您的手机号码',
   rememberPassword: '记得您的密码？',
   signUpFailed: '注册失败，请重试。',
+  signUpSuccess: '账户创建成功！',
   creatingAccount: '创建账户中...',
   welcomeBack: '欢迎回来',
   joinPlatform: '加入平台',

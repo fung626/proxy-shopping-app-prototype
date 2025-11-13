@@ -49,6 +49,7 @@ export const auth = {
   enterPhoneNumber: '전화번호를 입력하세요',
   rememberPassword: '비밀번호가 기억나시나요?',
   signUpFailed: '회원가입에 실패했습니다. 다시 시도해주세요.',
+  signUpSuccess: '계정이 성공적으로 생성되었습니다!',
   creatingAccount: '계정 생성 중...',
   welcomeBack: '다시 오신 것을 환영합니다',
   joinPlatform: '플랫폼에 참여하세요',

@@ -103,6 +103,7 @@ export const auth = {
     'ログインに失敗しました。資格情報を確認して再試行してください。',
   signOut: 'ログアウト',
   signUpFailed: '新規登録に失敗しました',
+  signUpSuccess: 'アカウントの作成に成功しました！',
   signingIn: 'ログイン中...',
   signingUp: 'サインアップ中...',
   step1Description: '欲しいものや代理購入を投稿して始めましょう。',

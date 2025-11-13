@@ -78,6 +78,7 @@ export const auth = {
   enterPhoneNumber: '請輸入您的電話號碼',
   rememberPassword: '記得您的密碼？',
   signUpFailed: '註冊失敗。請再試一次。',
+  signUpSuccess: '帳戶創建成功！',
   creatingAccount: '建立帳戶中...',
   enterEmail: '請輸入您的電子郵件',
   enterPassword: '請輸入您的密碼',

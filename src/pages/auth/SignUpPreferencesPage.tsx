@@ -1,16 +1,20 @@
 import { SignUpFormData } from '@/components/auth/SignUpForm';
+import AppModal from '@/components/modal/AppModal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { useModal } from '@/hooks/useModal';
 import AuthService from '@/services/authSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { CATEGORIES, getCategoryName } from '@/utils/categories';
-import { ArrowLeft, Check } from 'lucide-react';
+import { Check } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'sonner';
 
 export function SignUpPreferencesPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const { showModal } = useModal();
   const [selectedCategories, setSelectedCategories] = useState<
     string[]
   >([]);
@@ -66,8 +70,7 @@ export function SignUpPreferencesPage() {
           CATEGORIES.find((cat) => cat.id === id)?.translationKey ||
           id
       );
-
-      const submissionData = {
+      const { error } = await AuthService.signUp({
         email: formData.email.trim(),
         password: formData.password,
         firstName: formData.firstName.trim(),
@@ -81,23 +84,20 @@ export function SignUpPreferencesPage() {
         languages: formData.languages,
         avatar: formData.avatar,
         preferences: preferences,
-      };
-
-      console.log(
-        '🔧 SignUpPreferencesPage submissionData:',
-        submissionData
-      );
-
-      const { error } = await AuthService.signUp(submissionData);
+      });
 
       if (error) {
-        throw error;
+        showModal({
+          component: AppModal,
+          props: {
+            title: 'common.alert',
+            content: error.message,
+          },
+        });
+        return;
       }
-
-      // Clear stored form data
       sessionStorage.removeItem('signupFormData');
-
-      // Show success message and redirect
+      toast.success(t('auth.signUpSuccess'));
       navigate('/auth/signin');
     } catch (error: any) {
       console.error('Sign up error:', error);
@@ -107,28 +107,8 @@ export function SignUpPreferencesPage() {
     }
   };
 
-  const handleBack = () => {
-    navigate('/auth/signup');
-  };
-
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Header */}
-      <div className="flex items-center justify-between p-4 border-b border-border">
-        <Button
-          variant="ghost"
-          size="icon"
-          onClick={handleBack}
-          className="h-10 w-10"
-        >
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <h1 className="text-lg font-semibold text-foreground">
-          {t('preferences.setup')}
-        </h1>
-        <div className="w-10" /> {/* Spacer for center alignment */}
-      </div>
-
       {/* Content */}
       <div className="flex-1 px-4 py-6 pb-20">
         <div className="max-w-md mx-auto">
