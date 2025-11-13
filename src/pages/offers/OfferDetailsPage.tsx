@@ -285,8 +285,9 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                 </div>
                 <span className="text-muted-foreground">•</span>
                 <span className="text-muted-foreground">
-                  {`${agentData?.reviews} ${t('common.reviews')}` ||
-                    t('common.noReviews')}
+                  {`${agentData?.reviews ?? 0} ${t(
+                    'common.reviews'
+                  )}` || t('common.noReviews')}
                 </span>
                 {agentData?.verified && (
                   <>
@@ -302,7 +303,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
               </div>
               <p className="text-sm text-muted-foreground">
                 {`${t('common.memberSince')} ${memberSince} • ${
-                  agentData?.success_rate
+                  agentData?.success_rate ?? 0
                 }% ${t('offerDetails.successRate')}`}
               </p>
             </div>
@@ -454,7 +455,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             </div>
 
             {/* Price Breakdown */}
-            <div className="space-y-3">
+            {/* <div className="space-y-3">
               <h4 className="font-medium text-sm text-muted-foreground uppercase tracking-wide">
                 {t('offerDetails.priceBreakdown')}
               </h4>
@@ -484,7 +485,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                     </span>
                     <span className="font-medium">
                       {currencySymbol}
-                      {(offerData?.price * 0.1).toFixed(2)}
+                      {(offerData?.price ?? 0).toFixed(2)}
                     </span>
                   </div>
                   <Separator className="my-2" />
@@ -500,7 +501,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -516,7 +517,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
           <div className="grid grid-cols-3 gap-4 p-4 rounded-lg bg-muted/30">
             <div className="text-center">
               <div className="text-lg font-semibold text-foreground">
-                {agentData?.total_orders}
+                {agentData?.total_orders ?? 0}
               </div>
               <div className="text-xs text-muted-foreground">
                 Orders
@@ -524,7 +525,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             </div>
             <div className="text-center">
               <div className="text-lg font-semibold text-foreground">
-                {agentData?.success_rate}%
+                {agentData?.success_rate ?? 0}%
               </div>
               <div className="text-xs text-muted-foreground">
                 Success Rate
@@ -532,7 +533,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             </div>
             <div className="text-center">
               <div className="text-lg font-semibold text-foreground">
-                {agentData?.rating}
+                {agentData?.rating ?? 0}
               </div>
               <div className="text-xs text-muted-foreground">
                 Rating
