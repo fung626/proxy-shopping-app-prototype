@@ -41,4 +41,7 @@ export const offerDetails = {
   qualityInspectionBeforeShipping: '発送前の品質検査',
   noRatings: '評価なし',
   noReviews: '評価なし',
+  orderNow: '今すぐ注文',
+  contactAgent: 'エージェントに連絡',
+  allFeesIncluded: 'すべての料金が含まれています',
 };

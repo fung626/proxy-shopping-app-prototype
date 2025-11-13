@@ -85,4 +85,7 @@ export const common = {
   months: 'months',
   years: 'years',
   alert: 'Alert',
+  successRate: 'Success Rate',
+  rating: 'Rating',
+  total: 'Total',
 };

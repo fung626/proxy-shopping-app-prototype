@@ -82,4 +82,7 @@ export const common = {
   months: '个月',
   years: '年',
   alert: '提示',
+  successRate: '成功率',
+  rating: '评分',
+  total: '总计',
 };

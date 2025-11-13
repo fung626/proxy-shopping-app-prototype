@@ -43,4 +43,7 @@ export const offerDetails = {
     'Quality inspection before shipping',
   noRatings: 'No ratings yet',
   noReviews: 'No reviews yet',
+  orderNow: 'Order Now',
+  contactAgent: 'Contact Agent',
+  allFeesIncluded: 'All fees included',
 };

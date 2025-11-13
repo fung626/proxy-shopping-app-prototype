@@ -520,7 +520,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                 {agentData?.total_orders ?? 0}
               </div>
               <div className="text-xs text-muted-foreground">
-                Orders
+                {t('common.orders')}
               </div>
             </div>
             <div className="text-center">
@@ -528,7 +528,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                 {agentData?.success_rate ?? 0}%
               </div>
               <div className="text-xs text-muted-foreground">
-                Success Rate
+                {t('common.successRate')}
               </div>
             </div>
             <div className="text-center">
@@ -536,7 +536,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                 {agentData?.rating ?? 0}
               </div>
               <div className="text-xs text-muted-foreground">
-                Rating
+                {t('common.rating')}
               </div>
             </div>
           </div>
@@ -584,14 +584,13 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
                 {offerData?.price || '0.00'}
               </span>
               <span className="text-sm text-muted-foreground">
-                total
+                {t('common.total')}
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
               {'TBD'} delivery • All fees included
             </p>
           </div>
-
           <div className="flex space-x-3">
             <Button
               variant="outline"
@@ -599,7 +598,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
               className="flex-1"
             >
               <MessageCircle className="h-4 w-4 mr-2" />
-              Message
+              {t('offerDetails.contactAgent')}
             </Button>
             <Button
               onClick={handleCreateOrder}
@@ -607,7 +606,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
               // disabled={!onCreateOrder}
             >
               <Package className="h-4 w-4 mr-2" />
-              Order Now
+              {t('offerDetails.orderNow')}
             </Button>
           </div>
         </div>

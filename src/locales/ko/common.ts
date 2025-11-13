@@ -82,4 +82,7 @@ export const common = {
   months: '개월',
   years: '년',
   alert: '알림',
+  successRate: '성공률',
+  rating: '평점',
+  total: '합계',
 };
