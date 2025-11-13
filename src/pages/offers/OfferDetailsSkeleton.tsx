@@ -186,7 +186,6 @@ export function OfferDetailsSkeleton() {
         {/* Agent Stats Skeleton */}
         <div className="py-6">
           <Skeleton className="h-6 w-40 mb-4" />
-
           <div className="grid grid-cols-3 gap-4 p-4 rounded-lg bg-muted/30">
             {[1, 2, 3].map((_, index) => (
               <div key={index} className="text-center">
