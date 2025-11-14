@@ -1,7 +1,5 @@
 import { useAuth } from '@/hooks/useAuth';
 import { useNavigation } from '@/hooks/useNavigation';
-import { OfferDetailsPage } from '@/pages/offers/OfferDetailsPage';
-import { RequestDetailsPage } from '@/pages/orders/RequestDetailsPage';
 import { allRoutes } from '@/routes';
 import { PageProps } from '@/types/routing';
 import React, { memo, Suspense, useMemo } from 'react';
@@ -73,28 +71,6 @@ export const AppRouter = memo(function AppRouter({
   const routeElements = useMemo(() => {
     return allRoutes.map((route) => {
       const { path, element: Component, requireAuth } = route;
-
-      // Replace placeholder for Offer Details page
-      if (path === '/offers/:id') {
-        return (
-          <Route
-            key={path}
-            path={path}
-            element={<OfferDetailsPage />}
-          />
-        );
-      }
-
-      if (path === '/requests/:id') {
-        return (
-          <Route
-            key={path}
-            path={path}
-            element={<RequestDetailsPage />}
-          />
-        );
-      }
-
       // Regular route with optional authentication guard
       const element = path.includes(':') ? (
         <RouteParamsWrapper

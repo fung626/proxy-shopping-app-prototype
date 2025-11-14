@@ -20,6 +20,7 @@ export { preferences } from './preferences';
 export { privacy } from './privacy';
 export { profile } from './profile';
 export { recommendations } from './recommendations';
+export { requestDetails } from './requestDetails';
 export { search } from './search';
 export { support } from './support';
 export { terms } from './terms';
