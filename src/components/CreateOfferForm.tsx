@@ -1,6 +1,6 @@
 import CURRENCIES from '@/config/currencies';
 import { useLanguage } from '@/store/LanguageContext';
-import { User } from '@/types';
+import { useAuthStore } from '@/store/zustand/authStore';
 import { CATEGORIES } from '@/utils/categories';
 import { Camera, DollarSign, MapPin, Package, X } from 'lucide-react';
 import React, { useMemo, useState } from 'react';
@@ -18,11 +18,7 @@ import {
 } from './ui/select';
 import { Textarea } from './ui/textarea';
 
-interface CreateOfferFormProps {
-  user: User;
-}
-
-export function CreateOfferForm({ user }: CreateOfferFormProps) {
+export function CreateOfferForm() {
   const { t } = useLanguage();
   const [showInfoBox, setShowInfoBox] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -43,6 +39,8 @@ export function CreateOfferForm({ user }: CreateOfferFormProps) {
 
   const [newSpecification, setNewSpecification] = useState('');
   const [newTag, setNewTag] = useState('');
+
+  const { user } = useAuthStore();
 
   const categories = useMemo(
     () => [

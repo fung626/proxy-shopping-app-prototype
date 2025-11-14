@@ -85,4 +85,5 @@ export const common = {
   successRate: '성공률',
   rating: '평점',
   total: '합계',
+  unknownUser: '알 수 없는 사용자',
 };

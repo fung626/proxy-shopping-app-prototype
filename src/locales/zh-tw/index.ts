@@ -24,5 +24,6 @@ export { requestDetails } from './requestDetails';
 export { search } from './search';
 export { support } from './support';
 export { terms } from './terms';
+export { time } from './time';
 export { transactionPassword } from './transactionPassword';
 export { wishlist } from './wishlist';

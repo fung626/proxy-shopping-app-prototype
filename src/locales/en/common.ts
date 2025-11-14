@@ -88,4 +88,5 @@ export const common = {
   successRate: 'Success Rate',
   rating: 'Rating',
   total: 'Total',
+  unknownUser: 'Unknown User',
 };

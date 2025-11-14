@@ -79,6 +79,12 @@ const RequestDetailsPage = lazy(() =>
   }))
 );
 
+const ChatPageWrapper = lazy(() =>
+  import('@/pages/messages/chat/ChatPageWrapper').then((m) => ({
+    default: m.ChatPageWrapper,
+  }))
+);
+
 // Verification pages
 const EmailVerificationPage = lazy(() =>
   import('@/pages/verification/EmailVerificationPage').then((m) => ({
@@ -335,6 +341,21 @@ export const routeGroups: RouteGroup[] = [
         meta: {
           title: 'nav.titles.requestDetails',
           description: 'View request order details',
+        },
+      },
+    ],
+  },
+  {
+    name: 'messages',
+    basePath: '/messages',
+    routes: [
+      {
+        path: '/messages/chat/:id',
+        element: ChatPageWrapper,
+        showNavBar: false,
+        meta: {
+          title: 'nav.titles.chat',
+          description: 'View chat messages',
         },
       },
     ],

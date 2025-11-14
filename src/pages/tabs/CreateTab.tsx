@@ -1,17 +1,13 @@
 import { CreateOfferForm } from '@/components/CreateOfferForm';
 import { CreateRequestForm } from '@/components/CreateRequestForm';
 import { Button } from '@/components/ui/button';
+import SignInView from '@/pages/auth/SignInView';
 import { useLanguage } from '@/store/LanguageContext';
-import { User } from '@/types';
-import { Package, PlusCircle, ShoppingBag, X } from 'lucide-react';
+import { useAuthStore } from '@/store/zustand/authStore';
+import { Package, ShoppingBag, X } from 'lucide-react';
 import { useState } from 'react';
 
-interface CreateTabProps {
-  user: User | null;
-  onShowAuth: () => void;
-}
-
-export function CreateTab({ user, onShowAuth }: CreateTabProps) {
+export function CreateTab() {
   const { t } = useLanguage();
   const [activeMode, setActiveMode] = useState<'request' | 'offer'>(
     'request'
@@ -19,34 +15,17 @@ export function CreateTab({ user, onShowAuth }: CreateTabProps) {
   const [showModeDescription, setShowModeDescription] =
     useState(true);
 
+  const { user } = useAuthStore();
+
   if (!user) {
     return (
-      <div className="flex-1 bg-background pb-20">
-        {/* Header */}
-        <div className="bg-card px-4 pt-12 pb-6">
-          <h1 className="text-3xl font-semibold text-foreground">
-            {t('nav.create')}
-          </h1>
-          <p className="text-muted-foreground mt-1">
-            {t('create.description')}
-          </p>
-        </div>
-        {/* Sign In Prompt */}
-        <div className="px-4 py-8">
-          <div className="text-center py-12">
-            <PlusCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-2">
-              {t('create.signInPrompt')}
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              {t('create.signInDescription')}
-            </p>
-            <Button onClick={onShowAuth} className="px-8">
-              {t('profile.signIn')}
-            </Button>
-          </div>
-        </div>
-      </div>
+      <SignInView
+        title="nav.create"
+        description="create.description"
+        signInPrompt="create.signInPrompt"
+        signInDescription="create.signInDescription"
+        signInButtonText="profile.signIn"
+      />
     );
   }
 
@@ -135,9 +114,9 @@ export function CreateTab({ user, onShowAuth }: CreateTabProps) {
       {/* Content based on selected mode */}
       <div className="flex-1 min-h-0">
         {activeMode === 'request' ? (
-          <CreateRequestForm user={user} />
+          <CreateRequestForm />
         ) : (
-          <CreateOfferForm user={user} />
+          <CreateOfferForm />
         )}
       </div>
     </div>

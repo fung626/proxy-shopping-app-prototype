@@ -1,7 +1,7 @@
 import { CATEGORIES } from '@/config/categories';
 import { COUNTRIES } from '@/config/countries';
 import { useLanguage } from '@/store/LanguageContext';
-import { User } from '@/types';
+import { useAuthStore } from '@/store/zustand/authStore';
 import {
   DollarSign,
   MapPin,
@@ -24,11 +24,7 @@ import {
 } from './ui/select';
 import { Textarea } from './ui/textarea';
 
-interface CreateRequestFormProps {
-  user: User;
-}
-
-export function CreateRequestForm({ user }: CreateRequestFormProps) {
+export function CreateRequestForm() {
   const { t } = useLanguage();
   const [showInfoBox, setShowInfoBox] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -56,6 +52,8 @@ export function CreateRequestForm({ user }: CreateRequestFormProps) {
   });
 
   const [newRequirement, setNewRequirement] = useState('');
+
+  const { user } = useAuthStore();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

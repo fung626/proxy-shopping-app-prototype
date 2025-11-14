@@ -85,4 +85,5 @@ export const common = {
   successRate: '成功率',
   rating: '評価',
   total: '合計',
+  unknownUser: '不明なユーザー',
 };

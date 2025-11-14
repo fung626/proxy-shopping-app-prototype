@@ -17,9 +17,9 @@ export interface ChatData {
   messages: ChatMessageData[];
 }
 
-interface ChatViewProps {
+interface ChatPageProps {
   chat: ChatData;
-
+  onBack?: () => void;
   onSendMessage: (
     chatId: string,
     content: string,
@@ -27,11 +27,11 @@ interface ChatViewProps {
   ) => void;
 }
 
-export function ChatView({
+export function ChatPage({
   chat,
   onBack,
   onSendMessage,
-}: ChatViewProps) {
+}: ChatPageProps) {
   const { t } = useLanguage();
   const [isTyping, setIsTyping] = useState(false);
   const [agentTyping, setAgentTyping] = useState(false);

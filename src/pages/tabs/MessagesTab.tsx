@@ -1,409 +1,356 @@
-import { ChatList, ChatListItem } from '@/components/chat/ChatList';
-import { ChatMessageData } from '@/components/chat/ChatMessage';
-import { ChatData, ChatView } from '@/components/chat/ChatView';
+import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import SignInView from '@/pages/auth/SignInView';
+import { chatSupabaseService } from '@/services/chatSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
-import { User } from '@/types';
-import { MessageCircle } from 'lucide-react';
-import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useAuthStore } from '@/store/zustand/authStore';
+import { ConversationWithParticipants } from '@/types/chat';
+import { MessageCircle, Search, X } from 'lucide-react';
+import { useCallback, useEffect, useState } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { MessagesTabSkeleton } from '../messages/MessagesTabSkeleton';
 
-interface MessagesTabProps {
-  user: User | null;
-  onShowAuth: () => void;
-  onChatViewChange?: (inChatView: boolean) => void;
+interface Item {
+  id: string;
+  userName: string;
+  userImage: string;
+  lastMessage: string;
+  timestamp: Date;
+  unreadCount: number;
+  requestTitle: string;
+  isOnline: boolean;
+  messageType: 'text' | 'image' | 'location' | 'document';
+  isPinned?: boolean;
 }
 
-export function MessagesTab({
-  user,
-  onShowAuth,
-  onChatViewChange,
-}: MessagesTabProps) {
+export function MessagesTab() {
   const { t } = useLanguage();
   const location = useLocation();
-  const [selectedChatId, setSelectedChatId] = useState<string | null>(
-    null
-  );
+  const navigate = useNavigate();
+
   const [searchQuery, setSearchQuery] = useState('');
+  const [conversations, setConversations] = useState<
+    ConversationWithParticipants[]
+  >([]);
+  const [loading, setLoading] = useState(true);
+  const [showInfoBox, setShowInfoBox] = useState(true);
+
+  const { user } = useAuthStore();
 
   const selectedAgentId = location.state?.selectedAgentId;
 
-  if (!user) {
-    return (
-      <div className="flex-1 bg-background pb-20">
-        <div className="bg-card px-4 pt-12 pb-6">
-          <h1 className="text-3xl font-semibold text-foreground">
-            {t('nav.messages')}
-          </h1>
-          <p className="text-muted-foreground mt-1">
-            {t('messages.description')}
-          </p>
-        </div>
-        <div className="px-4 py-8">
-          <div className="text-center py-12">
-            <MessageCircle className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
-            <h3 className="text-xl font-semibold text-foreground mb-2">
-              {t('messages.signInPrompt')}
-            </h3>
-            <p className="text-muted-foreground mb-6">
-              {t('messages.signInDescription')}
-            </p>
-            <Button onClick={onShowAuth} className="px-8">
-              {t('profile.signIn')}
-            </Button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Load conversations from Supabase
+  const loadConversations = useCallback(async () => {
+    if (!user) return;
+    setLoading(true);
+    try {
+      const data = await chatSupabaseService.getMyConversations();
+      setConversations(data);
+    } catch (error) {
+      console.error('Error loading conversations:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [user]);
+
+  // Get or create conversation with selected agent and navigate to it
+  const handleGetOrCreateConversation = useCallback(
+    async (agentId: string) => {
+      if (!user) return;
+
+      try {
+        const conversation =
+          await chatSupabaseService.getOrCreateConversation({
+            participant_user_id: agentId,
+          });
+
+        if (conversation) {
+          navigate(`/messages/chat/${conversation.id}`);
+        }
+      } catch (error) {
+        console.error('Error creating conversation:', error);
+      }
+    },
+    [user, navigate]
+  );
+
+  // Initial load
+  useEffect(() => {
+    if (user) {
+      loadConversations();
+    }
+  }, [user, loadConversations]);
+
+  // Subscribe to real-time conversation updates
+  useEffect(() => {
+    if (!user) return;
+    chatSupabaseService.subscribeToConversations(() => {
+      // Reload conversations when there's an update
+      loadConversations();
+    });
+
+    return () => {
+      chatSupabaseService.unsubscribeAll();
+    };
+  }, [user, loadConversations]);
 
   // Auto-select chat when an agent is specified
   useEffect(() => {
-    if (selectedAgentId) {
-      // Find existing chat with this agent or create new chat
-      const existingChat = chatList.find(
-        (chat) => chat.id === selectedAgentId
-      );
-      if (existingChat) {
-        setSelectedChatId(selectedAgentId);
-        onChatViewChange?.(true);
-      } else {
-        // Create a new chat with the agent (in a real app, this would create a new conversation)
-        setSelectedChatId(selectedAgentId);
-        onChatViewChange?.(true);
-      }
+    if (selectedAgentId && user && conversations.length > 0) {
+      handleGetOrCreateConversation(selectedAgentId);
     }
-  }, [selectedAgentId]);
-
-  // Mock chat data
-  const [chatList] = useState<ChatListItem[]>([
-    {
-      id: '1',
-      agentName: 'Sarah Johnson',
-      agentImage:
-        'https://images.unsplash.com/photo-1628657485319-5865d0f2791d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHdvbWFuJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzU4MTIyMzgzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      lastMessage:
-        'I found some great options for your laptop requirement. The Dell laptops are available at bulk pricing.',
-      timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000), // 2 hours ago
-      unreadCount: 2,
-      requestTitle: 'Office Laptops & Equipment',
-      isOnline: true,
-      messageType: 'text',
-      isPinned: true,
-    },
-    {
-      id: '2',
-      agentName: 'Michael Chen',
-      agentImage:
-        'https://images.unsplash.com/photo-1584940121258-c2553b66a739?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMG1hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1ODE1ODkyMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      lastMessage:
-        'Perfect! The materials are ready for pickup. Location details attached.',
-      timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000), // 1 day ago
-      unreadCount: 0,
-      requestTitle: 'Construction Materials',
-      isOnline: false,
-      messageType: 'location',
-    },
-    {
-      id: '3',
-      agentName: 'Emma Rodriguez',
-      agentImage:
-        'https://images.unsplash.com/photo-1708195886023-3ecb00ac7a49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNleSUyMHByb2Zlc3Npb25hbCUyMHBvcnRyYWl0fGVufDF8fHx8MTc1ODEzODkxNXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      lastMessage: 'Here are the medical devices you requested',
-      timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
-      unreadCount: 1,
-      requestTitle: 'Medical Equipment',
-      isOnline: true,
-      messageType: 'image',
-    },
-    {
-      id: '4',
-      agentName: 'David Kim',
-      agentImage:
-        'https://images.unsplash.com/photo-1607990281513-2c110a25bd8c?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMG1hbiUyMGFzaWFufGVufDF8fHx8MTc1ODEzODkxNXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      lastMessage:
-        'The electronics shipment documentation is ready for review',
-      timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
-      unreadCount: 0,
-      requestTitle: 'Consumer Electronics',
-      isOnline: false,
-      messageType: 'document',
-    },
-    {
-      id: '5',
-      agentName: 'Lisa Wang',
-      agentImage:
-        'https://images.unsplash.com/photo-1580618672591-eb180b1a973f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHdvbWFuJTIwYXNpYW58ZW58MXx8fHwxNzU4MTM4OTE1fDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      lastMessage:
-        'Thank you for choosing our service! The fashion items have been delivered successfully.',
-      timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000), // 1 week ago
-      unreadCount: 0,
-      requestTitle: 'Fashion & Accessories',
-      isOnline: true,
-      messageType: 'text',
-    },
+  }, [
+    selectedAgentId,
+    user,
+    conversations.length,
+    handleGetOrCreateConversation,
   ]);
 
-  // Create default chat data for agents from ViewOffersPage if they don't exist
-  const createDefaultChatForAgent = (agentId: string): ChatData => {
-    const agentNames: Record<string, string> = {
-      '1': 'Sarah Chen',
-      '2': 'Mike Johnson',
-      '3': 'Emma Davis',
-    };
-
-    return {
-      id: agentId,
-      agentName: agentNames[agentId] || 'Agent',
-      agentImage:
-        'https://images.unsplash.com/photo-1628657485319-5865d0f2791d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHdvbWFuJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzU4MTIyMzgzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      requestTitle: 'New Conversation',
-      isOnline: true,
-      lastSeen: new Date(),
-      messages: [
-        {
-          id: `${agentId}-welcome`,
-          content: `Hi! I'm ${
-            agentNames[agentId] || 'your shopping agent'
-          }. I'm here to help with your shopping request. How can I assist you today?`,
-          sender: 'agent',
-          timestamp: new Date(),
-          type: 'text',
-          status: 'delivered',
-        },
-      ],
-    };
-  };
-
-  // Mock detailed chat data
-  const [chatData] = useState<Record<string, ChatData>>({
-    '1': {
-      id: '1',
-      agentName: 'Sarah Johnson',
-      agentImage:
-        'https://images.unsplash.com/photo-1628657485319-5865d0f2791d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMHdvbWFuJTIwcG9ydHJhaXR8ZW58MXx8fHwxNzU4MTIyMzgzfDA&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      requestTitle: 'Office Laptops & Equipment',
-      isOnline: true,
-      lastSeen: new Date(Date.now() - 5 * 60 * 1000), // 5 minutes ago
-      messages: [
-        {
-          id: '1-1',
-          content:
-            'Hi! I saw your request for office laptops. I can help you find the best deals.',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 4 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'read',
-        },
-        {
-          id: '1-2',
-          content:
-            'Great! I need about 15 laptops for our new office. Looking for something with good performance but budget-friendly.',
-          sender: 'user',
-          timestamp: new Date(Date.now() - 3.5 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'read',
-        },
-        {
-          id: '1-3',
-          content:
-            'Perfect! I have some excellent options from Dell and Lenovo. Both offer great bulk pricing for orders over 10 units.',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 3 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'read',
-        },
-        {
-          id: '1-4',
-          content:
-            'Here are the models I recommend for your requirements',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 2.5 * 60 * 60 * 1000),
-          type: 'image',
-          status: 'read',
-          imageUrl:
-            'https://images.unsplash.com/photo-1541807084-5c52b6b3adef?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxsYXB0b3AlMjBjb21wdXRlcnxlbnwxfHx8fDE3NTgxMzg5MTV8MA&ixlib=rb-4.1.0&q=80&w=1080',
-        },
-        {
-          id: '1-5',
-          content:
-            "These look perfect! What's the pricing for 15 units of the Dell model?",
-          sender: 'user',
-          timestamp: new Date(Date.now() - 2.2 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'read',
-        },
-        {
-          id: '1-6',
-          content:
-            'I found some great options for your laptop requirement. The Dell laptops are available at bulk pricing.',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 2 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'delivered',
-        },
-        {
-          id: '1-7',
-          content:
-            'For 15 units of the Dell Inspiron 15, I can offer $650 per unit (regular price $750). Total would be $9,750 including shipping and setup.',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 1.8 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'delivered',
-        },
-      ],
-    },
-    '2': {
-      id: '2',
-      agentName: 'Michael Chen',
-      agentImage:
-        'https://images.unsplash.com/photo-1584940121258-c2553b66a739?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNpbmVzcyUyMHByb2Zlc3Npb25hbCUyMG1hbiUyMHBvcnRyYWl0fGVufDF8fHx8MTc1ODE1ODkyMXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      requestTitle: 'Construction Materials',
-      isOnline: false,
-      lastSeen: new Date(Date.now() - 3 * 60 * 60 * 1000), // 3 hours ago
-      messages: [
-        {
-          id: '2-1',
-          content:
-            'I can help you source the construction materials you need. What specific materials are you looking for?',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'read',
-        },
-        {
-          id: '2-2',
-          content:
-            'I need cement, steel bars, and roofing materials for a small house project.',
-          sender: 'user',
-          timestamp: new Date(Date.now() - 1.8 * 24 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'read',
-        },
-        {
-          id: '2-3',
-          content:
-            'Perfect! The materials are ready for pickup. Location details attached.',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 24 * 60 * 60 * 1000),
-          type: 'location',
-          status: 'read',
-          location: {
-            name: 'Chen Materials Warehouse',
-            address: '1234 Industrial Blvd, Construction District',
-          },
-        },
-      ],
-    },
-    '3': {
-      id: '3',
-      agentName: 'Emma Rodriguez',
-      agentImage:
-        'https://images.unsplash.com/photo-1708195886023-3ecb00ac7a49?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxidXNleSUyMHByb2Zlc3Npb25hbCUyMHBvcnRyYWl0fGVufDF8fHx8MTc1ODEzODkxNXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral',
-      requestTitle: 'Medical Equipment',
-      isOnline: true,
-      lastSeen: new Date(Date.now() - 10 * 60 * 1000), // 10 minutes ago
-      messages: [
-        {
-          id: '3-1',
-          content:
-            'Hello! I specialize in medical equipment procurement. What specific devices do you need?',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'read',
-        },
-        {
-          id: '3-2',
-          content:
-            'I need to purchase some diagnostic equipment for our clinic.',
-          sender: 'user',
-          timestamp: new Date(Date.now() - 2.5 * 24 * 60 * 60 * 1000),
-          type: 'text',
-          status: 'read',
-        },
-        {
-          id: '3-3',
-          content: 'Here are the medical devices you requested',
-          sender: 'agent',
-          timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000),
-          type: 'image',
-          status: 'delivered',
-          imageUrl:
-            'https://images.unsplash.com/photo-1559757148-5c350d0d3c56?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtZWRpY2FsJTIwZXF1aXBtZW50fGVufDF8fHx8MTc1ODEzODkxNXww&ixlib=rb-4.1.0&q=80&w=1080',
-        },
-      ],
-    },
-  });
-
-  const handleChatSelect = (chatId: string) => {
-    setSelectedChatId(chatId);
-    onChatViewChange?.(true);
-  };
-
-  const handleBackToList = () => {
-    setSelectedChatId(null);
-    onChatViewChange?.(false);
-  };
-
-  const handleSendMessage = (
-    chatId: string,
-    content: string,
-    type: 'text' | 'image' | 'location' | 'document'
-  ) => {
-    // In a real app, this would make an API call
-    console.log('Sending message:', { chatId, content, type });
-
-    // Mock adding the message to the chat
-    const newMessage: ChatMessageData = {
-      id: `${chatId}-${Date.now()}`,
-      content,
-      sender: 'user',
-      timestamp: new Date(),
-      type,
-      status: 'sending',
-    };
-
-    // Simulate message status updates
-    setTimeout(() => {
-      // Update to sent
-      console.log('Message sent');
-    }, 500);
-
-    setTimeout(() => {
-      // Update to delivered
-      console.log('Message delivered');
-    }, 1000);
-
-    setTimeout(() => {
-      // Update to read
-      console.log('Message read');
-    }, 2000);
-  };
-
-  // If a chat is selected, show the chat view
-  if (selectedChatId) {
-    const currentChat =
-      chatData[selectedChatId] ||
-      createDefaultChatForAgent(selectedChatId);
+  if (!user) {
     return (
-      <div className="h-screen">
-        <ChatView
-          chat={currentChat}
-          onBack={handleBackToList}
-          onSendMessage={handleSendMessage}
-        />
-      </div>
+      <SignInView
+        title="nav.messages"
+        description="messages.description"
+        signInPrompt="messages.signInPrompt"
+        signInDescription="messages.signInDescription"
+        signInButtonText="profile.signIn"
+      />
     );
   }
 
-  // Otherwise, show the chat list
-  return (
-    <ChatList
-      chats={chatList}
-      onChatSelect={handleChatSelect}
-      searchQuery={searchQuery}
-      onSearchChange={setSearchQuery}
-    />
+  if (loading) {
+    return <MessagesTabSkeleton />;
+  }
+
+  // Transform conversations to Item format
+  const Items: Item[] = conversations.map((conv) => ({
+    id: conv.id,
+    userName: conv.other_user?.nickname || t('common.unknownUser'),
+    userImage: conv.other_user?.image || '/default-avatar.png',
+    lastMessage: conv.last_message_content || '',
+    timestamp: new Date(conv.updated_at),
+    unreadCount: conv.my_participant?.unread_count || 0,
+    requestTitle: 'Direct Message', // Request relationship not yet in ConversationWithParticipants type
+    isOnline: conv.other_user?.is_online || false,
+    messageType:
+      (conv.last_message_type as
+        | 'text'
+        | 'image'
+        | 'location'
+        | 'document') || 'text',
+    isPinned: conv.my_participant?.is_pinned || false,
+  }));
+
+  // Helper functions for MessagesList logic
+  const formatTime = (date: Date): string => {
+    const now = new Date();
+    const diffMs = now.getTime() - date.getTime();
+    const diffMins = Math.floor(diffMs / 60000);
+    const diffHours = Math.floor(diffMs / 3600000);
+    const diffDays = Math.floor(diffMs / 86400000);
+
+    if (diffMins < 1) return t('time.now');
+    if (diffMins < 60)
+      return t('time.minutesAgo', { count: diffMins });
+    if (diffHours < 24)
+      return t('time.hoursAgo', { count: diffHours });
+    if (diffDays < 7) return t('time.daysAgo', { count: diffDays });
+    return date.toLocaleDateString();
+  };
+
+  const getMessagePreview = (message: Item): string => {
+    switch (message.messageType) {
+      case 'image':
+        return `📷 ${t('messages.types.image')}`;
+      case 'location':
+        return `📍 ${t('messages.types.location')}`;
+      case 'document':
+        return `📎 ${t('messages.types.document')}`;
+      default:
+        return message.lastMessage;
+    }
+  };
+
+  // Filter and sort messages
+  const filteredMessages = Items.filter(
+    (message) =>
+      message.userName
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      message.requestTitle
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase()) ||
+      message.lastMessage
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase())
   );
+
+  const sortedMessages = [...filteredMessages].sort((a, b) => {
+    // Pinned messages first
+    if (a.isPinned && !b.isPinned) return -1;
+    if (!a.isPinned && b.isPinned) return 1;
+    // Then by timestamp
+    return b.timestamp.getTime() - a.timestamp.getTime();
+  });
+
+  return (
+    <div className="flex-1 bg-background pb-20">
+      {/* Header */}
+      <div className="bg-card px-4 pt-12 pb-6">
+        <h1 className="text-3xl font-semibold text-foreground">
+          {t('messages.title')}
+        </h1>
+        <p className="text-muted-foreground mt-1">
+          {t('messages.description')}
+        </p>
+      </div>
+
+      <div className="px-4 py-4">
+        {/* Feature Info Box */}
+        {showInfoBox && (
+          <div className="mb-6 p-4 bg-muted/50 rounded-xl">
+            <div className="flex items-start justify-between">
+              <div className="flex items-start space-x-3 flex-1">
+                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                  <MessageCircle className="h-4 w-4 text-primary" />
+                </div>
+                <div className="flex-1">
+                  <h4 className="font-medium text-foreground mb-1">
+                    {t('messages.chatManagement')}
+                  </h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    {t('messages.info')}
+                  </p>
+                </div>
+              </div>
+              <Button
+                variant="ghost"
+                size="sm"
+                className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground ml-2"
+                onClick={() => setShowInfoBox(false)}
+              >
+                <X className="h-4 w-4" />
+              </Button>
+            </div>
+          </div>
+        )}
+
+        {/* Search Bar */}
+        <div className="mb-6">
+          <div className="relative">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
+            <Input
+              type="text"
+              placeholder={t('messages.search')}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="pl-10 pr-10"
+            />
+            {searchQuery && (
+              <button
+                onClick={() => setSearchQuery('')}
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-muted-foreground hover:text-foreground"
+              >
+                <X className="h-4 w-4" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        {/* Messages List */}
+        {sortedMessages.length === 0 ? (
+          <div className="text-center py-12">
+            <MessageCircle className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+            <h3 className="text-lg font-medium text-foreground mb-2">
+              {searchQuery
+                ? t('messages.empty.noResults')
+                : t('messages.empty.noMessages')}
+            </h3>
+            <p className="text-muted-foreground">
+              {searchQuery
+                ? t('messages.empty.tryDifferentSearch')
+                : t('messages.empty.startConversation')}
+            </p>
+          </div>
+        ) : (
+          <div className="space-y-4">
+            {sortedMessages.map((message) => (
+              <div
+                key={message.id}
+                className="p-4 bg-muted/50 rounded-lg cursor-pointer hover:bg-muted transition-colors"
+                onClick={() => handleChatSelect(message.id)}
+              >
+                <div className="flex items-start gap-3">
+                  {/* Avatar */}
+                  <div className="relative flex-shrink-0">
+                    <ImageWithFallback
+                      src={message.userImage}
+                      alt={message.userName}
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    {message.isOnline && (
+                      <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-background rounded-full" />
+                    )}
+                  </div>
+
+                  {/* Content */}
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-start justify-between gap-2 mb-1">
+                      <div className="flex items-center gap-2 min-w-0 flex-1">
+                        <h3 className="font-semibold text-foreground truncate">
+                          {message.userName}
+                        </h3>
+                        {message.isPinned && (
+                          <Badge
+                            variant="secondary"
+                            className="text-xs px-1.5 py-0"
+                          >
+                            📌
+                          </Badge>
+                        )}
+                      </div>
+                      <span className="text-xs text-muted-foreground whitespace-nowrap">
+                        {formatTime(message.timestamp)}
+                      </span>
+                    </div>
+
+                    <p className="text-sm text-muted-foreground mb-1 truncate">
+                      {message.requestTitle}
+                    </p>
+
+                    <div className="flex items-center justify-between gap-2">
+                      <p
+                        className={`text-sm truncate flex-1 ${
+                          message.unreadCount > 0
+                            ? 'font-semibold text-foreground'
+                            : 'text-muted-foreground'
+                        }`}
+                      >
+                        {getMessagePreview(message)}
+                      </p>
+                      {message.unreadCount > 0 && (
+                        <Badge
+                          variant="default"
+                          className="text-xs px-2"
+                        >
+                          {message.unreadCount}
+                        </Badge>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+
+  // Navigate to chat when a conversation is selected
+  function handleChatSelect(chatId: string) {
+    navigate(`/messages/chat/${chatId}`);
+  }
 }

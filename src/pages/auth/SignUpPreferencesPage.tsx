@@ -1,8 +1,8 @@
-import { SignUpFormData } from '@/components/auth/SignUpForm';
 import AppModal from '@/components/modal/AppModal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { useModal } from '@/hooks/useModal';
+import { SignUpFormData } from '@/pages/auth/SignUpForm';
 import AuthService from '@/services/authSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { CATEGORIES, getCategoryName } from '@/utils/categories';
