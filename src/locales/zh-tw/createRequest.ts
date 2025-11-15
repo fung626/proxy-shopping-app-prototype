@@ -101,4 +101,11 @@ export const createRequest = {
   locationInstructions: '為當面交付提供明確的見面地點',
   uploadInstructions: '上傳有助於描述請求的圖像或文檔',
   createButton: '創建請求',
+  expectedMeetingLocation: '預期會面地點',
+
+  // 新增的翻譯鍵
+  creatingRequest: '正在建立請求',
+  creatingYourRequest: '正在建立您的請求',
+  creatingRequestDescription:
+    '請稍候，我們正在發布您的代理購物請求...',
 };

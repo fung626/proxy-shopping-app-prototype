@@ -50,8 +50,12 @@ export const messages = {
   activeDaysAgo: '{count}d ago',
   today: '오늘',
   yesterday: '어제',
+  offline: '오프라인',
   messageAgentPlaceholder: '{name}에게 메시지...',
   signInPrompt: '로그인하여 메시지 보기',
   signInDescription: '에이전트 및 고객과의 대화에 액세스하세요.',
   description: '설명', // Placeholder for missing key
+  chatManagement: '채팅 관리',
+  info: '정보',
+  search: '검색',
 };

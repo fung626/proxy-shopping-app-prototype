@@ -101,4 +101,11 @@ export const createRequest = {
   locationInstructions: '为当面交付提供明确的见面地点',
   uploadInstructions: '上传有助于描述请求的图像或文档',
   createButton: '创建请求',
+  expectedMeetingLocation: '预期会面地点',
+
+  // New keys
+  creatingRequest: '正在创建请求',
+  creatingYourRequest: '正在创建您的请求',
+  creatingRequestDescription:
+    '请稍候，我们正在发布您的代理购物请求...',
 };

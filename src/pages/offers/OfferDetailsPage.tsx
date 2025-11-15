@@ -4,6 +4,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Carousel from '@/components/ui/carousel/carousel';
 import { Separator } from '@/components/ui/separator';
+import { chatSupabaseService } from '@/services/chatSupabaseService';
 import {
   offersSupabaseService as offerService,
   SupabaseOffer,
@@ -13,6 +14,7 @@ import {
   userSupabaseService as userService,
 } from '@/services/userSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
+import { useAuthStore } from '@/store/zustand/authStore';
 import { getCurrencySymbol } from '@/utils/common';
 import {
   ArrowLeft,
@@ -38,6 +40,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuthStore();
 
   const [offerData, setOfferData] = useState<SupabaseOffer | null>(
     null
@@ -49,6 +52,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
   const [isImageModalOpen, setIsImageModalOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [isContactingAgent, setIsContactingAgent] = useState(false);
 
   useEffect(() => {
     const fetch = async () => {
@@ -133,8 +137,36 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
   //   }));
   // }, [displayImages, offerData?.title, offerData?.description]);
 
-  const handleContactAgent = () => {
-    console.log('Contact agent:', offerData?.user_id);
+  const handleContactAgent = async () => {
+    if (!user || !offerData?.user_id || !id) {
+      // If not authenticated, redirect to sign in
+      if (!user) {
+        navigate('/auth/signin');
+        return;
+      }
+      return;
+    }
+
+    setIsContactingAgent(true);
+    try {
+      // Create or get existing conversation
+      const conversation =
+        await chatSupabaseService.getOrCreateConversation({
+          participant_user_id: offerData.user_id,
+          offer_id: id,
+        });
+
+      if (conversation) {
+        // Navigate to the chat page
+        navigate(`/messages/chat/${conversation.id}`);
+      } else {
+        console.error('Failed to create conversation');
+      }
+    } catch (error) {
+      console.error('Error contacting agent:', error);
+    } finally {
+      setIsContactingAgent(false);
+    }
   };
 
   const handleCreateOrder = () => {
@@ -596,9 +628,12 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
               variant="outline"
               onClick={handleContactAgent}
               className="flex-1"
+              disabled={isContactingAgent || !offerData?.user_id}
             >
               <MessageCircle className="h-4 w-4 mr-2" />
-              {t('offerDetails.contactAgent')}
+              {isContactingAgent
+                ? t('common.loading')
+                : t('offerDetails.contactAgent')}
             </Button>
             <Button
               onClick={handleCreateOrder}

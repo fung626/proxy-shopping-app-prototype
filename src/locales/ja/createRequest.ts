@@ -119,4 +119,9 @@ export const createRequest = {
   uploadInstructions:
     'リクエストの説明に役立つ画像やドキュメントをアップロードしてください',
   createButton: 'リクエストを作成',
+  expectedMeetingLocation: '期待される会議場所',
+  creatingRequest: 'リクエストを作成中',
+  creatingYourRequest: 'リクエストを作成しています',
+  creatingRequestDescription:
+    'プロキシショッピングリクエストを投稿するまでお待ちください...',
 };

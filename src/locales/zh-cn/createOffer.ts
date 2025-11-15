@@ -84,4 +84,7 @@ export const createOffer = {
   addTagsPlaceholder: '添加标签（逗号分隔）',
   tagsInstructions: '添加标签以帮助买家找到您的报价',
   createButton: '创建报价',
+  creatingOffer: '正在创建报价',
+  creatingYourOffer: '正在创建您的报价',
+  creatingOfferDescription: '请稍候，我们正在发布您的购物报价...',
 };

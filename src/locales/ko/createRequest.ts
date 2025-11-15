@@ -55,6 +55,7 @@ export const createRequest = {
   shippingNote: '제품이 제공된 주소로 배송됩니다',
 
   expectedDeliveryLocation: '예상 배송 장소',
+  expectedMeetingLocation: '예상 만남 장소',
   location: '장소',
   meetingLocationPlaceholder:
     '만날 장소 입력 (예: 센트럴 몰, 푸드코트)',
@@ -113,4 +114,10 @@ export const createRequest = {
   locationInstructions: '직접 전달을 위한 명확한 장소를 제공하세요',
   uploadInstructions: '요청을 설명하는 이미지나 문서를 업로드하세요',
   createButton: '요청 생성',
+
+  // 추가된 키
+  creatingRequest: '요청 생성 중',
+  creatingYourRequest: '요청을 생성하는 중',
+  creatingRequestDescription:
+    '프록시 쇼핑 요청을 게시하는 동안 기다려 주세요...',
 };

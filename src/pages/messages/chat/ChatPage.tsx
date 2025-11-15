@@ -1,63 +1,148 @@
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { chatSupabaseService } from '@/services/chatSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
+import { useAuthStore } from '@/store/zustand/authStore';
+import { MessageWithSender } from '@/types/chat';
 import { ArrowLeft, MoreVertical } from 'lucide-react';
-import { useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import { ChatInput } from './ChatInput';
 import { ChatMessage, ChatMessageData } from './ChatMessage';
+import { ChatPageSkeleton } from './ChatPageSkeleton';
 
-export interface ChatData {
-  id: string;
-  agentName: string;
-  agentImage: string;
-  requestTitle: string;
-  isOnline: boolean;
-  lastSeen?: Date;
-  messages: ChatMessageData[];
-}
-
-interface ChatPageProps {
-  chat: ChatData;
-  onBack?: () => void;
-  onSendMessage: (
-    chatId: string,
-    content: string,
-    type: 'text' | 'image' | 'location' | 'document'
-  ) => void;
-}
-
-export function ChatPage({
-  chat,
-  onBack,
-  onSendMessage,
-}: ChatPageProps) {
+export function ChatPage() {
   const { t } = useLanguage();
-  const [isTyping, setIsTyping] = useState(false);
-  const [agentTyping, setAgentTyping] = useState(false);
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+  const { user } = useAuthStore();
+
+  const [conversation, setConversation] = useState<any>(null);
+  const [messages, setMessages] = useState<MessageWithSender[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [otherUserTyping, setOtherUserTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Load conversation and messages
+  const loadConversation = useCallback(async () => {
+    if (!id || !user) return;
+
+    setLoading(true);
+    try {
+      const conv = await chatSupabaseService.getConversationById(id);
+      setConversation(conv);
+
+      const msgs = await chatSupabaseService.getMessages(id);
+      setMessages(msgs);
+
+      // Mark as read
+      await chatSupabaseService.markAsRead({ conversation_id: id });
+    } catch (error) {
+      console.error('Error loading conversation:', error);
+    } finally {
+      setLoading(false);
+    }
+  }, [id, user]);
+
+  useEffect(() => {
+    loadConversation();
+  }, [loadConversation]);
+
+  // Subscribe to real-time message updates
+  useEffect(() => {
+    if (!id) return;
+    chatSupabaseService.subscribeToMessages(id, (message) => {
+      setMessages((prev) => {
+        // Check if message already exists (avoid duplicates)
+        const messageExists = prev.some(
+          (msg) => msg.id === message.id
+        );
+        if (messageExists) {
+          return prev;
+        }
+        return [...prev, message];
+      });
+      // Mark as read if it's not our message
+      if (message.sender_id !== user?.id) {
+        chatSupabaseService.markAsRead({ conversation_id: id });
+      }
+    });
+
+    return () => {
+      chatSupabaseService.unsubscribeFromMessages(id);
+    };
+  }, [id, user?.id]);
 
   // Auto-scroll to bottom when new messages arrive
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [chat.messages]);
+  }, [messages]);
 
-  // Simulate agent typing occasionally
+  // Subscribe to typing indicator updates
   useEffect(() => {
-    if (isTyping) {
-      const timer = setTimeout(() => {
-        setAgentTyping(true);
-        setTimeout(() => setAgentTyping(false), 2000);
-      }, 1000);
-      return () => clearTimeout(timer);
-    }
-  }, [isTyping]);
+    if (!id) return;
 
-  const handleSendMessage = (
+    // TODO: Implement real-time typing indicator subscription
+    // This would subscribe to a presence channel where users broadcast their typing status
+    // For now, this is a placeholder for the future implementation
+
+    return () => {
+      // Cleanup subscription
+    };
+  }, [id]);
+
+  const handleBack = () => {
+    navigate('/messages');
+  };
+
+  const handleSendMessage = async (
     content: string,
     type: 'text' | 'image' | 'location' | 'document'
   ) => {
-    onSendMessage(chat.id, content, type);
+    if (!id || !user) return;
+
+    // Optimistically add the message to the UI immediately
+    const optimisticMessage: MessageWithSender = {
+      id: `temp-${Date.now()}`,
+      conversation_id: id,
+      sender_id: user.id,
+      content,
+      message_type: type,
+      created_at: new Date().toISOString(),
+      updated_at: new Date().toISOString(),
+      is_edited: false,
+      is_deleted: false,
+      sender: {
+        id: user.id,
+        nickname: user.nickname || user.name || 'You',
+        image: user.avatar || null,
+      },
+    };
+
+    setMessages((prev) => [...prev, optimisticMessage]);
+
+    try {
+      const sentMessage = await chatSupabaseService.sendMessage({
+        conversation_id: id,
+        content: content,
+        message_type: type,
+      });
+
+      // Replace the optimistic message with the real one from the server
+      if (sentMessage) {
+        setMessages((prev) =>
+          prev.map((msg) =>
+            msg.id === optimisticMessage.id ? sentMessage : msg
+          )
+        );
+      }
+    } catch (error) {
+      console.error('Error sending message:', error);
+      // Remove the optimistic message on error
+      setMessages((prev) =>
+        prev.filter((msg) => msg.id !== optimisticMessage.id)
+      );
+    }
   };
 
   const formatLastSeen = (date?: Date) => {
@@ -125,17 +210,83 @@ export function ChatPage({
     }
   };
 
-  const messageGroups = groupMessagesByDate(chat.messages);
+  if (loading) {
+    return <ChatPageSkeleton />;
+  }
+
+  if (!conversation) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <div className="text-center">
+          <p className="mb-4 text-gray-600 dark:text-gray-400">
+            Conversation not found
+          </p>
+          <Button onClick={handleBack}>Back to Messages</Button>
+        </div>
+      </div>
+    );
+  }
+
+  // Transform messages to ChatMessageData format
+  const chatMessages: ChatMessageData[] = messages.map((msg) => ({
+    id: msg.id,
+    content: msg.content,
+    sender:
+      msg.sender_id === user?.id
+        ? ('user' as const)
+        : ('other' as const),
+    timestamp: new Date(msg.created_at),
+    type: msg.message_type,
+    status: 'delivered' as const,
+    imageUrl: msg.image_url || undefined,
+    documentName: msg.document_name || undefined,
+    location: msg.location_name
+      ? {
+          name: msg.location_name,
+          address: msg.location_address || '',
+        }
+      : undefined,
+  }));
+
+  const messageGroups = groupMessagesByDate(chatMessages);
+
+  // Get other user info from conversation.other_user or derive from participants
+  let otherUserInfo = conversation.other_user;
+
+  // Fallback: if other_user is not populated, try to get from participants
+  if (!otherUserInfo && conversation.participants) {
+    const otherParticipant = conversation.participants.find(
+      (p: any) => p.user_id !== user?.id
+    );
+    if (otherParticipant) {
+      // We'll show a placeholder until the user data is loaded
+      otherUserInfo = {
+        id: otherParticipant.user_id,
+        nickname: 'User',
+        image: '',
+        is_online: false,
+      };
+    }
+  }
+
+  const otherUserName = otherUserInfo?.nickname || 'Unknown User';
+  const otherUserImage = otherUserInfo?.image || '';
+  const isOnline = otherUserInfo?.is_online || false;
+  const requestTitle = conversation.request_id
+    ? `Request #${conversation.request_id.slice(0, 8)}`
+    : conversation.offer_id
+    ? `Offer #${conversation.offer_id.slice(0, 8)}`
+    : 'Direct Message';
 
   return (
-    <div className="flex flex-col h-full bg-background">
+    <div className="flex flex-col h-screen bg-background">
       {/* Header */}
       <div className="bg-card border-b border-border px-4 py-3 safe-area-inset-top">
         <div className="flex items-center space-x-3">
           <Button
             variant="ghost"
             size="icon"
-            onClick={onBack}
+            onClick={handleBack}
             className="h-10 w-10"
           >
             <ArrowLeft className="h-5 w-5" />
@@ -144,37 +295,31 @@ export function ChatPage({
           <div className="flex items-center space-x-3 flex-1 min-w-0">
             <div className="relative">
               <ImageWithFallback
-                src={chat.agentImage}
-                alt={chat.agentName}
+                src={otherUserImage}
+                alt={otherUserName}
                 className="w-10 h-10 rounded-full object-cover"
               />
-              {chat.isOnline && (
+              {isOnline && (
                 <div className="absolute bottom-0 right-0 w-3 h-3 bg-green-500 rounded-full border-2 border-card"></div>
               )}
             </div>
 
             <div className="flex-1 min-w-0">
               <h2 className="font-semibold text-foreground truncate">
-                {chat.agentName}
+                {otherUserName}
               </h2>
-              <div className="flex items-center space-x-2">
-                <p className="text-xs text-muted-foreground truncate">
-                  {chat.requestTitle}
-                </p>
-                <Badge
-                  variant="secondary"
-                  className="text-xs px-1.5 py-0.5"
-                >
-                  {t('messages.agentBadge')}
-                </Badge>
-              </div>
-              {chat.isOnline ? (
+              <p className="text-xs text-muted-foreground truncate">
+                {requestTitle}
+              </p>
+              {isOnline ? (
                 <p className="text-xs text-green-600">
                   {t('messages.online')}
                 </p>
               ) : (
                 <p className="text-xs text-muted-foreground">
-                  {formatLastSeen(chat.lastSeen)}
+                  {otherUserInfo?.last_seen
+                    ? formatLastSeen(otherUserInfo.last_seen)
+                    : t('messages.offline')}
                 </p>
               )}
             </div>
@@ -206,7 +351,7 @@ export function ChatPage({
             {/* Messages for this date */}
             {group.messages.map((message, index) => {
               const showAvatar =
-                message.sender === 'agent' &&
+                message.sender === 'other' &&
                 (index === 0 ||
                   group.messages[index - 1]?.sender === 'user');
 
@@ -214,8 +359,8 @@ export function ChatPage({
                 <ChatMessage
                   key={message.id}
                   message={message}
-                  agentAvatar={chat.agentImage}
-                  agentName={chat.agentName}
+                  otherUserAvatar={otherUserImage}
+                  otherUserName={otherUserName}
                   showAvatar={showAvatar}
                 />
               );
@@ -223,13 +368,13 @@ export function ChatPage({
           </div>
         ))}
 
-        {/* Agent Typing Indicator */}
-        {agentTyping && (
+        {/* Typing Indicator */}
+        {otherUserTyping && (
           <div className="flex justify-start mb-4">
             <div className="flex items-end space-x-2 max-w-[80%]">
               <ImageWithFallback
-                src={chat.agentImage}
-                alt={chat.agentName}
+                src={otherUserImage}
+                alt={otherUserName}
                 className="w-8 h-8 rounded-full object-cover flex-shrink-0"
               />
               <div className="bg-muted rounded-2xl rounded-bl-md px-4 py-2">
@@ -258,9 +403,13 @@ export function ChatPage({
       {/* Chat Input */}
       <ChatInput
         onSendMessage={handleSendMessage}
-        onTyping={setIsTyping}
-        placeholder={t('messages.messageAgentPlaceholder', {
-          name: chat.agentName,
+        onTyping={(typing) => {
+          // TODO: Broadcast typing status to other user via Supabase presence
+          // This would send a real-time event that the other user's chat would receive
+          console.log('Current user typing:', typing);
+        }}
+        placeholder={t('messages.messagePlaceholder', {
+          name: otherUserName,
         })}
       />
     </div>

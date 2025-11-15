@@ -97,4 +97,10 @@ export const createOffer = {
   tagsInstructions:
     '購入者がオファーを見つけやすくするためにタグを追加してください',
   createButton: 'オファーを作成',
+
+  // Creating Offer
+  creatingOffer: 'オファーを作成中',
+  creatingYourOffer: 'オファーを作成しています',
+  creatingOfferDescription:
+    'ショッピングオファーを投稿するまでお待ちください...',
 };

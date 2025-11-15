@@ -43,5 +43,4 @@ export const offerDetails = {
   noReviews: '評価なし',
   orderNow: '今すぐ注文',
   contactAgent: 'エージェントに連絡',
-  allFeesIncluded: 'すべての料金が含まれています',
 };

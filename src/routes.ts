@@ -79,9 +79,9 @@ const RequestDetailsPage = lazy(() =>
   }))
 );
 
-const ChatPageWrapper = lazy(() =>
-  import('@/pages/messages/chat/ChatPageWrapper').then((m) => ({
-    default: m.ChatPageWrapper,
+const ChatPage = lazy(() =>
+  import('@/pages/messages/chat/ChatPage').then((m) => ({
+    default: m.ChatPage,
   }))
 );
 
@@ -351,7 +351,7 @@ export const routeGroups: RouteGroup[] = [
     routes: [
       {
         path: '/messages/chat/:id',
-        element: ChatPageWrapper,
+        element: ChatPage,
         showNavBar: false,
         meta: {
           title: 'nav.titles.chat',

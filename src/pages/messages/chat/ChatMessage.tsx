@@ -3,7 +3,7 @@ import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 export interface ChatMessageData {
   id: string;
   content: string;
-  sender: 'user' | 'agent';
+  sender: 'user' | 'other';
   timestamp: Date;
   type: 'text' | 'image' | 'location' | 'document';
   status?: 'sending' | 'sent' | 'delivered' | 'read';
@@ -17,15 +17,15 @@ export interface ChatMessageData {
 
 interface ChatMessageProps {
   message: ChatMessageData;
-  agentAvatar?: string;
-  agentName?: string;
+  otherUserAvatar?: string;
+  otherUserName?: string;
   showAvatar?: boolean;
 }
 
 export function ChatMessage({
   message,
-  agentAvatar,
-  agentName,
+  otherUserAvatar,
+  otherUserName,
   showAvatar,
 }: ChatMessageProps) {
   const isUser = message.sender === 'user';
@@ -138,8 +138,8 @@ export function ChatMessage({
         {/* Avatar */}
         {!isUser && showAvatar && (
           <ImageWithFallback
-            src={agentAvatar || ''}
-            alt={agentName || 'Agent'}
+            src={otherUserAvatar || ''}
+            alt={otherUserName || 'User'}
             className="w-8 h-8 rounded-full object-cover flex-shrink-0"
           />
         )}

@@ -69,6 +69,10 @@ export const createOffer = {
     '고품질 이미지는 잠재 구매자와의 신뢰 구축에 도움이 됩니다',
 
   createOffer: '오퍼 생성',
+  creatingOffer: '오퍼 생성 중',
+  creatingYourOffer: '오퍼를 생성하는 중',
+  creatingOfferDescription:
+    '쇼핑 오퍼를 게시하는 동안 기다려 주세요...',
   title: '오퍼 게시',
   subtitle:
     '당신의 위치에서 상품을 구매하고 배송해주겠다고 제안하세요',

@@ -48,8 +48,12 @@ export const messages = {
   activeDaysAgo: '{count}天前',
   today: '今天',
   yesterday: '昨天',
+  offline: '离线',
   messageAgentPlaceholder: '给{name}发消息...',
   signInPrompt: '登录查看消息',
   signInDescription: '访问您与代理和客户的对话。',
   description: 'Description placeholder', // Placeholder for missing key
+  chatManagement: '聊天管理',
+  info: '信息',
+  search: '搜索',
 };

@@ -116,4 +116,7 @@ export const auth = {
   saving: '저장 중...',
   invalidResetToken: '유효하지 않은 재설정 토큰입니다.',
   resetPasswordFailed: '비밀번호 재설정에 실패했습니다.',
+  authenticationError: '인증 오류',
+  authCreateRequestError: '요청을 생성하려면 로그인해야 합니다.',
+  authCreateOfferError: '제안을 생성하려면 로그인해야 합니다.',
 };

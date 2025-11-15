@@ -172,35 +172,37 @@ export class RequestsSupabaseService {
     requestData: Partial<SupabaseRequest>
   ): Promise<SupabaseRequest> {
     try {
+      const now = new Date().toISOString();
+
+      const insertData = {
+        user_id: requestData.user_id,
+        user_name: requestData.user_name,
+        title: requestData.title,
+        description: requestData.description,
+        specific_requirements:
+          requestData.specific_requirements || [],
+        category: requestData.category,
+        budget_min: requestData.budget_min,
+        budget_max: requestData.budget_max,
+        currency: requestData.currency || 'USD',
+        product_origin: requestData.product_origin,
+        designated_purchasing_location:
+          requestData.designated_purchasing_location,
+        expected_delivery_location:
+          requestData.expected_delivery_location,
+        expected_delivery: requestData.expected_delivery,
+        shipping_address: requestData.shipping_address,
+        delivery_method: requestData.delivery_method || 'personal',
+        images: requestData.images || [],
+        created_at: now,
+        updated_at: now,
+        status: requestData.status || 'active',
+        urgency: requestData.urgency || 'normal',
+      };
+
       const { data, error } = await supabase
         .from('requests')
-        .insert([
-          {
-            id: requestData.id,
-            user_id: requestData.user_id,
-            user_name: requestData.user_name,
-            title: requestData.title,
-            description: requestData.description,
-            specific_requirements: requestData.specific_requirements,
-            category: requestData.category,
-            budget_min: requestData.budget_min,
-            budget_max: requestData.budget_max,
-            currency: requestData.currency,
-            product_origin: requestData.product_origin,
-            designated_purchasing_location:
-              requestData.designated_purchasing_location,
-            expected_delivery_location:
-              requestData.expected_delivery_location,
-            expected_delivery: requestData.expected_delivery,
-            shipping_address: requestData.shipping_address,
-            delivery_method: requestData.delivery_method,
-            images: requestData.images,
-            created_at: requestData.created_at,
-            updated_at: requestData.updated_at,
-            status: requestData.status,
-            urgency: requestData.urgency,
-          },
-        ])
+        .insert([insertData])
         .select()
         .single();
 

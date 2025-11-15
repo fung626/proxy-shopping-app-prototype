@@ -33,7 +33,7 @@ export function ChatPageSkeleton() {
 
       {/* Messages area */}
       <div className="flex-1 overflow-hidden p-4 space-y-4">
-        {/* Agent message */}
+        {/* Other user message */}
         <div className="flex items-start space-x-2">
           <Skeleton className="h-8 w-8 rounded-full flex-shrink-0" />
           <div className="space-y-2 flex-1">
@@ -50,7 +50,7 @@ export function ChatPageSkeleton() {
           </div>
         </div>
 
-        {/* Agent message */}
+        {/* Other user message */}
         <div className="flex items-start space-x-2">
           <Skeleton className="h-8 w-8 rounded-full flex-shrink-0" />
           <div className="space-y-2 flex-1">

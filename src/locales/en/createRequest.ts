@@ -122,4 +122,10 @@ export const createRequest = {
   uploadInstructions:
     'Upload images or documents that help describe your request',
   createButton: 'Create Request',
+
+  // Creating Request
+  creatingRequest: 'Creating Request',
+  creatingYourRequest: 'Creating Your Request',
+  creatingRequestDescription:
+    'Please wait while we post your proxy shopping request...',
 };

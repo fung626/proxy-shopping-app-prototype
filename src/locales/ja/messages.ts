@@ -50,8 +50,15 @@ export const messages = {
   activeDaysAgo: '{count}d ago',
   today: '今日',
   yesterday: '昨日',
+  offline: 'オフライン',
   messageAgentPlaceholder: '{name}にメッセージ...',
   signInPrompt: 'サインインしてメッセージを表示',
   signInDescription: 'エージェントや顧客との会話にアクセスします。',
   description: '説明', // Placeholder for missing key
+  messagePlaceholder: 'メッセージを入力してください {name}',
+
+  // 追加されたキー
+  chatManagement: 'チャット管理',
+  info: '情報',
+  search: '検索',
 };

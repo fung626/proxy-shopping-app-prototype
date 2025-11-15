@@ -48,8 +48,12 @@ export const messages = {
   activeDaysAgo: '{count} 天前',
   today: '今天',
   yesterday: '昨天',
+  offline: '離線',
   messageAgentPlaceholder: '傳送訊息給 {name}...',
   signInPrompt: '登入以查看訊息',
   signInDescription: '訪問您與代理和客戶的對話。',
   description: '描述佔位符',
+  chatManagement: '\u804a\u5929\u7ba1\u7406',
+  info: '\u8cc7\u8a0a',
+  search: '\u641c\u5c0b',
 };

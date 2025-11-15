@@ -107,4 +107,8 @@ export const auth = {
   saving: 'Saving...',
   invalidResetToken: 'Invalid reset token.',
   resetPasswordFailed: 'Failed to reset password.',
+  authenticationError: 'Authentication Error',
+  authCreateRequestError:
+    'You must be logged in to create a request.',
+  authCreateOfferError: 'You must be logged in to create an offer.',
 };

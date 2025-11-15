@@ -113,4 +113,7 @@ export const auth = {
   saving: '儲存中...',
   invalidResetToken: '無效的重設令牌。',
   resetPasswordFailed: '重設密碼失敗。',
+  authenticationError: '認證錯誤',
+  authCreateRequestError: '建立請求需要登入。',
+  authCreateOfferError: '建立報價需要登入。',
 };

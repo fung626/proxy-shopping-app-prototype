@@ -2,6 +2,7 @@ import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import { Avatar } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import Carousel from '@/components/ui/carousel/carousel';
+import { chatSupabaseService } from '@/services/chatSupabaseService';
 import {
   requestsSupabaseService as requestService,
   SupabaseRequest,
@@ -11,6 +12,7 @@ import {
   userSupabaseService as userService,
 } from '@/services/userSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
+import { useAuthStore } from '@/store/zustand/authStore';
 import { capitalize, getCurrencySymbol } from '@/utils/common';
 import { Separator } from '@radix-ui/react-select';
 import {
@@ -42,6 +44,7 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
   const { t, language } = useLanguage();
   const navigate = useNavigate();
   const { id } = useParams<{ id: string }>();
+  const { user } = useAuthStore();
 
   const [requestData, setRequestData] =
     useState<SupabaseRequest | null>(null);
@@ -50,6 +53,7 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
   );
   const [loading, setLoading] = useState(false);
   const [isFavorited, setIsFavorited] = useState(false);
+  const [isContactingClient, setIsContactingClient] = useState(false);
 
   const onBack = () => navigate(-1);
 
@@ -57,8 +61,36 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
     ? moment(clientData.created_at).fromNow()
     : t('common.unknown');
 
-  const handleContactClient = () => {
-    console.log('Contact client:', requestData?.user_id);
+  const handleContactClient = async () => {
+    if (!user || !requestData?.user_id || !id) {
+      // If not authenticated, redirect to sign in
+      if (!user) {
+        navigate('/auth/signin');
+        return;
+      }
+      return;
+    }
+
+    setIsContactingClient(true);
+    try {
+      // Create or get existing conversation
+      const conversation =
+        await chatSupabaseService.getOrCreateConversation({
+          participant_user_id: requestData.user_id,
+          request_id: id,
+        });
+
+      if (conversation) {
+        // Navigate to the chat page
+        navigate(`/messages/chat/${conversation.id}`);
+      } else {
+        console.error('Failed to create conversation');
+      }
+    } catch (error) {
+      console.error('Error contacting client:', error);
+    } finally {
+      setIsContactingClient(false);
+    }
   };
 
   const handleMakeOffer = () => {
@@ -554,9 +586,12 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
             variant="outline"
             className="flex-1"
             onClick={handleContactClient}
+            disabled={isContactingClient || !requestData?.user_id}
           >
             <MessageCircle className="h-4 w-4 mr-2" />
-            {t('requestDetails.contactClient')}
+            {isContactingClient
+              ? t('common.loading')
+              : t('requestDetails.contactClient')}
           </Button>
           <Button className="flex-1" onClick={handleMakeOffer}>
             {t('requestDetails.makeOffer')}

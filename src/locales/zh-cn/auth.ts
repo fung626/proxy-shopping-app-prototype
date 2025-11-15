@@ -113,4 +113,7 @@ export const auth = {
   saving: '保存中...',
   invalidResetToken: '无效的重置令牌。',
   resetPasswordFailed: '重置密码失败。',
+  authenticationError: '认证错误',
+  authCreateRequestError: '创建请求需要登录。',
+  authCreateOfferError: '创建报价需要登录。',
 };

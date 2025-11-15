@@ -45,5 +45,4 @@ export const offerDetails = {
   noReviews: 'No reviews yet',
   orderNow: 'Order Now',
   contactAgent: 'Contact Agent',
-  allFeesIncluded: 'All fees included',
 };

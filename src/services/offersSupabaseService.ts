@@ -6,7 +6,7 @@ export interface SupabaseOffer {
   title: string;
   description?: string;
   category?: string;
-  price: number;
+  price?: number;
   currency: string;
   location?: string;
   shopping_location?: string;
@@ -175,9 +175,32 @@ export class OffersSupabaseService {
     offerData: Partial<SupabaseOffer>
   ): Promise<SupabaseOffer> {
     try {
+      const now = new Date().toISOString();
+
+      const insertData = {
+        user_id: offerData.user_id,
+        title: offerData.title,
+        description: offerData.description,
+        category: offerData.category,
+        price: offerData.price,
+        currency: offerData.currency || 'USD',
+        location: offerData.location,
+        shopping_location:
+          offerData.shopping_location || offerData.location,
+        available_quantity: offerData.available_quantity || 1,
+        estimated_delivery: offerData.estimated_delivery,
+        specifications: offerData.specifications || [],
+        tags: offerData.tags || [],
+        delivery_options: offerData.delivery_options || [],
+        images: offerData.images || [],
+        status: offerData.status || 'active',
+        created_at: now,
+        updated_at: now,
+      };
+
       const { data, error } = await supabase
         .from('offers')
-        .insert([offerData])
+        .insert([insertData])
         .select()
         .single();
 

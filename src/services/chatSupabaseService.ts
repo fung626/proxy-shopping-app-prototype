@@ -15,6 +15,68 @@ class ChatSupabaseService {
     new Map();
 
   /**
+   * Ensure user profile exists in users table
+   */
+  private async ensureUserProfileExists(
+    userId: string
+  ): Promise<boolean> {
+    try {
+      // Check if user exists
+      const { data: existingUser } = await supabase
+        .from('users')
+        .select('id')
+        .eq('id', userId)
+        .single();
+
+      if (existingUser) return true;
+
+      // User doesn't exist in users table
+      // For current user, we can create profile from auth data
+      const {
+        data: { user: currentAuthUser },
+      } = await supabase.auth.getUser();
+
+      if (currentAuthUser && currentAuthUser.id === userId) {
+        // Create profile for current user
+        const { error: insertError } = await supabase
+          .from('users')
+          .insert({
+            id: currentAuthUser.id,
+            email: currentAuthUser.email!,
+            name:
+              currentAuthUser.user_metadata?.name ||
+              currentAuthUser.email?.split('@')[0] ||
+              'User',
+            nickname: currentAuthUser.user_metadata?.nickname,
+            phone: currentAuthUser.phone,
+            avatar: currentAuthUser.user_metadata?.avatar_url,
+            created_at: currentAuthUser.created_at,
+            updated_at:
+              currentAuthUser.updated_at ||
+              currentAuthUser.created_at,
+          });
+
+        if (insertError) {
+          console.error('Error creating user profile:', insertError);
+          return false;
+        }
+
+        return true;
+      }
+
+      // For other users, they should already exist
+      // If not, return false (profile should be created on their signup)
+      console.warn(
+        `User profile not found for userId: ${userId}. They may need to complete signup.`
+      );
+      return false;
+    } catch (error) {
+      console.error('Error ensuring user profile exists:', error);
+      return false;
+    }
+  }
+
+  /**
    * Get or create a conversation between current user and another user
    */
   async getOrCreateConversation(
@@ -25,6 +87,20 @@ class ChatSupabaseService {
         data: { user },
       } = await supabase.auth.getUser();
       if (!user) throw new Error('User not authenticated');
+
+      // Ensure both users have profiles in the users table
+      const currentUserExists = await this.ensureUserProfileExists(
+        user.id
+      );
+      const otherUserExists = await this.ensureUserProfileExists(
+        request.participant_user_id
+      );
+
+      if (!currentUserExists || !otherUserExists) {
+        throw new Error(
+          'Failed to ensure user profiles exist in database'
+        );
+      }
 
       // Call the Supabase function to get or create conversation
       const { data, error } = await supabase.rpc(
@@ -68,13 +144,35 @@ class ChatSupabaseService {
 
       if (convError) throw convError;
 
-      // Get participants
+      // Get participants - using service role to bypass RLS if needed
       const { data: participants, error: partError } = await supabase
         .from('conversation_participants')
         .select('*')
         .eq('conversation_id', conversationId);
 
-      if (partError) throw partError;
+      console.log('Participants query result:', {
+        conversationId,
+        participantCount: participants?.length,
+        participants,
+        error: partError,
+      });
+
+      if (partError) {
+        console.error('Error fetching participants:', partError);
+        throw partError;
+      }
+
+      if (!participants || participants.length === 0) {
+        console.warn(
+          'No participants found for conversation:',
+          conversationId
+        );
+      } else if (participants.length === 1) {
+        console.warn('Only 1 participant found (expected 2):', {
+          conversationId,
+          participant: participants[0],
+        });
+      }
 
       // Get other user's info
       const otherParticipant = participants.find(
@@ -88,13 +186,16 @@ class ChatSupabaseService {
       if (otherParticipant) {
         const { data: userData, error: userError } = await supabase
           .from('users')
-          .select('id, nickname, image')
+          .select('id, nickname, avatar, name')
           .eq('id', otherParticipant.user_id)
           .single();
 
         if (!userError && userData) {
           otherUser = {
-            ...userData,
+            id: userData.id,
+            nickname:
+              userData.nickname || userData.name || 'Unknown User',
+            image: userData.avatar || '',
             is_online: false, // You can implement online status tracking separately
           };
         }
@@ -169,13 +270,16 @@ class ChatSupabaseService {
           if (otherParticipant) {
             const { data: userData } = await supabase
               .from('users')
-              .select('id, nickname, image')
+              .select('id, nickname, avatar, name')
               .eq('id', otherParticipant.user_id)
               .single();
 
             if (userData) {
               otherUser = {
-                ...userData,
+                id: userData.id,
+                nickname:
+                  userData.nickname || userData.name || 'User',
+                image: userData.avatar || '',
                 is_online: false,
               };
             }
@@ -202,7 +306,7 @@ class ChatSupabaseService {
    */
   async sendMessage(
     request: SendMessageRequest
-  ): Promise<SupabaseMessage | null> {
+  ): Promise<MessageWithSender | null> {
     try {
       const {
         data: { user },
@@ -240,7 +344,24 @@ class ChatSupabaseService {
 
       if (error) throw error;
 
-      return data;
+      // Get sender info
+      const { data: senderData } = await supabase
+        .from('users')
+        .select('id, nickname, avatar, name')
+        .eq('id', user.id)
+        .single();
+
+      return {
+        ...data,
+        sender: senderData
+          ? {
+              id: senderData.id,
+              nickname:
+                senderData.nickname || senderData.name || 'User',
+              image: senderData.avatar || null,
+            }
+          : undefined,
+      };
     } catch (error) {
       console.error('Error sending message:', error);
       return null;
@@ -277,13 +398,20 @@ class ChatSupabaseService {
         messages.map(async (msg) => {
           const { data: senderData } = await supabase
             .from('users')
-            .select('id, nickname, image')
+            .select('id, nickname, avatar, name')
             .eq('id', msg.sender_id)
             .single();
 
           return {
             ...msg,
-            sender: senderData || undefined,
+            sender: senderData
+              ? {
+                  id: senderData.id,
+                  nickname:
+                    senderData.nickname || senderData.name || 'User',
+                  image: senderData.avatar || null,
+                }
+              : undefined,
           };
         })
       );
@@ -391,8 +519,13 @@ class ChatSupabaseService {
    */
   subscribeToMessages(
     conversationId: string,
-    callback: (message: SupabaseMessage) => void
+    callback: (message: MessageWithSender) => void
   ): RealtimeChannel {
+    console.log(
+      '🔔 Setting up real-time subscription for conversation:',
+      conversationId
+    );
+
     const channel = supabase
       .channel(`messages:${conversationId}`)
       .on(
@@ -403,11 +536,39 @@ class ChatSupabaseService {
           table: 'messages',
           filter: `conversation_id=eq.${conversationId}`,
         },
-        (payload) => {
-          callback(payload.new as SupabaseMessage);
+        async (payload) => {
+          console.log('📨 Real-time message received:', payload.new);
+          const message = payload.new as SupabaseMessage;
+
+          // Fetch sender info
+          const { data: senderData } = await supabase
+            .from('users')
+            .select('id, nickname, avatar, name')
+            .eq('id', message.sender_id)
+            .single();
+
+          const messageWithSender: MessageWithSender = {
+            ...message,
+            sender: senderData
+              ? {
+                  id: senderData.id,
+                  nickname:
+                    senderData.nickname || senderData.name || 'User',
+                  image: senderData.avatar || null,
+                }
+              : undefined,
+          };
+
+          console.log(
+            '📨 Calling callback with message:',
+            messageWithSender
+          );
+          callback(messageWithSender);
         }
       )
-      .subscribe();
+      .subscribe((status) => {
+        console.log('🔔 Subscription status:', status);
+      });
 
     this.conversationSubscriptions.set(conversationId, channel);
     return channel;

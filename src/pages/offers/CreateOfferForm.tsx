@@ -1,98 +1,97 @@
 import CURRENCIES from '@/config/currencies';
+import { offersSupabaseService } from '@/services/offersSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { useAuthStore } from '@/store/zustand/authStore';
+import { supabase } from '@/supabase/client';
 import { CATEGORIES } from '@/utils/categories';
 import { Camera, DollarSign, MapPin, Package, X } from 'lucide-react';
-import React, { useMemo, useState } from 'react';
+import React, { useState } from 'react';
 import { toast } from 'sonner';
-import { CreateFormLoadingOverlay } from './CreateFormLoadingOverlay';
-import { Badge } from './ui/badge';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
+import { CreateFormLoadingOverlay } from '../../components/CreateFormLoadingOverlay';
+import { FileUpload } from '../../components/FileUpload';
+import { Badge } from '../../components/ui/badge';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './ui/select';
-import { Textarea } from './ui/textarea';
+} from '../../components/ui/select';
+import { Textarea } from '../../components/ui/textarea';
+
+const EstimatedDeliveryTypeOptions = [
+  { value: 'days', label: 'days' },
+  { value: 'weeks', label: 'weeks' },
+  { value: 'months', label: 'months' },
+];
+
+const defaultFormData = {
+  title: '',
+  description: '',
+  category: '',
+  price: '',
+  currency: 'HKD',
+  location: '',
+  availableQuantity: '1',
+  estimatedDelivery: { start: 0, end: 0, type: 'days' },
+  specifications: [] as string[],
+  tags: [] as string[],
+  deliveryOptions: ['personal'],
+  images: [] as string[],
+};
 
 export function CreateOfferForm() {
   const { t } = useLanguage();
   const [showInfoBox, setShowInfoBox] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formData, setFormData] = useState({
-    title: '',
-    description: '',
-    category: '',
-    price: '',
-    currency: 'USD',
-    location: '',
-    availableQuantity: '1',
-    estimatedDelivery: '',
-    specifications: [] as string[],
-    tags: [] as string[],
-    deliveryOptions: [] as string[],
-    images: [] as string[],
-  });
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadPreviews, setUploadPreviews] = useState<string[]>([]);
+  const [formData, setFormData] = useState(defaultFormData);
 
   const [newSpecification, setNewSpecification] = useState('');
   const [newTag, setNewTag] = useState('');
 
   const { user } = useAuthStore();
 
-  const categories = useMemo(
-    () => [
-      { id: 'beauty', name: 'Beauty & Skincare' },
-      { id: 'fashion', name: 'Fashion & Clothing' },
-      { id: 'electronics', name: 'Electronics' },
-      { id: 'home', name: 'Home & Garden' },
-      { id: 'food', name: 'Food & Beverages' },
-      { id: 'toys', name: 'Toys & Games' },
-      { id: 'sports', name: 'Sports & Fitness' },
-      { id: 'books', name: 'Books & Media' },
-      { id: 'automotive', name: 'Automotive' },
-      { id: 'health', name: 'Health & Wellness' },
-      { id: 'stationery', name: 'Stationery & Office' },
-      { id: 'jewelry', name: 'Jewelry & Accessories' },
-    ],
-    []
-  );
+  const uploadImagesToStorage = async (
+    files: File[]
+  ): Promise<string[]> => {
+    const imageUrls: string[] = [];
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log('Creating offer:', formData);
-      // Show success message
-      toast.success(t('createOffer.successTitle'), {
-        description: t('createOffer.successDescription'),
-      });
-      // Reset form
-      setFormData({
-        title: '',
-        description: '',
-        category: '',
-        price: '',
-        currency: 'HKD',
-        location: '',
-        availableQuantity: '1',
-        estimatedDelivery: '',
-        specifications: [],
-        tags: [],
-        deliveryOptions: [],
-        images: [],
-      });
-    } catch (error) {
-      toast.error(t('createOffer.errorTitle'), {
-        description: t('createOffer.errorDescription'),
-      });
-    } finally {
-      setIsSubmitting(false);
+    for (const file of files) {
+      try {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${user?.id}-${Date.now()}-${Math.random()
+          .toString(36)
+          .substring(2)}.${fileExt}`;
+        const filePath = `offer-images/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('uploads')
+          .upload(filePath, file);
+
+        if (uploadError) throw uploadError;
+
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('uploads').getPublicUrl(filePath);
+
+        imageUrls.push(publicUrl);
+      } catch (uploadError) {
+        console.error('Error uploading file:', uploadError);
+        toast.error(t('createOffer.uploadError'));
+      }
     }
+
+    return imageUrls;
+  };
+
+  const resetForm = () => {
+    setFormData(defaultFormData);
+    setUploadedFiles([]);
+    setUploadPreviews([]);
   };
 
   const addSpecification = () => {
@@ -132,6 +131,75 @@ export function CreateOfferForm() {
       ...formData,
       tags: formData.tags.filter((tag) => tag !== tagToRemove),
     });
+  };
+
+  const isFormValid = () => {
+    return !!(
+      formData.title &&
+      formData.description &&
+      formData.category &&
+      formData.price &&
+      formData.location
+    );
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!user?.id) {
+      toast.error(t('createOffer.authError'), {
+        description: t('createOffer.authErrorDescription'),
+      });
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      // Upload files to Supabase storage
+      const imageUrls =
+        uploadedFiles.length > 0
+          ? await uploadImagesToStorage(uploadedFiles)
+          : [];
+
+      // Create offer data
+      const offerData = {
+        user_id: user.id,
+        title: formData.title,
+        description: formData.description,
+        category: formData.category,
+        price: parseFloat(formData.price),
+        currency: formData.currency,
+        location: formData.location,
+        shopping_location: formData.location,
+        available_quantity: parseInt(formData.availableQuantity),
+        estimated_delivery: formData.estimatedDelivery,
+        specifications: formData.specifications,
+        tags: formData.tags,
+        delivery_options:
+          formData.deliveryOptions.length > 0
+            ? formData.deliveryOptions
+            : ['personal'],
+        images: imageUrls,
+        status: 'active',
+      };
+
+      // Create offer in Supabase
+      await offersSupabaseService.createOffer(offerData);
+
+      toast.success(t('createOffer.successTitle'), {
+        description: t('createOffer.successDescription'),
+      });
+
+      resetForm();
+    } catch (error) {
+      console.error('Error creating offer:', error);
+      toast.error(t('createOffer.errorTitle'), {
+        description: t('createOffer.errorDescription'),
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -223,7 +291,7 @@ export function CreateOfferForm() {
               {t('createOffer.price')} *
             </label>
             <div className="grid grid-cols-6 gap-3">
-              <div className="col-span-4 relative">
+              <div className="col-span-3 relative">
                 <DollarSign className="absolute left-3 top-[14px] h-4 w-4 text-muted-foreground" />
                 <Input
                   placeholder={t('createOffer.enterPrice')}
@@ -240,7 +308,7 @@ export function CreateOfferForm() {
                   required
                 />
               </div>
-              <div className="col-span-2">
+              <div className="col-span-3">
                 <Select
                   value={formData.currency}
                   onValueChange={(value) =>
@@ -332,7 +400,7 @@ export function CreateOfferForm() {
               <Button
                 type="button"
                 onClick={addSpecification}
-                className="px-4"
+                className="!h-full px-4"
                 disabled={!newSpecification.trim()}
               >
                 {t('createOffer.add')}
@@ -393,17 +461,65 @@ export function CreateOfferForm() {
             <label className="block text-sm font-medium text-foreground mb-2">
               {t('createOffer.estimatedDeliveryTime')}
             </label>
-            <Input
-              placeholder={t('createOffer.deliveryTimePlaceholder')}
-              value={formData.estimatedDelivery}
-              onChange={(e) =>
-                setFormData({
-                  ...formData,
-                  estimatedDelivery: e.target.value,
-                })
-              }
-              className="bg-input-background border-border"
-            />
+            <div className="grid grid-cols-9 gap-3">
+              <Input
+                placeholder={t('createOffer.deliveryTimePlaceholder')}
+                value={formData.estimatedDelivery.start}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    estimatedDelivery: {
+                      ...formData.estimatedDelivery,
+                      start: Number(e.target.value),
+                    },
+                  })
+                }
+                className="col-span-3 bg-input-background border-border"
+              />
+              <Input
+                placeholder={t('createOffer.deliveryTimePlaceholder')}
+                value={formData.estimatedDelivery.end}
+                onChange={(e) =>
+                  setFormData({
+                    ...formData,
+                    estimatedDelivery: {
+                      ...formData.estimatedDelivery,
+                      end: Number(e.target.value),
+                    },
+                  })
+                }
+                className="col-span-3 bg-input-background border-border"
+              />
+              <div className="col-span-3">
+                <Select
+                  value={formData.estimatedDelivery.type}
+                  onValueChange={(value) =>
+                    setFormData({
+                      ...formData,
+                      estimatedDelivery: {
+                        ...formData.estimatedDelivery,
+                        type: value,
+                      },
+                    })
+                  }
+                >
+                  <SelectTrigger className="bg-input-background border-border">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {EstimatedDeliveryTypeOptions.map((option) => (
+                      <SelectItem
+                        key={option.value}
+                        value={option.value}
+                      >
+                        {t(`common.${option.label}`)}
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
             <p className="text-xs text-muted-foreground mt-1">
               {t('createOffer.deliveryTimeDescription')}
             </p>
@@ -430,7 +546,7 @@ export function CreateOfferForm() {
               <Button
                 type="button"
                 onClick={addTag}
-                className="px-4"
+                className="!h-full px-4"
                 disabled={
                   !newTag.trim() ||
                   formData.tags.includes(newTag.trim())
@@ -467,37 +583,26 @@ export function CreateOfferForm() {
             </p>
           </div>
           {/* Photo Upload */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              {t('createOffer.productImages')}
-            </label>
-            <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
+          <FileUpload
+            files={uploadedFiles}
+            previews={uploadPreviews}
+            maxFiles={5}
+            onFilesChange={setUploadedFiles}
+            onPreviewsChange={setUploadPreviews}
+            accept="image/*"
+            label={t('createOffer.productImages')}
+            description={t('createOffer.uploadPhotos')}
+            icon={
               <Camera className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground mb-2">
-                {t('createOffer.uploadPhotos')}
-              </p>
-              <Button type="button" variant="outline" size="sm">
-                {t('createOffer.chooseImages')}
-              </Button>
-            </div>
-            <p className="text-xs text-muted-foreground mt-2">
-              {t('createOffer.imageDescription')}
-            </p>
-          </div>
+            }
+            buttonText={t('createOffer.chooseImages')}
+          />
           {/* Submit Button */}
           <div className="pt-4">
             <Button
               type="submit"
               className="w-full h-12 text-base"
-              disabled={
-                isSubmitting ||
-                !formData.title ||
-                !formData.description ||
-                !formData.category ||
-                !formData.price ||
-                !formData.location ||
-                formData.deliveryOptions.length === 0
-              }
+              disabled={isSubmitting || !isFormValid()}
             >
               {isSubmitting
                 ? t('create.creatingOffer')

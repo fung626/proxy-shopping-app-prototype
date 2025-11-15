@@ -95,4 +95,8 @@ export const createOffer = {
   addTagsPlaceholder: 'Add tags (comma separated)',
   tagsInstructions: 'Add tags to help buyers find your offer',
   createButton: 'Create Offer',
+  creatingOffer: 'Creating Offer',
+  creatingYourOffer: 'Creating Your Offer',
+  creatingOfferDescription:
+    'Please wait while we publish your shopping offer...',
 };

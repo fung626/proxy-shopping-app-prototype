@@ -1,33 +1,37 @@
 import { CATEGORIES } from '@/config/categories';
 import { COUNTRIES } from '@/config/countries';
+import { requestsSupabaseService } from '@/services/requestsSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { useAuthStore } from '@/store/zustand/authStore';
+import { supabase } from '@/supabase/client';
 import {
   DollarSign,
   MapPin,
   Plus,
-  Upload,
   User as UserIcon,
   X,
 } from 'lucide-react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
-import { CreateFormLoadingOverlay } from './CreateFormLoadingOverlay';
-import { Button } from './ui/button';
-import { Input } from './ui/input';
+import { CreateFormLoadingOverlay } from '../../components/CreateFormLoadingOverlay';
+import { FileUpload } from '../../components/FileUpload';
+import { Button } from '../../components/ui/button';
+import { Input } from '../../components/ui/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from './ui/select';
-import { Textarea } from './ui/textarea';
+} from '../../components/ui/select';
+import { Textarea } from '../../components/ui/textarea';
 
 export function CreateRequestForm() {
   const { t } = useLanguage();
   const [showInfoBox, setShowInfoBox] = useState(true);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [uploadedFiles, setUploadedFiles] = useState<File[]>([]);
+  const [uploadPreviews, setUploadPreviews] = useState<string[]>([]);
   const [formData, setFormData] = useState({
     title: '',
     description: '',
@@ -38,7 +42,7 @@ export function CreateRequestForm() {
     budgetMax: '',
     productOrigin: '',
     designatedPurchasingLocation: '',
-    expectedDeliveryLocation: '',
+    expectedMeetingLocation: '', // Renamed from expectedDeliveryLocation
     shippingAddress: {
       fullName: '',
       addressLine1: '',
@@ -55,40 +59,188 @@ export function CreateRequestForm() {
 
   const { user } = useAuthStore();
 
+  const addRequirement = () => {
+    if (newRequirement.trim()) {
+      setFormData({
+        ...formData,
+        specificRequirements: [
+          ...formData.specificRequirements,
+          newRequirement.trim(),
+        ],
+      });
+      setNewRequirement('');
+    }
+  };
+
+  const removeRequirement = (index: number) => {
+    setFormData({
+      ...formData,
+      specificRequirements: formData.specificRequirements.filter(
+        (_, i) => i !== index
+      ),
+    });
+  };
+
+  const isFormValid = () => {
+    // Check required fields
+    if (
+      !formData.title ||
+      !formData.description ||
+      !formData.category
+    ) {
+      return false;
+    }
+
+    // Check delivery method specific requirements
+    if (formData.deliveryMethod === 'personal') {
+      return !!formData.expectedMeetingLocation;
+    }
+
+    if (formData.deliveryMethod === 'ship') {
+      const {
+        fullName,
+        addressLine1,
+        city,
+        state,
+        postalCode,
+        country,
+      } = formData.shippingAddress;
+      return !!(
+        fullName &&
+        addressLine1 &&
+        city &&
+        state &&
+        postalCode &&
+        country
+      );
+    }
+
+    return true;
+  };
+
+  const uploadImagesToStorage = async (
+    files: File[]
+  ): Promise<string[]> => {
+    const imageUrls: string[] = [];
+
+    for (const file of files) {
+      try {
+        const fileExt = file.name.split('.').pop();
+        const fileName = `${user?.id}-${Date.now()}-${Math.random()
+          .toString(36)
+          .substring(2)}.${fileExt}`;
+        const filePath = `request-images/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('uploads')
+          .upload(filePath, file);
+
+        if (uploadError) throw uploadError;
+
+        const {
+          data: { publicUrl },
+        } = supabase.storage.from('uploads').getPublicUrl(filePath);
+
+        imageUrls.push(publicUrl);
+      } catch (uploadError) {
+        console.error('Error uploading file:', uploadError);
+        toast.error(t('createRequest.uploadError'));
+      }
+    }
+
+    return imageUrls;
+  };
+
+  const resetForm = () => {
+    setFormData({
+      title: '',
+      description: '',
+      specificRequirements: [],
+      category: '',
+      quantity: '1',
+      budgetMin: '',
+      budgetMax: '',
+      productOrigin: '',
+      designatedPurchasingLocation: '',
+      expectedMeetingLocation: '',
+      shippingAddress: {
+        fullName: '',
+        addressLine1: '',
+        addressLine2: '',
+        city: '',
+        state: '',
+        postalCode: '',
+        country: '',
+      },
+      deliveryMethod: 'personal',
+    });
+    setUploadedFiles([]);
+    setUploadPreviews([]);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!user) {
+      toast.error(t('auth.authenticationError'), {
+        description: t('auth.authCreateRequestError'),
+      });
+      return;
+    }
+
     setIsSubmitting(true);
+
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-      console.log('Creating request:', formData);
+      // Upload files to Supabase storage
+      const imageUrls =
+        uploadedFiles.length > 0
+          ? await uploadImagesToStorage(uploadedFiles)
+          : [];
+
+      // Create request data
+      const requestData = {
+        user_id: user.id,
+        user_name: user.nickname || user.name || 'User',
+        title: formData.title,
+        description: formData.description,
+        specific_requirements: formData.specificRequirements,
+        category: formData.category,
+        budget_min: formData.budgetMin
+          ? parseFloat(formData.budgetMin)
+          : undefined,
+        budget_max: formData.budgetMax
+          ? parseFloat(formData.budgetMax)
+          : undefined,
+        currency: 'HKD',
+        product_origin: formData.productOrigin,
+        designated_purchasing_location:
+          formData.designatedPurchasingLocation,
+        expected_delivery_location: formData.expectedMeetingLocation,
+        expected_delivery: {
+          start: '7',
+          end: '14',
+          unit: 'days',
+        },
+        shipping_address:
+          formData.deliveryMethod === 'ship'
+            ? formData.shippingAddress
+            : undefined,
+        delivery_method: formData.deliveryMethod,
+        images: imageUrls,
+        status: 'active',
+        urgency: 'normal',
+      };
+
+      // Create request in Supabase
+      await requestsSupabaseService.createRequest(requestData);
+
       toast.success(t('createRequest.successMessage'), {
         description: t('createRequest.successMessageDescription'),
       });
-      // Reset form
-      setFormData({
-        title: '',
-        description: '',
-        specificRequirements: [],
-        category: '',
-        quantity: '1',
-        budgetMin: '',
-        budgetMax: '',
-        productOrigin: '',
-        designatedPurchasingLocation: '',
-        expectedDeliveryLocation: '',
-        shippingAddress: {
-          fullName: '',
-          addressLine1: '',
-          addressLine2: '',
-          city: '',
-          state: '',
-          postalCode: '',
-          country: '',
-        },
-        deliveryMethod: 'personal',
-      });
+
+      resetForm();
     } catch (error) {
+      console.error('Error creating request:', error);
       toast.error(t('createRequest.errorMessage'), {
         description: t('createRequest.errorMessageDescription'),
       });
@@ -328,7 +480,7 @@ export function CreateRequestForm() {
             </label>
 
             {/* Add requirement input */}
-            <div className="flex gap-2 mb-3">
+            <div className="flex items-center gap-2 mb-3">
               <Input
                 placeholder={t(
                   'createRequest.requirementPlaceholder'
@@ -339,34 +491,14 @@ export function CreateRequestForm() {
                 onKeyPress={(e) => {
                   if (e.key === 'Enter') {
                     e.preventDefault();
-                    if (newRequirement.trim()) {
-                      setFormData({
-                        ...formData,
-                        specificRequirements: [
-                          ...formData.specificRequirements,
-                          newRequirement.trim(),
-                        ],
-                      });
-                      setNewRequirement('');
-                    }
+                    addRequirement();
                   }
                 }}
               />
               <Button
                 type="button"
-                onClick={() => {
-                  if (newRequirement.trim()) {
-                    setFormData({
-                      ...formData,
-                      specificRequirements: [
-                        ...formData.specificRequirements,
-                        newRequirement.trim(),
-                      ],
-                    });
-                    setNewRequirement('');
-                  }
-                }}
-                className="px-4"
+                className="!h-full px-4"
+                onClick={addRequirement}
                 disabled={!newRequirement.trim()}
               >
                 {t('createRequest.add')}
@@ -389,16 +521,7 @@ export function CreateRequestForm() {
                         type="button"
                         variant="ghost"
                         size="sm"
-                        onClick={() => {
-                          const updated =
-                            formData.specificRequirements.filter(
-                              (_, i) => i !== index
-                            );
-                          setFormData({
-                            ...formData,
-                            specificRequirements: updated,
-                          });
-                        }}
+                        onClick={() => removeRequirement(index)}
                         className="h-6 w-6 p-0 text-muted-foreground hover:text-destructive"
                       >
                         ×
@@ -416,7 +539,7 @@ export function CreateRequestForm() {
             <div className="flex items-center space-x-2 mb-3">
               <UserIcon className="h-4 w-4 text-primary" />
               <h3 className="font-medium text-foreground">
-                {t('createRequest.expectedDeliveryLocation')}
+                {t('createRequest.expectedMeetingLocation')}
               </h3>
             </div>
             <div>
@@ -429,11 +552,11 @@ export function CreateRequestForm() {
                   placeholder={t(
                     'createRequest.meetingLocationPlaceholder'
                   )}
-                  value={formData.expectedDeliveryLocation}
+                  value={formData.expectedMeetingLocation}
                   onChange={(e) =>
                     setFormData({
                       ...formData,
-                      expectedDeliveryLocation: e.target.value,
+                      expectedMeetingLocation: e.target.value,
                     })
                   }
                   className="pl-10 bg-input-background border-border"
@@ -446,40 +569,23 @@ export function CreateRequestForm() {
             </div>
           </div>
           {/* File Upload */}
-          <div>
-            <label className="block text-sm font-medium text-foreground mb-2">
-              {t('createRequest.attachments')}
-            </label>
-            <div className="border-2 border-dashed border-border rounded-lg p-6 text-center">
-              <Upload className="h-8 w-8 text-muted-foreground mx-auto mb-2" />
-              <p className="text-sm text-muted-foreground mb-2">
-                {t('createRequest.uploadDescription')}
-              </p>
-              <Button type="button" variant="outline" size="sm">
-                {t('createRequest.chooseFiles')}
-              </Button>
-            </div>
-          </div>
+          <FileUpload
+            files={uploadedFiles}
+            previews={uploadPreviews}
+            maxFiles={5}
+            onFilesChange={setUploadedFiles}
+            onPreviewsChange={setUploadPreviews}
+            accept="image/*"
+            label={t('createRequest.attachments')}
+            description={t('createRequest.uploadDescription')}
+            buttonText={t('createRequest.chooseFiles')}
+          />
           {/* Submit Button */}
           <div className="pt-4">
             <Button
               type="submit"
               className="w-full h-12 text-base"
-              disabled={
-                isSubmitting ||
-                !formData.title ||
-                !formData.description ||
-                !formData.category ||
-                (formData.deliveryMethod === 'personal' &&
-                  !formData.expectedDeliveryLocation) ||
-                (formData.deliveryMethod === 'ship' &&
-                  (!formData.shippingAddress.fullName ||
-                    !formData.shippingAddress.addressLine1 ||
-                    !formData.shippingAddress.city ||
-                    !formData.shippingAddress.state ||
-                    !formData.shippingAddress.postalCode ||
-                    !formData.shippingAddress.country))
-              }
+              disabled={isSubmitting || !isFormValid()}
             >
               {isSubmitting
                 ? t('create.creatingRequest')

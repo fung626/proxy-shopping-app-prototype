@@ -127,10 +127,16 @@ CREATE POLICY "Users can view their own conversations"
     )
   );
 
--- RLS: Users can only see their own participant records
-CREATE POLICY "Users can view their own participant records"
+-- RLS: Users can see all participants in conversations they're part of
+CREATE POLICY "Users can view participants in their conversations"
   ON conversation_participants FOR SELECT
-  USING (user_id = auth.uid());
+  USING (
+    conversation_id IN (
+      SELECT conversation_id 
+      FROM conversation_participants 
+      WHERE user_id = auth.uid()
+    )
+  );
 
 -- RLS: Users can update their own participant records
 CREATE POLICY "Users can update their own participant records"

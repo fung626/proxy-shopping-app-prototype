@@ -2,6 +2,7 @@ export const auth = {
   activeUsers: 'アクティブユーザー',
   alreadyHaveAccount: 'すでにアカウントをお持ちですか？',
   appleSignInFailed: 'Appleログインに失敗しました',
+  authenticationError: '認証エラー',
   backToSignIn: 'ログインに戻る',
   bio: '自己紹介',
   byTheNumbers: '数字で見る',
@@ -144,5 +145,8 @@ export const auth = {
   passwordResetSuccessDescription:
     '新しいパスワードでログインできます。',
   saving: '保存中...',
+  authCreateRequestError:
+    'リクエストを作成するにはログインが必要です。',
+  authCreateOfferError: 'オファーを作成するにはログインが必要です。',
   invalidResetToken: '無効なリセットトークンです。',
 };
