@@ -20,7 +20,7 @@ export function ProfileTab() {
 
   if (!user) {
     return (
-      <div className="flex-1 bg-background pb-20 relative">
+      <div className="flex-1 bg-background pb-[74px] relative">
         <div className="py-4 space-y-6">
           <SignInPrompt onSignIn={redirectToAuth} />
           <AppSettingsSection
@@ -41,7 +41,7 @@ export function ProfileTab() {
   };
 
   return (
-    <div className="flex-1 bg-background pb-20 relative">
+    <div className="flex-1 bg-background pb-[74px] relative">
       <div className="py-4 space-y-6">
         <ProfileHeader userName={user.name} userEmail={user.email} />
         <AppSettingsSection

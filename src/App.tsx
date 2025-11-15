@@ -69,9 +69,9 @@ const AppContent = React.memo(function AppContent() {
 
   return (
     <div
-      className={`h-screen flex flex-col bg-background text-foreground ${
+      className={`h-svh flex flex-col bg-background text-foreground ${
         theme === 'dark' ? 'dark' : ''
-      }`}
+      } relative`}
     >
       {shouldShowNavBar && (
         <NavBar

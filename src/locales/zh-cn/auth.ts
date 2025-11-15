@@ -77,6 +77,7 @@ export const auth = {
   selectCountry: '选择您的国家',
   signingIn: '登录中...',
   signingUp: '注册中...',
+  signingOut: '退出中...',
   verifyCode: '验证码',
   verificationCodeSent: '验证码已发送',
   demoMode: '演示模式',

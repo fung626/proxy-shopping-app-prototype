@@ -20,6 +20,9 @@ export * from './offers';
 // Requests pages
 export * from './requests';
 
+// Orders pages
+export * from './orders';
+
 // Support pages
 export * from './support';
 

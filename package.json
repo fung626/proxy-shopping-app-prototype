@@ -61,6 +61,7 @@
     "@types/react-dom": "^19.1.9",
     "@vitejs/plugin-react-swc": "^3.10.2",
     "autoprefixer": "^10.4.21",
+    "gh-pages": "^6.3.0",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.18",
     "vite": "6.3.5"
@@ -71,6 +72,7 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
+    "deploy-win": "cd dist && git init && git add -A && git commit -m 'deploy' && git branch -M gh-pages && git remote add origin https://github.com/fung626/proxy-shopping-app-prototype.git && git push -f origin gh-pages && cd .. && Remove-Item -Recurse -Force dist\\.git",
     "type-check": "tsc --noEmit",
     "supabase:setup": "echo 'Setting up Supabase...' && echo 'Please run the setup wizard in your browser at http://localhost:5173'",
     "db:seed": "echo 'Seeding database with demo data...'",

@@ -96,7 +96,7 @@ export function SearchPage() {
   }, [allItems, searchQuery]);
 
   return (
-    <div className="flex-1 bg-background pb-20">
+    <div className="flex-1 bg-background pb-[74px]">
       <div className="px-4 pt-4 pb-4">
         <div className="relative">
           <Search className="absolute left-3 top-3 h-5 w-5 text-muted-foreground" />

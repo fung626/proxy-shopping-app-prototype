@@ -107,6 +107,7 @@ export const auth = {
   signUpSuccess: 'アカウントの作成に成功しました！',
   signingIn: 'ログイン中...',
   signingUp: 'サインアップ中...',
+  signingOut: 'ログアウト中...',
   step1Description: '欲しいものや代理購入を投稿して始めましょう。',
   step1Title: 'リクエストまたはオファーを作成',
   step2Description:

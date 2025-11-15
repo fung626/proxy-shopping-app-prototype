@@ -55,64 +55,6 @@ export interface BankInformation {
   country: string;
 }
 
-// User types
-export interface User {
-  id: string;
-  name: string;
-  email: string;
-  capabilities?: {
-    canBeClient: boolean;
-    canBeAgent: boolean;
-  };
-  nickname?: string;
-  gender?: string;
-  phone?: string;
-  country?: string;
-  bio?: string;
-  avatar?: string;
-  dateOfBirth?: string;
-  website?: string;
-  company?: string;
-  jobTitle?: string;
-  languages?: string[];
-  preferences?: {
-    categories: string[];
-  };
-  verificationStatus?: {
-    email: boolean;
-    phone: boolean;
-    identity: boolean;
-    business: boolean;
-    bank?: boolean;
-  };
-  creditCards?: CreditCard[];
-  bankInformation?: BankInformation;
-  transactionPasswordEnabled?: boolean;
-  transactionPasswordSet?: boolean;
-  biometricAuthEnabled?: boolean;
-}
-
-// Demo accounts type
-export interface DemoAccount extends User {
-  name: string;
-  email: string;
-  phone?: string;
-  preferences: {
-    categories: string[];
-  };
-  verificationStatus: {
-    email: boolean;
-    phone: boolean;
-    identity: boolean;
-    business: boolean;
-    bank?: boolean;
-  };
-  creditCards?: CreditCard[];
-  bankInformation?: BankInformation;
-  transactionPasswordEnabled?: boolean;
-  transactionPasswordSet?: boolean;
-}
-
 // Authentication form types
 export interface SignInCredentials {
   email: string;

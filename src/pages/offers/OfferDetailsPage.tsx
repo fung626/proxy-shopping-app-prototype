@@ -169,8 +169,68 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
     }
   };
 
-  const handleCreateOrder = () => {
-    console.log('Create order for offer:', offerData?.id);
+  const handleCreateOrder = async () => {
+    if (!user || !offerData) {
+      // If not authenticated, redirect to sign in
+      if (!user) {
+        navigate('/auth/signin');
+        return;
+      }
+      return;
+    }
+
+    // For now, use a default/placeholder delivery address
+    // TODO: In production, should show address selection modal
+    const deliveryAddress: import('@/types/order').DeliveryAddress = {
+      fullName:
+        user.user_metadata?.full_name || user.email || 'Customer',
+      phone: user.user_metadata?.phone || '',
+      street: '', // Should be filled by user
+      addressLine2: '',
+      city: '',
+      state: '',
+      postalCode: '',
+      country: offerData.location || 'US',
+    };
+
+    setLoading(true);
+    try {
+      const { ordersSupabaseService } = await import(
+        '@/services/ordersSupabaseService'
+      );
+
+      const orderData: import('@/types/order').CreateOrderRequest = {
+        agentUserId: offerData.user_id,
+        offerId: offerData.id,
+        currency: offerData.currency || 'USD',
+        deliveryMethod: 'standard_shipping',
+        deliveryAddress: deliveryAddress,
+        items: [
+          {
+            productName: offerData.title,
+            productDescription: offerData.description || '',
+            productImageUrl: offerData.images?.[0] || '',
+            quantity: 1,
+            unitPrice: offerData.price || 0,
+            offerId: offerData.id,
+          },
+        ],
+        notes: `Order created from offer: ${offerData.title}`,
+      };
+
+      const order = await ordersSupabaseService.createOrder(
+        orderData
+      );
+      if (order) {
+        navigate(`/orders/${order.id}`);
+      } else {
+        console.error('Failed to create order');
+      }
+    } catch (error) {
+      console.error('Error creating order:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
   const handleShare = () => {

@@ -61,6 +61,11 @@ const CategoryPage = lazy(() =>
 );
 
 // Orders sub-pages
+const OrderDetailsPage = lazy(() =>
+  import('@/pages/orders/OrderDetailsPage').then((m) => ({
+    default: m.OrderDetailsPage,
+  }))
+);
 const RequestOrderDetailsPage = lazy(() =>
   import('@/pages/orders/RequestDetailsPage').then((m) => ({
     default: m.RequestDetailsPage,
@@ -334,6 +339,15 @@ export const routeGroups: RouteGroup[] = [
     name: 'orders',
     basePath: '/orders',
     routes: [
+      {
+        path: '/orders/:orderId',
+        element: OrderDetailsPage,
+        showNavBar: true,
+        meta: {
+          title: 'nav.titles.orderDetails',
+          description: 'View order details',
+        },
+      },
       {
         path: '/orders/requests/:id',
         element: RequestOrderDetailsPage,

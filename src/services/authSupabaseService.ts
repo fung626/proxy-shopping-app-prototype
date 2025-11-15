@@ -43,7 +43,9 @@ export interface UpdateProfileData {
   company?: string;
   job_title?: string;
   languages?: string[];
-  preferences?: string[];
+  preferences?: {
+    categories?: string[];
+  };
 }
 
 class AuthSupabaseService {

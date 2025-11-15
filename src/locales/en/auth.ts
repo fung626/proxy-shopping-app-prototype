@@ -13,6 +13,7 @@ export const auth = {
   demoModeDescription: 'Explore the app with demo data',
   signingIn: 'Signing in...',
   signingUp: 'Signing up...',
+  signingOut: 'Signing out...',
   resendCodeIn: 'Resend code in',
   verify: 'Verify',
   resendCode: 'Resend',

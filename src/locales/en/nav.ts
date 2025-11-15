@@ -30,6 +30,7 @@ export const nav = {
     category: 'Category',
     offerDetails: 'Offer Details',
     requestDetails: 'Request Details',
+    orderDetails: 'Order Details',
     emailVerification: 'Email Verification',
     phoneVerification: 'Phone Verification',
     identityVerification: 'Identity Verification',

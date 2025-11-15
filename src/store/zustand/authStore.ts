@@ -1,13 +1,24 @@
+import { SupportedLanguage, t } from '@/locales';
 import authService from '@/services/authSupabaseService';
-import { userSupabaseService } from '@/services/userSupabaseService';
-import { User } from '@/types';
+import {
+  SupabaseUser as User,
+  userSupabaseService as userService,
+} from '@/services/userSupabaseService';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+import { useLoadingStore } from './loadingStore';
+
+// Helper to get current language from localStorage
+const getCurrentLanguage = (): SupportedLanguage => {
+  return (
+    (localStorage.getItem('language') as SupportedLanguage) || 'en'
+  );
+};
 
 interface AuthState {
-  user: User | null;
+  initalizing: boolean;
+  user?: User;
   isAuthenticated: boolean;
-  setUser: (user: User | null) => void;
   initialize: () => Promise<void>;
   logout: () => Promise<void>;
   clear: () => void;
@@ -16,82 +27,58 @@ interface AuthState {
 export const useAuthStore = create<AuthState>()(
   persist(
     (set) => ({
-      user: null,
+      initalizing: false,
+      user: undefined,
       isAuthenticated: false,
-      setUser: (user: User | null) => {
-        set({
-          user,
-          isAuthenticated: !!user,
-        });
-      },
       initialize: async () => {
         try {
-          // Use the loading store for auth initialization
-          const { start: startLoading, stop: stopLoading } =
-            await import('./loadingStore').then((m) =>
-              m.useLoadingStore.getState()
-            );
-          startLoading('auth-init', 'Loading...');
-          const currentUser =
-            await userSupabaseService.getCurrentUser();
-          if (currentUser?.email) {
+          const user = await userService.getCurrentUser();
+          if (user) {
             set({
-              user: currentUser,
+              user,
               isAuthenticated: true,
             });
-            console.log(
-              '✅ User restored from Supabase:',
-              currentUser.email
-            );
           } else {
             set({
-              user: null,
+              user: undefined,
               isAuthenticated: false,
             });
-            console.log('ℹ️ No authenticated user found');
           }
-          stopLoading('auth-init');
         } catch (error) {
           console.warn('⚠️ Auth initialization failed:', error);
           set({
-            user: null,
+            user: undefined,
             isAuthenticated: false,
           });
-          const { stop: stopLoading } = await import(
-            './loadingStore'
-          ).then((m) => m.useLoadingStore.getState());
+          const { stop: stopLoading } = useLoadingStore.getState();
           stopLoading('auth-init');
         }
       },
       logout: async () => {
         try {
           const { start: startLoading, stop: stopLoading } =
-            await import('./loadingStore').then((m) =>
-              m.useLoadingStore.getState()
-            );
-          startLoading('auth-logout', 'Signing out...');
+            useLoadingStore.getState();
+          const lang = getCurrentLanguage();
+          startLoading('auth-logout', t(lang, 'auth.signingOut'));
           await authService.signOut();
           set({
-            user: null,
+            user: undefined,
             isAuthenticated: false,
           });
           stopLoading('auth-logout');
         } catch (error) {
           console.error('Logout failed:', error);
-          // Still clear local state even if logout fails
           set({
-            user: null,
+            user: undefined,
             isAuthenticated: false,
           });
-          const { stop: stopLoading } = await import(
-            './loadingStore'
-          ).then((m) => m.useLoadingStore.getState());
+          const { stop: stopLoading } = useLoadingStore.getState();
           stopLoading('auth-logout');
         }
       },
       clear: () => {
         set({
-          user: null,
+          user: undefined,
           isAuthenticated: false,
         });
       },

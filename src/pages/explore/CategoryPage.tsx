@@ -119,7 +119,7 @@ export function CategoryPage({ category }: CategoryPageProps) {
     <PullToRefresh
       onRefresh={handleRefresh}
       refreshing={refreshing}
-      className="flex-1 bg-background pb-20"
+      className="flex-1 bg-background"
     >
       <div className="px-4 pt-4 pb-4">
         <div className="relative">

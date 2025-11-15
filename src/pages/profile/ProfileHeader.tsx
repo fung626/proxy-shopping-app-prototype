@@ -48,7 +48,7 @@ export function SignInPrompt({ onSignIn }: SignInPromptProps) {
       <p className="text-muted-foreground mb-6 px-4">
         {t('profile.signInDescription')}
       </p>
-      <Button onClick={onSignIn} className="px-8">
+      <Button onClick={() => onSignIn()} className="px-8">
         {t('profile.signIn')}
       </Button>
     </div>

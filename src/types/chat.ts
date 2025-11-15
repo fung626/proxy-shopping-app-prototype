@@ -9,6 +9,7 @@ export interface SupabaseConversation {
   last_message_type: 'text' | 'image' | 'location' | 'document';
   request_id: string | null;
   offer_id: string | null;
+  order_id: string | null;
 }
 
 export interface SupabaseConversationParticipant {
@@ -70,6 +71,7 @@ export interface CreateConversationRequest {
   participant_user_id: string;
   request_id?: string;
   offer_id?: string;
+  order_id?: string;
 }
 
 export interface SendMessageRequest {

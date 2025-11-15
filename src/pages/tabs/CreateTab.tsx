@@ -28,7 +28,7 @@ export function CreateTab() {
   }
 
   return (
-    <div className="flex-1 bg-background pb-20 flex flex-col">
+    <div className="flex-1 bg-background pb-[74px] flex flex-col">
       {/* Header with Mode Toggle */}
       <div className="px-4 pt-12 pb-2 flex-shrink-0">
         <h1 className="text-3xl font-semibold text-foreground mb-6">

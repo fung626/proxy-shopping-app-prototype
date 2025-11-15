@@ -27,7 +27,7 @@ export function TabNavigation({
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border pb-[max(0.5rem,env(safe-area-inset-bottom))]">
+    <div className="fixed bottom-0 left-0 right-0 bg-card border-t border-border">
       <div className="flex justify-around items-center max-w-md mx-auto py-2">
         {tabs.map((tab) => {
           const Icon = tab.icon;

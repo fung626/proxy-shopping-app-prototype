@@ -110,6 +110,7 @@ class ChatSupabaseService {
           user2_id: request.participant_user_id,
           req_id: request.request_id || null,
           off_id: request.offer_id || null,
+          ord_id: request.order_id || null,
         }
       );
 

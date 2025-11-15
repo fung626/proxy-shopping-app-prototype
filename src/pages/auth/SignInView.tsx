@@ -22,7 +22,7 @@ const SignInView: FC<SignInViewProps> = ({
   const navigate = useNavigate();
   const { t } = useLanguage();
   return (
-    <div className="flex-1 bg-background pb-20">
+    <div className="flex-1 bg-background pb-[74px]">
       <div className="bg-card px-4 pt-12 pb-6">
         <h1 className="text-3xl font-semibold text-foreground">
           {t(title)}

@@ -275,7 +275,7 @@ export function AllAgentsPage({ onBack }: AllAgentsPageProps) {
   // Error boundary wrapper for safe rendering
   try {
     return (
-      <div className="flex-1 bg-background pb-20">
+      <div className="flex-1 bg-background pb-[74px]">
         {/* Header */}
         <div className="bg-card px-4 pt-6 pb-4 border-b border-border">
           <div className="flex items-center space-x-3 mb-4">
@@ -547,7 +547,7 @@ export function AllAgentsPage({ onBack }: AllAgentsPageProps) {
   } catch (error) {
     console.error('Error rendering AllAgentsPage:', error);
     return (
-      <div className="flex-1 bg-background pb-20 flex items-center justify-center">
+      <div className="flex-1 bg-background pb-[74px] flex items-center justify-center">
         <div className="text-center p-4">
           <h2 className="text-lg font-medium mb-2">
             Something went wrong

@@ -79,6 +79,7 @@ export const auth = {
   selectCountry: '국가를 선택하세요',
   signingIn: '로그인 중...',
   signingUp: '가입 중...',
+  signingOut: '로그아웃 중...',
   verifyCode: '코드 확인',
   verificationCodeSent: '인증 코드 전송됨',
   demoMode: '데모 모드',

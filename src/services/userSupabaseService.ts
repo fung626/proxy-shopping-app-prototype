@@ -2,7 +2,25 @@ import { supabase } from '@/supabase/client';
 import authService, { User } from './authSupabaseService';
 
 export interface SupabaseUser extends User {
+  name?: string;
   nickname?: string;
+  email?: string;
+  country_code?: string;
+  phone?: string;
+  country?: string;
+  bio?: string;
+  avatar?: string;
+  gender?: string;
+  date_of_birth?: string;
+  website?: string;
+  company?: string;
+  job_title?: string;
+  languages?: string[];
+  preferences?: {
+    categories?: string[];
+  };
+  verification_status?: string;
+  credit_cards?: any;
   rating: number;
   reviews: number;
   since: string;
@@ -19,14 +37,13 @@ class UserSupabaseService {
         data: { user },
         error,
       } = await supabase.auth.getUser();
-
       if (error) {
         console.error('Error getting current user:', error);
         return null;
       }
-
-      if (!user) return null;
-
+      if (!user) {
+        return null;
+      }
       // Get user profile from our users table
       const { data: profile, error: profileError } = await supabase
         .from('users')
@@ -41,26 +58,28 @@ class UserSupabaseService {
         );
         // Return basic user data from auth if profile doesn't exist
         return {
-          ...user,
           id: user.id,
           email: user.email!,
-          name: user.user_metadata?.name || user.email!.split('@')[0],
+          name:
+            user.user_metadata?.name ||
+            user.user_metadata?.full_name ||
+            user.email!.split('@')[0],
           nickname: user.user_metadata?.nickname,
           phone: user.phone,
-
-          rating: 0, // Default value
-          reviews: 0, // Default value
+          rating: 0,
+          reviews: 0,
           since: new Date(user.created_at).getFullYear().toString(),
-          verified: false, // Default value
-          image: '', // Default value
-          totalOrders: 0, // Default value
-          successRate: 0, // Default value
-          created_at: user.created_at,
-          updated_at: user.updated_at || user.created_at,
-        } as unknown as SupabaseUser;
+          verified: false,
+          image: user.user_metadata?.avatar_url || '',
+          success_rate: 0,
+          total_orders: 0,
+        } as SupabaseUser;
       }
-
-      return profile as SupabaseUser;
+      // Ensure name field exists in profile data
+      return {
+        ...profile,
+        name: profile.name || profile.email?.split('@')[0] || 'User',
+      } as SupabaseUser;
     } catch (error) {
       console.error('Error in getCurrentUser:', error);
       return null;
@@ -71,20 +90,17 @@ class UserSupabaseService {
     userId: string,
     userData: Partial<SupabaseUser>
   ): Promise<SupabaseUser> {
-    const { data, error } = await authService.updateProfile(
+    const { error } = await authService.updateProfile(
       userId,
       userData
     );
-
     if (error) {
       throw new Error(error.message);
     }
-
     const updatedUser = await this.getCurrentUser();
     if (!updatedUser) {
       throw new Error('Failed to get updated user data');
     }
-
     return updatedUser;
   }
 

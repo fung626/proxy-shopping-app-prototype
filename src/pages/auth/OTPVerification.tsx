@@ -11,13 +11,7 @@ interface OTPVerificationProps {
   isSignUp: boolean;
 }
 
-export function OTPVerification({
-  email,
-  loginType,
-  onVerify,
-  onBack,
-  isSignUp,
-}: OTPVerificationProps) {
+export function OTPVerification({ onVerify }: OTPVerificationProps) {
   const { t } = useLanguage();
   const [otp, setOtp] = useState(['', '', '', '', '', '']);
   const [isLoading, setIsLoading] = useState(false);

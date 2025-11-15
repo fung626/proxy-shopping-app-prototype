@@ -12,6 +12,7 @@ export const auth = {
   demoModeDescription: '使用演示數據體驗應用',
   signingIn: '登入中...',
   signingUp: '註冊中...',
+  signingOut: '登出中...',
   resendCodeIn: '重新發送代碼',
   verify: '驗證',
   resendCode: '重新發送',
