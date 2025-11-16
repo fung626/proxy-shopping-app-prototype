@@ -43,4 +43,5 @@ export const offerDetails = {
   noReviews: '\u6682\u65e0\u8bc4\u8bba',
   orderNow: '立即下单',
   contactAgent: '联系代理',
+  allFeesIncluded: '包含所有费用',
 };

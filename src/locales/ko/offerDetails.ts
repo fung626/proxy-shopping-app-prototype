@@ -40,4 +40,5 @@ export const offerDetails = {
   noReviews: '\ud3c9\uac00 \uc5c6\uc74c',
   orderNow: '지금 주문',
   contactAgent: '에이전트에게 연락',
+  allFeesIncluded: '모든 수수료 포함',
 };

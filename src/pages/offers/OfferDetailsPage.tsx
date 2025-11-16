@@ -680,7 +680,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
               </span>
             </div>
             <p className="text-xs text-muted-foreground">
-              {'TBD'} delivery • All fees included
+              {t('offerDetails.allFeesIncluded')}
             </p>
           </div>
           <div className="flex space-x-3">

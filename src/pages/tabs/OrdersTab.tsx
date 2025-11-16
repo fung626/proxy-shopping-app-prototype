@@ -10,18 +10,17 @@ import { useAuthStore } from '@/store/zustand';
 import { OrderStatus, OrderWithDetails } from '@/types/order';
 import {
   CreditCard,
-  Loader2,
   Package,
   PackageCheck,
   Search,
   Truck,
-  X,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { OrdersTabSkeleton } from '../orders/OrdersTabSkeleton';
 
 // Extended order type with enriched data
-interface EnrichedOrder extends OrderWithDetails {
+interface Order extends OrderWithDetails {
   requestTitle?: string;
   requestCategory?: string;
   requestImages?: string[];
@@ -35,8 +34,7 @@ export function OrdersTab() {
   const navigate = useNavigate();
   const { user } = useAuthStore();
 
-  const [showInfoBox, setShowInfoBox] = useState(true);
-  const [orders, setOrders] = useState<EnrichedOrder[]>([]);
+  const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'client' | 'agent'>(
     'all'
@@ -63,7 +61,7 @@ export function OrdersTab() {
       }
 
       // Enrich orders with request/offer details
-      const enrichedOrders = await Promise.all(
+      const Orders = await Promise.all(
         fetchedOrders.map(async (order) => {
           let additionalData: any = {};
 
@@ -99,7 +97,7 @@ export function OrdersTab() {
         })
       );
 
-      setOrders(enrichedOrders);
+      setOrders(Orders);
     } catch (error) {
       console.error('Error loading orders:', error);
     } finally {
@@ -290,35 +288,6 @@ export function OrdersTab() {
       </div>
 
       <div className="px-4 py-4">
-        {/* Info Box */}
-        {showInfoBox && (
-          <div className="mb-6 p-4 bg-muted/50 rounded-xl">
-            <div className="flex items-start justify-between">
-              <div className="flex items-start space-x-3 flex-1">
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <Package className="h-4 w-4 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-medium text-foreground mb-1">
-                    {t('orders.orderManagement')}
-                  </h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {t('orders.orderManagementDescription')}
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground ml-2"
-                onClick={() => setShowInfoBox(false)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        )}
-
         {/* Filter Tabs */}
         <div className="flex gap-2 mb-6">
           <Button
@@ -366,12 +335,7 @@ export function OrdersTab() {
 
         {/* Loading State */}
         {loading ? (
-          <div className="text-center py-12">
-            <Loader2 className="h-12 w-12 text-primary mx-auto mb-4 animate-spin" />
-            <p className="text-muted-foreground">
-              {t('common.loading')}
-            </p>
-          </div>
+          <OrdersTabSkeleton />
         ) : orders.length === 0 ? (
           /* Empty State */
           <div className="text-center py-12">

@@ -89,4 +89,5 @@ export const common = {
   total: '合計',
   unknownUser: '不明なユーザー',
   filesSelected: '{count}/{total} ファイルが選択されました',
+  goHome: 'ホームへ戻る',
 };

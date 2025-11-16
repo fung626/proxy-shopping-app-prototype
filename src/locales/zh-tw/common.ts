@@ -89,4 +89,5 @@ export const common = {
   total: '總計',
   unknownUser: '未知使用者',
   filesSelected: '{count}/{total} 個檔案已選擇',
+  goHome: '返回首頁',
 };

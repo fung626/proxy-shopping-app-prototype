@@ -26,7 +26,7 @@ const PopularCategoriesSection = () => {
                 <div className="w-16 h-16 rounded-full mb-2 bg-primary/10 flex items-center justify-center mx-auto">
                   <IconComponent />
                 </div>
-                <p className="font-medium text-xs leading-tight">
+                <p className="font-medium text-xs leading-tight line-clamp-1">
                   {getCategoryName(category.id, t)}
                 </p>
               </button>

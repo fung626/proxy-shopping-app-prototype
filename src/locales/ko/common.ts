@@ -89,4 +89,5 @@ export const common = {
   total: '합계',
   unknownUser: '알 수 없는 사용자',
   filesSelected: '{count}/{total}개의 파일이 선택되었습니다',
+  goHome: '홈으로 이동',
 };

@@ -1,6 +1,5 @@
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import SignInView from '@/pages/auth/SignInView';
 import { chatSupabaseService } from '@/services/chatSupabaseService';
@@ -206,37 +205,7 @@ export function MessagesTab() {
           {t('messages.description')}
         </p>
       </div>
-
       <div className="px-4 py-4">
-        {/* Feature Info Box */}
-        {showInfoBox && (
-          <div className="mb-6 p-4 bg-muted/50 rounded-xl">
-            <div className="flex items-start justify-between">
-              <div className="flex items-start space-x-3 flex-1">
-                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                  <MessageCircle className="h-4 w-4 text-primary" />
-                </div>
-                <div className="flex-1">
-                  <h4 className="font-medium text-foreground mb-1">
-                    {t('messages.chatManagement')}
-                  </h4>
-                  <p className="text-sm text-muted-foreground leading-relaxed">
-                    {t('messages.info')}
-                  </p>
-                </div>
-              </div>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="h-8 w-8 p-0 text-muted-foreground hover:text-foreground ml-2"
-                onClick={() => setShowInfoBox(false)}
-              >
-                <X className="h-4 w-4" />
-              </Button>
-            </div>
-          </div>
-        )}
-
         {/* Search Bar */}
         <div className="mb-6">
           <div className="relative">

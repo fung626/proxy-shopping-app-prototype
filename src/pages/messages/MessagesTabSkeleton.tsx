@@ -2,48 +2,59 @@ import { Skeleton } from '@/components/ui/skeleton';
 
 export function MessagesTabSkeleton() {
   return (
-    <div className="flex flex-col h-full bg-background">
+    <div className="flex-1 bg-background pb-[74px]">
       {/* Header */}
-      <div className="bg-card px-4 pt-12 pb-4 border-b border-border">
+      <div className="bg-card px-4 pt-12 pb-6">
         <Skeleton className="h-8 w-32 mb-2" />
-        <Skeleton className="h-4 w-48" />
+        <Skeleton className="h-4 w-64" />
       </div>
 
-      {/* Search Bar */}
-      <div className="px-4 py-3 bg-card border-b border-border">
-        <Skeleton className="h-10 w-full rounded-lg" />
-      </div>
+      <div className="px-4 py-4">
+        {/* Search Bar */}
+        <div className="mb-6">
+          <Skeleton className="h-10 w-full rounded-md" />
+        </div>
 
-      {/* Chat List Items */}
-      <div className="flex-1 overflow-hidden">
-        {[...Array(8)].map((_, index) => (
-          <div
-            key={index}
-            className="px-4 py-3 border-b border-border flex items-center space-x-3"
-          >
-            {/* Avatar */}
-            <Skeleton className="h-12 w-12 rounded-full flex-shrink-0" />
+        {/* Messages List */}
+        <div className="space-y-4">
+          {[...Array(6)].map((_, index) => (
+            <div key={index} className="p-4 bg-muted/50 rounded-lg">
+              <div className="flex items-start gap-3">
+                {/* Avatar with online indicator */}
+                <div className="relative flex-shrink-0">
+                  <Skeleton className="w-12 h-12 rounded-full" />
+                  {index % 2 === 0 && (
+                    <Skeleton className="absolute bottom-0 right-0 w-3 h-3 rounded-full" />
+                  )}
+                </div>
 
-            <div className="flex-1 min-w-0 space-y-2">
-              {/* Name and timestamp row */}
-              <div className="flex items-center justify-between">
-                <Skeleton className="h-4 w-32" />
-                <Skeleton className="h-3 w-12" />
+                {/* Content */}
+                <div className="flex-1 min-w-0">
+                  <div className="flex items-start justify-between gap-2 mb-1">
+                    <div className="flex items-center gap-2 min-w-0 flex-1">
+                      <Skeleton className="h-5 w-32" />
+                      {/* Pinned badge for some items */}
+                      {index === 0 && (
+                        <Skeleton className="h-4 w-8" />
+                      )}
+                    </div>
+                    <Skeleton className="h-3 w-12" />
+                  </div>
+
+                  <Skeleton className="h-4 w-24 mb-1" />
+
+                  <div className="flex items-center justify-between gap-2">
+                    <Skeleton className="h-4 w-full" />
+                    {/* Unread badge for some items */}
+                    {index % 3 === 0 && (
+                      <Skeleton className="h-5 w-6 rounded-full" />
+                    )}
+                  </div>
+                </div>
               </div>
-
-              {/* Request title */}
-              <Skeleton className="h-3 w-24" />
-
-              {/* Last message */}
-              <Skeleton className="h-3 w-full" />
             </div>
-
-            {/* Unread badge */}
-            {index % 3 === 0 && (
-              <Skeleton className="h-5 w-5 rounded-full flex-shrink-0" />
-            )}
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </div>
   );

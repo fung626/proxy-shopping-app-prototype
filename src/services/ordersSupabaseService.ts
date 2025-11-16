@@ -222,7 +222,7 @@ class OrdersSupabaseService {
       // Get client info
       const { data: clientData, error: clientError } = await supabase
         .from('users')
-        .select('id, nickname, image')
+        .select('id, nickname, avatar')
         .eq('id', order.client_user_id)
         .single();
 
@@ -231,7 +231,7 @@ class OrdersSupabaseService {
       // Get agent info
       const { data: agentData, error: agentError } = await supabase
         .from('users')
-        .select('id, nickname, image')
+        .select('id, nickname, avatar')
         .eq('id', order.agent_user_id)
         .single();
 
@@ -263,12 +263,12 @@ class OrdersSupabaseService {
         clientInfo: {
           id: clientData.id,
           nickname: clientData.nickname,
-          image: clientData.image || undefined,
+          image: clientData.avatar || undefined,
         },
         agentInfo: {
           id: agentData.id,
           nickname: agentData.nickname,
-          image: agentData.image || undefined,
+          image: agentData.avatar || undefined,
         },
         history: transformedHistory,
       };

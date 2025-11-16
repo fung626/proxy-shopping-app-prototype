@@ -92,4 +92,5 @@ export const common = {
   total: 'Total',
   unknownUser: 'Unknown User',
   filesSelected: '{count}/{total} files selected',
+  goHome: 'Go Home',
 };

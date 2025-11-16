@@ -3,8 +3,8 @@ import path from 'path';
 import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
-export default defineConfig({
-  base: '/',
+export default defineConfig(({ mode }) => ({
+  base: mode === 'production' ? '/proxy-shopping-app-prototype' : '/',
   plugins: [react(), svgr()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
@@ -84,4 +84,4 @@ export default defineConfig({
     port: 3000,
     open: true,
   },
-});
+}));
