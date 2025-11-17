@@ -24,7 +24,7 @@ export const nav = {
     profile: '프로필',
     wishlist: '위시리스트',
     search: '검색',
-    allOffers: '모든 제안',
+    allOffers: '모든 대리 구매 제안',
     allRequests: '모든 요청',
     allAgents: '모든 에이전트',
     category: '카테고리',

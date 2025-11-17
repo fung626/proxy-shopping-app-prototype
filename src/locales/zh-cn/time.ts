@@ -1,7 +1,7 @@
 // Time-related translations - Simplified Chinese
 export const time = {
-  now: '刚刚',
-  minutesAgo: '{count}分钟前',
-  hoursAgo: '{count}小时前',
   daysAgo: '{count}天前',
+  hoursAgo: '{count}小时前',
+  minutesAgo: '{count}分钟前',
+  now: '刚刚',
 };

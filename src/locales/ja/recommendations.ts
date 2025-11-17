@@ -1,8 +1,9 @@
+// Recommendations translations - Japanese
 export const recommendations = {
-  title: 'おすすめ',
   description: 'あなたのためのパーソナライズされたおすすめ',
   forYou: 'あなたにおすすめ',
-  seeAll: 'すべてのおすすめを見る',
   loadMore: 'もっと読み込む',
   loading: '読み込み中...',
+  seeAll: 'すべてのおすすめを見る',
+  title: 'おすすめ',
 };

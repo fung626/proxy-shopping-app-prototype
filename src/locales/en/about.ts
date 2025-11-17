@@ -1,14 +1,20 @@
 // About Us translations - English
 export const about = {
   activeUsers: 'Active Users',
+  business: 'Business',
   byTheNumbers: 'By the Numbers',
+  completedOrders: 'Completed Orders',
   countries: 'Countries Served',
   customerFirst: 'Customer First',
   customerFirstDescription:
     'We prioritize customer satisfaction and experience above all.',
+  email: 'Email',
+  getInTouch: 'Get in Touch',
   globalCommunity: 'Global Community',
   globalCommunityDescription:
     'Connecting shoppers and agents worldwide.',
+  haveQuestions:
+    "Have questions or suggestions? We'd love to hear from you.",
   howItWorks: 'How It Works',
   milestone2023Founded: 'Company founded',
   milestone2023Launch: 'Platform launched',
@@ -22,6 +28,7 @@ export const about = {
   qualityExcellence: 'Quality & Excellence',
   qualityExcellenceDescription:
     'We strive for excellence in every transaction.',
+  satisfactionRate: 'Satisfaction Rate',
   step1Description:
     'Start by posting what you want to buy or offer to shop for others.',
   step1Title: 'Create a Request or Offer',
@@ -34,6 +41,7 @@ export const about = {
   step4Description:
     'Share your experience and help build a trusted community.',
   step4Title: 'Rate & Review',
+  support: 'Support',
   title: 'About Us',
   trustSafety: 'Trust & Safety',
   trustSafetyDescription:
@@ -41,12 +49,4 @@ export const about = {
   welcomeDescription:
     'Connecting shoppers and agents worldwide for a seamless proxy shopping experience.',
   welcomeTitle: 'Welcome to ProxyShop',
-  getInTouch: 'Get in Touch',
-  email: 'Email',
-  haveQuestions:
-    "Have questions or suggestions? We'd love to hear from you.",
-  support: 'Support',
-  business: 'Business',
-  completedOrders: 'Completed Orders',
-  satisfactionRate: 'Satisfaction Rate',
 };

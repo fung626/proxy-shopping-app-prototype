@@ -1,7 +1,7 @@
 // Time-related translations - English
 export const time = {
-  now: 'now',
-  minutesAgo: '{count} min ago',
-  hoursAgo: '{count}h ago',
   daysAgo: '{count}d ago',
+  hoursAgo: '{count}h ago',
+  minutesAgo: '{count} min ago',
+  now: 'now',
 };

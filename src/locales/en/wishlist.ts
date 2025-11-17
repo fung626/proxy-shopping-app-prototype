@@ -1,15 +1,15 @@
 // Wishlist translations - English
 export const wishlist = {
-  myWishlist: 'My Wishlist',
-  items: 'items',
-  searchWishlist: 'Search wishlist...',
-  emptyWishlist: 'Your wishlist is empty',
-  startAdding: 'Start adding items you love',
-  exploreItems: 'Explore Items',
   addToWishlist: 'Add to Wishlist',
-  removeFromWishlist: 'Remove from Wishlist',
   addedToWishlist: 'Added to wishlist',
-  removedFromWishlist: 'Removed from wishlist',
+  emptyWishlist: 'Your wishlist is empty',
+  exploreItems: 'Explore Items',
+  items: 'items',
+  myWishlist: 'My Wishlist',
   noItemsFound: 'No items found',
+  removeFromWishlist: 'Remove from Wishlist',
+  removedFromWishlist: 'Removed from wishlist',
+  searchWishlist: 'Search wishlist...',
+  startAdding: 'Start adding items you love',
   tryAdjusting: 'Try adjusting your search or filter',
 };
