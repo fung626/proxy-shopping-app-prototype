@@ -9,10 +9,8 @@ import {
   offersSupabaseService as offerService,
   SupabaseOffer,
 } from '@/services/offersSupabaseService';
-import {
-  SupabaseUser,
-  userSupabaseService as userService,
-} from '@/services/userSupabaseService';
+import { SupabaseUser } from '@/services/type';
+import { userSupabaseService as userService } from '@/services/userSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { useAuthStore } from '@/store/zustand/authStore';
 import { getCurrencySymbol } from '@/utils/common';
@@ -53,6 +51,19 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [isFavorited, setIsFavorited] = useState(false);
   const [isContactingAgent, setIsContactingAgent] = useState(false);
+
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    };
+    setTimeout(() => {
+      scrollToTop();
+    }, 100);
+  }, []);
 
   useEffect(() => {
     const fetch = async () => {

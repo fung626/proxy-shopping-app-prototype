@@ -10,14 +10,14 @@ import { Input } from '@/components/ui/input';
 import { LanguageMultiSelect } from '@/components/ui/language-multi-select';
 import { PhoneInput } from '@/components/ui/phone-input';
 import { Textarea } from '@/components/ui/textarea';
+import { SupabaseUser } from '@/services/type';
 import { useLanguage } from '@/store/LanguageContext';
-import { User } from '@/types';
 import { Camera, Check, X } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 interface EditAccountPageProps {
-  user: User;
+  user: SupabaseUser;
 }
 
 export function EditAccountPage({ user }: EditAccountPageProps) {
@@ -122,8 +122,7 @@ export function EditAccountPage({ user }: EditAccountPageProps) {
     try {
       // Simulate API call
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      const updatedUser: User = {
+      const updated: SupabaseUser = {
         ...user,
         name: `${formData.firstName} ${formData.lastName}`,
         nickname: formData.nickname,
@@ -139,13 +138,8 @@ export function EditAccountPage({ user }: EditAccountPageProps) {
         country: formData.country,
         languages: formData.languages,
       };
-
       // Add avatar to updated user
-      updatedUser.avatar = avatarPreview;
-
-      // In a real app, save to backend here
-      console.log('User profile updated:', updatedUser);
-
+      updated.avatar = avatarPreview;
       // Navigate back to profile
       navigate('/profile');
     } catch (error) {
@@ -153,13 +147,6 @@ export function EditAccountPage({ user }: EditAccountPageProps) {
     } finally {
       setIsLoading(false);
     }
-  };
-
-  const handleCancel = () => {
-    if (hasChanges) {
-      console.log('Changes will be lost');
-    }
-    navigate('/profile');
   };
 
   return (

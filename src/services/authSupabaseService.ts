@@ -1,52 +1,6 @@
 import { supabase } from '@/supabase/client';
 import type { AuthError, Session, User } from '@supabase/supabase-js';
-
-export interface AuthUser extends User {
-  // Add any custom user properties
-}
-
-export interface AuthSession {
-  user: AuthUser;
-  session: Session;
-}
-
-export interface SignUpData {
-  email: string;
-  password: string;
-  firstName: string;
-  lastName: string;
-  nickname?: string;
-  phone?: string;
-  countryCode?: string;
-  gender?: string;
-  bio?: string;
-  country?: string;
-  languages?: string[];
-  avatar?: File | null;
-  agreeToTerms?: boolean;
-  preferences: string[];
-}
-
-export interface SignInData {
-  email: string;
-  password: string;
-}
-
-export interface UpdateProfileData {
-  name?: string;
-  nickname?: string;
-  bio?: string;
-  avatar?: string;
-  phone?: string;
-  country?: string;
-  website?: string;
-  company?: string;
-  job_title?: string;
-  languages?: string[];
-  preferences?: {
-    categories?: string[];
-  };
-}
+import { SignInData, SignUpData, UpdateProfileData } from './type';
 
 class AuthSupabaseService {
   // Get current session
@@ -162,8 +116,7 @@ class AuthSupabaseService {
     authCode: string,
     password: string
   ): Promise<{ data: any; error: AuthError | null }> {
-    const res = await supabase.auth.exchangeCodeForSession(authCode);
-    console.log('[DEBUG] UpdatePassword', res);
+    await supabase.auth.exchangeCodeForSession(authCode);
     return await supabase.auth.updateUser({ password });
   }
 

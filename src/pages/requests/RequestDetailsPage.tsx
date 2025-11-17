@@ -7,10 +7,8 @@ import {
   requestsSupabaseService as requestService,
   SupabaseRequest,
 } from '@/services/requestsSupabaseService';
-import {
-  SupabaseUser,
-  userSupabaseService as userService,
-} from '@/services/userSupabaseService';
+import { SupabaseUser } from '@/services/type';
+import { userSupabaseService as userService } from '@/services/userSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { useAuthStore } from '@/store/zustand/authStore';
 import { capitalize, getCurrencySymbol } from '@/utils/common';
@@ -102,6 +100,17 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
   };
 
   const currencySymbol = getCurrencySymbol(requestData?.currency);
+
+  useEffect(() => {
+    const scrollToTop = () => {
+      window.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: 'smooth',
+      });
+    };
+    scrollToTop();
+  }, []);
 
   useEffect(() => {
     moment.locale(language);

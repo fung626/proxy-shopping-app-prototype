@@ -1,34 +1,6 @@
 import { supabase } from '@/supabase/client';
-import authService, { User } from './authSupabaseService';
-
-export interface SupabaseUser extends User {
-  name?: string;
-  nickname?: string;
-  email?: string;
-  country_code?: string;
-  phone?: string;
-  country?: string;
-  bio?: string;
-  avatar?: string;
-  gender?: string;
-  date_of_birth?: string;
-  website?: string;
-  company?: string;
-  job_title?: string;
-  languages?: string[];
-  preferences?: {
-    categories?: string[];
-  };
-  verification_status?: string;
-  credit_cards?: any;
-  rating: number;
-  reviews: number;
-  since: string;
-  verified: boolean;
-  image: string;
-  success_rate: number;
-  total_orders: number;
-}
+import authService from './authSupabaseService';
+import { SupabaseUser } from './type';
 
 class UserSupabaseService {
   async getCurrentUser(): Promise<SupabaseUser | null> {
