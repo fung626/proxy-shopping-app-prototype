@@ -52,7 +52,7 @@ export function CreateRequestForm() {
       postalCode: '',
       country: '',
     },
-    deliveryMethod: 'personal', // 'ship' or 'personal',
+    deliveryMethod: 'personal_handoff', // 'ship' or 'personal_handoff',
   });
 
   const [newRequirement, setNewRequirement] = useState('');
@@ -92,7 +92,7 @@ export function CreateRequestForm() {
     }
 
     // Check delivery method specific requirements
-    if (formData.deliveryMethod === 'personal') {
+    if (formData.deliveryMethod === 'personal_handoff') {
       return !!formData.expectedMeetingLocation;
     }
 
@@ -172,7 +172,7 @@ export function CreateRequestForm() {
         postalCode: '',
         country: '',
       },
-      deliveryMethod: 'personal',
+      deliveryMethod: 'personal_handoff',
     });
     setUploadedFiles([]);
     setUploadPreviews([]);

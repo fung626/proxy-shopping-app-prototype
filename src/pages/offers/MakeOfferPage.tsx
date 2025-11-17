@@ -394,13 +394,13 @@ export function MakeOfferPage({
             </label>
             <div className="p-3 bg-muted/30 rounded-lg">
               <div className="flex items-center space-x-2">
-                {request.deliveryMethod === 'personal' ? (
+                {request.deliveryMethod === 'personal_handoff' ? (
                   <User className="h-4 w-4 text-muted-foreground" />
                 ) : (
                   <Package className="h-4 w-4 text-muted-foreground" />
                 )}
                 <span className="text-sm">
-                  {request.deliveryMethod === 'personal'
+                  {request.deliveryMethod === 'personal_handoff'
                     ? t('makeOffer.personalDelivery')
                     : t('makeOffer.shipToClient')}
                 </span>

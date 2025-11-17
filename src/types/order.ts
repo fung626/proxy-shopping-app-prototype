@@ -2,6 +2,9 @@
 // ORDER TYPES FOR SUPABASE
 // =====================================================
 
+import { SupabaseOffer } from '@/services/offersSupabaseService';
+import { SupabaseRequest } from '@/services/requestsSupabaseService';
+
 // Order Status enum
 export type OrderStatus =
   | 'pending_payment' // Order created, awaiting payment
@@ -26,6 +29,7 @@ export type PaymentStatus =
 
 // Delivery Method enum
 export type DeliveryMethod =
+  | 'personal_handoff'
   | 'pickup'
   | 'standard_shipping'
   | 'express_shipping'
@@ -145,7 +149,7 @@ export interface Order {
 }
 
 // Order with related data
-export interface OrderWithDetails extends Order {
+export interface DetailedOrder extends Order {
   items: OrderItem[];
   clientInfo: {
     id: string;
@@ -158,6 +162,8 @@ export interface OrderWithDetails extends Order {
     image?: string;
   };
   history?: OrderHistoryEntry[];
+  request?: SupabaseRequest;
+  offer?: SupabaseOffer;
 }
 
 // Order History Entry (from Supabase)
@@ -167,7 +173,6 @@ export interface SupabaseOrderHistory {
   status: OrderStatus;
   previous_status: OrderStatus | null;
   changed_by_user_id: string | null;
-  notes: string | null;
   metadata: Record<string, any>;
   created_at: string;
 }
@@ -179,7 +184,6 @@ export interface OrderHistoryEntry {
   status: OrderStatus;
   previousStatus?: OrderStatus;
   changedByUserId?: string;
-  notes?: string;
   metadata?: Record<string, any>;
   createdAt: string;
 }

@@ -38,7 +38,7 @@ const defaultFormData = {
   estimatedDelivery: { start: 0, end: 0, type: 'days' },
   specifications: [] as string[],
   tags: [] as string[],
-  deliveryOptions: ['personal'],
+  deliveryOptions: ['personal_handoff'],
   images: [] as string[],
 };
 
@@ -179,7 +179,7 @@ export function CreateOfferForm() {
         delivery_options:
           formData.deliveryOptions.length > 0
             ? formData.deliveryOptions
-            : ['personal'],
+            : ['personal_handoff'],
         images: imageUrls,
         status: 'active',
       };

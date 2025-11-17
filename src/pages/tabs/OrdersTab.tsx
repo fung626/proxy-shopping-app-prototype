@@ -2,31 +2,36 @@ import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ProgressSteps } from '@/components/ui/progress-steps';
-import { offersSupabaseService } from '@/services/offersSupabaseService';
+import {
+  offersSupabaseService,
+  SupabaseOffer,
+} from '@/services/offersSupabaseService';
 import { ordersSupabaseService } from '@/services/ordersSupabaseService';
-import { requestsSupabaseService } from '@/services/requestsSupabaseService';
+import {
+  requestsSupabaseService,
+  SupabaseRequest,
+} from '@/services/requestsSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { useAuthStore } from '@/store/zustand';
-import { OrderStatus, OrderWithDetails } from '@/types/order';
+import { DetailedOrder } from '@/types/order';
 import {
-  CreditCard,
-  Package,
-  PackageCheck,
-  Search,
-  Truck,
-} from 'lucide-react';
+  getOrderRole,
+  getOrderStep,
+  getRoleBadgeVariant,
+  getRoleLabel,
+  getStatusLabel,
+  getStatusVariant,
+  getStepDetails,
+} from '@/utils/orders';
+import { Package, Truck } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OrdersTabSkeleton } from '../orders/OrdersTabSkeleton';
 
 // Extended order type with enriched data
-interface Order extends OrderWithDetails {
-  requestTitle?: string;
-  requestCategory?: string;
-  requestImages?: string[];
-  offerTitle?: string;
-  offerCategory?: string;
-  offerImages?: string[];
+interface Order extends DetailedOrder {
+  request?: SupabaseRequest;
+  offer?: SupabaseOffer;
 }
 
 export function OrdersTab() {
@@ -42,16 +47,14 @@ export function OrdersTab() {
 
   useEffect(() => {
     if (user) {
-      loadOrders();
+      fetch();
     }
   }, [user, filter]);
 
-  const loadOrders = async () => {
+  const fetch = async () => {
     try {
       setLoading(true);
-
-      let fetchedOrders: OrderWithDetails[] = [];
-
+      let fetchedOrders: DetailedOrder[] = [];
       if (filter === 'all') {
         fetchedOrders = await ordersSupabaseService.getOrders();
       } else {
@@ -59,12 +62,10 @@ export function OrdersTab() {
           role: filter,
         });
       }
-
       // Enrich orders with request/offer details
       const Orders = await Promise.all(
         fetchedOrders.map(async (order) => {
           let additionalData: any = {};
-
           // Fetch request details if exists
           if (order.requestId) {
             const request =
@@ -72,21 +73,18 @@ export function OrdersTab() {
                 order.requestId
               );
             if (request) {
-              additionalData.requestTitle = request.title;
-              additionalData.requestCategory = request.category;
-              additionalData.requestImages = request.images;
+              additionalData.request = request;
+              additionalData.requestDeliveryMethod =
+                request.delivery_method;
             }
           }
-
           // Fetch offer details if exists
           if (order.offerId) {
             const offer = await offersSupabaseService.getOfferById(
               order.offerId
             );
             if (offer) {
-              additionalData.offerTitle = offer.title;
-              additionalData.offerCategory = offer.category;
-              additionalData.offerImages = offer.images;
+              additionalData.offer = offer;
             }
           }
 
@@ -105,132 +103,8 @@ export function OrdersTab() {
     }
   };
 
-  const getOrderRole = (
-    order: OrderWithDetails
-  ): 'client' | 'agent' => {
-    return order.clientUserId === user?.id ? 'client' : 'agent';
-  };
-
-  const getOrderStep = (status: OrderStatus): number => {
-    const statusStepMap: Record<string, number> = {
-      pending_payment: 1,
-      payment_confirmed: 1,
-      processing: 2,
-      shipped: 4,
-      in_transit: 4,
-      delivered: 5,
-      completed: 5,
-      cancelled: 0,
-      refunded: 0,
-      disputed: 0,
-    };
-    return statusStepMap[status] || 1;
-  };
-
-  const getStepDetails = (step: number, role: 'client' | 'agent') => {
-    if (role === 'client') {
-      const steps = [
-        {
-          icon: Search,
-          label: t('orders.steps.requestPosted'),
-          description: t('orders.steps.waitingForAgents'),
-        },
-        {
-          icon: Package,
-          label: t('orders.steps.agentAssigned'),
-          description: t('orders.steps.shoppingInProgress'),
-        },
-        {
-          icon: CreditCard,
-          label: t('orders.steps.itemsPurchased'),
-          description: t('orders.steps.itemsBoughtByAgent'),
-        },
-        {
-          icon: PackageCheck,
-          label: t('orders.steps.packageShipped'),
-          description: t('orders.steps.packageSentOut'),
-        },
-        {
-          icon: Truck,
-          label: t('orders.steps.delivered'),
-          description: t('orders.steps.orderComplete'),
-        },
-      ];
-      return steps[step - 1] || steps[0];
-    } else {
-      const steps = [
-        {
-          icon: Search,
-          label: t('orders.steps.requestAccepted'),
-          description: t('orders.steps.startingShopping'),
-        },
-        {
-          icon: Package,
-          label: t('orders.steps.shoppingStarted'),
-          description: t('orders.steps.findingRequestedItems'),
-        },
-        {
-          icon: CreditCard,
-          label: t('orders.steps.itemsPurchased'),
-          description: t('orders.steps.itemsBoughtSuccessfully'),
-        },
-        {
-          icon: PackageCheck,
-          label: t('orders.steps.packageShipped'),
-          description: t('orders.steps.packageSentToClient'),
-        },
-        {
-          icon: Truck,
-          label: t('orders.steps.delivered'),
-          description: t('orders.steps.successfullyCompleted'),
-        },
-      ];
-      return steps[step - 1] || steps[0];
-    }
-  };
-
-  const getStatusLabel = (status: OrderStatus) => {
-    const statusMap: Record<string, string> = {
-      pending_payment: t('orders.status.pending_payment'),
-      payment_confirmed: t('orders.status.paid'),
-      processing: t('orders.status.shopping'),
-      shipped: t('orders.status.shipped'),
-      in_transit: t('orders.status.in_transit'),
-      delivered: t('orders.status.delivered'),
-      completed: t('orders.status.completed'),
-      cancelled: t('orders.status.cancelled'),
-      refunded: t('orders.status.refunded'),
-      disputed: t('orders.status.cancelled'),
-    };
-    return statusMap[status] || status;
-  };
-
-  const getStatusVariant = (
-    status: OrderStatus
-  ): 'default' | 'secondary' | 'destructive' | 'outline' => {
-    if (status === 'completed' || status === 'delivered')
-      return 'default';
-    if (
-      status === 'cancelled' ||
-      status === 'refunded' ||
-      status === 'disputed'
-    )
-      return 'destructive';
-    return 'secondary';
-  };
-
-  const getRoleBadgeVariant = (role: 'client' | 'agent') => {
-    return role === 'client' ? 'default' : 'secondary';
-  };
-
-  const getRoleLabel = (role: 'client' | 'agent') => {
-    return role === 'client'
-      ? t('orders.request')
-      : t('orders.offer');
-  };
-
-  const handleContactUser = (order: OrderWithDetails) => {
-    const role = getOrderRole(order);
+  const handleContactUser = (order: DetailedOrder) => {
+    const role = getOrderRole(user, order);
     const otherUserId =
       role === 'client' ? order.agentUserId : order.clientUserId;
 
@@ -274,6 +148,8 @@ export function OrdersTab() {
       </div>
     );
   }
+
+  console.log('[DEBUG] OrdersTab Rendered', orders);
 
   return (
     <div className="flex-1 bg-background pb-[74px]">
@@ -354,17 +230,45 @@ export function OrdersTab() {
           /* Orders List */
           <div className="space-y-4">
             {orders.map((order) => {
-              const role = getOrderRole(order);
-              const step = getOrderStep(order.status);
-              const currentStepDetails = getStepDetails(step, role);
+              const role = getOrderRole(user, order);
+
+              // Determine delivery method from request or offer
+              let deliveryMethod: 'ship' | 'personal_handoff' =
+                'ship';
+
+              if (order.request?.delivery_method) {
+                // Request has explicit delivery_method ("ship" or "personal")
+                deliveryMethod = order.request.delivery_method as
+                  | 'ship'
+                  | 'personal_handoff';
+              } else if (order.offer?.delivery_options) {
+                // Offer has delivery_options array
+                // If it includes "pickup", treat as personal delivery
+                // Otherwise default to ship
+                const hasPickup =
+                  order.offer.delivery_options.indexOf('pickup') !==
+                  -1;
+                deliveryMethod = hasPickup
+                  ? 'personal_handoff'
+                  : 'ship';
+              }
+
+              const step = getOrderStep(order.status, deliveryMethod);
+              const currentStepDetails = getStepDetails(
+                step,
+                role,
+                deliveryMethod
+              );
               const title =
-                order.requestTitle ||
-                order.offerTitle ||
+                order.request?.title ||
+                order.offer?.title ||
                 t('orders.order');
               const category =
-                order.requestCategory || order.offerCategory || '';
+                order.request?.category ||
+                order.offer?.category ||
+                '';
               const images =
-                order.requestImages || order.offerImages || [];
+                order.request?.images || order.offer?.images || [];
 
               return (
                 <div
@@ -392,13 +296,13 @@ export function OrdersTab() {
                           variant={getRoleBadgeVariant(role)}
                           className="text-xs flex-shrink-0"
                         >
-                          {getRoleLabel(role)}
+                          {t(getRoleLabel(role))}
                         </Badge>
                         <Badge
                           variant={getStatusVariant(order.status)}
                           className="ml-2 flex-shrink-0"
                         >
-                          {getStatusLabel(order.status)}
+                          {t(getStatusLabel(order.status))}
                         </Badge>
                       </div>
 
@@ -424,7 +328,7 @@ export function OrdersTab() {
                           <div className="flex items-center space-x-2">
                             <currentStepDetails.icon className="h-4 w-4 text-primary" />
                             <span className="text-sm font-medium">
-                              {currentStepDetails.label}
+                              {t(currentStepDetails.label)}
                             </span>
                           </div>
                           <span className="text-xs text-muted-foreground">
@@ -434,21 +338,20 @@ export function OrdersTab() {
                             })}
                           </span>
                         </div>
-
                         <p className="text-xs text-muted-foreground mb-3">
-                          {currentStepDetails.description}
+                          {t(currentStepDetails.description)}
                         </p>
-
-                        {order.trackingNumber && (
-                          <div className="mb-3 p-3 bg-background rounded-lg border">
-                            <div className="flex items-center space-x-2">
-                              <Truck className="h-3 w-3 text-muted-foreground" />
-                              <span className="text-xs font-mono text-foreground">
-                                {order.trackingNumber}
-                              </span>
+                        {deliveryMethod === 'ship' &&
+                          order.trackingNumber && (
+                            <div className="mb-3 p-3 bg-background rounded-lg border">
+                              <div className="flex items-center space-x-2">
+                                <Truck className="h-3 w-3 text-muted-foreground" />
+                                <span className="text-xs font-mono text-foreground">
+                                  {order.trackingNumber}
+                                </span>
+                              </div>
                             </div>
-                          </div>
-                        )}
+                          )}
 
                         <ProgressSteps
                           currentStep={step}

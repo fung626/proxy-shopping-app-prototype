@@ -14,8 +14,6 @@ export const nav = {
   settings: '設定',
   support: '支援',
   wishlist: '願望清單',
-
-  // Page titles for navigation
   titles: {
     aboutUs: '關於我們',
     allAgents: '所有代理',
@@ -37,6 +35,7 @@ export const nav = {
     identityVerification: '身份驗證',
     messages: '訊息',
     offerDetails: '優惠詳情',
+    orderDetails: '\u8a02\u55ae\u8a73\u60c5',
     orders: '訂單',
     phoneVerification: '手機驗證',
     privacy: '隱私政策',

@@ -1,6 +1,7 @@
 ﻿// Index file for Chinese (Traditional) translations
 export { about } from './about';
 export { agents } from './agents';
+export { allAgents } from './allAgents';
 export { auth } from './auth';
 export { categories } from './categories';
 export { changePassword } from './changePassword';

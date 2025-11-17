@@ -1,13 +1,13 @@
 import { supabase } from '@/supabase/client';
 import {
   CreateOrderRequest,
+  DetailedOrder,
   Order,
   OrderFilters,
   OrderHistoryEntry,
   OrderItem,
   OrderStatistics,
   OrderStatus,
-  OrderWithDetails,
   SupabaseOrder,
   SupabaseOrderHistory,
   SupabaseOrderItem,
@@ -117,7 +117,7 @@ class OrdersSupabaseService {
    */
   async createOrder(
     request: CreateOrderRequest
-  ): Promise<OrderWithDetails | null> {
+  ): Promise<DetailedOrder | null> {
     try {
       const {
         data: { user },
@@ -193,9 +193,7 @@ class OrdersSupabaseService {
   /**
    * Get a specific order by ID with full details
    */
-  async getOrderById(
-    orderId: string
-  ): Promise<OrderWithDetails | null> {
+  async getOrderById(orderId: string): Promise<DetailedOrder | null> {
     try {
       const {
         data: { user },
@@ -281,9 +279,7 @@ class OrdersSupabaseService {
   /**
    * Get orders for current user with filters
    */
-  async getOrders(
-    filters?: OrderFilters
-  ): Promise<OrderWithDetails[]> {
+  async getOrders(filters?: OrderFilters): Promise<DetailedOrder[]> {
     try {
       const {
         data: { user },
@@ -351,7 +347,7 @@ class OrdersSupabaseService {
       );
 
       return ordersWithDetails.filter(
-        (order): order is OrderWithDetails => order !== null
+        (order): order is DetailedOrder => order !== null
       );
     } catch (error) {
       console.error('Error getting orders:', error);
@@ -364,7 +360,7 @@ class OrdersSupabaseService {
    */
   async getClientOrders(
     filters?: Omit<OrderFilters, 'role'>
-  ): Promise<OrderWithDetails[]> {
+  ): Promise<DetailedOrder[]> {
     return this.getOrders({ ...filters, role: 'client' });
   }
 
@@ -373,7 +369,7 @@ class OrdersSupabaseService {
    */
   async getAgentOrders(
     filters?: Omit<OrderFilters, 'role'>
-  ): Promise<OrderWithDetails[]> {
+  ): Promise<DetailedOrder[]> {
     return this.getOrders({ ...filters, role: 'agent' });
   }
 

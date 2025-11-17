@@ -65,7 +65,7 @@ export function OrdersTab() {
       location: 'New York, USA',
       createdDate: '2024-01-10',
       category: 'Fashion & Clothing',
-      deliveryMethod: 'personal',
+      deliveryMethod: 'personal_handoff',
       budget: '$150-200',
       timeline: '3-5 days',
       isPurchased: true,

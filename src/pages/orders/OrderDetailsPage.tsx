@@ -1,14 +1,26 @@
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
 import { ProgressSteps } from '@/components/ui/progress-steps';
 import { Separator } from '@/components/ui/separator';
 import { chatSupabaseService } from '@/services/chatSupabaseService';
+import { offersSupabaseService } from '@/services/offersSupabaseService';
 import { ordersSupabaseService } from '@/services/ordersSupabaseService';
+import { requestsSupabaseService } from '@/services/requestsSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { useAuthStore } from '@/store/zustand';
-import { OrderHistoryEntry, OrderWithDetails } from '@/types/order';
+import {
+  DeliveryMethod,
+  DetailedOrder,
+  OrderHistoryEntry,
+} from '@/types/order';
+import {
+  getOrderRole,
+  getOrderStep,
+  getStatusLabel,
+  getStatusVariant,
+  getStepDetails,
+} from '@/utils/orders';
 import {
   ArrowLeft,
   CheckCircle,
@@ -18,7 +30,6 @@ import {
   MapPin,
   MessageSquare,
   Package,
-  Truck,
   XCircle,
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -30,22 +41,54 @@ export function OrderDetailsPage() {
   const { user } = useAuthStore();
   const { orderId } = useParams<{ orderId: string }>();
 
-  const [order, setOrder] = useState<OrderWithDetails | null>(null);
+  const [order, setOrder] = useState<DetailedOrder | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     if (orderId) {
-      loadOrderDetails();
+      fetch();
     }
   }, [orderId]);
 
-  const loadOrderDetails = async () => {
+  const fetch = async () => {
     try {
       setLoading(true);
       const orderData = await ordersSupabaseService.getOrderById(
         orderId!
       );
-      setOrder(orderData);
+
+      if (!orderData) {
+        setOrder(null);
+        return;
+      }
+
+      // Enrich order with request/offer details
+      let additionalData: any = {};
+
+      // Fetch request details if exists
+      if (orderData.requestId) {
+        const request = await requestsSupabaseService.getRequestById(
+          orderData.requestId
+        );
+        if (request) {
+          additionalData.request = request;
+        }
+      }
+
+      // Fetch offer details if exists
+      if (orderData.offerId) {
+        const offer = await offersSupabaseService.getOfferById(
+          orderData.offerId
+        );
+        if (offer) {
+          additionalData.offer = offer;
+        }
+      }
+
+      setOrder({
+        ...orderData,
+        ...additionalData,
+      });
     } catch (error) {
       console.error('Error loading order:', error);
     } finally {
@@ -53,17 +96,11 @@ export function OrderDetailsPage() {
     }
   };
 
-  const getOrderRole = (): 'client' | 'agent' => {
-    if (!order || !user) return 'client';
-    return order.clientUserId === user.id ? 'client' : 'agent';
-  };
-
-  const handleContactUser = async () => {
+  const handleContact = async () => {
     if (!order || !user) return;
-    const role = getOrderRole();
+    const role = getOrderRole(user, order);
     const otherUserId =
       role === 'client' ? order.agentUserId : order.clientUserId;
-
     try {
       // Create or get conversation with order context
       const conversation =
@@ -71,7 +108,6 @@ export function OrderDetailsPage() {
           participant_user_id: otherUserId,
           order_id: order.id,
         });
-
       if (conversation) {
         navigate(`/messages/chat/${conversation.id}`);
       }
@@ -93,7 +129,7 @@ export function OrderDetailsPage() {
       reason
     );
     if (result) {
-      await loadOrderDetails();
+      await fetch();
     }
   };
 
@@ -106,7 +142,7 @@ export function OrderDetailsPage() {
       order.id
     );
     if (result) {
-      await loadOrderDetails();
+      await fetch();
     }
   };
 
@@ -129,27 +165,6 @@ export function OrderDetailsPage() {
     } else {
       return <Clock className="h-5 w-5 text-yellow-500" />;
     }
-  };
-
-  const getOrderStep = (status: string): number => {
-    const statusStepMap: Record<string, number> = {
-      pending_payment: 1,
-      payment_processing: 1,
-      paid: 2,
-      agent_accepted: 2,
-      shopping_in_progress: 2,
-      items_purchased: 3,
-      ready_to_ship: 3,
-      shipped: 4,
-      in_transit: 4,
-      out_for_delivery: 4,
-      delivered: 5,
-      completed: 5,
-      cancelled: 0,
-      refunded: 0,
-      disputed: 0,
-    };
-    return statusStepMap[status] || 1;
   };
 
   if (loading) {
@@ -182,28 +197,24 @@ export function OrderDetailsPage() {
     );
   }
 
-  const role = getOrderRole();
-  const step = getOrderStep(order.status);
+  const role = getOrderRole(user, order);
+
+  // Use the delivery method from the order
+  const deliveryMethod: DeliveryMethod = order.deliveryMethod;
+
+  const step = getOrderStep(order.status, deliveryMethod);
+  const currentStepDetails = getStepDetails(
+    step,
+    role,
+    deliveryMethod
+  );
   const isActive =
     order.status !== 'cancelled' && order.status !== 'completed';
 
   return (
     <div className="flex-1 bg-background pb-20">
       {/* Header */}
-      <div className="bg-card p-4 sticky top-0 z-10 border-b">
-        <div className="flex items-center mb-2">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => navigate('/orders')}
-            className="mr-2"
-          >
-            <ArrowLeft className="h-4 w-4" />
-          </Button>
-          <h1 className="text-xl font-semibold flex-1">
-            {t('orders.orderDetails')}
-          </h1>
-        </div>
+      <div className="bg-background p-4 sticky top-0 z-10 border-b">
         <div className="flex items-center justify-between text-sm">
           <span className="text-muted-foreground">
             {t('orders.orderNumber')}: {order.orderNumber}
@@ -211,51 +222,9 @@ export function OrderDetailsPage() {
           {getStatusIcon(order.status)}
         </div>
       </div>
-
       <div className="p-4 space-y-4">
-        {/* Status Card */}
-        <Card className="p-4">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="font-semibold">
-              {t('orders.orderStatus')}
-            </h2>
-            <Badge
-              variant={
-                order.status === 'completed' ? 'default' : 'secondary'
-              }
-            >
-              {order.status.replace(/_/g, ' ').toUpperCase()}
-            </Badge>
-          </div>
-
-          {isActive && (
-            <>
-              <p className="text-sm text-muted-foreground mb-4">
-                {t('orders.currentStep')}: {step} / 5
-              </p>
-              <ProgressSteps currentStep={step} numberOfSteps={5} />
-            </>
-          )}
-
-          {order.trackingNumber && (
-            <div className="mt-4 p-3 bg-muted/50 rounded-lg">
-              <div className="flex items-center justify-between">
-                <div className="flex items-center space-x-2">
-                  <Truck className="h-4 w-4 text-muted-foreground" />
-                  <span className="text-sm font-medium">
-                    {t('orders.trackingNumber')}
-                  </span>
-                </div>
-                <span className="text-sm font-mono">
-                  {order.trackingNumber}
-                </span>
-              </div>
-            </div>
-          )}
-        </Card>
-
         {/* Order Items */}
-        <Card className="p-4">
+        <div className="p-4 rounded-xl bg-muted/50">
           <h2 className="font-semibold mb-4">
             {t('orders.orderItems')}
           </h2>
@@ -323,11 +292,61 @@ export function OrderDetailsPage() {
               </span>
             </div>
           </div>
-        </Card>
+        </div>
+        {/* Status Card */}
+        <div className="p-4 rounded-xl bg-muted/50">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="font-semibold">
+              {t('orders.orderStatus')}
+            </h2>
+            <Badge variant={getStatusVariant(order.status)}>
+              {t(getStatusLabel(order.status))}
+            </Badge>
+          </div>
 
+          {isActive && (
+            <>
+              <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center space-x-2">
+                  <currentStepDetails.icon className="h-4 w-4 text-primary" />
+                  <span className="text-sm font-medium">
+                    {t(currentStepDetails.label)}
+                  </span>
+                </div>
+                <span className="text-xs text-muted-foreground">
+                  {t('orders.stepOf', {
+                    current: step,
+                    total: 5,
+                  })}
+                </span>
+              </div>
+              <p className="text-xs text-muted-foreground mb-3">
+                {t(currentStepDetails.description)}
+              </p>
+              <ProgressSteps currentStep={step} numberOfSteps={5} />
+            </>
+          )}
+          {deliveryMethod !== 'personal_handoff' &&
+            deliveryMethod !== 'pickup' &&
+            order.trackingNumber && (
+              <div className="mt-4 p-3 bg-muted/50 rounded-lg">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center space-x-2">
+                    <Package className="h-4 w-4 text-muted-foreground" />
+                    <span className="text-sm font-medium">
+                      {t('orders.trackingNumber')}
+                    </span>
+                  </div>
+                  <span className="text-sm font-mono">
+                    {order.trackingNumber}
+                  </span>
+                </div>
+              </div>
+            )}
+        </div>
         {/* Delivery Information */}
         {order.deliveryAddress && (
-          <Card className="p-4">
+          <div className="p-4 rounded-xl bg-muted/50">
             <h2 className="font-semibold mb-4 flex items-center">
               <MapPin className="h-4 w-4 mr-2" />
               {t('orders.deliveryAddress')}
@@ -352,11 +371,10 @@ export function OrderDetailsPage() {
               </span>
               <Badge variant="outline">{order.deliveryMethod}</Badge>
             </div>
-          </Card>
+          </div>
         )}
-
         {/* Payment Information */}
-        <Card className="p-4">
+        <div className="p-4 rounded-xl bg-muted/50">
           <h2 className="font-semibold mb-4 flex items-center">
             <CreditCard className="h-4 w-4 mr-2" />
             {t('orders.paymentInfo')}
@@ -393,10 +411,9 @@ export function OrderDetailsPage() {
               </div>
             )}
           </div>
-        </Card>
-
+        </div>
         {/* Partner Information */}
-        <Card className="p-4">
+        <div className="p-4 rounded-xl bg-muted/50">
           <h2 className="font-semibold mb-4">
             {role === 'client'
               ? t('orders.agentInfo')
@@ -444,17 +461,16 @@ export function OrderDetailsPage() {
             <Button
               variant="outline"
               size="sm"
-              onClick={handleContactUser}
+              onClick={handleContact}
             >
               <MessageSquare className="h-4 w-4 mr-2" />
               {t('orders.contact')}
             </Button>
           </div>
-        </Card>
-
+        </div>
         {/* Order History */}
         {order.history && order.history.length > 0 && (
-          <Card className="p-4">
+          <div className="p-4 rounded-xl bg-muted/50">
             <h2 className="font-semibold mb-4">
               {t('orders.orderHistory')}
             </h2>
@@ -472,11 +488,6 @@ export function OrderDetailsPage() {
                       <p className="font-medium text-sm">
                         {entry.status.replace(/_/g, ' ')}
                       </p>
-                      {entry.notes && (
-                        <p className="text-xs text-muted-foreground mt-1">
-                          {entry.notes}
-                        </p>
-                      )}
                       <p className="text-xs text-muted-foreground mt-1">
                         {formatDate(entry.createdAt)}
                       </p>
@@ -485,11 +496,10 @@ export function OrderDetailsPage() {
                 )
               )}
             </div>
-          </Card>
+          </div>
         )}
-
         {/* Order Dates */}
-        <Card className="p-4">
+        <div className="p-4 rounded-xl bg-muted/50">
           <h2 className="font-semibold mb-4">{t('orders.dates')}</h2>
           <div className="space-y-2 text-sm">
             <div className="flex justify-between">
@@ -529,8 +539,7 @@ export function OrderDetailsPage() {
               </div>
             )}
           </div>
-        </Card>
-
+        </div>
         {/* Action Buttons */}
         <div className="space-y-2">
           {role === 'agent' &&
@@ -544,7 +553,6 @@ export function OrderDetailsPage() {
                 {t('orders.markAsComplete')}
               </Button>
             )}
-
           {isActive && order.status === 'pending_payment' && (
             <Button
               variant="destructive"

@@ -88,4 +88,5 @@ export const createRequest = {
   uploadDescription: '上傳參考圖片或文檔（可選）',
   uploadInstructions: '上傳有助於描述請求的圖像或文檔',
   signInButton: '登入以繼續',
+  specificRequirements: '特殊要求',
 };

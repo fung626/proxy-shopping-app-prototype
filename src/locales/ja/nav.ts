@@ -35,7 +35,7 @@ export const nav = {
     identityVerification: '本人確認',
     messages: 'メッセージ',
     offerDetails: 'オファー詳細',
-    orderDetails: '注文詳細',
+    orderDetails: '\u6ce8\u6587\u8a73\u7d30',
     orders: '注文',
     phoneVerification: '電話認証',
     privacy: 'プライバシーポリシー',

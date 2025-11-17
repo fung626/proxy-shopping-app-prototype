@@ -35,6 +35,7 @@ export const nav = {
     identityVerification: '身份验证',
     messages: '消息',
     offerDetails: '优惠详情',
+    orderDetails: '\u8ba2\u5355\u8be6\u60c5',
     orders: '订单',
     phoneVerification: '手机验证',
     privacy: '隐私政策',

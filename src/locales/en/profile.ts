@@ -41,6 +41,10 @@ export const profile = {
   paymentSettings: 'Payment Settings',
   pending: 'Pending',
   personalInfo: 'Personal Information',
+  phoneVerification: 'Phone Verification',
+  phoneVerificationDesc: 'Your phone number has been verified.',
+  phoneVerificationDescPending:
+    'Verify your phone number for account security.',
   preferences: 'Preferences',
   privacy: 'Privacy Policy',
   rating: 'Rating',

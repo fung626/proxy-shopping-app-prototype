@@ -36,6 +36,7 @@ export const nav = {
     identityVerification: '신원 확인',
     messages: '메시지',
     offerDetails: '제안 상세',
+    orderDetails: '주문 상세',
     orders: '주문',
     phoneVerification: '전화 인증',
     privacy: '개인정보처리방침',

@@ -34,6 +34,10 @@ export const profile = {
   notVerified: '인증되지 않음',
   pending: '보류 중',
   personalInfo: '개인 정보',
+  phoneVerification: '전화번호 인증',
+  phoneVerificationDesc: '전화번호가 인증되었습니다.',
+  phoneVerificationDescPending:
+    '계정 보안을 위해 전화번호를 인증하세요.',
   preferences: '환경설정',
   privacy: '개인정보보호정책',
   rating: '평점',

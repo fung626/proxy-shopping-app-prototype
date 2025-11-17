@@ -41,6 +41,10 @@ export const profile = {
   paymentSettings: '支払い設定',
   pending: '保留中',
   personalInfo: '個人情報',
+  phoneVerification: '電話番号認証',
+  phoneVerificationDesc: '電話番号が認証されました。',
+  phoneVerificationDescPending:
+    'アカウントセキュリティのために電話番号を認証してください。',
   preferences: '設定',
   privacy: 'プライバシーポリシー',
   rating: '評価',

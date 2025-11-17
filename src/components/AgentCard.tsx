@@ -17,7 +17,7 @@ import { Button } from './ui/button';
 interface AgentCardProps {
   index?: number;
   loading?: boolean;
-  item: SupabaseUser;
+  item?: SupabaseUser;
 }
 
 const badges = [
@@ -72,7 +72,7 @@ const AgentCard: FC<AgentCardProps> = ({
   }
 
   return (
-    <div key={item.id} className="p-4 rounded-xl bg-muted/50">
+    <div className="p-4 rounded-xl bg-muted/50">
       <div className="flex space-x-4">
         <div className="relative">
           {/* <div className="w-16 h-16 rounded-full overflow-hidden">
@@ -96,7 +96,7 @@ const AgentCard: FC<AgentCardProps> = ({
         <div className="flex-1 space-y-2">
           <div className="flex justify-between items-start">
             <div>
-              <h3 className="font-medium">{item.name}</h3>
+              <h3 className="font-medium">{item?.name}</h3>
               {badges.length > 0 && (
                 <div className="flex flex-wrap gap-1 mt-1">
                   {badges.slice(0, 2).map((badge, index) => (
@@ -153,7 +153,7 @@ const AgentCard: FC<AgentCardProps> = ({
               </div>
             </div>
           </div>
-          {item.languages && (
+          {item?.languages && (
             <div className="text-xs text-muted-foreground">
               <span className="font-medium">
                 {t('common.languages')}:
@@ -167,7 +167,7 @@ const AgentCard: FC<AgentCardProps> = ({
         <Button
           className="w-full rounded-lg"
           size="sm"
-          onClick={() => navigate(`/messages/agent/${item.id}`)}
+          onClick={() => navigate(`/messages/agent/${item?.id}`)}
         >
           {t('agents.contact')}
         </Button>

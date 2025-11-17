@@ -1,5 +1,4 @@
-import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
-import { Badge } from '@/components/ui/badge';
+import AgentCard from '@/components/AgentCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import {
@@ -12,40 +11,33 @@ import {
 import { SupabaseUser } from '@/services/type';
 import { userSupabaseService as service } from '@/services/userSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
-import {
-  Award,
-  CheckCircle,
-  Clock,
-  MapPin,
-  Package,
-  Search,
-  Star,
-  Users,
-  Zap,
-} from 'lucide-react';
+import { Search, Users } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export function AllAgentsPage() {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSpecialty, setSelectedSpecialty] = useState('all');
   const [selectedLocation, setSelectedLocation] = useState('all');
   const [sortBy, setSortBy] = useState('rating');
-  const [allAgents, setAllAgents] = useState<SupabaseUser[]>([]);
+  const [items, setItems] = useState<SupabaseUser[]>([]);
 
   useEffect(() => {
-    async function fetchAgents() {
+    async function fetch() {
+      setLoading(true);
       try {
-        const agents = await service.getUsers();
-        setAllAgents(agents);
+        const res = await service.getUsers();
+        setItems(res);
       } catch (error) {
         console.error('Error fetching agents:', error);
+      } finally {
+        setLoading(false);
       }
     }
-
-    fetchAgents();
+    fetch();
   }, []);
 
   const specialties = [
@@ -74,31 +66,31 @@ export function AllAgentsPage() {
     { value: 'success', label: t('allAgents.highestSuccessRate') },
   ];
 
-  const filteredAgents = useMemo(
+  const filteredItems = useMemo(
     () =>
-      allAgents
-        .filter((agent) => {
+      items
+        .filter((item) => {
           const matchesSearch =
             searchQuery === '' ||
-            (agent.name ?? '')
+            (item.name ?? '')
               .toLowerCase()
               .includes(searchQuery.toLowerCase()) ||
-            (agent.country ?? '')
+            (item.country ?? '')
               .toLowerCase()
               .includes(searchQuery.toLowerCase());
 
           const matchesLocation =
             selectedLocation === 'all' ||
             (selectedLocation === 'north-america' &&
-              ((agent.country ?? '').includes('NY') ||
-                (agent.country ?? '').includes('CA') ||
-                (agent.country ?? '').includes('WA'))) ||
+              ((item.country ?? '').includes('NY') ||
+                (item.country ?? '').includes('CA') ||
+                (item.country ?? '').includes('WA'))) ||
             (selectedLocation === 'europe' &&
-              ((agent.country ?? '').includes('France') ||
-                (agent.country ?? '').includes('Switzerland'))) ||
+              ((item.country ?? '').includes('France') ||
+                (item.country ?? '').includes('Switzerland'))) ||
             (selectedLocation === 'asia' &&
-              ((agent.country ?? '').includes('Korea') ||
-                (agent.country ?? '').includes('Japan')));
+              ((item.country ?? '').includes('Korea') ||
+                (item.country ?? '').includes('Japan')));
           return matchesSearch && matchesLocation;
         })
         .sort((a, b) => {
@@ -123,13 +115,7 @@ export function AllAgentsPage() {
               return b.rating - a.rating;
           }
         }),
-    [
-      searchQuery,
-      selectedSpecialty,
-      selectedLocation,
-      sortBy,
-      allAgents,
-    ]
+    [searchQuery, selectedSpecialty, selectedLocation, sortBy, items]
   );
 
   const handleSearchChange = (
@@ -152,68 +138,63 @@ export function AllAgentsPage() {
           />
         </div>
         {/* Filters */}
-        <div className="grid grid-cols-1 gap-3 mb-4">
-          <div className="grid grid-cols-3 gap-2">
-            <Select
-              value={selectedSpecialty}
-              onValueChange={setSelectedSpecialty}
-            >
-              <SelectTrigger className="bg-input-background border-0">
-                <SelectValue placeholder={t('allAgents.specialty')} />
-              </SelectTrigger>
-              <SelectContent>
-                {specialties.map((specialty) => (
-                  <SelectItem
-                    key={specialty.value}
-                    value={specialty.value}
-                  >
-                    {specialty.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select
-              value={selectedLocation}
-              onValueChange={setSelectedLocation}
-            >
-              <SelectTrigger className="bg-input-background border-0">
-                <SelectValue placeholder="Location" />
-              </SelectTrigger>
-              <SelectContent>
-                {locations.map((location) => (
-                  <SelectItem
-                    key={location.value}
-                    value={location.value}
-                  >
-                    {location.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="bg-input-background border-0">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                {sortOptions.map((option) => (
-                  <SelectItem key={option.value} value={option.value}>
-                    {option.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        <div className="flex max-w-full overflow-scroll">
+          <Select
+            value={selectedSpecialty}
+            onValueChange={setSelectedSpecialty}
+          >
+            <SelectTrigger className="bg-input-background border-0">
+              <SelectValue placeholder={t('allAgents.specialty')} />
+            </SelectTrigger>
+            <SelectContent>
+              {specialties.map((specialty) => (
+                <SelectItem
+                  key={specialty.value}
+                  value={specialty.value}
+                >
+                  {specialty.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select
+            value={selectedLocation}
+            onValueChange={setSelectedLocation}
+          >
+            <SelectTrigger className="bg-input-background border-0">
+              <SelectValue placeholder="Location" />
+            </SelectTrigger>
+            <SelectContent>
+              {locations.map((location) => (
+                <SelectItem
+                  key={location.value}
+                  value={location.value}
+                >
+                  {location.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+          <Select value={sortBy} onValueChange={setSortBy}>
+            <SelectTrigger className="bg-input-background border-0">
+              <SelectValue placeholder="Sort by" />
+            </SelectTrigger>
+            <SelectContent>
+              {sortOptions.map((option) => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
         </div>
-
         {/* Content */}
         <div className="px-4 py-6">
           {/* Results count and clear filters */}
           <div className="flex items-center justify-between mb-4">
             <span className="text-muted-foreground text-sm">
-              {filteredAgents.length}{' '}
-              {filteredAgents.length === 1
+              {filteredItems.length}{' '}
+              {filteredItems.length === 1
                 ? t('allAgents.agent')
                 : t('allAgents.agents')}{' '}
               {t('allAgents.found')}
@@ -235,135 +216,22 @@ export function AllAgentsPage() {
               </Button>
             )}
           </div>
+
           <div className="space-y-4">
-            {filteredAgents.map((agent) => (
-              <div
-                key={agent.id}
-                className="p-4 rounded-xl bg-card border border-border hover:shadow-md transition-shadow"
-              >
-                <div className="flex space-x-4">
-                  <div className="relative">
-                    <div className="w-16 h-16 rounded-full overflow-hidden">
-                      <ImageWithFallback
-                        src={agent.image}
-                        alt={agent.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                    {agent.verified && (
-                      <div className="absolute -bottom-1 -right-1 w-5 h-5 bg-green-500 rounded-full flex items-center justify-center">
-                        <CheckCircle className="h-3 w-3 text-white" />
-                      </div>
-                    )}
-                  </div>
-
-                  <div className="flex-1">
-                    <div className="flex justify-between items-start mb-2">
-                      <div>
-                        <h3 className="font-medium text-foreground">
-                          {agent.name}
-                        </h3>
-                        <p className="text-sm text-muted-foreground">
-                          {agent.bio || t('allAgents.agentBio')}
-                        </p>
-                      </div>
-                      <div className="flex items-center space-x-1 text-sm">
-                        <Star className="h-4 w-4 text-yellow-500 fill-current" />
-                        <span className="font-medium">
-                          {agent.rating}
-                        </span>
-                        <span className="text-muted-foreground">
-                          ({agent.reviews})
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Badges */}
-                    {agent.verified && (
-                      <div className="flex flex-wrap gap-1 mb-3">
-                        <Badge
-                          variant="outline"
-                          className="text-xs px-2 py-1"
-                        >
-                          {t('allAgents.verifiedAgent')}
-                        </Badge>
-                      </div>
-                    )}
-
-                    {/* Stats */}
-                    <div className="grid grid-cols-2 gap-4 mb-3 text-sm text-muted-foreground">
-                      <div className="space-y-1">
-                        <div className="flex items-center space-x-1">
-                          <MapPin className="h-3 w-3" />
-                          <span>{agent.country || 'N/A'}</span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Package className="h-3 w-3" />
-                          <span>
-                            {agent.completed_orders ?? 0}{' '}
-                            {t('allAgents.ordersCompleted')}
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Award className="h-3 w-3" />
-                          <span>
-                            {agent.success_rate}%{' '}
-                            {t('allAgents.successRate')}
-                          </span>
-                        </div>
-                      </div>
-                      <div className="space-y-1">
-                        <div className="flex items-center space-x-1">
-                          <Clock className="h-3 w-3" />
-                          <span>
-                            {t('allAgents.responds')}{' '}
-                            {agent.response_time || 'N/A'}
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Zap className="h-3 w-3" />
-                          <span>
-                            {t('allAgents.avgDelivery')}: {'N/A'}
-                          </span>
-                        </div>
-                        <div className="flex items-center space-x-1">
-                          <Users className="h-3 w-3" />
-                          <span>
-                            {t('allAgents.joined')}{' '}
-                            {new Date(agent.since).getFullYear()}
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Languages */}
-                    {agent.languages && (
-                      <div className="text-xs text-muted-foreground mb-3">
-                        <span className="font-medium">
-                          {t('allAgents.languages')}:
-                        </span>{' '}
-                        {agent.languages.join(', ')}
-                      </div>
-                    )}
-
-                    {/* Contact Button */}
-                    <Button
-                      className="w-full rounded-lg"
-                      size="sm"
-                      onClick={() =>
-                        navigate(`/messages/agent/${agent.id}`)
-                      }
-                    >
-                      {t('allAgents.contactAgent')}
-                    </Button>
-                  </div>
-                </div>
-              </div>
-            ))}
+            {loading
+              ? Array.from({ length: 8 }).map((_, index) => (
+                  <AgentCard key={index} loading />
+                ))
+              : filteredItems.map((item, index) => (
+                  <AgentCard
+                    key={item.id}
+                    item={item}
+                    index={index}
+                  />
+                ))}
           </div>
-
           {/* No results */}
-          {filteredAgents.length === 0 && (
+          {filteredItems.length === 0 && (
             <div className="text-center py-8">
               <Users className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
               <h3 className="text-lg font-medium text-foreground mb-2">

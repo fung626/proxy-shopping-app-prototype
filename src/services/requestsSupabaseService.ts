@@ -1,5 +1,6 @@
 import { RequestDetailsPageProps } from '@/pages/orders/RequestDetailsPage';
 import { supabase } from '@/supabase/client';
+import { DeliveryMethod } from '@/types/order';
 
 export interface SupabaseRequest {
   id: string;
@@ -17,7 +18,7 @@ export interface SupabaseRequest {
   expected_delivery_location?: string;
   expected_delivery?: { start: string; end: string; unit: string };
   shipping_address?: any;
-  delivery_method?: string;
+  delivery_method?: DeliveryMethod;
   images?: string[];
   offers?: {
     user_id: string;
@@ -192,7 +193,8 @@ export class RequestsSupabaseService {
           requestData.expected_delivery_location,
         expected_delivery: requestData.expected_delivery,
         shipping_address: requestData.shipping_address,
-        delivery_method: requestData.delivery_method || 'personal',
+        delivery_method:
+          requestData.delivery_method || 'personal_handoff',
         images: requestData.images || [],
         created_at: now,
         updated_at: now,
@@ -434,7 +436,9 @@ export async function getRequestById(
       location: data.expected_delivery_location || '',
       createdDate: data.created_at,
       category: data.category || '',
-      deliveryMethod: data.delivery_method as 'ship' | 'personal',
+      deliveryMethod: data.delivery_method as
+        | 'ship'
+        | 'personal_handoff',
       budget: data.budget_min
         ? `${data.budget_min}-${data.budget_max}`
         : undefined,

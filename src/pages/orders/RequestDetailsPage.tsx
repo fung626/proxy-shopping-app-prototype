@@ -59,7 +59,7 @@ interface RequestDetailsPageProps {
     location: string;
     createdDate: string;
     category: string;
-    deliveryMethod?: 'ship' | 'personal';
+    deliveryMethod?: 'ship' | 'personal_handoff';
     budget?: string;
     timeline?: string;
     requirements?: string[];
@@ -231,7 +231,8 @@ export function RequestDetailsPage({
   const getAvailableStatusOptions = () => {
     if (request.role !== 'agent') return [];
 
-    const isPersonalDelivery = request.deliveryMethod === 'personal';
+    const isPersonalDelivery =
+      request.deliveryMethod === 'personal_handoff';
 
     const statusMap: {
       [key: string]: { value: string; label: string }[];
@@ -525,7 +526,7 @@ export function RequestDetailsPage({
                 {/* Delivery Method */}
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-background rounded-full flex items-center justify-center flex-shrink-0">
-                    {request.deliveryMethod === 'personal' ? (
+                    {request.deliveryMethod === 'personal_handoff' ? (
                       <User className="h-4 w-4 text-muted-foreground" />
                     ) : (
                       <Truck className="h-4 w-4 text-muted-foreground" />
@@ -536,19 +537,19 @@ export function RequestDetailsPage({
                       {t('requestDetails.deliveryMethod')}
                     </p>
                     <p className="font-medium text-sm truncate">
-                      {request.deliveryMethod === 'personal'
+                      {request.deliveryMethod === 'personal_handoff'
                         ? t('requestDetails.deliverPersonally')
                         : t('requestDetails.shipToMe')}
                     </p>
                     <Badge
                       variant={
-                        request.deliveryMethod === 'personal'
+                        request.deliveryMethod === 'personal_handoff'
                           ? 'secondary'
                           : 'outline'
                       }
                       className="text-xs px-2 py-0.5 mt-1 inline-block"
                     >
-                      {request.deliveryMethod === 'personal'
+                      {request.deliveryMethod === 'personal_handoff'
                         ? t('requestDetails.inPerson')
                         : t('requestDetails.shipping')}
                     </Badge>
