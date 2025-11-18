@@ -4,9 +4,10 @@
 
 import { SupabaseOffer } from '@/services/offersSupabaseService';
 import { SupabaseRequest } from '@/services/requestsSupabaseService';
+import { SupabaseUser } from '@/services/type';
 
-// Order Status enum
-export type OrderStatus =
+// Shipping Order Status enum
+export type ShippingOrderStatus =
   | 'pending_payment' // Order created, awaiting payment
   | 'payment_confirmed' // Payment received and confirmed
   | 'processing' // Order being prepared/processed
@@ -17,6 +18,22 @@ export type OrderStatus =
   | 'cancelled' // Order cancelled by user or agent
   | 'refunded' // Order refunded
   | 'disputed'; // Order in dispute/arbitration
+
+// Personal Handoff Order Status enum
+export type PersonalHandoffOrderStatus =
+  | 'pending_payment' // Order created, awaiting payment
+  | 'payment_confirmed' // Payment received and confirmed
+  | 'processing' // Order being prepared/processed
+  | 'ready_for_handoff' // Order ready for personal handoff
+  | 'completed' // Order completed and confirmed by customer
+  | 'cancelled' // Order cancelled by user or agent
+  | 'refunded' // Order refunded
+  | 'disputed'; // Order in dispute/arbitration
+
+// Order Status enum
+export type OrderStatus =
+  | ShippingOrderStatus
+  | PersonalHandoffOrderStatus;
 
 // Payment Status enum
 export type PaymentStatus =
@@ -30,7 +47,6 @@ export type PaymentStatus =
 // Delivery Method enum
 export type DeliveryMethod =
   | 'personal_handoff'
-  | 'pickup'
   | 'standard_shipping'
   | 'express_shipping'
   | 'same_day_delivery'
@@ -151,17 +167,9 @@ export interface Order {
 // Order with related data
 export interface DetailedOrder extends Order {
   items: OrderItem[];
-  clientInfo: {
-    id: string;
-    nickname: string;
-    image?: string;
-  };
-  agentInfo: {
-    id: string;
-    nickname: string;
-    image?: string;
-  };
-  history?: OrderHistoryEntry[];
+  client: SupabaseUser;
+  agent: SupabaseUser;
+  history?: OrderHistory[];
   request?: SupabaseRequest;
   offer?: SupabaseOffer;
 }
@@ -178,7 +186,7 @@ export interface SupabaseOrderHistory {
 }
 
 // Order History Entry (Client-side)
-export interface OrderHistoryEntry {
+export interface OrderHistory {
   id: string;
   orderId: string;
   status: OrderStatus;
@@ -266,6 +274,7 @@ export const ORDER_STATUS_VARIANTS: Record<
   pending_payment: 'secondary',
   payment_confirmed: 'default',
   processing: 'default',
+  ready_for_handoff: 'default',
   shipped: 'default',
   in_transit: 'default',
   delivered: 'default',

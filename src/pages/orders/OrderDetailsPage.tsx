@@ -12,21 +12,20 @@ import { useAuthStore } from '@/store/zustand';
 import {
   DeliveryMethod,
   DetailedOrder,
-  OrderHistoryEntry,
+  OrderHistory,
 } from '@/types/order';
 import {
   getOrderRole,
   getOrderStep,
+  getPaymentStatusLabel,
   getStatusLabel,
   getStatusVariant,
   getStepDetails,
 } from '@/utils/orders';
 import {
-  ArrowLeft,
   CheckCircle,
   Clock,
   CreditCard,
-  Loader2,
   MapPin,
   MessageSquare,
   Package,
@@ -34,6 +33,7 @@ import {
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
+import { OrderDetailsSkeleton } from './OrderDetailsSkeleton';
 
 export function OrderDetailsPage() {
   const { t } = useLanguage();
@@ -168,21 +168,13 @@ export function OrderDetailsPage() {
   };
 
   if (loading) {
-    return (
-      <div className="flex-1 bg-background flex items-center justify-center">
-        <Loader2 className="h-12 w-12 text-primary animate-spin" />
-      </div>
-    );
+    return <OrderDetailsSkeleton />;
   }
 
   if (!order) {
     return (
       <div className="flex-1 bg-background">
         <div className="p-4">
-          <Button variant="ghost" onClick={() => navigate('/orders')}>
-            <ArrowLeft className="h-4 w-4 mr-2" />
-            {t('common.back')}
-          </Button>
           <div className="text-center py-12">
             <Package className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
             <h3 className="text-lg font-medium mb-2">
@@ -210,6 +202,10 @@ export function OrderDetailsPage() {
   );
   const isActive =
     order.status !== 'cancelled' && order.status !== 'completed';
+
+  console.log('[DBEUG] OrderDetailsPage Rendered', order);
+
+  // return null;
 
   return (
     <div className="flex-1 bg-background pb-20">
@@ -303,7 +299,6 @@ export function OrderDetailsPage() {
               {t(getStatusLabel(order.status))}
             </Badge>
           </div>
-
           {isActive && (
             <>
               <div className="flex items-center justify-between mb-2">
@@ -327,7 +322,6 @@ export function OrderDetailsPage() {
             </>
           )}
           {deliveryMethod !== 'personal_handoff' &&
-            deliveryMethod !== 'pickup' &&
             order.trackingNumber && (
               <div className="mt-4 p-3 bg-muted/50 rounded-lg">
                 <div className="flex items-center justify-between">
@@ -391,7 +385,7 @@ export function OrderDetailsPage() {
                     : 'secondary'
                 }
               >
-                {order.paymentStatus}
+                {t(getPaymentStatusLabel(order.paymentStatus))}
               </Badge>
             </div>
             {order.paymentMethod && (
@@ -399,7 +393,9 @@ export function OrderDetailsPage() {
                 <span className="text-muted-foreground">
                   {t('orders.paymentMethod')}
                 </span>
-                <span>{order.paymentMethod}</span>
+                <span>
+                  {t(`paymentMethod.${order.paymentMethod}`)}
+                </span>
               </div>
             )}
             {order.paidAt && (
@@ -423,14 +419,14 @@ export function OrderDetailsPage() {
             <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center overflow-hidden">
               {(
                 role === 'client'
-                  ? order.agentInfo?.image
-                  : order.clientInfo?.image
+                  ? order.agent?.avatar
+                  : order.client?.avatar
               ) ? (
                 <ImageWithFallback
                   src={
                     role === 'client'
-                      ? order.agentInfo?.image
-                      : order.clientInfo?.image
+                      ? order.agent?.avatar
+                      : order.client?.avatar
                   }
                   alt="User"
                   className="w-full h-full object-cover"
@@ -438,8 +434,8 @@ export function OrderDetailsPage() {
               ) : (
                 <span className="text-lg font-semibold">
                   {(role === 'client'
-                    ? order.agentInfo?.nickname
-                    : order.clientInfo?.nickname
+                    ? order.agent?.nickname
+                    : order.client?.nickname
                   )
                     ?.charAt(0)
                     .toUpperCase()}
@@ -449,8 +445,8 @@ export function OrderDetailsPage() {
             <div className="flex-1">
               <p className="font-medium">
                 {role === 'client'
-                  ? order.agentInfo?.nickname
-                  : order.clientInfo?.nickname}
+                  ? order.agent?.nickname
+                  : order.client?.nickname}
               </p>
               <p className="text-sm text-muted-foreground">
                 {role === 'client'
@@ -476,7 +472,7 @@ export function OrderDetailsPage() {
             </h2>
             <div className="space-y-3">
               {order.history.map(
-                (entry: OrderHistoryEntry, index: number) => (
+                (entry: OrderHistory, index: number) => (
                   <div key={entry.id} className="flex space-x-3">
                     <div className="flex flex-col items-center">
                       <div className="w-2 h-2 rounded-full bg-primary" />
@@ -486,7 +482,7 @@ export function OrderDetailsPage() {
                     </div>
                     <div className="flex-1 pb-3">
                       <p className="font-medium text-sm">
-                        {entry.status.replace(/_/g, ' ')}
+                        {t(getStatusLabel(entry.status))}
                       </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         {formatDate(entry.createdAt)}
@@ -508,13 +504,19 @@ export function OrderDetailsPage() {
               </span>
               <span>{formatDate(order.createdAt)}</span>
             </div>
-            {order.estimatedDeliveryDate && (
-              <div className="flex justify-between">
-                <span className="text-muted-foreground">
-                  {t('orders.estimatedDelivery')}
-                </span>
-                <span>{formatDate(order.estimatedDeliveryDate)}</span>
-              </div>
+            {order.deliveryMethod === 'personal_handoff' ? (
+              <></>
+            ) : (
+              order.estimatedDeliveryDate && (
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">
+                    {t('orders.estimatedDelivery')}
+                  </span>
+                  <span>
+                    {formatDate(order.estimatedDeliveryDate)}
+                  </span>
+                </div>
+              )
             )}
             {order.actualDeliveryDate && (
               <div className="flex justify-between">

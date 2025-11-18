@@ -2,15 +2,9 @@ import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ProgressSteps } from '@/components/ui/progress-steps';
-import {
-  offersSupabaseService,
-  SupabaseOffer,
-} from '@/services/offersSupabaseService';
+import { offersSupabaseService } from '@/services/offersSupabaseService';
 import { ordersSupabaseService } from '@/services/ordersSupabaseService';
-import {
-  requestsSupabaseService,
-  SupabaseRequest,
-} from '@/services/requestsSupabaseService';
+import { requestsSupabaseService } from '@/services/requestsSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { useAuthStore } from '@/store/zustand';
 import { DetailedOrder } from '@/types/order';
@@ -28,18 +22,12 @@ import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { OrdersTabSkeleton } from '../orders/OrdersTabSkeleton';
 
-// Extended order type with enriched data
-interface Order extends DetailedOrder {
-  request?: SupabaseRequest;
-  offer?: SupabaseOffer;
-}
-
 export function OrdersTab() {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { user } = useAuthStore();
 
-  const [orders, setOrders] = useState<Order[]>([]);
+  const [orders, setOrders] = useState<DetailedOrder[]>([]);
   const [loading, setLoading] = useState(true);
   const [filter, setFilter] = useState<'all' | 'client' | 'agent'>(
     'all'
@@ -107,7 +95,6 @@ export function OrdersTab() {
     const role = getOrderRole(user, order);
     const otherUserId =
       role === 'client' ? order.agentUserId : order.clientUserId;
-
     navigate('/messages', {
       state: {
         selectedUserId: otherUserId,
@@ -127,7 +114,6 @@ export function OrdersTab() {
             {t('orders.description')}
           </p>
         </div>
-
         <div className="px-4 py-8">
           <div className="text-center py-12">
             <Package className="h-16 w-16 text-muted-foreground mx-auto mb-4" />
@@ -162,7 +148,6 @@ export function OrdersTab() {
           {t('orders.description')}
         </p>
       </div>
-
       <div className="px-4 py-4">
         {/* Filter Tabs */}
         <div className="flex gap-2 mb-6">
@@ -231,33 +216,14 @@ export function OrdersTab() {
           <div className="space-y-4">
             {orders.map((order) => {
               const role = getOrderRole(user, order);
-
-              // Determine delivery method from request or offer
-              let deliveryMethod: 'ship' | 'personal_handoff' =
-                'ship';
-
-              if (order.request?.delivery_method) {
-                // Request has explicit delivery_method ("ship" or "personal")
-                deliveryMethod = order.request.delivery_method as
-                  | 'ship'
-                  | 'personal_handoff';
-              } else if (order.offer?.delivery_options) {
-                // Offer has delivery_options array
-                // If it includes "pickup", treat as personal delivery
-                // Otherwise default to ship
-                const hasPickup =
-                  order.offer.delivery_options.indexOf('pickup') !==
-                  -1;
-                deliveryMethod = hasPickup
-                  ? 'personal_handoff'
-                  : 'ship';
-              }
-
-              const step = getOrderStep(order.status, deliveryMethod);
+              const step = getOrderStep(
+                order.status,
+                order.deliveryMethod
+              );
               const currentStepDetails = getStepDetails(
                 step,
                 role,
-                deliveryMethod
+                order.deliveryMethod
               );
               const title =
                 order.request?.title ||
@@ -269,7 +235,6 @@ export function OrdersTab() {
                 '';
               const images =
                 order.request?.images || order.offer?.images || [];
-
               return (
                 <div
                   key={order.id}
@@ -288,7 +253,6 @@ export function OrdersTab() {
                         </div>
                       </div>
                     )}
-
                     {/* Content */}
                     <div className="flex-1 min-w-0">
                       <div className="flex justify-between items-start mb-2">
@@ -341,7 +305,8 @@ export function OrdersTab() {
                         <p className="text-xs text-muted-foreground mb-3">
                           {t(currentStepDetails.description)}
                         </p>
-                        {deliveryMethod === 'ship' &&
+                        {order.deliveryMethod !==
+                          'personal_handoff' &&
                           order.trackingNumber && (
                             <div className="mb-3 p-3 bg-background rounded-lg border">
                               <div className="flex items-center space-x-2">
@@ -352,7 +317,6 @@ export function OrdersTab() {
                               </div>
                             </div>
                           )}
-
                         <ProgressSteps
                           currentStep={step}
                           numberOfSteps={5}
@@ -370,8 +334,8 @@ export function OrdersTab() {
                     </p>
                     <p className="font-medium">
                       {role === 'client'
-                        ? order.agentInfo?.nickname || 'Agent'
-                        : order.clientInfo?.nickname || 'Client'}
+                        ? order.agent?.nickname || 'Agent'
+                        : order.client?.nickname || 'Client'}
                     </p>
                   </div>
 

@@ -14,14 +14,20 @@
 -- 1. ENUMS
 -- =====================================================
 
+-- Drop existing types to avoid conflicts
+DROP TYPE IF EXISTS order_status CASCADE;
+DROP TYPE IF EXISTS payment_status CASCADE;
+DROP TYPE IF EXISTS delivery_method CASCADE;
+
 -- Order status enum
 CREATE TYPE order_status AS ENUM (
   'pending_payment',      -- Order created, awaiting payment
   'payment_confirmed',    -- Payment received and confirmed
   'processing',           -- Order being prepared/processed
-  'shipped',              -- Order shipped to customer
-  'in_transit',           -- Order in delivery
-  'delivered',            -- Order delivered successfully
+  'ready_for_handoff',    -- Order ready for personal handoff (personal delivery only)
+  'shipped',              -- Order shipped to customer (shipping only)
+  'in_transit',           -- Order in delivery (shipping only)
+  'delivered',            -- Order delivered successfully (shipping only)
   'completed',            -- Order completed and confirmed by customer
   'cancelled',            -- Order cancelled by user or agent
   'refunded',             -- Order refunded
@@ -40,7 +46,7 @@ CREATE TYPE payment_status AS ENUM (
 
 -- Delivery method enum
 CREATE TYPE delivery_method AS ENUM (
-  'pickup',
+  'personal_handoff',
   'standard_shipping',
   'express_shipping',
   'same_day_delivery',
@@ -67,7 +73,7 @@ CREATE TABLE IF NOT EXISTS orders (
   -- Order details
   status order_status NOT NULL DEFAULT 'pending_payment',
   total_amount DECIMAL(10, 2) NOT NULL,
-  currency VARCHAR(3) NOT NULL DEFAULT 'USD',
+  currency VARCHAR(3) NOT NULL DEFAULT 'HKD',
   
   -- Payment information
   payment_status payment_status NOT NULL DEFAULT 'pending',
@@ -77,20 +83,20 @@ CREATE TABLE IF NOT EXISTS orders (
   
   -- Delivery information
   delivery_method delivery_method NOT NULL,
-  delivery_address JSONB NOT NULL, -- {street, city, state, country, postal_code, phone}
+  expected_meeting_location TEXT NULL,
+  delivery_address JSONB NULL, -- {street, city, state, country, postal_code, phone} - Required for shipping, null for personal_handoff
   tracking_number VARCHAR(100),
   estimated_delivery_date DATE,
   actual_delivery_date DATE,
   
   -- Additional information
-  notes TEXT,
   cancellation_reason TEXT,
   refund_amount DECIMAL(10, 2),
   refund_reason TEXT,
   
   -- Agent commission
-  agent_commission_rate DECIMAL(5, 2) DEFAULT 10.00, -- Percentage
-  agent_commission_amount DECIMAL(10, 2),
+  agent_commission_rate DECIMAL(5, 2) DEFAULT 0, -- Percentage
+  agent_commission_amount DECIMAL(10, 2) DEFAULT 0,
   
   -- Metadata
   metadata JSONB DEFAULT '{}', -- For extensibility
@@ -181,71 +187,22 @@ CREATE INDEX IF NOT EXISTS idx_order_history_order_id ON order_history(order_id)
 CREATE INDEX IF NOT EXISTS idx_order_history_created_at ON order_history(created_at DESC);
 
 -- =====================================================
--- 6. ROW LEVEL SECURITY (RLS) POLICIES
+-- 6. TRIGGERS
 -- =====================================================
 
--- Enable RLS
-ALTER TABLE orders ENABLE ROW LEVEL SECURITY;
-ALTER TABLE order_items ENABLE ROW LEVEL SECURITY;
-ALTER TABLE order_history ENABLE ROW LEVEL SECURITY;
+-- Drop existing triggers and functions to avoid conflicts
+DROP TRIGGER IF EXISTS orders_updated_at_trigger ON orders;
+DROP TRIGGER IF EXISTS order_items_updated_at_trigger ON order_items;
+DROP TRIGGER IF EXISTS order_status_change_trigger ON orders;
+DROP TRIGGER IF EXISTS generate_order_number_trigger ON orders;
 
--- Orders policies
-CREATE POLICY "Users can view their own orders (as client)" ON orders
-  FOR SELECT USING (auth.uid() = client_user_id);
-
-CREATE POLICY "Users can view their own orders (as agent)" ON orders
-  FOR SELECT USING (auth.uid() = agent_user_id);
-
-CREATE POLICY "Clients can create orders" ON orders
-  FOR INSERT WITH CHECK (auth.uid() = client_user_id);
-
-CREATE POLICY "Clients can update their orders (limited)" ON orders
-  FOR UPDATE USING (
-    auth.uid() = client_user_id AND
-    status IN ('pending_payment', 'payment_confirmed')
-  );
-
-CREATE POLICY "Agents can update orders (status management)" ON orders
-  FOR UPDATE USING (auth.uid() = agent_user_id);
-
--- Order items policies
-CREATE POLICY "Users can view order items for their orders" ON order_items
-  FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM orders
-      WHERE orders.id = order_items.order_id
-      AND (orders.client_user_id = auth.uid() OR orders.agent_user_id = auth.uid())
-    )
-  );
-
-CREATE POLICY "Users can insert order items for their orders" ON order_items
-  FOR INSERT WITH CHECK (
-    EXISTS (
-      SELECT 1 FROM orders
-      WHERE orders.id = order_items.order_id
-      AND orders.client_user_id = auth.uid()
-    )
-  );
-
--- Order history policies
-CREATE POLICY "Users can view order history for their orders" ON order_history
-  FOR SELECT USING (
-    EXISTS (
-      SELECT 1 FROM orders
-      WHERE orders.id = order_history.order_id
-      AND (orders.client_user_id = auth.uid() OR orders.agent_user_id = auth.uid())
-    )
-  );
-
-CREATE POLICY "System can insert order history" ON order_history
-  FOR INSERT WITH CHECK (true);
-
--- =====================================================
--- 7. TRIGGERS
--- =====================================================
+DROP FUNCTION IF EXISTS update_orders_updated_at();
+DROP FUNCTION IF EXISTS update_order_items_updated_at();
+DROP FUNCTION IF EXISTS create_order_history_on_status_change();
+DROP FUNCTION IF EXISTS generate_order_number();
 
 -- Auto-update updated_at timestamp for orders
-CREATE OR REPLACE FUNCTION update_orders_updated_at()
+CREATE FUNCTION update_orders_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
   NEW.updated_at = NOW();
@@ -259,7 +216,7 @@ CREATE TRIGGER orders_updated_at_trigger
   EXECUTE FUNCTION update_orders_updated_at();
 
 -- Auto-update updated_at timestamp for order_items
-CREATE OR REPLACE FUNCTION update_order_items_updated_at()
+CREATE FUNCTION update_order_items_updated_at()
 RETURNS TRIGGER AS $$
 BEGIN
   NEW.updated_at = NOW();
@@ -273,7 +230,7 @@ CREATE TRIGGER order_items_updated_at_trigger
   EXECUTE FUNCTION update_order_items_updated_at();
 
 -- Auto-create order history entry when status changes
-CREATE OR REPLACE FUNCTION create_order_history_on_status_change()
+CREATE FUNCTION create_order_history_on_status_change()
 RETURNS TRIGGER AS $$
 BEGIN
   IF NEW.status IS DISTINCT FROM OLD.status THEN
@@ -305,7 +262,7 @@ CREATE TRIGGER order_status_change_trigger
   EXECUTE FUNCTION create_order_history_on_status_change();
 
 -- Auto-generate order number
-CREATE OR REPLACE FUNCTION generate_order_number()
+CREATE FUNCTION generate_order_number()
 RETURNS TRIGGER AS $$
 BEGIN
   IF NEW.order_number IS NULL OR NEW.order_number = '' THEN
@@ -322,11 +279,15 @@ CREATE TRIGGER generate_order_number_trigger
   EXECUTE FUNCTION generate_order_number();
 
 -- =====================================================
--- 8. HELPER FUNCTIONS
+-- 7. HELPER FUNCTIONS
 -- =====================================================
 
+-- Drop existing helper functions to avoid conflicts
+DROP FUNCTION IF EXISTS calculate_order_total(UUID);
+DROP FUNCTION IF EXISTS get_order_details(UUID);
+
 -- Function to calculate order total from items
-CREATE OR REPLACE FUNCTION calculate_order_total(p_order_id UUID)
+CREATE FUNCTION calculate_order_total(p_order_id UUID)
 RETURNS DECIMAL(10, 2) AS $$
 DECLARE
   v_total DECIMAL(10, 2);
@@ -341,7 +302,7 @@ END;
 $$ LANGUAGE plpgsql;
 
 -- Function to get orders with full details (including items and users)
-CREATE OR REPLACE FUNCTION get_order_details(p_order_id UUID)
+CREATE FUNCTION get_order_details(p_order_id UUID)
 RETURNS TABLE (
   order_data JSONB,
   items JSONB,
@@ -395,7 +356,7 @@ END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- =====================================================
--- 9. SAMPLE DATA (Optional - for testing)
+-- 8. SAMPLE DATA (Optional - for testing)
 -- =====================================================
 
 -- Note: Uncomment below to insert sample data for testing

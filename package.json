@@ -73,7 +73,7 @@
     "preview": "vite preview",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
-    "deploy-win": "cd dist && git init && git add -A && git commit -m 'deploy' && git branch -M gh-pages && git remote add origin https://github.com/fung626/proxy-shopping-app-prototype.git && git push -f origin gh-pages && cd .. && Remove-Item -Recurse -Force dist\\.git",
+    "win:deploy": "cd dist && git init && git add -A && git commit -m 'deploy' && git branch -M gh-pages && git remote add origin https://github.com/fung626/proxy-shopping-app-prototype.git && git push -f origin gh-pages && cd .. && Remove-Item -Recurse -Force dist\\.git",
     "type-check": "tsc --noEmit",
     "supabase:setup": "echo 'Setting up Supabase...' && echo 'Please run the setup wizard in your browser at http://localhost:5173'",
     "db:seed": "echo 'Seeding database with demo data...'",

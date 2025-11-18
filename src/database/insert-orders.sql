@@ -1,110 +1,9 @@
--- Drop the tables if they exist
-DROP TABLE IF EXISTS order_history CASCADE;
-DROP TABLE IF EXISTS order_items CASCADE;
-DROP TABLE IF EXISTS orders CASCADE;
-
--- Create orders table
-CREATE TABLE IF NOT EXISTS orders (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    order_number TEXT UNIQUE NOT NULL,
-    
-    -- Participants
-    client_user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    agent_user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    
-    -- Related entities
-    request_id UUID REFERENCES requests(id) ON DELETE SET NULL,
-    offer_id UUID REFERENCES offers(id) ON DELETE SET NULL,
-    
-    -- Order status
-    status TEXT NOT NULL DEFAULT 'pending_payment',
-    
-    -- Financial information
-    total_amount NUMERIC(10, 2) NOT NULL,
-    currency TEXT NOT NULL DEFAULT 'USD',
-    
-    -- Payment information
-    payment_status TEXT NOT NULL DEFAULT 'pending',
-    payment_method TEXT,
-    payment_transaction_id TEXT,
-    paid_at TIMESTAMP WITH TIME ZONE,
-    
-    -- Delivery information
-    delivery_method TEXT NOT NULL,
-    expected_meeting_location TEXT,
-    delivery_address JSONB NOT NULL,
-    tracking_number TEXT,
-    estimated_delivery_date TIMESTAMP WITH TIME ZONE,
-    actual_delivery_date TIMESTAMP WITH TIME ZONE,
-    
-    -- Additional information
-    notes TEXT,
-    cancellation_reason TEXT,
-    refund_amount NUMERIC(10, 2),
-    refund_reason TEXT,
-    
-    -- Agent commission
-    agent_commission_rate NUMERIC(5, 2) DEFAULT 0.00,
-    agent_commission_amount NUMERIC(10, 2) DEFAULT 0.00,
-    
-    -- Metadata
-    metadata JSONB DEFAULT '{}',
-    
-    -- Timestamps
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    cancelled_at TIMESTAMP WITH TIME ZONE,
-    completed_at TIMESTAMP WITH TIME ZONE
-);
-
--- Create order_items table
-CREATE TABLE IF NOT EXISTS order_items (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
-    
-    -- Product information
-    product_name TEXT NOT NULL,
-    product_description TEXT,
-    product_image_url TEXT,
-    
-    -- Pricing
-    quantity INTEGER NOT NULL CHECK (quantity > 0),
-    unit_price NUMERIC(10, 2) NOT NULL,
-    subtotal NUMERIC(10, 2) NOT NULL,
-    
-    -- References
-    offer_id UUID REFERENCES offers(id) ON DELETE SET NULL,
-    
-    -- Additional specifications
-    specifications JSONB DEFAULT '{}',
-    
-    -- Timestamps
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-    updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
--- Create order_history table
-CREATE TABLE IF NOT EXISTS order_history (
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    order_id UUID NOT NULL REFERENCES orders(id) ON DELETE CASCADE,
-    
-    -- Status change information
-    status TEXT NOT NULL,
-    changed_by UUID REFERENCES users(id) ON DELETE SET NULL,
-    
-    -- Metadata
-    metadata JSONB DEFAULT '{}',
-    
-    -- Timestamp
-    created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
 -- Insert test order data based on requests
 INSERT INTO "public"."orders" (
     "id", "order_number", "client_user_id", "agent_user_id", "request_id", "offer_id", 
     "status", "total_amount", "currency", "payment_status", "payment_method", "paid_at",
-    "delivery_method", "expected_meeting_location", "delivery_address", "tracking_number", "estimated_delivery_date",
-    "notes", "agent_commission_rate", "agent_commission_amount", 
+    "delivery_method", "expected_meeting_location", "tracking_number", "estimated_delivery_date",
+    "agent_commission_rate", "agent_commission_amount", 
     "created_at", "updated_at", "completed_at"
 ) VALUES
 -- Order 1: 多功能收納盒 - Completed
@@ -113,9 +12,8 @@ INSERT INTO "public"."orders" (
  '11223344-5566-7788-99aa-bbccddeeff00', NULL,
  'completed', 85.00, 'HKD', 'completed', 'credit_card', '2025-11-10 14:00:00+00',
  'personal_handoff', 'Sha Tin Plaza', 
- '{"fullName":"Bob Chan","phone":"","street":"Sha Tin","addressLine2":"","city":"Hong Kong","state":"","postalCode":"","country":"HKG"}',
  'HK123456789CN', '2025-11-17 00:00:00+00',
- 'Order for multi-functional storage box from Guangzhou', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-10 13:30:00+00', '2025-11-15 10:00:00+00', '2025-11-15 10:00:00+00'),
 
 -- Order 2: 寶可夢卡牌 - In Transit
@@ -124,9 +22,8 @@ INSERT INTO "public"."orders" (
  '11aabbcc-ddee-1122-3344-556677889900', NULL,
  'in_transit', 175.00, 'HKD', 'completed', 'paypal', '2025-11-01 11:00:00+00',
  'personal_handoff', 'Tokyo Pokemon Center',
- '{"fullName":"John Smith","phone":"","street":"123 Main St","addressLine2":"Apt 4B","city":"Los Angeles","state":"CA","postalCode":"90210","country":"USA"}',
  'JP987654321US', '2025-11-16 00:00:00+00',
- 'Rare Pokemon cards from Tokyo Pokemon Center', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-01 10:30:00+00', '2025-11-14 09:00:00+00', NULL),
 
 -- Order 3: 廚房紙巾 - Shipped
@@ -135,9 +32,8 @@ INSERT INTO "public"."orders" (
  '22334455-6677-8899-aabb-ccddeeff0011', NULL,
  'shipped', 35.00, 'HKD', 'completed', 'credit_card', '2025-11-12 15:00:00+00',
  'personal_handoff', 'Tuen Mun Town Plaza',
- '{"fullName":"Cathy Lee","phone":"","street":"Tuen Mun","addressLine2":"","city":"Hong Kong","state":"","postalCode":"","country":"HKG"}',
  'CN555666777HK', '2025-11-18 00:00:00+00',
- 'High quality kitchen towels bulk pack', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-12 14:30:00+00', '2025-11-14 16:00:00+00', NULL),
 
 -- Order 4: 日本廚刀 - Processing
@@ -146,9 +42,8 @@ INSERT INTO "public"."orders" (
  '22bbccdd-eeff-2233-4455-667788990011', NULL,
  'processing', 325.00, 'HKD', 'completed', 'credit_card', '2025-11-03 16:00:00+00',
  'personal_handoff', 'Tsukiji Market',
- '{"fullName":"Jane Smith","phone":"","street":"","addressLine2":"","city":"Hong Kong","state":"","postalCode":"","country":"HKG"}',
  NULL, '2025-11-20 00:00:00+00',
- 'Professional Japanese chef knife from Tsukiji Market', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-03 15:30:00+00', '2025-11-15 11:00:00+00', NULL),
 
 -- Order 5: 韓國護膚套裝 - Delivered
@@ -157,9 +52,8 @@ INSERT INTO "public"."orders" (
  '33ccddee-ffaa-3344-5566-778899001122', NULL,
  'delivered', 140.00, 'HKD', 'completed', 'credit_card', '2025-11-04 10:00:00+00',
  'personal_handoff', 'Myeongdong Shopping Street',
- '{"fullName":"Emily Johnson","phone":"","street":"456 Broadway","addressLine2":"","city":"New York","state":"NY","postalCode":"10001","country":"USA"}',
  'KR111222333US', '2025-11-19 00:00:00+00',
- 'Korean skincare set for glass skin from Myeongdong', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-04 09:30:00+00', '2025-11-14 14:00:00+00', NULL),
 
 -- Order 6: 復古樂隊T恤 - Completed
@@ -168,9 +62,8 @@ INSERT INTO "public"."orders" (
  '44ddeeff-aabb-4455-6677-889900112233', NULL,
  'completed', 90.00, 'HKD', 'completed', 'paypal', '2025-11-05 17:30:00+00',
  'personal_handoff', NULL,
- '{"fullName":"Mike Wilson","phone":"","street":"789 Queen St W","addressLine2":"Unit 12","city":"Toronto","state":"ON","postalCode":"M6J 1G1","country":"Canada"}',
  'UK444555666CA', '2025-11-22 00:00:00+00',
- 'Vintage British rock band t-shirts from Camden Market', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-05 17:00:00+00', '2025-11-13 12:00:00+00', '2025-11-13 12:00:00+00'),
 
 -- Order 7: 機械鍵盤 - In Transit
@@ -179,9 +72,8 @@ INSERT INTO "public"."orders" (
  '55eeffaa-bbcc-5566-7788-990011223344', NULL,
  'in_transit', 300.00, 'HKD', 'completed', 'credit_card', '2025-11-06 12:00:00+00',
  'personal_handoff', 'Berlin Tech District',
- '{"fullName":"Alex Chen","phone":"","street":"321 Tech Blvd","addressLine2":"Floor 5","city":"San Francisco","state":"CA","postalCode":"94105","country":"USA"}',
  'DE777888999US', '2025-11-25 00:00:00+00',
- 'German mechanical keyboard with Cherry MX switches', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-06 11:30:00+00', '2025-11-14 13:00:00+00', NULL),
 
 -- Order 8: 瑞士手錶工具 - Processing
@@ -190,9 +82,8 @@ INSERT INTO "public"."orders" (
  '66ffaabb-ccdd-6677-8899-001122334455', NULL,
  'processing', 350.00, 'HKD', 'completed', 'credit_card', '2025-11-07 14:00:00+00',
  'personal_handoff', 'Geneva Old Town',
- '{"fullName":"Sarah Liu","phone":"","street":"","addressLine2":"","city":"Miami","state":"FL","postalCode":"","country":"USA"}',
  NULL, '2025-11-28 00:00:00+00',
- 'Swiss watch repair tools and parts from Geneva', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-07 13:30:00+00', '2025-11-15 10:30:00+00', NULL),
 
 -- Order 9: 書法毛筆 - Shipped
@@ -201,9 +92,8 @@ INSERT INTO "public"."orders" (
  '77aabbcc-ddee-7788-9900-112233445566', NULL,
  'shipped', 80.00, 'HKD', 'completed', 'paypal', '2025-11-08 09:00:00+00',
  'personal_handoff', 'Beijing Art District',
- '{"fullName":"David Brown","phone":"","street":"654 Granville St","addressLine2":"","city":"Vancouver","state":"BC","postalCode":"V6C 1X8","country":"Canada"}',
  'CN999000111CA', '2025-11-30 00:00:00+00',
- 'Traditional Chinese calligraphy brushes and inkstone', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-08 08:30:00+00', '2025-11-14 15:00:00+00', NULL),
 
 -- Order 10: Taylor Swift門票 - Payment Confirmed
@@ -212,9 +102,8 @@ INSERT INTO "public"."orders" (
  'bbccddef-fabb-bb22-3344-556677889911', NULL,
  'payment_confirmed', 1650.00, 'HKD', 'completed', 'credit_card', '2025-11-11 10:00:00+00',
  'personal_handoff', 'Central District',
- '{"fullName":"John Doe","phone":"","street":"Central District","addressLine2":"","city":"Hong Kong","state":"","postalCode":"","country":"HKG"}',
  NULL, NULL,
- 'Taylor Swift concert tickets - VIP section', 0.00, 0.00,
+ 0.00, 0.00,
  '2025-11-11 09:30:00+00', '2025-11-11 10:00:00+00', NULL);
 
 -- Insert order items (using gen_random_uuid() for IDs)
@@ -284,7 +173,7 @@ INSERT INTO "public"."order_items" (
 
 -- Insert order history
 INSERT INTO "public"."order_history" (
-    "order_id", "status", "changed_by", "created_at"
+    "order_id", "status", "changed_by_user_id", "created_at"
 ) VALUES
 -- Order 1 history (Completed)
 ('a1b2c3d4-e5f6-7890-abcd-ef1234567890', 'pending_payment', '264cb457-c21d-47d0-b56e-1149b958d625', '2025-11-10 13:30:00+00'),

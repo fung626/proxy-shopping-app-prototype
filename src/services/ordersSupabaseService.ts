@@ -4,7 +4,7 @@ import {
   DetailedOrder,
   Order,
   OrderFilters,
-  OrderHistoryEntry,
+  OrderHistory,
   OrderItem,
   OrderStatistics,
   OrderStatus,
@@ -94,7 +94,7 @@ class OrdersSupabaseService {
    */
   private transformOrderHistory(
     supabaseHistory: SupabaseOrderHistory
-  ): OrderHistoryEntry {
+  ): OrderHistory {
     return {
       id: supabaseHistory.id,
       orderId: supabaseHistory.order_id,
@@ -102,7 +102,6 @@ class OrdersSupabaseService {
       previousStatus: supabaseHistory.previous_status || undefined,
       changedByUserId:
         supabaseHistory.changed_by_user_id || undefined,
-      notes: supabaseHistory.notes || undefined,
       metadata: supabaseHistory.metadata,
       createdAt: supabaseHistory.created_at,
     };
@@ -218,18 +217,18 @@ class OrdersSupabaseService {
       if (itemsError) throw itemsError;
 
       // Get client info
-      const { data: clientData, error: clientError } = await supabase
+      const { data: client, error: clientError } = await supabase
         .from('users')
-        .select('id, nickname, avatar')
+        .select('*')
         .eq('id', order.client_user_id)
         .single();
 
       if (clientError) throw clientError;
 
       // Get agent info
-      const { data: agentData, error: agentError } = await supabase
+      const { data: agent, error: agentError } = await supabase
         .from('users')
-        .select('id, nickname, avatar')
+        .select('*')
         .eq('id', order.agent_user_id)
         .single();
 
@@ -258,16 +257,8 @@ class OrdersSupabaseService {
       return {
         ...transformedOrder,
         items: transformedItems,
-        clientInfo: {
-          id: clientData.id,
-          nickname: clientData.nickname,
-          image: clientData.avatar || undefined,
-        },
-        agentInfo: {
-          id: agentData.id,
-          nickname: agentData.nickname,
-          image: agentData.avatar || undefined,
-        },
+        client: client,
+        agent: agent,
         history: transformedHistory,
       };
     } catch (error) {

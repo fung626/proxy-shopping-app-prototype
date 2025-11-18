@@ -401,9 +401,10 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
                     {t('requestDetails.deliveryMethod')}
                   </h4>
                   <p className="text-sm text-muted-foreground">
-                    {requestData.delivery_method === 'ship'
-                      ? t('requestDetails.shipToAddress')
-                      : t('requestDetails.deliverInPerson')}
+                    {requestData.delivery_method ===
+                    'personal_handoff'
+                      ? t('requestDetails.deliverInPerson')
+                      : t('requestDetails.shipToAddress')}
                   </p>
                 </div>
               </div>
@@ -447,9 +448,7 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
             </div>
           </div>
         </div>
-
         <Separator />
-
         {/* Specific Requirements */}
         {requestData?.specific_requirements &&
           requestData.specific_requirements.length > 0 && (
@@ -477,7 +476,6 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
               <Separator />
             </>
           )}
-
         {/* Trust & Protection */}
         <div className="py-6">
           <h3 className="font-semibold mb-4">
@@ -495,7 +493,6 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
                 </p>
               </div>
             </div>
-
             <div className="flex items-start space-x-3 p-4 rounded-lg bg-blue-50 dark:bg-blue-950/20">
               <CheckCircle2 className="h-5 w-5 text-blue-600 flex-shrink-0 mt-0.5" />
               <div>
@@ -507,7 +504,6 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
                 </p>
               </div>
             </div>
-
             <div className="flex items-start space-x-3 p-4 rounded-lg bg-purple-50 dark:bg-purple-950/20">
               <Star className="h-5 w-5 text-purple-600 flex-shrink-0 mt-0.5" />
               <div>
@@ -521,9 +517,7 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
             </div>
           </div>
         </div>
-
         <Separator />
-
         {/* Client Stats */}
         <div className="py-6">
           <h3 className="font-semibold mb-4">
@@ -558,7 +552,6 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
             </div>
           </div>
         </div>
-
         {/* Offers Section */}
         {requestData?.offers && requestData.offers.length > 0 && (
           <div className="py-6">

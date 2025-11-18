@@ -3,6 +3,7 @@ import {
   DeliveryMethod,
   DetailedOrder,
   OrderStatus,
+  PaymentStatus,
 } from '@/types/order';
 import {
   CreditCard,
@@ -29,6 +30,7 @@ export const getOrderStep = (
       pending_payment: 1,
       payment_confirmed: 1,
       processing: 2,
+      shopping: 3,
       shipped: 3, // Repurposed as "ready for pickup"
       in_transit: 4, // Repurposed as "meeting arranged"
       delivered: 5,
@@ -186,20 +188,35 @@ export const getStepDetails = (
   }
 };
 
-export const getStatusLabel = (status: OrderStatus) => {
+export const getStatusLabel = (status: OrderStatus): string => {
   const map: Record<string, string> = {
-    pending_payment: 'orders.status.pending_payment',
-    payment_confirmed: 'orders.status.paid',
-    processing: 'orders.status.shopping',
-    shipped: 'orders.status.shipped',
-    in_transit: 'orders.status.in_transit',
-    delivered: 'orders.status.delivered',
-    completed: 'orders.status.completed',
-    cancelled: 'orders.status.cancelled',
-    refunded: 'orders.status.refunded',
-    disputed: 'orders.status.cancelled',
+    pending_payment: 'orderStatus.pending_payment',
+    payment_confirmed: 'orderStatus.payment_confirmed',
+    processing: 'orderStatus.shopping',
+    shipped: 'orderStatus.shipped',
+    in_transit: 'orderStatus.in_transit',
+    delivered: 'orderStatus.delivered',
+    completed: 'orderStatus.completed',
+    cancelled: 'orderStatus.cancelled',
+    refunded: 'orderStatus.refunded',
+    disputed: 'orderStatus.cancelled',
   };
   return map[status] || status;
+};
+
+export const getPaymentStatusLabel = (
+  status: PaymentStatus
+): string => {
+  const map: Record<string, string> = {
+    pending: 'paymentStatus.pending',
+    processing: 'paymentStatus.processing',
+    completed: 'paymentStatus.completed',
+    failed: 'paymentStatus.failed',
+    refunded: 'paymentStatus.refunded',
+    partially_refunded: 'paymentStatus.partially_refunded',
+  };
+  console.log('[DBEUG] GetPaymentStatusLabel', map, status, map);
+  return map[status] || String(status);
 };
 
 export const getStatusVariant = (

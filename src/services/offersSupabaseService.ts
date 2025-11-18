@@ -1,4 +1,5 @@
 import { supabase } from '@/supabase/client';
+import { DeliveryMethod } from '@/types/order';
 
 export interface SupabaseOffer {
   id: string;
@@ -14,7 +15,7 @@ export interface SupabaseOffer {
   estimated_delivery?: { start: number; end: number; type: string };
   specifications?: string[];
   tags?: string[];
-  delivery_options?: string[];
+  delivery_options?: DeliveryMethod[];
   images?: string[];
   created_at: string;
   updated_at: string;
