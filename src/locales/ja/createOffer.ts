@@ -33,6 +33,7 @@ export const createOffer = {
   expressDeliveryDescription: '高速配送サービス',
   imageDescription:
     '高品質な画像は潜在的な買い手との信頼構築に役立ちます',
+  makingOfferFor: 'リクエストに対するオファーを作成',
   infoBoxDescription:
     'あなたのショッピング専門知識を共有し、世界中の顧客に商品の購入・配送サービスを提供しましょう。',
   infoBoxTitle: 'ショッピングオファーの作成',

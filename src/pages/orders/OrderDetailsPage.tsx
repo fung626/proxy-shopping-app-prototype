@@ -1,8 +1,17 @@
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
+import AppModal from '@/components/modal/AppModal';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { ProgressSteps } from '@/components/ui/progress-steps';
 import { Separator } from '@/components/ui/separator';
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from '@/components/ui/sheet';
+import { useModal } from '@/hooks/useModal';
 import { chatSupabaseService } from '@/services/chatSupabaseService';
 import { offersSupabaseService } from '@/services/offersSupabaseService';
 import { ordersSupabaseService } from '@/services/ordersSupabaseService';
@@ -31,12 +40,14 @@ import {
   Package,
   XCircle,
 } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import { OrderDetailsSkeleton } from './OrderDetailsSkeleton';
 
 export function OrderDetailsPage() {
   const { t } = useLanguage();
+
+  const { showModal } = useModal();
   const navigate = useNavigate();
   const { user } = useAuthStore();
   const { orderId } = useParams<{ orderId: string }>();
@@ -118,31 +129,194 @@ export function OrderDetailsPage() {
 
   const handleCancelOrder = async () => {
     if (!order) return;
-    const confirmed = window.confirm(t('orders.confirmCancel'));
-    if (!confirmed) return;
-
-    const reason = window.prompt(t('orders.cancelReason'));
-    if (!reason) return;
-
+    const confirmModalResult = await showModal({
+      component: AppModal,
+      props: {
+        title: 'common.alert',
+        content: t('orders.confirmCancel'),
+      },
+    });
+    if (confirmModalResult.action === 'CLOSE') return;
+    const reasonModalResult = await showModal({
+      component: AppModal,
+      props: {
+        title: 'common.alert',
+        content: t('orders.cancelReason'),
+      },
+    });
+    if (reasonModalResult.action === 'CLOSE') return;
     const result = await ordersSupabaseService.cancelOrder(
       order.id,
-      reason
+      'demo reason'
     );
     if (result) {
       await fetch();
     }
   };
 
-  const handleCompleteOrder = async () => {
+  const handleConfirmPayment = async () => {
     if (!order) return;
-    const confirmed = window.confirm(t('orders.confirmComplete'));
-    if (!confirmed) return;
+    const modalResult = await showModal({
+      component: AppModal,
+      props: {
+        title: 'common.alert',
+        content: t('orders.confirmPayment'),
+      },
+    });
+    if (modalResult.action === 'CONFIRM') {
+      const result = await ordersSupabaseService.confirmPayment(
+        order.id
+      );
+      if (result) {
+        await fetch();
+      }
+    }
+  };
 
-    const result = await ordersSupabaseService.completeOrder(
+  const handleMarkAsProcessing = async () => {
+    if (!order) return;
+    const result = await ordersSupabaseService.markAsProcessing(
       order.id
     );
     if (result) {
       await fetch();
+    }
+  };
+
+  const handleMarkReadyForHandoff = async () => {
+    if (!order) return;
+    const result = await ordersSupabaseService.markReadyForHandoff(
+      order.id
+    );
+    if (result) {
+      await fetch();
+    }
+  };
+
+  const handleMarkAsShipped = async () => {
+    if (!order) return;
+    const trackingNumber = window.prompt(
+      t('orders.enterTrackingNumber')
+    );
+    if (!trackingNumber) return;
+
+    const result = await ordersSupabaseService.markAsShipped(
+      order.id,
+      trackingNumber
+    );
+    if (result) {
+      await fetch();
+    }
+  };
+
+  const handleMarkInTransit = async () => {
+    if (!order) return;
+    const result = await ordersSupabaseService.markInTransit(
+      order.id
+    );
+    if (result) {
+      await fetch();
+    }
+  };
+
+  const handleMarkAsDelivered = async () => {
+    if (!order) return;
+    const result = await ordersSupabaseService.markAsDelivered(
+      order.id
+    );
+    if (result) {
+      await fetch();
+    }
+  };
+
+  const handleConfirmCompletion = async () => {
+    if (!order) return;
+    const confirmed = window.confirm(t('orders.confirmComplete'));
+    if (!confirmed) return;
+
+    const result = await ordersSupabaseService.confirmCompletion(
+      order.id
+    );
+    if (result) {
+      await fetch();
+    }
+  };
+
+  const [showPinVerification, setShowPinVerification] =
+    useState(false);
+  const [enteredPin, setEnteredPin] = useState([
+    '',
+    '',
+    '',
+    '',
+    '',
+    '',
+  ]);
+  const [pinError, setPinError] = useState(false);
+  const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
+
+  const handleAgentConfirmHandoff = () => {
+    setShowPinVerification(true);
+  };
+
+  const handlePinInputChange = (index: number, value: string) => {
+    const digit = value.replace(/\D/g, '');
+    if (digit.length <= 1) {
+      const newPin = [...enteredPin];
+      newPin[index] = digit;
+      setEnteredPin(newPin);
+      setPinError(false);
+
+      if (digit && index < 5) {
+        inputRefs.current[index + 1]?.focus();
+      }
+    }
+  };
+
+  const handlePinKeyDown = (
+    index: number,
+    e: React.KeyboardEvent<HTMLInputElement>
+  ) => {
+    if (e.key === 'Backspace' && !enteredPin[index] && index > 0) {
+      inputRefs.current[index - 1]?.focus();
+    }
+  };
+
+  const handlePinPaste = (
+    e: React.ClipboardEvent<HTMLInputElement>
+  ) => {
+    e.preventDefault();
+    const pastedData = e.clipboardData
+      .getData('text')
+      .replace(/\D/g, '')
+      .slice(0, 6);
+
+    if (pastedData) {
+      const newPin = [...enteredPin];
+      for (let i = 0; i < 6; i++) {
+        newPin[i] = pastedData[i] || '';
+      }
+      setEnteredPin(newPin);
+      const nextIndex = Math.min(pastedData.length, 5);
+      inputRefs.current[nextIndex]?.focus();
+    }
+  };
+
+  const handleVerifyPin = async () => {
+    const pin = enteredPin.join('');
+    if (pin === order?.confirmationPin) {
+      const result = await ordersSupabaseService.confirmCompletion(
+        order.id
+      );
+      if (result) {
+        setShowPinVerification(false);
+        setEnteredPin(['', '', '', '', '', '']);
+        await fetch();
+      }
+    } else {
+      setPinError(true);
+      setEnteredPin(['', '', '', '', '', '']);
+      inputRefs.current[0]?.focus();
     }
   };
 
@@ -258,7 +432,7 @@ export function OrderDetailsPage() {
             ))}
           </div>
 
-          <Separator className="my-4" />
+          <Separator className="mt-2 mb-2" />
 
           {/* Total */}
           <div className="space-y-2">
@@ -291,7 +465,7 @@ export function OrderDetailsPage() {
         </div>
         {/* Status Card */}
         <div className="p-4 rounded-xl bg-muted/50">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <h2 className="font-semibold">
               {t('orders.orderStatus')}
             </h2>
@@ -339,34 +513,57 @@ export function OrderDetailsPage() {
             )}
         </div>
         {/* Delivery Information */}
-        {order.deliveryAddress && (
-          <div className="p-4 rounded-xl bg-muted/50">
-            <h2 className="font-semibold mb-4 flex items-center">
-              <MapPin className="h-4 w-4 mr-2" />
-              {t('orders.deliveryAddress')}
-            </h2>
-            <div className="text-sm space-y-1">
-              {order.deliveryAddress.street && (
-                <p>{order.deliveryAddress.street}</p>
-              )}
-              {order.deliveryAddress.addressLine2 && (
-                <p>{order.deliveryAddress.addressLine2}</p>
-              )}
-              <p>
-                {order.deliveryAddress.city},{' '}
-                {order.deliveryAddress.state}{' '}
-                {order.deliveryAddress.postalCode}
-              </p>
-              <p>{order.deliveryAddress.country}</p>
+        {order.deliveryAddress &&
+          deliveryMethod !== 'personal_handoff' && (
+            <div className="p-4 rounded-xl bg-muted/50">
+              <h2 className="font-semibold mb-4 flex items-center">
+                <MapPin className="h-4 w-4 mr-2" />
+                {t('orders.deliveryAddress')}
+              </h2>
+              <div className="text-sm space-y-1">
+                {order.deliveryAddress.street && (
+                  <p>{order.deliveryAddress.street}</p>
+                )}
+                {order.deliveryAddress.addressLine2 && (
+                  <p>{order.deliveryAddress.addressLine2}</p>
+                )}
+                <p>
+                  {order.deliveryAddress.city},{' '}
+                  {order.deliveryAddress.state}{' '}
+                  {order.deliveryAddress.postalCode}
+                </p>
+                <p>{order.deliveryAddress.country}</p>
+              </div>
+              <div className="mt-3 text-sm">
+                <span className="text-muted-foreground">
+                  {t('orders.deliveryMethod')}:{' '}
+                </span>
+                <Badge variant="outline">
+                  {order.deliveryMethod}
+                </Badge>
+              </div>
             </div>
-            <div className="mt-3 text-sm">
-              <span className="text-muted-foreground">
-                {t('orders.deliveryMethod')}:{' '}
-              </span>
-              <Badge variant="outline">{order.deliveryMethod}</Badge>
+          )}
+        {/* Confirmation PIN for Personal Handoff */}
+        {role === 'client' &&
+          deliveryMethod === 'personal_handoff' &&
+          order.status === 'ready_for_handoff' &&
+          order.confirmationPin && (
+            <div className="p-6 rounded-xl bg-primary/10 border-2 border-primary">
+              <h2 className="font-semibold mb-3 flex items-center text-primary">
+                <Package className="h-5 w-5 mr-2" />
+                {t('orders.confirmationPin')}
+              </h2>
+              <div className="bg-background p-4 rounded-lg text-center">
+                <p className="text-xs text-muted-foreground mb-2">
+                  {t('orders.showPinToAgent')}
+                </p>
+                <p className="text-4xl font-bold tracking-wider font-mono text-primary">
+                  {order.confirmationPin}
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
         {/* Payment Information */}
         <div className="p-4 rounded-xl bg-muted/50">
           <h2 className="font-semibold mb-4 flex items-center">
@@ -544,28 +741,135 @@ export function OrderDetailsPage() {
         </div>
         {/* Action Buttons */}
         <div className="space-y-2">
-          {role === 'agent' &&
-            isActive &&
-            order.status === 'payment_confirmed' && (
-              <Button
-                className="w-full"
-                onClick={handleCompleteOrder}
-              >
-                <CheckCircle className="h-4 w-4 mr-2" />
-                {t('orders.markAsComplete')}
-              </Button>
-            )}
-          {isActive && order.status === 'pending_payment' && (
-            <Button
-              variant="destructive"
-              className="w-full"
-              onClick={handleCancelOrder}
-            >
-              <XCircle className="h-4 w-4 mr-2" />
-              {t('orders.cancelOrder')}
-            </Button>
+          {/* Agent Actions */}
+          {role === 'agent' && isActive && (
+            <>
+              {/* Pending Payment -> Payment Confirmed */}
+              {order.status === 'pending_payment' && (
+                <Button
+                  className="w-full"
+                  onClick={handleConfirmPayment}
+                >
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  {t('orders.confirmPayment')}
+                </Button>
+              )}
+
+              {/* Payment Confirmed -> Processing */}
+              {order.status === 'payment_confirmed' && (
+                <Button
+                  className="w-full"
+                  onClick={handleMarkAsProcessing}
+                >
+                  <Package className="h-4 w-4 mr-2" />
+                  {t('orders.startProcessing')}
+                </Button>
+              )}
+
+              {/* Processing -> Ready for Handoff (personal_handoff) */}
+              {order.status === 'processing' &&
+                deliveryMethod === 'personal_handoff' && (
+                  <Button
+                    className="w-full"
+                    onClick={handleMarkReadyForHandoff}
+                  >
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    {t('orders.markReadyForHandoff')}
+                  </Button>
+                )}
+
+              {/* Processing -> Shipped (shipping) */}
+              {order.status === 'processing' &&
+                deliveryMethod !== 'personal_handoff' && (
+                  <Button
+                    className="w-full"
+                    onClick={handleMarkAsShipped}
+                  >
+                    <Package className="h-4 w-4 mr-2" />
+                    {t('orders.markAsShipped')}
+                  </Button>
+                )}
+
+              {/* Shipped -> In Transit */}
+              {order.status === 'shipped' && (
+                <Button
+                  className="w-full"
+                  onClick={handleMarkInTransit}
+                >
+                  <Package className="h-4 w-4 mr-2" />
+                  {t('orders.markInTransit')}
+                </Button>
+              )}
+
+              {/* In Transit -> Delivered */}
+              {order.status === 'in_transit' && (
+                <Button
+                  className="w-full"
+                  onClick={handleMarkAsDelivered}
+                >
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  {t('orders.markAsDelivered')}
+                </Button>
+              )}
+            </>
           )}
 
+          {/* Agent Actions for Ready for Handoff */}
+          {role === 'agent' &&
+            order.status === 'ready_for_handoff' &&
+            deliveryMethod === 'personal_handoff' &&
+            !showPinVerification && (
+              <Button
+                className="w-full"
+                onClick={handleAgentConfirmHandoff}
+              >
+                <CheckCircle className="h-4 w-4 mr-2" />
+                {t('orders.confirmHandoff')}
+              </Button>
+            )}
+
+          {/* Client Actions */}
+          {role === 'client' && isActive && (
+            <>
+              {/* Ready for Handoff -> Completed (personal_handoff) */}
+              {order.status === 'ready_for_handoff' && (
+                <Button
+                  className="w-full"
+                  onClick={handleConfirmCompletion}
+                >
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  {t('orders.confirmReceipt')}
+                </Button>
+              )}
+
+              {/* Delivered -> Completed (shipping) */}
+              {order.status === 'delivered' && (
+                <Button
+                  className="w-full"
+                  onClick={handleConfirmCompletion}
+                >
+                  <CheckCircle className="h-4 w-4 mr-2" />
+                  {t('orders.confirmReceipt')}
+                </Button>
+              )}
+            </>
+          )}
+
+          {/* Cancel Order (available for both roles in early stages) */}
+          {isActive &&
+            (order.status === 'pending_payment' ||
+              order.status === 'payment_confirmed') && (
+              <Button
+                variant="destructive"
+                className="w-full"
+                onClick={handleCancelOrder}
+              >
+                <XCircle className="h-4 w-4 mr-2" />
+                {t('orders.cancelOrder')}
+              </Button>
+            )}
+
+          {/* Leave Feedback (completed orders) */}
           {order.status === 'completed' && (
             <Button
               variant="default"
@@ -579,6 +883,83 @@ export function OrderDetailsPage() {
           )}
         </div>
       </div>
+
+      {/* PIN Verification Bottom Sheet */}
+      <Sheet
+        open={showPinVerification}
+        onOpenChange={(open: boolean) => {
+          setShowPinVerification(open);
+          if (!open) {
+            setEnteredPin(['', '', '', '', '', '']);
+            setPinError(false);
+          }
+        }}
+      >
+        <SheetContent side="bottom" className="px-4 pb-8">
+          <SheetHeader>
+            <SheetTitle className="flex items-center justify-center text-lg">
+              <Package className="h-5 w-5 mr-2" />
+              {t('orders.enterConfirmationPin')}
+            </SheetTitle>
+          </SheetHeader>
+          <div className="mt-6">
+            <p className="text-sm text-muted-foreground mb-6 text-center">
+              {t('orders.enterPinFromClient')}
+            </p>
+            <div className="flex justify-center mb-6">
+              <div className="flex space-x-3">
+                {[0, 1, 2, 3, 4, 5].map((index) => (
+                  <Input
+                    key={index}
+                    ref={(el) => {
+                      inputRefs.current[index] = el;
+                    }}
+                    type="text"
+                    inputMode="numeric"
+                    value={enteredPin[index]}
+                    onChange={(e) =>
+                      handlePinInputChange(index, e.target.value)
+                    }
+                    onKeyDown={(e) => handlePinKeyDown(index, e)}
+                    onPaste={handlePinPaste}
+                    className={`w-12 h-12 text-center text-lg font-medium bg-input-background border-input rounded-xl focus:ring-2 focus:ring-primary focus:border-primary transition-all ${
+                      pinError ? 'border-red-500' : ''
+                    }`}
+                    maxLength={1}
+                    autoComplete="off"
+                  />
+                ))}
+              </div>
+            </div>
+            {pinError && (
+              <p className="text-sm text-red-500 text-center mb-4">
+                {t('orders.incorrectPin')}
+              </p>
+            )}
+            <div className="flex space-x-3">
+              <Button
+                variant="outline"
+                className="flex-1 h-12"
+                onClick={() => {
+                  setShowPinVerification(false);
+                  setEnteredPin(['', '', '', '', '', '']);
+                  setPinError(false);
+                }}
+              >
+                {t('common.cancel')}
+              </Button>
+              <Button
+                className="flex-1 h-12"
+                onClick={handleVerifyPin}
+                disabled={enteredPin.join('').length !== 6}
+              >
+                <CheckCircle className="h-4 w-4 mr-2" />
+                {t('orders.verifyAndComplete')}
+              </Button>
+            </div>
+          </div>
+        </SheetContent>
+      </Sheet>
     </div>
   );
 }

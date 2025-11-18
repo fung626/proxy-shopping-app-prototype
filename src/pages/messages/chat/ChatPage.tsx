@@ -273,10 +273,10 @@ export function ChatPage() {
   const otherUserImage = otherUserInfo?.image || '';
   const isOnline = otherUserInfo?.is_online || false;
   const requestTitle = conversation.request_id
-    ? `Request #${conversation.request_id.slice(0, 8)}`
+    ? `${t('common.request')} #${conversation.request_id.slice(0, 8)}`
     : conversation.offer_id
-    ? `Offer #${conversation.offer_id.slice(0, 8)}`
-    : 'Direct Message';
+    ? `${t('common.offer')} #${conversation.offer_id.slice(0, 8)}`
+    : t('messages.directMessage');
 
   return (
     <div className="flex flex-col h-screen bg-background">

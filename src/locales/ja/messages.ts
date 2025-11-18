@@ -30,6 +30,7 @@ export const messages = {
   markAsRead: '既読にする',
   markAsUnread: '未読にする',
   message: 'メッセージ',
+  directMessage: 'ダイレクトメッセージ',
   messageAgentPlaceholder: '{name}にメッセージ...',
   messageDeleted: 'メッセージが削除されました',
   messagePlaceholder: 'メッセージを入力してください {name}',

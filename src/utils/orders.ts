@@ -25,23 +25,30 @@ export const getOrderStep = (
   deliveryMethod: DeliveryMethod
 ): number => {
   if (deliveryMethod === 'personal_handoff') {
-    // Personal delivery steps: 1. Payment -> 2. Shopping -> 3. Ready for Pickup -> 4. Meeting Arranged -> 5. Completed
+    // Personal handoff steps (match PersonalHandoffOrderStatus):
+    // 1. pending_payment
+    // 2. processing
+    // 3. ready_for_handoff
+    // 4. (n/a)
+    // 5. completed
     const map: Record<string, number> = {
       pending_payment: 1,
       payment_confirmed: 1,
       processing: 2,
-      shopping: 3,
-      shipped: 3, // Repurposed as "ready for pickup"
-      in_transit: 4, // Repurposed as "meeting arranged"
-      delivered: 5,
+      ready_for_handoff: 3,
       completed: 5,
       cancelled: 0,
       refunded: 0,
       disputed: 0,
     };
-    return map[status] || 1;
+    return map[status] ?? 1;
   } else {
-    // Ship delivery steps: 1. Payment -> 2. Shopping -> 3. Items Purchased -> 4. Shipped/In Transit -> 5. Delivered
+    // Shipping steps (match ShippingOrderStatus):
+    // 1. pending_payment
+    // 2. processing
+    // 3. items purchased
+    // 4. shipped / in_transit
+    // 5. delivered / completed
     const map: Record<string, number> = {
       pending_payment: 1,
       payment_confirmed: 1,
@@ -54,7 +61,7 @@ export const getOrderStep = (
       refunded: 0,
       disputed: 0,
     };
-    return map[status] || 1;
+    return map[status] ?? 1;
   }
 };
 
@@ -192,14 +199,19 @@ export const getStatusLabel = (status: OrderStatus): string => {
   const map: Record<string, string> = {
     pending_payment: 'orderStatus.pending_payment',
     payment_confirmed: 'orderStatus.payment_confirmed',
-    processing: 'orderStatus.shopping',
+    // For shipping flow use 'processing' -> 'items purchased' label
+    processing: 'orderStatus.processing',
+    // Personal handoff specific status
+    ready_for_handoff: 'orderStatus.ready_for_handoff',
+    // Legacy/alternate keys used in locales
+    shopping: 'orderStatus.shopping',
     shipped: 'orderStatus.shipped',
     in_transit: 'orderStatus.in_transit',
     delivered: 'orderStatus.delivered',
     completed: 'orderStatus.completed',
     cancelled: 'orderStatus.cancelled',
     refunded: 'orderStatus.refunded',
-    disputed: 'orderStatus.cancelled',
+    disputed: 'orderStatus.disputed',
   };
   return map[status] || status;
 };

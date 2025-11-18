@@ -131,7 +131,11 @@ export function MessagesTab() {
     lastMessage: conv.last_message_content || '',
     timestamp: new Date(conv.updated_at),
     unreadCount: conv.my_participant?.unread_count || 0,
-    requestTitle: 'Direct Message', // Request relationship not yet in ConversationWithParticipants type
+    requestTitle: conv.request_id
+      ? `${t('common.request')} #${conv.request_id.slice(0, 8)}`
+      : conv.offer_id
+      ? `${t('common.offer')} #${conv.offer_id.slice(0, 8)}`
+      : t('messages.directMessage'),
     isOnline: conv.other_user?.is_online || false,
     messageType:
       (conv.last_message_type as

@@ -49,7 +49,7 @@ class OrdersSupabaseService {
         supabaseOrder.estimated_delivery_date || undefined,
       actualDeliveryDate:
         supabaseOrder.actual_delivery_date || undefined,
-      notes: supabaseOrder.notes || undefined,
+      confirmationPin: supabaseOrder.confirmation_pin || undefined,
       cancellationReason:
         supabaseOrder.cancellation_reason || undefined,
       refundAmount: supabaseOrder.refund_amount || undefined,
@@ -57,6 +57,7 @@ class OrdersSupabaseService {
       agentCommissionRate: supabaseOrder.agent_commission_rate,
       agentCommissionAmount:
         supabaseOrder.agent_commission_amount || undefined,
+
       metadata: supabaseOrder.metadata,
       createdAt: supabaseOrder.created_at,
       updatedAt: supabaseOrder.updated_at,
@@ -130,13 +131,20 @@ class OrdersSupabaseService {
       );
 
       // Calculate agent commission
-      const commissionRate = 10.0; // Default 10%
+      const commissionRate = 0.0; // Default 0%
       const commissionAmount = (totalAmount * commissionRate) / 100;
+
+      // Generate unique order number
+      const orderNumber = `ORD-${Date.now()}-${Math.random()
+        .toString(36)
+        .substring(2, 8)
+        .toUpperCase()}`;
 
       // Create order
       const { data: order, error: orderError } = await supabase
         .from('orders')
         .insert({
+          order_number: orderNumber,
           client_user_id: user.id,
           agent_user_id: request.agentUserId,
           request_id: request.requestId || null,
@@ -147,8 +155,9 @@ class OrdersSupabaseService {
           payment_status: 'pending',
           payment_method: request.paymentMethod || null,
           delivery_method: request.deliveryMethod,
+          expected_meeting_location:
+            request.expectedMeetingLocation || null,
           delivery_address: request.deliveryAddress,
-          notes: request.notes || null,
           agent_commission_rate: commissionRate,
           agent_commission_amount: commissionAmount,
         })
@@ -536,6 +545,117 @@ class OrdersSupabaseService {
     return this.updateOrder(orderId, {
       status: 'completed',
     });
+  }
+
+  /**
+   * Confirm payment for an order (Agent action)
+   */
+  async confirmPayment(orderId: string): Promise<Order | null> {
+    return this.updateOrder(orderId, {
+      status: 'payment_confirmed',
+      paymentStatus: 'completed',
+    });
+  }
+
+  /**
+   * Mark order as processing (Agent action)
+   */
+  async markAsProcessing(orderId: string): Promise<Order | null> {
+    return this.updateOrder(orderId, {
+      status: 'processing',
+    });
+  }
+
+  /**
+   * Mark order as ready for handoff (Agent action - personal handoff only)
+   */
+  async markReadyForHandoff(orderId: string): Promise<Order | null> {
+    return this.updateOrder(orderId, {
+      status: 'ready_for_handoff',
+    });
+  }
+
+  /**
+   * Mark order as shipped (Agent action - shipping only)
+   */
+  async markAsShipped(
+    orderId: string,
+    trackingNumber?: string,
+    estimatedDeliveryDate?: string
+  ): Promise<Order | null> {
+    return this.updateOrder(orderId, {
+      status: 'shipped',
+      trackingNumber,
+      estimatedDeliveryDate,
+    });
+  }
+
+  /**
+   * Mark order as in transit (Agent/System action - shipping only)
+   */
+  async markInTransit(orderId: string): Promise<Order | null> {
+    return this.updateOrder(orderId, {
+      status: 'in_transit',
+    });
+  }
+
+  /**
+   * Mark order as delivered (Agent/System action - shipping only)
+   */
+  async markAsDelivered(
+    orderId: string,
+    actualDeliveryDate?: string
+  ): Promise<Order | null> {
+    return this.updateOrder(orderId, {
+      status: 'delivered',
+      actualDeliveryDate:
+        actualDeliveryDate || new Date().toISOString(),
+    });
+  }
+
+  /**
+   * Confirm order completion (Client action)
+   */
+  async confirmCompletion(orderId: string): Promise<Order | null> {
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      if (!user) throw new Error('User not authenticated');
+
+      // Get current order status
+      const { data: currentOrder, error: fetchError } = await supabase
+        .from('orders')
+        .select('status')
+        .eq('id', orderId)
+        .single();
+
+      if (fetchError) throw fetchError;
+
+      // Update order status
+      const result = await this.updateOrder(orderId, {
+        status: 'completed',
+      });
+
+      if (result) {
+        // Create order history entry
+        await supabase.from('order_history').insert({
+          order_id: orderId,
+          status: 'completed',
+          previous_status: currentOrder.status,
+          changed_by_user_id: user.id,
+          metadata: {
+            action: 'confirm_completion',
+            timestamp: new Date().toISOString(),
+          },
+        });
+      }
+
+      return result;
+    } catch (error) {
+      console.error('Error confirming completion:', error);
+      return null;
+    }
   }
 
   // =====================================================

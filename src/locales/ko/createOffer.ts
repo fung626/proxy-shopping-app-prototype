@@ -36,6 +36,7 @@ export const createOffer = {
   expressDeliveryDescription: '빠른 배송 서비스',
   imageDescription:
     '고품질 이미지는 잠재 구매자와의 신뢰 구축에 도움이 됩니다',
+  makingOfferFor: '요청에 대한 오퍼 작성',
   infoBoxDescription:
     '당신의 쇼핑 전문 지식을 공유하여 전 세계 고객들에게 제품을 구매하고 배송하는 서비스를 제공하세요.',
   infoBoxTitle: '쇼핑 오퍼 생성',

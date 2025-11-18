@@ -2,6 +2,7 @@ export const orderStatus = {
   pending_payment: '待付款',
   payment_confirmed: '付款已确认',
   processing: '处理中',
+  ready_for_handoff: '準備面交',
   shopping: '购物中',
   shipped: '已发货',
   in_transit: '运输中',

@@ -5,7 +5,7 @@ export function OrdersTabSkeleton() {
     <div className="space-y-4">
       {[...Array(3)].map((_, index) => (
         <div key={index} className="p-4 bg-muted/50 rounded-lg">
-          <div className="flex space-x-4 mb-4">
+          <div className="flex space-x-4 mb-2">
             {/* Image */}
             <Skeleton className="w-16 h-16 rounded-lg flex-shrink-0" />
 

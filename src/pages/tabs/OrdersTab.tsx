@@ -2,6 +2,7 @@ import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { ProgressSteps } from '@/components/ui/progress-steps';
+import { chatSupabaseService } from '@/services/chatSupabaseService';
 import { offersSupabaseService } from '@/services/offersSupabaseService';
 import { ordersSupabaseService } from '@/services/ordersSupabaseService';
 import { requestsSupabaseService } from '@/services/requestsSupabaseService';
@@ -91,16 +92,27 @@ export function OrdersTab() {
     }
   };
 
-  const handleContactUser = (order: DetailedOrder) => {
+  const handleContactUser = async (order: DetailedOrder) => {
     const role = getOrderRole(user, order);
     const otherUserId =
       role === 'client' ? order.agentUserId : order.clientUserId;
-    navigate('/messages', {
-      state: {
-        selectedUserId: otherUserId,
-        orderId: order.id,
-      },
-    });
+    try {
+      // Create or get existing conversation
+      const conversation =
+        await chatSupabaseService.getOrCreateConversation({
+          participant_user_id: otherUserId,
+          order_id: order.id,
+        });
+
+      if (conversation) {
+        // Navigate to the chat page
+        navigate(`/messages/chat/${conversation.id}`);
+      } else {
+        console.error('Failed to create conversation');
+      }
+    } catch (error) {
+      console.error('Error contacting agent:', error);
+    }
   };
 
   if (!user) {
@@ -240,7 +252,7 @@ export function OrdersTab() {
                   key={order.id}
                   className="p-4 bg-muted/50 rounded-lg"
                 >
-                  <div className="flex space-x-4 mb-4">
+                  <div className="flex space-x-4 mb-2">
                     {/* Image */}
                     {images && images.length > 0 && (
                       <div className="flex-shrink-0">
@@ -269,13 +281,11 @@ export function OrdersTab() {
                           {t(getStatusLabel(order.status))}
                         </Badge>
                       </div>
-
                       <h3 className="font-semibold text-foreground mb-2 leading-tight">
                         {title}
                       </h3>
-
                       <div className="flex items-center justify-between text-xs text-muted-foreground mb-3">
-                        <span>{category}</span>
+                        <span>{t(`categories.${category}`)}</span>
                         <span className="font-semibold text-foreground">
                           {order.currency}{' '}
                           {order.totalAmount.toFixed(2)}
@@ -283,7 +293,6 @@ export function OrdersTab() {
                       </div>
                     </div>
                   </div>
-
                   {/* Progress */}
                   {order.status !== 'cancelled' &&
                     order.status !== 'refunded' && (
@@ -324,7 +333,6 @@ export function OrdersTab() {
                         />
                       </div>
                     )}
-
                   {/* Partner Info */}
                   <div className="mb-3">
                     <p className="text-sm text-muted-foreground">
@@ -338,7 +346,6 @@ export function OrdersTab() {
                         : order.client?.nickname || 'Client'}
                     </p>
                   </div>
-
                   {/* Actions */}
                   {order.status === 'completed' ? (
                     <div className="space-y-2">

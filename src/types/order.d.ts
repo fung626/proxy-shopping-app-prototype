@@ -118,7 +118,7 @@ export interface SupabaseOrder {
   tracking_number: string | null;
   estimated_delivery_date: string | null;
   actual_delivery_date: string | null;
-  notes: string | null;
+  confirmation_pin: string | null;
   cancellation_reason: string | null;
   refund_amount: number | null;
   refund_reason: string | null;
@@ -151,7 +151,7 @@ export interface Order {
   trackingNumber?: string;
   estimatedDeliveryDate?: string;
   actualDeliveryDate?: string;
-  notes?: string;
+  confirmationPin?: string;
   cancellationReason?: string;
   refundAmount?: number;
   refundReason?: string;
@@ -202,7 +202,8 @@ export interface OrderHistory {
 
 // Create Order Request
 export interface CreateOrderRequest {
-  agentUserId: string;
+  agentUserId?: string;
+  clientUserId?: string;
   requestId?: string;
   offerId?: string;
   items: {
@@ -212,13 +213,14 @@ export interface CreateOrderRequest {
     quantity: number;
     unitPrice: number;
     offerId?: string;
+    requestId?: string;
     specifications?: Record<string, any>;
   }[];
   currency: string;
   deliveryMethod: DeliveryMethod;
+  expectedMeetingLocation?: string;
   deliveryAddress: DeliveryAddress;
   paymentMethod?: string;
-  notes?: string;
 }
 
 // Update Order Request

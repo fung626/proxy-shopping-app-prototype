@@ -30,6 +30,7 @@ export const createOffer = {
   expressDelivery: '快遞配送',
   expressDeliveryDescription: '快速配送服務',
   imageDescription: '高質量的圖片有助於與潛在買家建立信任',
+  makingOfferFor: '為請求製作報價',
   infoBoxDescription:
     '分享您的購物專業知識，為全世界的客戶提供產品購買和配送服務。',
   infoBoxTitle: '創建購物報價',

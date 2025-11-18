@@ -14,9 +14,10 @@ CREATE TABLE IF NOT EXISTS conversations (
   last_message_content TEXT,
   last_message_type TEXT DEFAULT 'text',
   
-  -- Optional: If conversations are related to requests/offers
+  -- Optional: If conversations are related to requests/offers/orders
   request_id UUID REFERENCES requests(id) ON DELETE SET NULL,
-  offer_id UUID REFERENCES offers(id) ON DELETE SET NULL
+  offer_id UUID REFERENCES offers(id) ON DELETE SET NULL,
+  order_id UUID REFERENCES orders(id) ON DELETE SET NULL
 );
 
 -- Table: conversation_participants
@@ -186,7 +187,8 @@ CREATE OR REPLACE FUNCTION get_or_create_conversation(
   user1_id UUID,
   user2_id UUID,
   req_id UUID DEFAULT NULL,
-  off_id UUID DEFAULT NULL
+  off_id UUID DEFAULT NULL,
+  ord_id UUID DEFAULT NULL
 )
 RETURNS UUID AS $$
 DECLARE
@@ -199,19 +201,21 @@ BEGIN
   INNER JOIN conversation_participants cp2 ON c.id = cp2.conversation_id AND cp2.user_id = user2_id
   WHERE (c.request_id = req_id OR (c.request_id IS NULL AND req_id IS NULL))
     AND (c.offer_id = off_id OR (c.offer_id IS NULL AND off_id IS NULL))
+    AND (c.order_id = ord_id OR (c.order_id IS NULL AND ord_id IS NULL))
   LIMIT 1;
   
   -- If no conversation exists, create one
   IF conv_id IS NULL THEN
-    INSERT INTO conversations (request_id, offer_id)
-    VALUES (req_id, off_id)
+    INSERT INTO conversations (request_id, offer_id, order_id)
+    VALUES (req_id, off_id, ord_id)
     RETURNING id INTO conv_id;
     
-    -- Add both participants
+    -- Add both participants using ON CONFLICT to handle race conditions
     INSERT INTO conversation_participants (conversation_id, user_id)
-    VALUES (conv_id, user1_id), (conv_id, user2_id);
+    VALUES (conv_id, user1_id), (conv_id, user2_id)
+    ON CONFLICT (conversation_id, user_id) DO NOTHING;
   END IF;
   
   RETURN conv_id;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$ LANGUAGE plpgsql SECURITY INVOKER;

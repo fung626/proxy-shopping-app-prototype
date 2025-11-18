@@ -41,7 +41,7 @@ export function OrderDetailsSkeleton() {
 
         {/* Status / Progress */}
         <div className="p-4 rounded-xl bg-muted/50">
-          <div className="flex items-center justify-between mb-4">
+          <div className="flex items-center justify-between mb-2">
             <Skeleton className="h-5 w-40" />
             <Skeleton className="h-5 w-16" />
           </div>

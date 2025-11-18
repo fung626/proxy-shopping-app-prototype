@@ -9,10 +9,12 @@ import {
   offersSupabaseService as offerService,
   SupabaseOffer,
 } from '@/services/offersSupabaseService';
+import { ordersSupabaseService } from '@/services/ordersSupabaseService';
 import { SupabaseUser } from '@/services/type';
 import { userSupabaseService as userService } from '@/services/userSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
 import { useAuthStore } from '@/store/zustand/authStore';
+import { CreateOrderRequest, DeliveryAddress } from '@/types/order';
 import { getCurrencySymbol } from '@/utils/common';
 import {
   ArrowLeft,
@@ -189,33 +191,28 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
       }
       return;
     }
-
-    // For now, use a default/placeholder delivery address
-    // TODO: In production, should show address selection modal
-    const deliveryAddress: import('@/types/order').DeliveryAddress = {
+    const deliveryAddress: DeliveryAddress = {
       fullName:
         user.user_metadata?.full_name || user.email || 'Customer',
       phone: user.user_metadata?.phone || '',
-      street: '', // Should be filled by user
+      street: '',
       addressLine2: '',
       city: '',
       state: '',
       postalCode: '',
-      country: offerData.location || 'US',
+      country: offerData.location || 'HK',
     };
-
     setLoading(true);
     try {
-      const { ordersSupabaseService } = await import(
-        '@/services/ordersSupabaseService'
-      );
-
-      const orderData: import('@/types/order').CreateOrderRequest = {
+      const orderData: CreateOrderRequest = {
         agentUserId: offerData.user_id,
+        clientUserId: user.id,
         offerId: offerData.id,
-        currency: offerData.currency || 'USD',
-        deliveryMethod: 'standard_shipping',
+        currency: offerData.currency || 'HKD',
+        deliveryMethod: 'personal_handoff',
+        expectedMeetingLocation: offerData.location || 'Hong Kong',
         deliveryAddress: deliveryAddress,
+        paymentMethod: 'credit_card',
         items: [
           {
             productName: offerData.title,
@@ -226,9 +223,7 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             offerId: offerData.id,
           },
         ],
-        notes: `Order created from offer: ${offerData.title}`,
       };
-
       const order = await ordersSupabaseService.createOrder(
         orderData
       );
@@ -699,7 +694,11 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
               variant="outline"
               onClick={handleContactAgent}
               className="flex-1"
-              disabled={isContactingAgent || !offerData?.user_id}
+              disabled={
+                isContactingAgent ||
+                !offerData?.user_id ||
+                offerData.agent_id === user?.id
+              }
             >
               <MessageCircle className="h-4 w-4 mr-2" />
               {isContactingAgent
@@ -709,6 +708,11 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
             <Button
               onClick={handleCreateOrder}
               className="flex-1"
+              disabled={
+                loading ||
+                !offerData ||
+                offerData.agent_id === user?.id
+              }
               // disabled={!onCreateOrder}
             >
               <Package className="h-4 w-4 mr-2" />
