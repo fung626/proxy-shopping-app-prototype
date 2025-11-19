@@ -1,0 +1,1 @@
+import{j as o,i as d}from"./index-BAYo30GC.js";function t({className:r,...a}){return o.jsx("div",{"data-slot":"card",className:d("bg-card text-card-foreground flex flex-col gap-6 rounded-xl border",r),...a})}export{t as C};
