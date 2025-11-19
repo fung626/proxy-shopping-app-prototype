@@ -13,7 +13,7 @@ import { useAuthStore } from '@/store/zustand/authStore';
 import { AppTab } from '@/types/routing';
 import React, { useEffect, useState } from 'react';
 import {
-  BrowserRouter,
+  HashRouter,
   Route,
   Routes,
   useLocation,
@@ -109,7 +109,7 @@ export default function App() {
     : '/';
   return (
     <ErrorBoundary>
-      <BrowserRouter basename={basename}>
+      <HashRouter basename={basename}>
         <ThemeProvider>
           <LanguageProvider>
             <AuthProvider>
@@ -117,7 +117,7 @@ export default function App() {
             </AuthProvider>
           </LanguageProvider>
         </ThemeProvider>
-      </BrowserRouter>
+      </HashRouter>
     </ErrorBoundary>
   );
 }
