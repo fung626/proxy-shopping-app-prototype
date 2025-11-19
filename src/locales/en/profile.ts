@@ -62,6 +62,7 @@ export const profile = {
   transactionPassword: 'Transaction Password',
   transactionPasswordDisabled: 'Transaction password disabled',
   transactionPasswordEnabled: 'Transaction password enabled',
+  translation: 'Translation',
   twoFactor: '2-Factor Authentication',
   verified: 'Verified',
   verificationStatus: 'Verification Status',

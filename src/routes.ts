@@ -283,6 +283,7 @@ export const routeGroups: RouteGroup[] = [
         path: '/explore/wishlist',
         element: WishlistsPage,
         requireAuth: true,
+        showNavBar: true,
         meta: {
           title: 'nav.titles.wishlist',
           description: 'Your saved items',

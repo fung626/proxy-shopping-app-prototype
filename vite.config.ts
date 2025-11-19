@@ -4,7 +4,8 @@ import { defineConfig } from 'vite';
 import svgr from 'vite-plugin-svgr';
 
 export default defineConfig(({ mode }) => ({
-  base: mode === 'production' ? '/proxy-shopping-app-prototype' : '/',
+  base:
+    mode === 'production' ? '/proxy-shopping-app-prototype/' : '/',
   plugins: [react(), svgr()],
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],

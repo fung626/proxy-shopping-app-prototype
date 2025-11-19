@@ -61,6 +61,7 @@ export const profile = {
   transactionPassword: '取引パスワード',
   transactionPasswordDisabled: '取引パスワードが無効です',
   transactionPasswordEnabled: '取引パスワードが有効です',
+  translation: '翻訳',
   twoFactor: '2段階認証',
   verificationStatus: '認証状態',
   verified: '認証済み',

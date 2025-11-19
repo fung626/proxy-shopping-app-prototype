@@ -53,6 +53,7 @@ export const profile = {
   transactionPassword: '거래 비밀번호',
   transactionPasswordDisabled: '거래 비밀번호 비활성화됨',
   transactionPasswordEnabled: '거래 비밀번호 활성화됨',
+  translation: '번역',
   twoFactor: '2단계 인증',
   verificationStatus: '인증 상태',
   verified: '인증됨',

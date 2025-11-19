@@ -106,7 +106,7 @@ export function OrdersTab() {
 
       if (conversation) {
         // Navigate to the chat page
-        navigate(`/messages/chat/${conversation.id}`);
+        navigate(`/messages/chat/${conversation!.id}`);
       } else {
         console.error('Failed to create conversation');
       }

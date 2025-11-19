@@ -29,9 +29,7 @@ export function LanguageSelector() {
   const currentLanguage = languages.find(
     (lang) => lang.code === language
   );
-  const displayName = currentLanguage
-    ? t(`profile.${lc(currentLanguage.name.replace(' ', ''))}`)
-    : t('profile.english');
+  const displayName = currentLanguage?.name ?? '';
 
   return (
     <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -89,9 +87,7 @@ export function LanguageSelector() {
               <div className="flex items-center space-x-3">
                 <span className="text-2xl">{lang.flag}</span>
                 <div className="text-left">
-                  <div className="font-medium">
-                    {t(`profile.${lang.name.replace(' ', '')}`)}
-                  </div>
+                  <div className="font-medium">{lang.name}</div>
                   <div className="text-sm text-muted-foreground">
                     {lang.native}
                   </div>

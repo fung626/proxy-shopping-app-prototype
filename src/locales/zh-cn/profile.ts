@@ -54,6 +54,7 @@ export const profile = {
   transactionPassword: '交易密码',
   transactionPasswordDisabled: '交易密码未启用',
   transactionPasswordEnabled: '交易密码已启用',
+  translation: '翻译',
   twoFactor: '双重认证',
   verified: '已验证',
 };

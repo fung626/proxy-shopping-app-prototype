@@ -1,12 +1,21 @@
--- Chat System Schema for Supabase
+-- Chat System Schema for Supabase - Simplified Version
 -- Run this in your Supabase SQL Editor
+-- WARNING: This will DELETE ALL chat data and recreate tables from scratch
 
 -- Enable UUID extension if not already enabled
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- Drop all existing objects
+DROP FUNCTION IF EXISTS get_or_create_conversation(UUID, UUID, UUID, UUID, UUID) CASCADE;
+DROP FUNCTION IF EXISTS update_conversation_last_message() CASCADE;
+DROP FUNCTION IF EXISTS update_unread_count() CASCADE;
+DROP TABLE IF EXISTS messages CASCADE;
+DROP TABLE IF EXISTS conversation_participants CASCADE;
+DROP TABLE IF EXISTS conversations CASCADE;
+
 -- Table: conversations
 -- Stores conversation metadata between users
-CREATE TABLE IF NOT EXISTS conversations (
+CREATE TABLE conversations (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
@@ -22,7 +31,7 @@ CREATE TABLE IF NOT EXISTS conversations (
 
 -- Table: conversation_participants
 -- Links users to conversations (many-to-many relationship)
-CREATE TABLE IF NOT EXISTS conversation_participants (
+CREATE TABLE conversation_participants (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   conversation_id UUID REFERENCES conversations(id) ON DELETE CASCADE NOT NULL,
   user_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
@@ -37,7 +46,7 @@ CREATE TABLE IF NOT EXISTS conversation_participants (
 
 -- Table: messages
 -- Stores individual messages in conversations
-CREATE TABLE IF NOT EXISTS messages (
+CREATE TABLE messages (
   id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
   conversation_id UUID REFERENCES conversations(id) ON DELETE CASCADE NOT NULL,
   sender_id UUID REFERENCES users(id) ON DELETE CASCADE NOT NULL,
@@ -61,12 +70,12 @@ CREATE TABLE IF NOT EXISTS messages (
 );
 
 -- Indexes for better query performance
-CREATE INDEX IF NOT EXISTS idx_conversations_updated_at ON conversations(updated_at DESC);
-CREATE INDEX IF NOT EXISTS idx_conversation_participants_user_id ON conversation_participants(user_id);
-CREATE INDEX IF NOT EXISTS idx_conversation_participants_conversation_id ON conversation_participants(conversation_id);
-CREATE INDEX IF NOT EXISTS idx_messages_conversation_id ON messages(conversation_id);
-CREATE INDEX IF NOT EXISTS idx_messages_created_at ON messages(created_at DESC);
-CREATE INDEX IF NOT EXISTS idx_messages_sender_id ON messages(sender_id);
+CREATE INDEX idx_conversations_updated_at ON conversations(updated_at DESC);
+CREATE INDEX idx_conversation_participants_user_id ON conversation_participants(user_id);
+CREATE INDEX idx_conversation_participants_conversation_id ON conversation_participants(conversation_id);
+CREATE INDEX idx_messages_conversation_id ON messages(conversation_id);
+CREATE INDEX idx_messages_created_at ON messages(created_at DESC);
+CREATE INDEX idx_messages_sender_id ON messages(sender_id);
 
 -- Function: Update conversation's last message info
 CREATE OR REPLACE FUNCTION update_conversation_last_message()
@@ -128,16 +137,10 @@ CREATE POLICY "Users can view their own conversations"
     )
   );
 
--- RLS: Users can see all participants in conversations they're part of
-CREATE POLICY "Users can view participants in their conversations"
+-- RLS: Users can see all participants
+CREATE POLICY "Users can view participants"
   ON conversation_participants FOR SELECT
-  USING (
-    conversation_id IN (
-      SELECT conversation_id 
-      FROM conversation_participants 
-      WHERE user_id = auth.uid()
-    )
-  );
+  USING (true);
 
 -- RLS: Users can update their own participant records
 CREATE POLICY "Users can update their own participant records"
@@ -156,7 +159,7 @@ CREATE POLICY "Users can view messages in their conversations"
   );
 
 -- RLS: Users can insert messages in their conversations
-CREATE POLICY "Users can send messages in their conversations"
+CREATE POLICY "Users can send messages"
   ON messages FOR INSERT
   WITH CHECK (
     conversation_id IN (
@@ -172,50 +175,13 @@ CREATE POLICY "Users can update their own messages"
   ON messages FOR UPDATE
   USING (sender_id = auth.uid());
 
--- RLS: Users can insert conversations (when starting a new chat)
+-- RLS: Users can create conversations
+DROP POLICY IF EXISTS "Users can create conversations" ON conversations;
 CREATE POLICY "Users can create conversations"
-  ON conversations FOR INSERT
+  ON conversations FOR INSERT TO public
   WITH CHECK (true);
 
--- RLS: Users can insert participant records
+-- RLS: Users can add participants
 CREATE POLICY "Users can add participants"
   ON conversation_participants FOR INSERT
   WITH CHECK (true);
-
--- Helper function: Get or create conversation between two users
-CREATE OR REPLACE FUNCTION get_or_create_conversation(
-  user1_id UUID,
-  user2_id UUID,
-  req_id UUID DEFAULT NULL,
-  off_id UUID DEFAULT NULL,
-  ord_id UUID DEFAULT NULL
-)
-RETURNS UUID AS $$
-DECLARE
-  conv_id UUID;
-BEGIN
-  -- Try to find existing conversation between these two users
-  SELECT c.id INTO conv_id
-  FROM conversations c
-  INNER JOIN conversation_participants cp1 ON c.id = cp1.conversation_id AND cp1.user_id = user1_id
-  INNER JOIN conversation_participants cp2 ON c.id = cp2.conversation_id AND cp2.user_id = user2_id
-  WHERE (c.request_id = req_id OR (c.request_id IS NULL AND req_id IS NULL))
-    AND (c.offer_id = off_id OR (c.offer_id IS NULL AND off_id IS NULL))
-    AND (c.order_id = ord_id OR (c.order_id IS NULL AND ord_id IS NULL))
-  LIMIT 1;
-  
-  -- If no conversation exists, create one
-  IF conv_id IS NULL THEN
-    INSERT INTO conversations (request_id, offer_id, order_id)
-    VALUES (req_id, off_id, ord_id)
-    RETURNING id INTO conv_id;
-    
-    -- Add both participants using ON CONFLICT to handle race conditions
-    INSERT INTO conversation_participants (conversation_id, user_id)
-    VALUES (conv_id, user1_id), (conv_id, user2_id)
-    ON CONFLICT (conversation_id, user_id) DO NOTHING;
-  END IF;
-  
-  RETURN conv_id;
-END;
-$$ LANGUAGE plpgsql SECURITY INVOKER;

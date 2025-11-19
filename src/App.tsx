@@ -103,13 +103,9 @@ const AppContent = React.memo(function AppContent() {
 });
 
 export default function App() {
-  // Use base path only in production (GitHub Pages)
-  const basename = import.meta.env.PROD
-    ? '/proxy-shopping-app-prototype'
-    : '/';
   return (
     <ErrorBoundary>
-      <HashRouter basename={basename}>
+      <HashRouter>
         <ThemeProvider>
           <LanguageProvider>
             <AuthProvider>

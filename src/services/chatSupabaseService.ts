@@ -102,22 +102,126 @@ class ChatSupabaseService {
         );
       }
 
-      // Call the Supabase function to get or create conversation
-      const { data, error } = await supabase.rpc(
-        'get_or_create_conversation',
-        {
-          user1_id: user.id,
-          user2_id: request.participant_user_id,
-          req_id: request.request_id || null,
-          off_id: request.offer_id || null,
-          ord_id: request.order_id || null,
+      // Step 1: Try to find existing conversation with both participants
+      const { data: myParticipants } = await supabase
+        .from('conversation_participants')
+        .select('conversation_id')
+        .eq('user_id', user.id);
+
+      if (myParticipants && myParticipants.length > 0) {
+        const myConvIds = myParticipants.map(
+          (p) => p.conversation_id
+        );
+
+        // Find conversations where the other user is also a participant
+        const { data: otherParticipants } = await supabase
+          .from('conversation_participants')
+          .select('conversation_id')
+          .eq('user_id', request.participant_user_id)
+          .in('conversation_id', myConvIds);
+
+        if (otherParticipants && otherParticipants.length > 0) {
+          // Get the actual conversation to match request/offer/order IDs
+          const commonConvIds = otherParticipants.map(
+            (p) => p.conversation_id
+          );
+
+          let query = supabase
+            .from('conversations')
+            .select('id')
+            .in('id', commonConvIds);
+
+          // Apply filters for request/offer/order
+          if (request.request_id) {
+            query = query.eq('request_id', request.request_id);
+          } else {
+            query = query.is('request_id', null);
+          }
+
+          if (request.offer_id) {
+            query = query.eq('offer_id', request.offer_id);
+          } else {
+            query = query.is('offer_id', null);
+          }
+
+          if (request.order_id) {
+            query = query.eq('order_id', request.order_id);
+          } else {
+            query = query.is('order_id', null);
+          }
+
+          const { data: existingConvs } = await query.limit(1);
+
+          if (existingConvs && existingConvs.length > 0) {
+            console.log(
+              'Found existing conversation:',
+              existingConvs[0].id
+            );
+            return await this.getConversationById(
+              existingConvs[0].id
+            );
+          }
         }
+      }
+
+      // Step 2: No existing conversation, create a new one
+      const { data: newConv, error: convError } = await supabase
+        .from('conversations')
+        .insert({
+          request_id: request.request_id || null,
+          offer_id: request.offer_id || null,
+          order_id: request.order_id || null,
+        })
+        .select()
+        .single();
+
+      if (convError) {
+        console.error('Error creating conversation:', convError);
+        throw convError;
+      }
+
+      console.log('Created new conversation:', newConv.id);
+
+      // Step 3: Add participants one by one with ON CONFLICT handling
+      const participants = [user.id, request.participant_user_id];
+      let successCount = 0;
+
+      for (const userId of participants) {
+        const { error: partError } = await supabase
+          .from('conversation_participants')
+          .insert({
+            conversation_id: newConv.id,
+            user_id: userId,
+          });
+
+        if (partError) {
+          // If duplicate key, it means this participant already exists (race condition)
+          if (
+            partError.code === '23505' ||
+            partError.message?.includes('duplicate')
+          ) {
+            console.warn(
+              `Participant ${userId} already exists in conversation ${newConv.id}`
+            );
+            successCount++;
+          } else {
+            console.error('Error adding participant:', partError);
+          }
+        } else {
+          successCount++;
+        }
+      }
+
+      if (successCount === 0) {
+        throw new Error('Failed to add any participants');
+      }
+
+      console.log(
+        `Added ${successCount}/${participants.length} participants`
       );
 
-      if (error) throw error;
-
-      // Fetch the full conversation with participants
-      return await this.getConversationById(data);
+      // Step 4: Return the full conversation
+      return await this.getConversationById(newConv.id);
     } catch (error) {
       console.error('Error getting or creating conversation:', error);
       return null;
