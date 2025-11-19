@@ -1,19 +1,13 @@
-import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
-import { Badge } from '@/components/ui/badge';
+import OfferCard from '@/components/OfferCard';
+import RequestCardB from '@/components/RequestCardB';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { offersSupabaseService } from '@/services/offersSupabaseService';
 import { requestsSupabaseService } from '@/services/requestsSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
+import { useAuthStore } from '@/store/zustand/authStore';
 import { useWishlistStore } from '@/store/zustand/wishlistStore';
-import {
-  Heart,
-  MapPin,
-  Package,
-  Search,
-  Share2,
-  Trash2,
-} from 'lucide-react';
+import { Heart, Search } from 'lucide-react';
 import { useEffect, useMemo, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -44,62 +38,134 @@ export function WishlistsPage() {
   const [wishlistItems, setWishlistItems] = useState<
     WishlistDisplayItem[]
   >([]);
+  const [cardMap, setCardMap] = useState<Record<string, any>>({});
   const [loading, setLoading] = useState(true);
 
   const { getWishlist, removeWishlistItem } = useWishlistStore();
   const wishlistIds = useMemo(() => getWishlist(), [getWishlist]);
+  const { user } = useAuthStore();
+
+  // If user is signed in, sync local wishlist with remote server
+  useEffect(() => {
+    if (user) {
+      const fetchRemote = async () => {
+        try {
+          await useWishlistStore.getState().fetchRemoteWishlist();
+        } catch (err) {
+          console.warn('Failed to fetch remote wishlist', err);
+        }
+      };
+      fetchRemote();
+    }
+  }, [user]);
 
   // Fetch full data for wishlist items
   useEffect(() => {
     const fetchWishlistData = async () => {
       setLoading(true);
-      const items: WishlistDisplayItem[] = [];
-      for (const item of wishlistIds) {
+      // If user is authenticated, fetch enriched items in batch
+      if (user) {
         try {
-          // Try to fetch as offer first
-          const offer = await offersSupabaseService.getOfferById(
-            item.id
-          );
-          if (offer) {
-            items.push({
-              id: offer.id,
-              type: 'offer',
-              title: offer.title,
-              price: offer.price,
-              currency: offer.currency,
-              location: offer.location,
-              images: offer.images,
-              agentName: offer.agent_details?.name,
-              rating: offer.agent_details?.rating,
-              reviews: offer.agent_details?.reviews,
-            });
-            continue;
+          const enriched = await (
+            await import('@/services/wishlistSupabaseService')
+          ).wishlistSupabaseService.getWishlistByUser(user.id);
+          const items: WishlistDisplayItem[] = [];
+          const map: Record<string, any> = {};
+          for (const r of enriched) {
+            if (r.item_type === 'offer' && r.offer) {
+              items.push({
+                id: r.item_id,
+                type: 'offer',
+                title: r.offer.title,
+                price: r.offer.price,
+                currency: r.offer.currency,
+                location: r.offer.location,
+                images: r.offer.images,
+                agentName: r.offer.agent_details?.name,
+                rating: r.offer.agent_details?.rating,
+                reviews: r.offer.agent_details?.reviews,
+              });
+              map[r.item_id] = r.offer;
+            } else if (r.item_type === 'request' && r.request) {
+              items.push({
+                id: r.item_id,
+                type: 'request',
+                title: r.request.title,
+                budget_min: r.request.budget_min,
+                budget_max: r.request.budget_max,
+                currency: r.request.currency,
+                location: r.request.expected_delivery_location,
+                images: r.request.images,
+                clientName: r.request.user_name,
+              });
+              map[r.item_id] = r.request;
+            }
           }
-          // Try to fetch as request
-          const request =
-            await requestsSupabaseService.getRequestById(item.id);
-          if (request) {
-            items.push({
-              id: request.id,
-              type: 'request',
-              title: request.title,
-              budget_min: request.budget_min,
-              budget_max: request.budget_max,
-              currency: request.currency,
-              location: request.expected_delivery_location,
-              images: request.images,
-              clientName: request.user_name,
-            });
-          }
-        } catch (error) {
-          console.error(
-            'Error fetching wishlist item:',
-            item.id,
-            error
+
+          setWishlistItems(items);
+          setCardMap(map);
+        } catch (err) {
+          console.warn(
+            'Failed to fetch enriched wishlist, falling back',
+            err
           );
         }
       }
-      setWishlistItems(items);
+
+      // Fallback: for unauthenticated users or if enriched fetch failed
+      if (!user) {
+        const items: WishlistDisplayItem[] = [];
+        const map: Record<string, any> = {};
+        for (const item of wishlistIds) {
+          try {
+            // Try to fetch as offer first
+            const offer = await offersSupabaseService.getOfferById(
+              item.id
+            );
+            if (offer) {
+              items.push({
+                id: offer.id,
+                type: 'offer',
+                title: offer.title,
+                price: offer.price,
+                currency: offer.currency,
+                location: offer.location,
+                images: offer.images,
+                agentName: offer.agent_details?.name,
+                rating: offer.agent_details?.rating,
+                reviews: offer.agent_details?.reviews,
+              });
+              map[offer.id] = offer;
+              continue;
+            }
+            // Try to fetch as request
+            const request =
+              await requestsSupabaseService.getRequestById(item.id);
+            if (request) {
+              items.push({
+                id: request.id,
+                type: 'request',
+                title: request.title,
+                budget_min: request.budget_min,
+                budget_max: request.budget_max,
+                currency: request.currency,
+                location: request.expected_delivery_location,
+                images: request.images,
+                clientName: request.user_name,
+              });
+              map[request.id] = request;
+            }
+          } catch (error) {
+            console.error(
+              'Error fetching wishlist item:',
+              item.id,
+              error
+            );
+          }
+        }
+        setWishlistItems(items);
+        setCardMap(map);
+      }
       setLoading(false);
     };
 
@@ -130,27 +196,6 @@ export function WishlistsPage() {
 
     return filtered;
   }, [wishlistItems, selectedFilter, searchQuery]);
-
-  const handleItemClick = (item: WishlistDisplayItem) => {
-    if (item.type === 'offer') {
-      navigate(`/offers/${item.id}`);
-    } else {
-      navigate(`/requests/${item.id}`);
-    }
-  };
-
-  const handleRemoveItem = (itemId: string, e: React.MouseEvent) => {
-    e.stopPropagation();
-    removeWishlistItem(itemId);
-  };
-
-  const handleShare = (
-    item: WishlistDisplayItem,
-    e: React.MouseEvent
-  ) => {
-    e.stopPropagation();
-    console.log('Share item:', item);
-  };
 
   const onBack = () => {
     navigate(-1);
@@ -219,21 +264,9 @@ export function WishlistsPage() {
       {/* Content */}
       <div className="p-4 pb-20">
         {loading ? (
-          <div className="space-y-4">
-            {Array.from({ length: 3 }).map((_, i) => (
-              <div
-                key={i}
-                className="bg-card rounded-xl border border-border p-4 animate-pulse"
-              >
-                <div className="flex space-x-4">
-                  <div className="w-20 h-20 rounded-lg bg-muted"></div>
-                  <div className="flex-1 space-y-2">
-                    <div className="h-4 bg-muted rounded w-3/4"></div>
-                    <div className="h-3 bg-muted rounded w-1/2"></div>
-                    <div className="h-3 bg-muted rounded w-2/3"></div>
-                  </div>
-                </div>
-              </div>
+          <div className="grid grid-cols-2 gap-3">
+            {Array.from({ length: 12 }).map((_, index) => (
+              <OfferCard key={index} loading />
             ))}
           </div>
         ) : filteredItems.length === 0 ? (
@@ -258,139 +291,40 @@ export function WishlistsPage() {
             )}
           </div>
         ) : (
-          <div className="space-y-4">
-            {filteredItems.map((item) => (
-              <div
-                key={item.id}
-                className="bg-card rounded-xl border border-border p-4 cursor-pointer hover:bg-muted/30 transition-colors"
-                onClick={() => handleItemClick(item)}
-              >
-                <div className="flex space-x-4">
-                  {/* Image */}
-                  <div className="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
-                    <ImageWithFallback
-                      src={item.images?.[0] || ''}
-                      alt={item.title}
-                      className="w-full h-full object-cover"
+          <div className="grid grid-cols-2 gap-3">
+            {loading
+              ? Array.from({ length: 12 }).map((_, index) => (
+                  <OfferCard key={index} loading />
+                ))
+              : filteredItems.map((item) =>
+                  item.type === 'request' ? (
+                    cardMap[item.id] ? (
+                      <RequestCardB
+                        key={item.id}
+                        request={cardMap[item.id]}
+                      />
+                    ) : (
+                      <RequestCardB
+                        key={item.id}
+                        request={
+                          { id: item.id, title: item.title } as any
+                        }
+                      />
+                    )
+                  ) : cardMap[item.id] ? (
+                    <OfferCard
+                      key={item.id}
+                      offer={cardMap[item.id]}
                     />
-                  </div>
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between mb-2">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center space-x-2 mb-1">
-                          <Badge
-                            variant={
-                              item.type === 'offer'
-                                ? 'default'
-                                : 'secondary'
-                            }
-                            className="text-xs"
-                          >
-                            {item.type === 'offer'
-                              ? t('common.offer')
-                              : t('common.request')}
-                          </Badge>
-                        </div>
-                        <h3 className="font-medium line-clamp-2 text-sm leading-tight mb-1">
-                          {item.title}
-                        </h3>
-                      </div>
-                      {/* Action buttons */}
-                      <div className="flex items-center space-x-1 ml-2">
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8"
-                          onClick={(e) => handleShare(item, e)}
-                        >
-                          <Share2 className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="icon"
-                          className="h-8 w-8 text-destructive hover:text-destructive"
-                          onClick={(e) =>
-                            handleRemoveItem(item.id, e)
-                          }
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    </div>
-                    {/* Details */}
-                    <div className="space-y-2">
-                      {item.type === 'offer' ? (
-                        <>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-1">
-                              <span className="font-semibold text-sm">
-                                {item.currency === 'USD'
-                                  ? '$'
-                                  : item.currency === 'EUR'
-                                  ? '€'
-                                  : '¥'}
-                                {item.price}
-                              </span>
-                              <span className="text-xs text-muted-foreground">
-                                {t('common.by')} {item.agentName}
-                              </span>
-                            </div>
-                          </div>
-                          <div className="flex items-center space-x-4 text-xs text-muted-foreground">
-                            <div className="flex items-center space-x-1">
-                              <MapPin className="h-3 w-3" />
-                              <span>{item.location}</span>
-                            </div>
-                            {item.rating && (
-                              <div className="flex items-center space-x-1">
-                                <span className="text-yellow-500">
-                                  ★
-                                </span>
-                                <span>
-                                  {item.rating} ({item.reviews})
-                                </span>
-                              </div>
-                            )}
-                          </div>
-                        </>
-                      ) : (
-                        <>
-                          <div className="flex items-center justify-between">
-                            <div className="flex items-center space-x-1">
-                              <span className="font-semibold text-sm">
-                                {item.budget_min} - {item.budget_max}
-                              </span>
-                              <span className="text-xs text-muted-foreground">
-                                {t('common.by')} {item.clientName}
-                              </span>
-                            </div>
-                            <div className="flex items-center space-x-1 text-xs">
-                              <Package className="h-3 w-3 text-blue-500" />
-                              <span>{t('common.request')}</span>
-                            </div>
-                          </div>
-                          <div className="flex items-center space-x-4 text-xs text-muted-foreground">
-                            <div className="flex items-center space-x-1">
-                              <MapPin className="h-3 w-3" />
-                              <span>{item.location}</span>
-                            </div>
-                            <div className="flex items-center space-x-1">
-                              <span className="text-xs text-muted-foreground">
-                                {item.currency}
-                              </span>
-                            </div>
-                          </div>
-                        </>
-                      )}
-                      <div className="text-xs text-muted-foreground">
-                        {t('wishlist.addedToWishlist')}
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+                  ) : (
+                    <OfferCard
+                      key={item.id}
+                      offer={
+                        { id: item.id, title: item.title } as any
+                      }
+                    />
+                  )
+                )}
           </div>
         )}
       </div>

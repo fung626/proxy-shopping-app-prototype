@@ -1,5 +1,7 @@
+import { chatSupabaseService } from '@/services';
 import { SupabaseUser } from '@/services/type';
 import { useLanguage } from '@/store/LanguageContext';
+import { useAuthStore } from '@/store/zustand';
 import {
   CheckCircle,
   Clock,
@@ -50,6 +52,37 @@ const AgentCard: FC<AgentCardProps> = ({
 }) => {
   const { t } = useLanguage();
   const navigate = useNavigate();
+  const { user } = useAuthStore();
+
+  const handleContactClient = async (agent: SupabaseUser) => {
+    if (!user) {
+      // If not authenticated, redirect to sign in
+      if (!user) {
+        navigate('/auth/signin');
+        return;
+      }
+      return;
+    }
+    if (user.id === agent.id) {
+      return;
+    }
+    try {
+      // Create or get existing conversation
+      const conversation =
+        await chatSupabaseService.getOrCreateConversation({
+          participant_user_id: agent.id,
+        });
+
+      if (conversation) {
+        // Navigate to the chat page
+        navigate(`/messages/chat/${conversation.id}`);
+      } else {
+        console.error('Failed to create conversation');
+      }
+    } catch (error) {
+      console.error('Error contacting client:', error);
+    }
+  };
 
   if (loading) {
     return (
@@ -167,7 +200,7 @@ const AgentCard: FC<AgentCardProps> = ({
         <Button
           className="w-full rounded-lg"
           size="sm"
-          onClick={() => navigate(`/messages/agent/${item?.id}`)}
+          onClick={() => item && handleContactClient(item)}
         >
           {t('agents.contact')}
         </Button>

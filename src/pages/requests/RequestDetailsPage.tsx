@@ -70,6 +70,9 @@ export const RequestDetailsPage = memo(function RequestDetailsPage() {
       }
       return;
     }
+    if (user.id === requestData.user_id) {
+      return;
+    }
 
     setIsContactingClient(true);
     try {

@@ -160,6 +160,10 @@ export const OfferDetailsPage = memo(function OfferDetailsPage() {
       return;
     }
 
+    if (user.id === offerData.user_id) {
+      return;
+    }
+
     setIsContactingAgent(true);
     try {
       // Create or get existing conversation

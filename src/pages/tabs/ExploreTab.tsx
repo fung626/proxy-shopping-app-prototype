@@ -1,7 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/store/LanguageContext';
 import { useWishlistStore } from '@/store/zustand';
+import { useAuthStore } from '@/store/zustand/authStore';
 import { Heart, Search } from 'lucide-react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import PopularCategoriesSection from '../explore/components/PopularCategoriesSection';
 import RecommendationsSection from '../explore/components/RecommendationsSection';
@@ -13,6 +15,17 @@ export function ExploreTab() {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { getWishlistCount } = useWishlistStore();
+  const { user } = useAuthStore();
+
+  useEffect(() => {
+    if (user) {
+      try {
+        useWishlistStore.getState().fetchRemoteWishlist();
+      } catch (err) {
+        console.warn('Failed to fetch remote wishlist', err);
+      }
+    }
+  }, [user]);
 
   return (
     <div className="flex-1 bg-background pb-[74px]">

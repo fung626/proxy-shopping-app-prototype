@@ -108,7 +108,14 @@ export function OrderDetailsPage() {
   };
 
   const handleContact = async () => {
-    if (!order || !user) return;
+    if (
+      !order ||
+      !user ||
+      user.id === order.agentUserId ||
+      user.id === order.clientUserId
+    ) {
+      return;
+    }
     const role = getOrderRole(user, order);
     const otherUserId =
       role === 'client' ? order.agentUserId : order.clientUserId;

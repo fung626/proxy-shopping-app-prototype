@@ -54,7 +54,24 @@ const OfferCard = ({ loading, offer }: OfferCardProps) => {
           }`}
           onClick={(e) => {
             e.stopPropagation();
-            if (offer) toggleWishlistItem(offer.id, 'offer');
+            if (!offer) return;
+            // toggle local state immediately
+            toggleWishlistItem(offer.id, 'offer');
+            // persist to server if available
+            try {
+              const state = useWishlistStore.getState();
+              if (isWishlistItem(offer.id)) {
+                // it is now wishlisted -> ensure remote add
+                if (state.addRemoteItem)
+                  state.addRemoteItem(offer.id, 'offer');
+              } else {
+                // it was removed -> ensure remote removal
+                if (state.removeRemoteItem)
+                  state.removeRemoteItem(offer.id);
+              }
+            } catch (err) {
+              /* ignore */
+            }
           }}
         >
           <Heart

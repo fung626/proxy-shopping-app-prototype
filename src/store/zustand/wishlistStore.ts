@@ -1,3 +1,5 @@
+import { authSupabaseService } from '@/services/authSupabaseService';
+import { wishlistSupabaseService } from '@/services/wishlistSupabaseService';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
@@ -18,6 +20,14 @@ interface WishlistState {
   getWishlist: () => WishlistItem[];
   clearWishlist: () => void;
   getWishlistCount: () => number;
+  // Optional remote sync helpers
+  syncWithServer: () => Promise<void>;
+  fetchRemoteWishlist: () => Promise<void>;
+  addRemoteItem: (
+    id: string,
+    type: 'offer' | 'request'
+  ) => Promise<void>;
+  removeRemoteItem: (id: string) => Promise<void>;
 }
 
 export const useWishlistStore = create<WishlistState>()(
@@ -29,6 +39,75 @@ export const useWishlistStore = create<WishlistState>()(
         const newWishlist = new Set(wishlist);
         newWishlist.add(item);
         set({ wishlist: newWishlist });
+        (async () => {
+          try {
+            const { data: userData } =
+              await authSupabaseService.getCurrentUser();
+            const user = userData.user;
+            if (!user) return;
+            await wishlistSupabaseService.addWishlistItem(
+              user.id,
+              item.id,
+              item.type
+            );
+          } catch (err) {
+            console.warn('Failed to add remote wishlist item', err);
+          }
+        })();
+      },
+      syncWithServer: async () => {
+        try {
+          const { data: userData } =
+            await authSupabaseService.getCurrentUser();
+          const user = userData.user;
+          if (!user) return;
+          const remote =
+            await wishlistSupabaseService.getWishlistByUser(user.id);
+          const remoteItems = new Set<WishlistItem>(
+            (remote || []).map((r) => ({
+              id: r.item_id,
+              type: r.item_type,
+            }))
+          );
+          set({ wishlist: remoteItems });
+        } catch (err) {
+          console.warn('Failed to sync wishlist with server', err);
+        }
+      },
+      fetchRemoteWishlist: async () => {
+        await get().syncWithServer();
+      },
+      addRemoteItem: async (
+        id: string,
+        type: 'offer' | 'request'
+      ) => {
+        try {
+          const { data: userData } =
+            await authSupabaseService.getCurrentUser();
+          const user = userData.user;
+          if (!user) return;
+          await wishlistSupabaseService.addWishlistItem(
+            user.id,
+            id,
+            type
+          );
+        } catch (err) {
+          console.warn('Failed to add remote wishlist item', err);
+        }
+      },
+      removeRemoteItem: async (id: string) => {
+        try {
+          const { data: userData } =
+            await authSupabaseService.getCurrentUser();
+          const user = userData.user;
+          if (!user) return;
+          await wishlistSupabaseService.removeWishlistItem(
+            user.id,
+            id
+          );
+        } catch (err) {
+          console.warn('Failed to remove remote wishlist item', err);
+        }
       },
       removeWishlistItem: (id: string) => {
         const { wishlist } = get();
@@ -41,6 +120,25 @@ export const useWishlistStore = create<WishlistState>()(
           }
         }
         set({ wishlist: newWishlist });
+
+        // Fire-and-forget remote removal
+        (async () => {
+          try {
+            const { data: userData } =
+              await authSupabaseService.getCurrentUser();
+            const user = userData.user;
+            if (!user) return;
+            await wishlistSupabaseService.removeWishlistItem(
+              user.id,
+              id
+            );
+          } catch (err) {
+            console.warn(
+              'Failed to remove remote wishlist item',
+              err
+            );
+          }
+        })();
       },
       toggleWishlistItem: (
         id: string,

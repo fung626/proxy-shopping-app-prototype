@@ -13,6 +13,8 @@ export const useFavorites = () => {
     toggleWishlistItem,
     addWishlistItem,
     removeWishlistItem,
+    addRemoteItem,
+    removeRemoteItem,
     isWishlistItem,
     getWishlist,
     clearWishlist,
@@ -39,6 +41,13 @@ export const useFavorites = () => {
   const addFavorite = useCallback(
     (id: string, type: 'offer' | 'request') => {
       addWishlistItem({ id, type });
+      // If remote API available, persist there as well
+      try {
+        const state = useWishlistStore.getState();
+        if (state.addRemoteItem) state.addRemoteItem(id, type);
+      } catch (err) {
+        /* ignore */
+      }
     },
     [addWishlistItem]
   );
@@ -50,6 +59,12 @@ export const useFavorites = () => {
   const removeFavorite = useCallback(
     (id: string) => {
       removeWishlistItem(id);
+      try {
+        const state = useWishlistStore.getState();
+        if (state.removeRemoteItem) state.removeRemoteItem(id);
+      } catch (err) {
+        /* ignore */
+      }
     },
     [removeWishlistItem]
   );

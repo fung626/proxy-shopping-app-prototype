@@ -53,7 +53,20 @@ const RequestCardB = ({ loading, request }: RequestCardBProps) => {
           }`}
           onClick={(e) => {
             e.stopPropagation();
-            if (request) toggleWishlistItem(request.id, 'request');
+            if (!request) return;
+            toggleWishlistItem(request.id, 'request');
+            try {
+              const state = useWishlistStore.getState();
+              if (isWishlistItem(request.id)) {
+                if (state.addRemoteItem)
+                  state.addRemoteItem(request.id, 'request');
+              } else {
+                if (state.removeRemoteItem)
+                  state.removeRemoteItem(request.id);
+              }
+            } catch (err) {
+              /* ignore */
+            }
           }}
         >
           <Heart
