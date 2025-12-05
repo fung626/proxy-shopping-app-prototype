@@ -1,5 +1,10 @@
 // Explore translations - Chinese Simplified
 export const explore = {
+  agents: '代理',
+  allAgents: '所有代理',
+  allOffers: '所有报价',
+  allRequests: '所有请求',
+  browseAll: '浏览全部',
   agentsContact: '联系代理',
   bestDeals: '超值优惠',
   categories: '分类',

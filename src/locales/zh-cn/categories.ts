@@ -9,6 +9,8 @@ export const categories = {
   bagsDescription: '适合各种旅行的时尚包袋和耐用行李。',
   beauty: '美容',
   beautyDescription: '探索美容产品和个人护理用品。',
+  cosmetics: '美容与个人护理',
+  cosmeticsDescription: '探索美容产品和个人护理用品。',
   electronics: '电子产品',
   electronicsDescription: '最新的小工具和电子设备。',
   fashion: '时尚',

@@ -61,4 +61,19 @@ export const messages = {
   today: 'Today',
   tryDifferentSearch: 'Try a different search term',
   yesterday: 'Yesterday',
+
+  // Message types
+  types: {
+    image: 'Image',
+    location: 'Location',
+    document: 'Document',
+  },
+
+  // Empty states
+  empty: {
+    noResults: 'No results found',
+    noMessages: 'No messages yet',
+    tryDifferentSearch: 'Try a different search term',
+    startConversation: 'Start a conversation',
+  },
 };

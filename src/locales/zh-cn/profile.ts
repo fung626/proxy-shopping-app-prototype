@@ -9,6 +9,9 @@ export const profile = {
   biometricAuth: '生物识别认证',
   biometricAuthDisabled: '未设置',
   biometricAuthEnabled: 'Face ID 或指纹识别已启用',
+  businessVerification: '商家认证',
+  businessVerificationDesc: '您的商家信息已验证。',
+  businessVerificationDescPending: '提交商家信息以完成验证。',
   changePassword: '更改密码',
   completedOrders: '已完成订单',
   creditCards: '信用卡',
@@ -57,4 +60,5 @@ export const profile = {
   translation: '翻译',
   twoFactor: '双重认证',
   verified: '已验证',
+  verificationStatus: '验证状态',
 };

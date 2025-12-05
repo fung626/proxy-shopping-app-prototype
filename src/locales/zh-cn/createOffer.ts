@@ -26,6 +26,7 @@ export const createOffer = {
   descriptionPlaceholder: '描述您的产品和服务',
   domesticShipping: '国内运输',
   domesticShippingDescription: '国内配送',
+  enterPrice: '输入价格',
   errorDescription: '请重试，如果问题持续存在，请联系客服。',
   errorTitle: '创建报价失败',
   estimatedDeliveryTime: '预计交付时间',

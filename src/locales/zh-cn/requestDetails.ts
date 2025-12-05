@@ -23,6 +23,8 @@ export const requestDetails = {
   noRequirements: '未提供具体要求',
   normal: '普通',
   offerCount: '收到的报价',
+  offersReceived: '收到的报价',
+  orderNow: '立即订购',
   postedDate: '发布于',
   productImages: '产品图片',
   purchaseLocation: '购买地点',

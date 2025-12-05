@@ -450,6 +450,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/two-factor-auth',
         element: TwoFactorAuthPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.twoFactorAuth',
@@ -459,6 +460,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/edit-account',
         element: EditAccountPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.editAccount',
@@ -468,6 +470,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/delete-account',
         element: DeleteAccountPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.deleteAccount',
@@ -477,6 +480,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/bank-information',
         element: BankInformationPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.bankInformation',
@@ -486,6 +490,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/credit-cards',
         element: CreditCardsPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.creditCards',
@@ -495,6 +500,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/transaction-password',
         element: TransactionPasswordPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.transactionPassword',
@@ -504,6 +510,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/biometric-auth',
         element: BiometricAuthPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.biometricAuth',

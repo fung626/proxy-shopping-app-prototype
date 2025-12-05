@@ -1,9 +1,9 @@
 import { SupportedLanguage, t } from '@/locales';
 import authService from '@/services/authSupabaseService';
 import {
-  SupabaseUser as User,
   userSupabaseService as userService,
 } from '@/services/userSupabaseService';
+import { SupabaseUser as User } from '@/services/type';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { useLoadingStore } from './loadingStore';

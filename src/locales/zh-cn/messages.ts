@@ -57,4 +57,19 @@ export const messages = {
   today: '今天',
   tryDifferentSearch: '尝试不同的搜索词',
   yesterday: '昨天',
+
+  // Message types
+  types: {
+    image: '图片',
+    location: '位置',
+    document: '文件',
+  },
+
+  // Empty states
+  empty: {
+    noResults: '未找到结果',
+    noMessages: '暂无消息',
+    tryDifferentSearch: '尝试不同的搜索词',
+    startConversation: '开始对话',
+  },
 };

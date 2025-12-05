@@ -1,5 +1,8 @@
 export const about = {
   activeUsers: '活跃用户',
+  business: '商务',
+  byTheNumbers: '数据统计',
+  completedOrders: '已完成订单',
   countries: '服务国家',
   customerFirst: '客户至上',
   customerFirstDescription: '我们将客户满意度和体验放在首位。',
