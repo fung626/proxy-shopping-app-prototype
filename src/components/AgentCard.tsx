@@ -10,7 +10,7 @@ import {
   Star,
   User,
 } from 'lucide-react';
-import { FC } from 'react';
+import { FC, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Avatar } from './ui/avatar';
 import { Badge } from './ui/badge';
@@ -53,17 +53,22 @@ const AgentCard: FC<AgentCardProps> = ({
   const { t } = useLanguage();
   const navigate = useNavigate();
   const { user } = useAuthStore();
+  const [contactLoading, setContactLoading] = useState(false);
 
   const handleContactClient = async (agent: SupabaseUser) => {
+    setContactLoading(true);
     if (!user) {
       // If not authenticated, redirect to sign in
       if (!user) {
         navigate('/auth/signin');
+        setContactLoading(false);
         return;
       }
+      setContactLoading(false);
       return;
     }
     if (user.id === agent.id) {
+      setContactLoading(false);
       return;
     }
     try {
@@ -78,9 +83,11 @@ const AgentCard: FC<AgentCardProps> = ({
         navigate(`/messages/chat/${conversation.id}`);
       } else {
         console.error('Failed to create conversation');
+        setContactLoading(false);
       }
     } catch (error) {
       console.error('Error contacting client:', error);
+      setContactLoading(false);
     }
   };
 
@@ -201,8 +208,9 @@ const AgentCard: FC<AgentCardProps> = ({
           className="w-full rounded-lg"
           size="sm"
           onClick={() => item && handleContactClient(item)}
+          disabled={contactLoading}
         >
-          {t('agents.contact')}
+          {contactLoading ? t('common.loading') : t('agents.contact')}
         </Button>
       </div>
     </div>

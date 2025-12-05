@@ -405,6 +405,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/email-verification',
         element: EmailVerificationPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.emailVerification',
@@ -414,6 +415,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/phone-verification',
         element: PhoneVerificationPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.phoneVerification',
@@ -423,6 +425,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/identity-verification',
         element: IdentityVerificationPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.identityVerification',
@@ -432,6 +435,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/business-verification',
         element: BusinessVerificationPage,
+        showNavBar: true,
         requireAuth: true,
         meta: {
           title: 'nav.titles.businessVerification',
@@ -441,6 +445,7 @@ export const routeGroups: RouteGroup[] = [
       {
         path: '/profile/change-password',
         element: ChangePasswordPage,
+        showNavBar: true, 
         requireAuth: true,
         meta: {
           title: 'nav.titles.changePassword',

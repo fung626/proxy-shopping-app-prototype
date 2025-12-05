@@ -1,7 +1,7 @@
 import { Button } from '@/components/ui/button';
 import { Switch } from '@/components/ui/switch';
+import { SupabaseUser as User } from '@/services/type';
 import { useLanguage } from '@/store/LanguageContext';
-import { User } from '@/types';
 import { Eye, Fingerprint, Smartphone } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -14,7 +14,7 @@ export function BiometricAuthPage({ user }: BiometricAuthPageProps) {
   const { t } = useLanguage();
   const navigate = useNavigate();
   const [biometricEnabled, setBiometricEnabled] = useState(
-    user?.biometricEnabled || false
+    user?.biometric_enabled || false
   );
   const [loading, setLoading] = useState(false);
 

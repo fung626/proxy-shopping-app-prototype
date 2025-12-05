@@ -28,11 +28,16 @@ export const createOffer = {
   domesticShipping: '国内配送',
   domesticShippingDescription: '国内への配送',
   enterPrice: '価格を入力',
+  errorDescription: '再試行するか、問題が解決しない場合はサポートに連絡してください。',
+  errorTitle: 'オファーの作成に失敗しました',
   estimatedDeliveryTime: '推定配送時間',
   expressDelivery: '速達配送',
   expressDeliveryDescription: '高速配送サービス',
+  chooseImages: '画像を選択',
   imageDescription:
     '高品質な画像は潜在的な買い手との信頼構築に役立ちます',
+  international: '国際配送',
+  internationalDescription: '世界中への配送',
   makingOfferFor: 'リクエストに対するオファーを作成',
   infoBoxDescription:
     'あなたのショッピング専門知識を共有し、世界中の顧客に商品の購入・配送サービスを提供しましょう。',
@@ -49,6 +54,7 @@ export const createOffer = {
     '購入者を引き付けるために競争力のある価格を設定してください',
   productImages: '商品画像',
   productSpecifications: '商品仕様',
+  productTitle: '商品タイトル',
   quantityDescription: 'どのくらいの商品を調達できますか？',
   quantityPlaceholder: '利用可能な数量を入力',
   selectCategory: 'カテゴリーを選択',
@@ -58,6 +64,9 @@ export const createOffer = {
   shoppingLocation: '購入場所',
   shoppingLocationDescription: '通常どこでこの商品を調達しますか？',
   shoppingLocationPlaceholder: '推奨店舗またはマーケットプレイス',
+  signInButton: 'サインインして続ける',
+  signInDescription: 'オファーを作成するにはサインインが必要です。',
+  signInRequired: 'サインインが必要です',
   specificationsDescription: '調達可能な商品の詳細を追加してください',
   subtitle:
     'あなたの所在地から商品を購入・配送するサービスを提供しましょう',
@@ -68,7 +77,9 @@ export const createOffer = {
   tags: 'タグ',
   tagsDescription:
     '買い手があなたのオファーを見つけやすくするタグを追加してください',
+  tagsInstructions: '買い手があなたのオファーを見つけやすくするタグを追加してください',
   title: 'オファーを投稿',
+  titlePlaceholder: 'オファーのタイトルを入力',
   uploadPhotos:
     '以前の購入品やサンプル商品の写真をアップロードしてください',
   yourLocation: 'あなたの所在地',

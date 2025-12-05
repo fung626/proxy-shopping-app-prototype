@@ -60,6 +60,7 @@ export const countries = {
   norway: '挪威',
   nz: '新西兰',
   oman: '阿曼',
+  peru: '秘鲁',
   ph: '菲律宾',
   philippines: '菲律宾',
   poland: '波兰',

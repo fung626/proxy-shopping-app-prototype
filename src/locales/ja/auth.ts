@@ -111,6 +111,7 @@ export const auth = {
   selectLanguages: '話せる言語を選択してください',
   sending: '送信中...',
   signIn: 'ログイン',
+  signInSuccess: 'ログインに成功しました',
   signInError: 'ログインに失敗しました',
   signInFailed:
     'ログインに失敗しました。資格情報を確認して再試行してください。',

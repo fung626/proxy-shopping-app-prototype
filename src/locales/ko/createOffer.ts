@@ -28,6 +28,7 @@ export const createOffer = {
   descriptionPlaceholder: '제품 및 서비스에 대해 설명하세요',
   domesticShipping: '국내 배송',
   domesticShippingDescription: '국내 배송',
+  enterPrice: '가격 입력',
   errorDescription:
     '다시 시도하거나 문제가 지속되면 고객지원에 문의하세요.',
   errorTitle: '오퍼 생성에 실패했습니다',

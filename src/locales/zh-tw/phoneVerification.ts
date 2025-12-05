@@ -1,40 +1,40 @@
-// Phone Verification translations - Simplified Chinese
+// Phone Verification translations - Traditional Chinese
 export const phoneVerification = {
-    title: '手机验证',
-    verifyYourPhone: '验证您的手机号码',
+    title: '手機驗證',
+    verifyYourPhone: '驗證您的手機號碼',
 
     // Send code step
-    sendCodeDescription: '我们将通过短信向您发送验证码',
-    phoneLabel: '手机号码',
-    phonePlaceholder: '+86 138 0000 0000',
-    phoneHint: '输入带国家代码的手机号码',
-    sendingCode: '发送验证码中...',
-    sendVerificationCode: '发送验证码',
+    sendCodeDescription: '我們將透過簡訊向您發送驗證碼',
+    phoneLabel: '手機號碼',
+    phonePlaceholder: '+886 912 345 678',
+    phoneHint: '輸入帶國家代碼的手機號碼',
+    sendingCode: '發送驗證碼中...',
+    sendVerificationCode: '發送驗證碼',
 
     // Enter code step
-    enterVerificationCode: '输入验证码',
-    codeDescription: '输入我们发送到的6位数验证码',
-    verificationCodeLabel: '验证码',
+    enterVerificationCode: '輸入驗證碼',
+    codeDescription: '輸入我們發送到的6位數驗證碼',
+    verificationCodeLabel: '驗證碼',
     codePlaceholder: '000000',
 
     // Resend
-    didntReceiveCode: '没有收到验证码？',
-    sentCodeCount: '已发送{count}次验证码',
-    sending: '发送中...',
-    resendInSeconds: '{seconds}秒后重新发送',
-    resendCode: '重新发送验证码',
+    didntReceiveCode: '沒有收到驗證碼？',
+    sentCodeCount: '已發送{count}次驗證碼',
+    sending: '發送中...',
+    resendInSeconds: '{seconds}秒後重新發送',
+    resendCode: '重新發送驗證碼',
 
     // Tips
-    smsTips: '短信提示',
-    tip1: '检查垃圾短信文件夹',
-    tip2: '确保您有信号',
-    tip3: '30秒后尝试重新发送',
-    tip4: '如果问题持续存在，请联系客服',
+    smsTips: '簡訊提示',
+    tip1: '檢查垃圾簡訊資料夾',
+    tip2: '確保您有訊號',
+    tip3: '30秒後嘗試重新發送',
+    tip4: '如果問題持續存在，請聯絡客服',
 
     // Actions
-    verifyPhoneNumber: '验证手机号码',
+    verifyPhoneNumber: '驗證手機號碼',
 
     // Demo
-    demoMode: '演示模式',
-    simulateVerified: '模拟已验证',
+    demoMode: '示範模式',
+    simulateVerified: '模擬已驗證',
 };

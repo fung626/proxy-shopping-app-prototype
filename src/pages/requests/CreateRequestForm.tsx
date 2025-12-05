@@ -1,3 +1,15 @@
+import { CreateFormLoadingOverlay } from '@/components/CreateFormLoadingOverlay';
+import { FileUpload } from '@/components/FileUpload';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import { CATEGORIES } from '@/config/categories';
 import { COUNTRIES } from '@/config/countries';
 import { requestsSupabaseService } from '@/services/requestsSupabaseService';
@@ -13,18 +25,6 @@ import {
 } from 'lucide-react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
-import { CreateFormLoadingOverlay } from '../../components/CreateFormLoadingOverlay';
-import { FileUpload } from '../../components/FileUpload';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../../components/ui/select';
-import { Textarea } from '../../components/ui/textarea';
 
 export function CreateRequestForm() {
   const { t } = useLanguage();

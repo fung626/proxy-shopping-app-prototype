@@ -370,7 +370,7 @@ export function OrderDetailsPage() {
     );
   }
 
-  const role = getOrderRole(user, order);
+  const role = getOrderRole(user ?? null, order);
 
   // Use the delivery method from the order
   const deliveryMethod: DeliveryMethod = order.deliveryMethod;

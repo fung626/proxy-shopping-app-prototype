@@ -39,7 +39,6 @@ interface AddCreditCardPageProps {
 }
 
 export function AddCreditCardPage({
-  onBack,
   onSave,
   user,
 }: AddCreditCardPageProps) {
@@ -566,13 +565,6 @@ export function AddCreditCardPage({
             {isSaving
               ? t('addCreditCard.savingCard')
               : t('addCreditCard.saveCard')}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={onBack}
-            className="w-full"
-          >
-            {t('common.cancel')}
           </Button>
         </div>
       </div>

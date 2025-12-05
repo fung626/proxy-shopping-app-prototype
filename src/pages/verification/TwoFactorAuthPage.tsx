@@ -388,8 +388,7 @@ export function TwoFactorAuthPage({}: TwoFactorAuthPageProps) {
                   onCheckedChange={handleToggle2FA}
                 />
               </div>
-
-              <Button onClick={onComplete} className="w-full">
+              <Button className="w-full">
                 {t('common.done')}
               </Button>
             </div>

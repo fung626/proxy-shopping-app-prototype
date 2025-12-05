@@ -2,7 +2,7 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 import { useLanguage } from '@/store/LanguageContext';
-import { ArrowLeft, MessageCircle, Star, User } from 'lucide-react';
+import { MessageCircle, Star, User } from 'lucide-react';
 import { useState } from 'react';
 
 interface FeedbackPageProps {
@@ -25,7 +25,6 @@ interface FeedbackPageProps {
 
 export function FeedbackPage({
   request,
-  onBack,
   onSubmitFeedback,
 }: FeedbackPageProps) {
   const { t } = useLanguage();
@@ -93,30 +92,6 @@ export function FeedbackPage({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-background border-b border-border">
-        <div className="flex items-center justify-between p-4">
-          <div className="flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onBack}
-              className="rounded-full"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div>
-              <h1 className="text-lg font-semibold">
-                {t('feedback.title')}
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                {t('feedback.subtitle')}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="p-4 space-y-6">
         {/* Request Info */}
@@ -239,17 +214,6 @@ export function FeedbackPage({
               {t('feedback.selectRatingToContinue')}
             </p>
           )}
-        </div>
-
-        {/* Skip Option */}
-        <div className="text-center pt-2">
-          <Button
-            variant="ghost"
-            onClick={onBack}
-            className="text-muted-foreground"
-          >
-            {t('feedback.skipForNow')}
-          </Button>
         </div>
       </div>
     </div>

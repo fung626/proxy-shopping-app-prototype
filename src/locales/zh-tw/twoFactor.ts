@@ -1,46 +1,46 @@
-// Two-Factor Authentication translations - Simplified Chinese
+// Two-Factor Authentication translations - Traditional Chinese
 export const twoFactor = {
-    title: '双重认证',
-    secureAccount: '保护您的账户',
-    description: '为您的账户添加额外的安全层',
+    title: '雙重認證',
+    secureAccount: '保護您的帳戶',
+    description: '為您的帳戶新增額外的安全層',
 
     // Recommendation
-    recommended: '推荐',
-    recommendedText: '我们强烈建议启用双重认证以保障账户安全',
+    recommended: '推薦',
+    recommendedText: '我們強烈建議啟用雙重認證以保障帳戶安全',
 
     // Disabled state
-    currentlyDisabled: '双重认证当前已禁用',
+    currentlyDisabled: '雙重認證目前已停用',
 
     // Setup
-    setupApp: '设置身份验证器应用',
-    setupDescription: '使用身份验证器应用生成验证码',
+    setupApp: '設定身份驗證器應用程式',
+    setupDescription: '使用身份驗證器應用程式產生驗證碼',
 
     // QR Code step
-    scanQR: '扫描二维码',
-    manualSetup: '手动设置',
-    setupInstructions: '设置说明',
-    instruction1: '1. 下载身份验证器应用（Google Authenticator、Authy等）',
-    instruction2: '2. 用您的应用扫描二维码',
-    instruction3: '3. 输入应用中显示的6位数验证码',
-    addedAccount: '账户添加成功',
+    scanQR: '掃描QR碼',
+    manualSetup: '手動設定',
+    setupInstructions: '設定說明',
+    instruction1: '1. 下載身份驗證器應用程式（Google Authenticator、Authy等）',
+    instruction2: '2. 用您的應用程式掃描QR碼',
+    instruction3: '3. 輸入應用程式中顯示的6位數驗證碼',
+    addedAccount: '帳戶新增成功',
 
     // Verify step
-    verifySetup: '验证设置',
-    verifyDescription: '输入身份验证器应用中的验证码',
-    verificationCode: '验证码',
-    enterCode: '输入6位数验证码',
-    verifying: '验证中...',
-    verifyAndEnable: '验证并启用',
+    verifySetup: '驗證設定',
+    verifyDescription: '輸入身份驗證器應用程式中的驗證碼',
+    verificationCode: '驗證碼',
+    enterCode: '輸入6位數驗證碼',
+    verifying: '驗證中...',
+    verifyAndEnable: '驗證並啟用',
 
     // Success
-    enabledSuccess: '双重认证已启用',
-    enabledDescription: '您的账户现在更加安全',
+    enabledSuccess: '雙重認證已啟用',
+    enabledDescription: '您的帳戶現在更加安全',
 
     // Backup codes
-    backupCodes: '备用码',
-    copyAll: '全部复制',
-    backupDescription: '请将这些代码保存在安全的地方。如果您丢失了设备，可以使用它们访问您的账户。',
+    backupCodes: '備用碼',
+    copyAll: '全部複製',
+    backupDescription: '請將這些代碼儲存在安全的地方。如果您遺失了裝置，可以使用它們存取您的帳戶。',
 
     // Enabled state
-    currentlyEnabled: '双重认证当前已启用',
+    currentlyEnabled: '雙重認證目前已啟用',
 };

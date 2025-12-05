@@ -1,5 +1,5 @@
-// Verification translations - Simplified Chinese
+// Verification translations - Traditional Chinese
 export const verification = {
-    verifiedSuppliers: '访问已验证的供应商',
-    fasterDispute: '更快的争议解决',
+    verifiedSuppliers: '存取已驗證的供應商',
+    fasterDispute: '更快的爭議解決',
 };

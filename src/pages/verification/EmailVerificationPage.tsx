@@ -2,10 +2,9 @@ import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
 import { useLanguage } from '@/store/LanguageContext';
 import {
-  ArrowLeft,
   CheckCircle,
   Mail,
-  RefreshCw,
+  RefreshCw
 } from 'lucide-react';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -69,23 +68,6 @@ export function EmailVerificationPage({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="px-4 py-4 safe-area-inset-top">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={() => navigate(-1)}
-            className="mr-3"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-lg font-semibold text-foreground">
-            Email Verification
-          </h1>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="px-4 pb-20">
         <div className="max-w-md mx-auto">

@@ -1,8 +1,8 @@
-// Security translations - Simplified Chinese
+// Security translations - Traditional Chinese
 export const security = {
-    dataSecure: '您的数据是安全的',
-    encrypted: '所有数据均端到端加密',
-    noStorage: '我们不存储敏感信息',
-    essentialOnly: '我们只收集必要的数据',
-    deleteAnytime: '您可以随时删除数据',
+    dataSecure: '您的資料是安全的',
+    encrypted: '所有資料均端到端加密',
+    noStorage: '我們不儲存敏感資訊',
+    essentialOnly: '我們只收集必要的資料',
+    deleteAnytime: '您可以隨時刪除資料',
 };

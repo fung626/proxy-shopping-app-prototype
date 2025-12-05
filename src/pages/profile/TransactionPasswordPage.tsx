@@ -1,9 +1,9 @@
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Switch } from '@/components/ui/switch';
+import { SupabaseUser as User } from '@/services/type';
 import { useLanguage } from '@/store/LanguageContext';
-import { User } from '@/types';
-import { ArrowLeft, Check, Eye, EyeOff, Lock } from 'lucide-react';
+import { Check, Eye, EyeOff, Lock } from 'lucide-react';
 import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -46,7 +46,7 @@ export function TransactionPasswordPage({
     '',
   ]);
   const [isEnabled, setIsEnabled] = useState(
-    user?.transactionPasswordEnabled || false
+    user?.transaction_password_enabled || false
   );
   const [loading, setLoading] = useState(false);
   const [errors, setErrors] = useState<{ [key: string]: string }>({});
@@ -64,12 +64,12 @@ export function TransactionPasswordPage({
       const confirmPasswordString = confirmPassword.join('');
 
       if (
-        !user?.transactionPasswordEnabled &&
+        !user?.transaction_password_enabled &&
         !currentPasswordString
       ) {
         // If enabling for first time, don't require current password
       } else if (
-        user?.transactionPasswordEnabled &&
+        user?.transaction_password_enabled &&
         (!currentPasswordString || currentPasswordString.length !== 6)
       ) {
         newErrors.currentPassword = t(
@@ -110,7 +110,7 @@ export function TransactionPasswordPage({
     const confirmPasswordString = confirmPassword.join('');
 
     const hasCurrentPasswordError =
-      user?.transactionPasswordEnabled &&
+      user?.transaction_password_enabled &&
       (!currentPasswordString || currentPasswordString.length !== 6);
     const hasNewPasswordError =
       !newPasswordString || newPasswordString.length !== 6;
@@ -250,11 +250,11 @@ export function TransactionPasswordPage({
 
       const updatedUser = {
         ...user,
-        transactionPasswordEnabled: isEnabled,
-        transactionPasswordSet:
+        transaction_password_enabled: isEnabled,
+        transaction_password_set:
           isEnabled && newPassword
             ? true
-            : user?.transactionPasswordSet || false,
+            : user?.transaction_password_set || false,
       };
 
       // Here you would typically save to your backend/database
@@ -286,17 +286,11 @@ export function TransactionPasswordPage({
   };
 
   const hasExistingPassword =
-    user?.transactionPasswordEnabled && user?.transactionPasswordSet;
+    user?.transaction_password_enabled && user?.transaction_password_set;
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
       {/* Header */}
-      <div className="flex items-center justify-between p-4 pt-12">
-        <Button variant="ghost" size="icon" onClick={handleBack}>
-          <ArrowLeft className="h-5 w-5" />
-        </Button>
-        <div className="flex-1" />
-      </div>
 
       {/* Content */}
       <div className="flex-1 px-6 py-8">
@@ -365,9 +359,9 @@ export function TransactionPasswordPage({
                       {[0, 1, 2, 3, 4, 5].map((index) => (
                         <Input
                           key={index}
-                          ref={(el) =>
-                            (currentPasswordRefs.current[index] = el)
-                          }
+                          ref={(el) => {
+                            currentPasswordRefs.current[index] = el;
+                          }}
                           type={
                             showCurrentPassword ? 'text' : 'password'
                           }
@@ -432,9 +426,9 @@ export function TransactionPasswordPage({
                     {[0, 1, 2, 3, 4, 5].map((index) => (
                       <Input
                         key={index}
-                        ref={(el) =>
-                          (newPasswordRefs.current[index] = el)
-                        }
+                        ref={(el) => {
+                          newPasswordRefs.current[index] = el;
+                        }}
                         type={showNewPassword ? 'text' : 'password'}
                         inputMode="numeric"
                         value={newPassword[index]}
@@ -492,9 +486,9 @@ export function TransactionPasswordPage({
                     {[0, 1, 2, 3, 4, 5].map((index) => (
                       <Input
                         key={index}
-                        ref={(el) =>
-                          (confirmPasswordRefs.current[index] = el)
-                        }
+                        ref={(el) => {
+                          confirmPasswordRefs.current[index] = el;
+                        }}
                         type={
                           showConfirmPassword ? 'text' : 'password'
                         }

@@ -1,4 +1,4 @@
-// Feedback translations - Simplified Chinese
+// Feedback translations - Traditional Chinese
 export const feedback = {
     // Rating labels
     poor: '差',
@@ -6,7 +6,7 @@ export const feedback = {
     good: '好',
     veryGood: '很好',
     excellent: '非常好',
-    noRating: '无评分',
+    noRating: '無評分',
 
     // Rating variations
     ratingPoor: '差',
@@ -16,46 +16,46 @@ export const feedback = {
     ratingExcellent: '非常好',
 
     // Page headers
-    title: '留下反馈',
-    subtitle: '分享您的体验',
-    rateYour: '评价您的',
-    selectRating: '选择评分',
-    selectRatingToContinue: '请选择评分以继续',
+    title: '留下回饋',
+    subtitle: '分享您的體驗',
+    rateYour: '評價您的',
+    selectRating: '選擇評分',
+    selectRatingToContinue: '請選擇評分以繼續',
 
     // Rating display
-    overallRating: '总体评分',
-    outOfStars: '满分5星',
-    basedOn: '基于',
-    review: '评价',
-    reviews: '评价',
+    overallRating: '總體評分',
+    outOfStars: '滿分5星',
+    basedOn: '基於',
+    review: '評價',
+    reviews: '評價',
 
     // Comment section
-    yourComments: '您的评论',
-    shareDetails: '分享您的体验细节',
-    commentPlaceholder: '告诉我们您的体验...',
-    feedbackHelps: '您的反馈帮助我们改进服务',
+    yourComments: '您的評論',
+    shareDetails: '分享您的體驗細節',
+    commentPlaceholder: '告訴我們您的體驗...',
+    feedbackHelps: '您的回饋幫助我們改進服務',
 
     // Guidelines
     guidelines: '指南',
-    guideline1: '请诚实和尊重',
-    guideline2: '专注于您的个人体验',
-    guideline3: '避免分享敏感信息',
-    guideline4: '保持建设性和有帮助',
+    guideline1: '請誠實和尊重',
+    guideline2: '專注於您的個人體驗',
+    guideline3: '避免分享敏感資訊',
+    guideline4: '保持建設性和有幫助',
 
     // Actions
     submitting: '提交中...',
-    submitFeedback: '提交反馈',
-    skipForNow: '暂时跳过',
+    submitFeedback: '提交回饋',
+    skipForNow: '暫時跳過',
 
     // Roles
     agent: '代理',
-    client: '客户',
+    client: '客戶',
     notAssigned: '未分配',
     unknown: '未知',
 
     // Empty states
-    noFeedback: '暂无反馈',
-    noFeedbackDescription: '成为第一个留下评价的人',
-    aboutReviews: '关于评价',
-    aboutReviewsDescription: '评价有助于建立社区信任',
+    noFeedback: '暫無回饋',
+    noFeedbackDescription: '成為第一個留下評價的人',
+    aboutReviews: '關於評價',
+    aboutReviewsDescription: '評價有助於建立社群信任',
 };

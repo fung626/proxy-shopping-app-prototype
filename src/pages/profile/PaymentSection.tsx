@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { SupabaseUser as User } from '@/services/type';
 import { useLanguage } from '@/store/LanguageContext';
-import { User } from '@/types';
 import { CreditCard, Fingerprint, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 

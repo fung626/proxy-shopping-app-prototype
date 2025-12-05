@@ -1,3 +1,16 @@
+import { CreateFormLoadingOverlay } from '@/components/CreateFormLoadingOverlay';
+import { FileUpload } from '@/components/FileUpload';
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
+import { Textarea } from '@/components/ui/textarea';
 import CURRENCIES from '@/config/currencies';
 import { offersSupabaseService } from '@/services/offersSupabaseService';
 import { useLanguage } from '@/store/LanguageContext';
@@ -7,19 +20,6 @@ import { CATEGORIES } from '@/utils/categories';
 import { Camera, DollarSign, MapPin, Package, X } from 'lucide-react';
 import React, { useState } from 'react';
 import { toast } from 'sonner';
-import { CreateFormLoadingOverlay } from '../../components/CreateFormLoadingOverlay';
-import { FileUpload } from '../../components/FileUpload';
-import { Badge } from '../../components/ui/badge';
-import { Button } from '../../components/ui/button';
-import { Input } from '../../components/ui/input';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '../../components/ui/select';
-import { Textarea } from '../../components/ui/textarea';
 
 const EstimatedDeliveryTypeOptions = [
   { value: 'days', label: 'days' },

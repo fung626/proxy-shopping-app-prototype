@@ -11,6 +11,8 @@ export const categories = {
     'あらゆる旅行に適したスタイリッシュなバッグと耐久性のある荷物。',
   beauty: '美容',
   beautyDescription: '美容製品とパーソナルケア用品を探検しましょう。',
+  cosmetics: '美容・パーソナルケア',
+  cosmeticsDescription: '美容製品とパーソナルケア用品を探検しましょう。',
   electronics: '電子機器',
   electronicsDescription: '最新のガジェットと電子機器。',
   fashion: 'ファッション',

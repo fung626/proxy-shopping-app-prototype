@@ -6,12 +6,11 @@ import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { useLanguage } from '@/store/LanguageContext';
 import {
-  ArrowLeft,
   Building,
   CheckCircle,
   FileText,
   Shield,
-  Upload,
+  Upload
 } from 'lucide-react';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -388,23 +387,6 @@ export function BusinessVerificationPage({}: BusinessVerificationPageProps) {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="px-4 py-4 safe-area-inset-top">
-        <div className="flex items-center">
-          <Button
-            variant="ghost"
-            size="icon"
-            onClick={handleBack}
-            className="mr-3"
-          >
-            <ArrowLeft className="h-5 w-5" />
-          </Button>
-          <h1 className="text-lg font-semibold text-foreground">
-            {t('businessVerification.title')}
-          </h1>
-        </div>
-      </div>
-
       {/* Progress Indicator */}
       <div className="px-4 pb-4 border-b">
         <div className="flex items-center justify-between mb-2">

@@ -3,14 +3,13 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { SupabaseUser as User } from '@/services/type';
 import { useLanguage } from '@/store/LanguageContext';
-import { User } from '@/types';
 import {
   AlertTriangle,
-  ArrowLeft,
   FileText,
   Upload,
-  X,
+  X
 } from 'lucide-react';
 import { useState } from 'react';
 import { toast } from 'sonner';
@@ -25,7 +24,6 @@ interface ArbitrationCentrePageProps {
 export function ArbitrationCentrePage({
   user,
   request,
-  onBack,
   onSubmit,
 }: ArbitrationCentrePageProps) {
   const { t } = useLanguage();
@@ -145,30 +143,6 @@ export function ArbitrationCentrePage({
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <div className="sticky top-0 z-10 bg-background border-b border-border">
-        <div className="flex items-center justify-between p-4">
-          <div className="flex items-center space-x-3">
-            <Button
-              variant="ghost"
-              size="icon"
-              onClick={onBack}
-              className="rounded-full"
-            >
-              <ArrowLeft className="h-5 w-5" />
-            </Button>
-            <div>
-              <h1 className="text-lg font-semibold">
-                {t('arbitration.title')}
-              </h1>
-              <p className="text-sm text-muted-foreground">
-                {t('arbitration.subtitle')}
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
       {/* Content */}
       <div className="px-4 pt-0 pb-4">
         {/* Info Box */}

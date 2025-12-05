@@ -1,8 +1,8 @@
+import { Button } from '@/components/ui/button';
 import { useLanguage } from '@/store/LanguageContext';
 import { MessageCircle } from 'lucide-react';
 import { FC } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button } from '../../components/ui/button';
 
 interface SignInViewProps {
   title: string;

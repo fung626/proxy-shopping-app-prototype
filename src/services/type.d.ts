@@ -29,6 +29,9 @@ export interface SupabaseUser extends User {
   total_orders: number;
   completed_orders?: number;
   response_time?: string;
+  transaction_password_enabled?: boolean;
+  transaction_password_set?: boolean;
+  biometric_enabled?: boolean;
 }
 
 export interface SignUpData {

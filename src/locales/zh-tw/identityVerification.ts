@@ -1,17 +1,17 @@
-// Identity Verification translations - Simplified Chinese
+// Identity Verification translations - Traditional Chinese
 export const identityVerification = {
-    title: '身份验证',
-    description: '验证您的身份以访问所有平台功能',
-    submit: '提交验证',
+    title: '身份驗證',
+    description: '驗證您的身份以存取所有平台功能',
+    submit: '提交驗證',
 
     // Guidelines
-    guidelines: '验证指南',
-    guideline1: '确保您的文件有效且未过期',
-    guideline2: '照片应清晰且所有文字可读',
-    guideline3: '上传原件，而非复印件',
+    guidelines: '驗證指南',
+    guideline1: '確保您的文件有效且未過期',
+    guideline2: '照片應清晰且所有文字可讀',
+    guideline3: '上傳原件，而非影印本',
 
     // Benefits
-    benefits: '验证优势',
-    benefit1: '提高交易限额',
-    benefit3: '访问高级功能',
+    benefits: '驗證優勢',
+    benefit1: '提高交易限額',
+    benefit3: '存取進階功能',
 };

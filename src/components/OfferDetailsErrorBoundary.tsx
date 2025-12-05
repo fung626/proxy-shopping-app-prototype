@@ -1,4 +1,4 @@
-import { AlertTriangle, ArrowLeft } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import React, { Component, ReactNode } from 'react';
 
 interface Props {
@@ -38,18 +38,7 @@ export class OfferDetailsErrorBoundary extends Component<
     if (this.state.hasError) {
       return (
         <div className="min-h-screen bg-white">
-          <div className="sticky top-0 z-10 bg-white border-b border-gray-200">
-            <div className="flex items-center justify-between p-4">
-              <button
-                onClick={this.props.onBack}
-                className="p-2 rounded-full hover:bg-gray-100"
-              >
-                <ArrowLeft className="h-5 w-5" />
-              </button>
-              <h1 className="text-lg font-semibold">Offer Details</h1>
-              <div className="w-10" />
-            </div>
-          </div>
+          
 
           <div className="flex items-center justify-center min-h-96 p-8">
             <div className="text-center max-w-md">

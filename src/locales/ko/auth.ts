@@ -99,6 +99,7 @@ export const auth = {
   sendVerificationCode: '인증 코드 전송',
   sending: '전송 중...',
   signIn: '로그인',
+  signInSuccess: '로그인 성공',
   signInError: '로그인 실패',
   signInFailed:
     '로그인에 실패했습니다. 자격 증명을 확인하고 다시 시도해주세요.',
